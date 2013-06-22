@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.fuin</groupId>
+		<artifactId>pom</artifactId>
+		<version>1.0.5</version>
+	</parent>
+
+	<artifactId>utils4j</artifactId>
+	<packaging>jar</packaging>
+	<version>0.6.9</version>
+	<name>Utils4J</name>
+	<description>A small Java library that contains several helpful utility classes.</description>
+	<url>http://www.fuin.org/utils4j/</url>
+
+	<scm>
+		<url>https://github.com/fuinorg/utils4j/</url>
+		<connection>scm:git:git://github.com/fuinorg/utils4j.git</connection>
+		<developerConnection>scm:git:git@github.com:fuinorg/utils4j.git</developerConnection>
+	</scm>
+
+    <issueManagement>
+    	<system>GitHub Issues</system>
+    	<url>https://github.com/fuinorg/utils4j/issues</url>
+    </issueManagement>
+
+
+	<dependencies>
+
+		<!-- Compile -->
+
+		<!-- Test -->
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>5.11</version>
+			<scope>test</scope>
+			<classifier>jdk14</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>junit-addons</groupId>
+			<artifactId>junit-addons</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xercesImpl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xmlParserAPIs</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.4</source>
+					<target>1.4</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
