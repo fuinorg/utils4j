@@ -178,8 +178,8 @@ public class Utils4JTest {
      * @testng.test
      */
     public final void testGetResource() throws IOException {
-        final URL url = new URL("file:/" + new File(".").getCanonicalPath()
-                + "/target/test-classes/org/fuin/utils4j/test.properties");
+        final URL url = new File(new File(".").getCanonicalPath(),
+                "target/test-classes/org/fuin/utils4j/test.properties").toURL();
         Assert.assertEquals(url, Utils4J.getResource(Utils4JTest.class, "test.properties"));
     }
 
