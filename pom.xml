@@ -27,10 +27,6 @@
     	<url>https://github.com/fuinorg/utils4j/issues</url>
     </issueManagement>
 
-	<properties>
-		<checkstyle.header.file>${project.baseUri}required-header.txt</checkstyle.header.file>
-	</properties>
-
 	<dependencies>
 
 		<!-- Compile -->
