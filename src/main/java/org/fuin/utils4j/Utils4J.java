@@ -465,8 +465,7 @@ public final class Utils4J {
 					password, salt, count);
 			return cipher.doFinal(data);
 		} catch (final Exception ex) {
-			throw new RuntimeException(
-					"Error encrypting the password!", ex);
+			throw new RuntimeException("Error encrypting the password!", ex);
 		}
 	}
 
@@ -501,8 +500,7 @@ public final class Utils4J {
 					password, salt, count);
 			return cipher.doFinal(encryptedData);
 		} catch (final Exception ex) {
-			throw new RuntimeException(
-					"Error decrypting the password!", ex);
+			throw new RuntimeException("Error decrypting the password!", ex);
 		}
 	}
 
@@ -578,6 +576,42 @@ public final class Utils4J {
 		} catch (final IOException ex) {
 			throw new RuntimeException(ex);
 		}
+	}
+
+	/**
+	 * Replaces all directory names in a relative path with "..".<br>
+	 * <br>
+	 * Examples:<br>
+	 * "a/b/c" => "../../.."<br> 
+	 * "my-dir" => ".."<br> 
+	 * "my-dir/other/" => "../../".
+	 * 
+	 * @param relativePath
+	 *            Relative path to convert - Expected to be a directory and NOT
+	 *            a file - Cannot be NULL.
+	 * @param fileSeparatorChar
+	 *            See {@link File#separatorChar}.
+	 * 
+	 * @return Relative path with ".." (dot dot)
+	 */
+	public static String getBackToRootPath(final String relativePath,
+			final char fileSeparatorChar) {
+		
+		checkNotNull("relativePath", relativePath);
+		
+		final StringBuffer sb = new StringBuffer();
+		boolean firstChar = true;
+		for (int i = 0; i < relativePath.length(); i++) {
+			final char ch = relativePath.charAt(i);
+			if (ch == fileSeparatorChar) {
+				sb.append(ch);
+				firstChar = true;
+			} else if (firstChar) {
+				sb.append("..");
+				firstChar = false;
+			}
+		}
+		return sb.toString();
 	}
 
 	/**
@@ -1287,8 +1321,8 @@ public final class Utils4J {
 	 * double the length of the passed array, as it takes two characters to
 	 * represent any given byte.
 	 * 
-	 * Author: Apache Software Foundation
-	 * See: org.apache.commons.codec.binary.Hex
+	 * Author: Apache Software Foundation See:
+	 * org.apache.commons.codec.binary.Hex
 	 * 
 	 * @param data
 	 *            A byte[] to convert to Hex characters - Cannot be
@@ -1296,6 +1330,7 @@ public final class Utils4J {
 	 * 
 	 * @return A string containing hexidecimal characters
 	 */
+	// CHECKSTYLE:OFF Orginal Apache code 
 	public static String encodeHex(final byte[] data) {
 
 		checkNotNull("data", data);
@@ -1310,6 +1345,7 @@ public final class Utils4J {
 		}
 		return String.copyValueOf(out);
 	}
+	// CHECKSTYLE:ON 
 
 	/**
 	 * Converts an array of characters representing hexidecimal values into an
@@ -1325,9 +1361,10 @@ public final class Utils4J {
 	 * @return A byte array containing binary data decoded from the supplied
 	 *         char array.
 	 * 
-	 * Author: Apache Software Foundation
-	 * See: org.apache.commons.codec.binary.Hex
+	 *         Author: Apache Software Foundation See:
+	 *         org.apache.commons.codec.binary.Hex
 	 */
+	// CHECKSTYLE:OFF Orginal Apache code 
 	public static byte[] decodeHex(final String data) {
 
 		checkNotNull("data", data);
@@ -1351,6 +1388,7 @@ public final class Utils4J {
 
 		return out;
 	}
+	// CHECKSTYLE:ON 
 
 	/**
 	 * Converts a hexadecimal character to an integer.
@@ -1504,8 +1542,10 @@ public final class Utils4J {
 		final File[] files = listFiles(srcDir, filter);
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].isDirectory()) {
-				zipDir(files[i], filter, concatPathAndFilename(destPath,
-						files[i].getName(), File.separator), out);
+				zipDir(files[i],
+						filter,
+						concatPathAndFilename(destPath, files[i].getName(),
+								File.separator), out);
 			} else {
 				zipFile(files[i], destPath, out);
 			}

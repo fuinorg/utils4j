@@ -429,6 +429,16 @@ public class Utils4JTest {
                 Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile().getParentFile()
                         .getParentFile().getParentFile(), TEST_PROPERTIES_FILE.getParentFile()));
     }
+    
+    /**
+     * @testng.test
+     */
+    public final void testGetBackToRootPath() {
+		Assert.assertEquals("[1]", "../../..", Utils4J.getBackToRootPath("a/b/c", '/'));
+        Assert.assertEquals("[2]", "../../", Utils4J.getBackToRootPath("a/b/", '/'));
+        Assert.assertEquals("[3]", "..", Utils4J.getBackToRootPath("a", '/'));
+        Assert.assertEquals("[4]", "", Utils4J.getBackToRootPath("", '/'));
+    }
 
     /**
      * @testng.test
