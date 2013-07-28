@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-Description: A small Java library that contains several helpful u
+ tility classes.
+Bundle-DocURL: http://www.fuin.org/
+Bundle-License: http://www.fsf.org/licensing/licenses/lgpl.html
+Bundle-ManifestVersion: 2
+Bundle-Name: Utils4J
+Bundle-SymbolicName: org.fuin.utils4j
+Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
+ ny)
+Bundle-Version: 0.8.0.SNAPSHOT
+Export-Package: org.fuin.utils4j;version="0.8.0.SNAPSHOT",org.fuin.utils
+ 4j.filter;version="0.8.0.SNAPSHOT"
+Import-Package: javax.crypto,javax.crypto.spec
