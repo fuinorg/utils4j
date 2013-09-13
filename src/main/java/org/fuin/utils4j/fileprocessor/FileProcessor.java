@@ -109,11 +109,11 @@ public final class FileProcessor {
     private FileHandlerResult processDir(final File dir) {
         // CHECKSTYLE:ON
 
-        FileHandlerResult result = handler.handleFile(dir);
-        if (result == FileHandlerResult.STOP) {
-            return result;
+        final FileHandlerResult dirResult = handler.handleFile(dir);
+        if (dirResult == FileHandlerResult.STOP) {
+            return FileHandlerResult.STOP;
         }
-        if (result == FileHandlerResult.SKIP_ALL) {
+        if (dirResult == FileHandlerResult.SKIP_ALL) {
             return FileHandlerResult.CONTINUE;
         }
 
@@ -122,9 +122,10 @@ public final class FileProcessor {
             final List sortedFiles = asList(files);
             for (int i = 0; i < sortedFiles.size(); i++) {
                 final File file = (File) sortedFiles.get(i);
-                if (file.isDirectory() && (result != FileHandlerResult.SKIP_SUBDIRS)) {
+                FileHandlerResult result = FileHandlerResult.CONTINUE;
+                if (file.isDirectory() && (dirResult != FileHandlerResult.SKIP_SUBDIRS)) {
                     result = processDir(file);
-                } else if (file.isFile() && (result != FileHandlerResult.SKIP_FILES)) {
+                } else if (file.isFile() && (dirResult != FileHandlerResult.SKIP_FILES)) {
                     result = handler.handleFile(file);
                 }
                 if (result == FileHandlerResult.STOP) {

@@ -18,7 +18,6 @@
 package org.fuin.utils4j.fileprocessor;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,23 +166,12 @@ public class FileProcessorTest {
         final List processed = new ArrayList();
         final FileHandler handler = new FileHandler() {
             public FileHandlerResult handleFile(File file) {
-                System.out.println("---- BEGIN handleFile(File) ----");
-                System.out.println("file=" + file);
-                try {
-                    System.out.println("CANONICAL=" + file.getCanonicalPath());
-                } catch (IOException ex) {
-                    throw new RuntimeException("Couldn't get canonical path: " + file, ex);
-                }
                 if (file.getName().equals("test")) {
-                    System.out.println("SKIP FILES: " + file);
-                    System.out.println("---- END handleFile(File) SKIP ----");
                     return FileHandlerResult.SKIP_FILES;
                 }
                 if (file.isFile()) {
-                    System.out.println("ADD=" + file);
                     processed.add(file);
                 }
-                System.out.println("---- END handleFile(File) CONTINUE ----");
                 return FileHandlerResult.CONTINUE;
 
             }
