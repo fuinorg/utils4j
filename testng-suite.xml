@@ -4,6 +4,7 @@
     <packages>
       <package name="org.fuin.utils4j"/>
       <package name="org.fuin.utils4j.filter"/>
+      <package name="org.fuin.utils4j.fileprocessor"/>
     </packages>
   </test>
 </suite>
