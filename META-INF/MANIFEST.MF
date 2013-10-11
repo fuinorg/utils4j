@@ -10,5 +10,6 @@ Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
  ny)
 Bundle-Version: 0.8.0.SNAPSHOT
 Export-Package: org.fuin.utils4j;version="0.8.0.SNAPSHOT",org.fuin.utils
- 4j.filter;version="0.8.0.SNAPSHOT"
+ 4j.fileprocessor;version="0.8.0.SNAPSHOT",org.fuin.utils4j.filter;versi
+ on="0.8.0.SNAPSHOT"
 Import-Package: javax.crypto,javax.crypto.spec
