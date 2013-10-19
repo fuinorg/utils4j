@@ -287,9 +287,21 @@ public final class Utils4J {
      *            URL to add - Cannot be <code>null</code>.
      */
     public static void addToClasspath(final String url) {
+        addToClasspath(url, Utils4J.class.getClassLoader());
+    }
+
+    /**
+     * Adds an URL to the classpath.
+     * 
+     * @param url
+     *            URL to add - Cannot be <code>null</code>.
+     * @param classLoader
+     *            Class loader to use - Cannot be <code>null</code>.
+     */
+    public static void addToClasspath(final String url, final ClassLoader classLoader) {
         checkNotNull("url", url);
         try {
-            addToClasspath(new URL(url));
+            addToClasspath(new URL(url), classLoader);
         } catch (final MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -683,14 +695,26 @@ public final class Utils4J {
     }
 
     /**
-     * Adds an URL to the classpath.
+     * Adds an URL to the class path.
      * 
      * @param url
      *            URL to add - Cannot be <code>null</code>.
      */
     public static void addToClasspath(final URL url) {
+        addToClasspath(url, Utils4J.class.getClassLoader());
+    }
+
+    /**
+     * Adds an URL to the class path.
+     * 
+     * @param url
+     *            URL to add - Cannot be <code>null</code>.
+     * @param classLoader
+     *            Class loader to use - Cannot be <code>null</code>.
+     */
+    public static void addToClasspath(final URL url, final ClassLoader classLoader) {
         checkNotNull("url", url);
-        final ClassLoader classLoader = Utils4J.class.getClassLoader();
+        checkNotNull("classLoader", classLoader);
         if (!(classLoader instanceof URLClassLoader)) {
             throw new IllegalArgumentException("Cannot add '" + url
                     + "' to classloader because it's not an URL classloader");
