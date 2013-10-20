@@ -429,12 +429,12 @@ public class Utils4JTest {
                 Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile().getParentFile()
                         .getParentFile().getParentFile(), TEST_PROPERTIES_FILE.getParentFile()));
     }
-    
+
     /**
      * @testng.test
      */
     public final void testGetBackToRootPath() {
-		Assert.assertEquals("[1]", "../../..", Utils4J.getBackToRootPath("a/b/c", '/'));
+        Assert.assertEquals("[1]", "../../..", Utils4J.getBackToRootPath("a/b/c", '/'));
         Assert.assertEquals("[2]", "../../", Utils4J.getBackToRootPath("a/b/", '/'));
         Assert.assertEquals("[3]", "..", Utils4J.getBackToRootPath("a", '/'));
         Assert.assertEquals("[4]", "", Utils4J.getBackToRootPath("", '/'));
@@ -874,6 +874,57 @@ public class Utils4JTest {
         final String str2 = new String(decrypted);
         Assert.assertEquals(str1, str2);
 
+    }
+
+    /**
+     * @testng.test
+     */
+    public void testFileInsideDirectory() {
+
+        Assert.assertTrue(Utils4J.fileInsideDirectory(new File("/"), new File("/a/b/c/fileX.txt")));
+        Assert.assertTrue(Utils4J.fileInsideDirectory(new File("/"), new File("/fileX.txt")));
+        Assert.assertTrue(Utils4J.fileInsideDirectory(new File("/a"), new File("/a/b/c/fileX.txt")));
+        Assert.assertTrue(Utils4J.fileInsideDirectory(new File("/a/b"),
+                new File("/a/b/c/fileX.txt")));
+        Assert.assertTrue(Utils4J.fileInsideDirectory(new File("/a/b/c"), new File(
+                "/a/b/c/fileX.txt")));
+        Assert.assertTrue(Utils4J.fileInsideDirectory(new File("/a/b/c"), new File(
+                "/a/b/c/d/fileX.txt")));
+
+        Assert.assertFalse(Utils4J.fileInsideDirectory(new File("/a"), new File("/fileX.txt")));
+        Assert.assertFalse(Utils4J.fileInsideDirectory(new File("/a"), new File("/b/fileX.txt")));
+
+    }
+
+    /**
+     * @testng.test
+     */
+    public void testGetCanonicalPath() {
+
+        Assert.assertEquals(null, Utils4J.getCanonicalPath(null));
+        Assert.assertEquals(getRoot() + "a/b/c/fileX.txt".replace('/', File.separatorChar),
+                Utils4J.getCanonicalPath(new File("/a/b/c/fileX.txt")));
+
+    }
+
+    /**
+     * @testng.test
+     */
+    public void testGetCanonicalFile() {
+
+        Assert.assertEquals(null, Utils4J.getCanonicalFile(null));
+        Assert.assertEquals(
+                new File(getRoot() + "a/b/c/fileX.txt".replace('/', File.separatorChar)),
+                Utils4J.getCanonicalFile(new File("/a/b/c/fileX.txt")));
+
+    }
+
+    private static String getRoot() {
+        try {
+            return new File("/").getCanonicalPath();
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private static class ExceptionContainer {

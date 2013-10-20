@@ -576,19 +576,79 @@ public final class Utils4J {
     public static String getRelativePath(final File baseDir, final File dir) {
         checkNotNull("baseDir", baseDir);
         checkNotNull("dir", dir);
+
+        final String base = getCanonicalPath(baseDir);
+        final String path = getCanonicalPath(dir);
+        if (!path.startsWith(base)) {
+            throw new IllegalArgumentException("The path '" + path
+                    + "' is not inside the base directory '" + base + "'!");
+        }
+        if (base.equals(path)) {
+            return "";
+        }
+        return path.substring(base.length() + 1);
+    }
+
+    /**
+     * Checks if a given file is inside the given directory.
+     * 
+     * @param dir
+     *            Base directory - Cannot be <code>null</code>.
+     * @param file
+     *            File - Cannot be <code>null</code>.
+     * 
+     * @return If the file is inside the directory TRUE, else FALSE.
+     */
+    public static boolean fileInsideDirectory(final File dir, final File file) {
+        checkNotNull("dir", dir);
+        checkNotNull("file", file);
+
+        final String dirPath = getCanonicalPath(dir);
+        final String filePath = getCanonicalPath(file);
+        return filePath.startsWith(dirPath);
+    }
+
+    /**
+     * Returns the canonical path for the file without throwing a checked
+     * exception. A potential {@link IOException} is converted into a
+     * {@link RuntimeException}
+     * 
+     * @param file
+     *            File to return the canonical path for or <code>null</code>.
+     * 
+     * @return Canonical path for the given argument or <code>null</code> if the
+     *         input was <code>null</code>.
+     */
+    public static String getCanonicalPath(final File file) {
+        if (file == null) {
+            return null;
+        }
         try {
-            final String base = baseDir.getCanonicalPath();
-            final String path = dir.getCanonicalPath();
-            if (!path.startsWith(base)) {
-                throw new IllegalArgumentException("The path '" + path
-                        + "' is not inside the base directory '" + base + "'!");
-            }
-            if (base.equals(path)) {
-                return "";
-            }
-            return path.substring(base.length() + 1);
+            return file.getCanonicalPath();
         } catch (final IOException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Couldn't get canonical path for: " + file, ex);
+        }
+    }
+
+    /**
+     * Returns the canonical file for the file without throwing a checked
+     * exception. A potential {@link IOException} is converted into a
+     * {@link RuntimeException}
+     * 
+     * @param file
+     *            File to return the canonical file for or <code>null</code>.
+     * 
+     * @return Canonical file for the given argument or <code>null</code> if the
+     *         input was <code>null</code>.
+     */
+    public static File getCanonicalFile(final File file) {
+        if (file == null) {
+            return null;
+        }
+        try {
+            return file.getCanonicalFile();
+        } catch (final IOException ex) {
+            throw new RuntimeException("Couldn't get canonical file for: " + file, ex);
         }
     }
 
