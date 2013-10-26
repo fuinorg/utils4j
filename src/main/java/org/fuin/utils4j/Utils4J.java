@@ -1532,8 +1532,10 @@ public final class Utils4J {
         final byte[] buf = new byte[1024];
         final InputStream in = new BufferedInputStream(new FileInputStream(srcFile));
         try {
-            out.putNextEntry(new ZipEntry(concatPathAndFilename(destPath, srcFile.getName(),
-                    File.separator)));
+            final ZipEntry zipEntry = new ZipEntry(concatPathAndFilename(destPath,
+                    srcFile.getName(), File.separator));
+            zipEntry.setTime(srcFile.lastModified());
+            out.putNextEntry(zipEntry);
             int len;
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
