@@ -281,6 +281,33 @@ public final class Utils4J {
     }
 
     /**
+     * Adds a file to the classpath.
+     * 
+     * @param file
+     *            File to add - Cannot be <code>null</code>.
+     */
+    public static void addToClasspath(final File file) {
+        addToClasspath(file, Utils4J.class.getClassLoader());
+    }
+
+    /**
+     * Adds a file to the classpath.
+     * 
+     * @param file
+     *            File to add - Cannot be <code>null</code>.
+     * @param classLoader
+     *            Class loader to use - Cannot be <code>null</code>.
+     */
+    public static void addToClasspath(final File file, final ClassLoader classLoader) {
+        checkNotNull("file", file);
+        try {
+            addToClasspath(file.toURI().toURL(), classLoader);
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Adds an URL to the classpath.
      * 
      * @param url
