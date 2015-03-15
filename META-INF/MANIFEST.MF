@@ -8,8 +8,7 @@ Bundle-Name: Utils4J
 Bundle-SymbolicName: org.fuin.utils4j
 Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
  ny)
-Bundle-Version: 0.8.0.SNAPSHOT
-Export-Package: org.fuin.utils4j;version="0.8.0.SNAPSHOT",org.fuin.utils
- 4j.fileprocessor;version="0.8.0.SNAPSHOT",org.fuin.utils4j.filter;versi
- on="0.8.0.SNAPSHOT"
+Bundle-Version: 0.8.0
+Export-Package: org.fuin.utils4j;version="0.8.0",org.fuin.utils4j.filepr
+ ocessor;version="0.8.0",org.fuin.utils4j.filter;version="0.8.0"
 Import-Package: javax.crypto,javax.crypto.spec
