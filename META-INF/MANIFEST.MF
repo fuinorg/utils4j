@@ -9,8 +9,8 @@ Bundle-SymbolicName: org.fuin.utils4j
 Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
  ny)
 Bundle-Version: 0.9.0.SNAPSHOT
-Export-Package: org.fuin.utils4j;version="0.9.0.SNAPSHOT";uses:="javax.x
- ml.bind,javax.xml.bind.annotation,javax.xml.bind.annotation.adapters",o
+Export-Package: org.fuin.utils4j;uses:="javax.xml.bind,javax.xml.bind.an
+ notation,javax.xml.bind.annotation.adapters";version="0.9.0.SNAPSHOT",o
  rg.fuin.utils4j.filter;version="0.9.0.SNAPSHOT",org.fuin.utils4j.filepr
  ocessor;version="0.9.0.SNAPSHOT"
 Import-Package: javax.crypto,javax.crypto.spec,javax.xml.bind,javax.xml.

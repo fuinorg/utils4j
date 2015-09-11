@@ -706,9 +706,9 @@ public final class Utils4J {
      * Replaces all directory names in a relative path with "..".<br>
      * <br>
      * Examples:<br>
-     * "a/b/c" => "../../.."<br>
-     * "my-dir" => ".."<br>
-     * "my-dir/other/" => "../../".
+     * "a/b/c" =&gt; "../../.."<br>
+     * "my-dir" =&gt; ".."<br>
+     * "my-dir/other/" =&gt; "../../".<br>
      * 
      * @param relativePath
      *            Relative path to convert - Expected to be a directory and NOT
