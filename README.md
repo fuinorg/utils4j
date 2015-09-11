@@ -11,8 +11,7 @@ A small Java library that contains several helpful utility classes.
 
 <a href="https://fuin-org.ci.cloudbees.com/job/utils4j"><img src="http://www.fuin.org/images/Button-Built-on-CB-1.png" width="213" height="72" border="0" alt="Built on CloudBees"/></a>
 
-*JDK 1.4.2 for releases up to 0.8.0*
-*JKD 1.7 for releases >= 0.9.0*
+**JDK 1.7 for releases >= 0.9.0  /  JDK 1.4.2 for releases up to 0.8.0**
 
 * * *
 
