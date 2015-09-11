@@ -14,9 +14,9 @@ http://www.fuin.org/utils4j/index.html
 
 <a href="https://fuin-org.ci.cloudbees.com/job/utils4j"><img src="http://www.fuin.org/images/Button-Built-on-CB-1.png" width="213" height="72" border="0" alt="Built on CloudBees"/></a>
 
-#Examples
+##Examples
 
-##ZIP directory
+###ZIP directory
 Compress a complete directory and it's subdirectories with a single line of code using Utils4J
 ```Java
 // Given a local directory "mydir" on drive "c:" that contains
@@ -38,7 +38,7 @@ Utils4J.zipDir(dirToZip, "", new File("c:/myfile2.zip"));
 // z.txt
 ```
 
-###Snapshots
+##Snapshots
 
 Snapshots can be found on the [OSS Sonatype Snapshots Repository](http://oss.sonatype.org/content/repositories/snapshots/org/fuin "Snapshot Repository"). 
 
