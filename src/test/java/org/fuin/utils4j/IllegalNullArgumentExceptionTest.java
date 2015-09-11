@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class IllegalNullArgumentExceptionTest {
                 argument);
         assertThat(ex.getArgument()).isEqualTo(argument);
         assertThat(ex.getMessage()).isEqualTo(
-                "The argument '" + argument + "' cannot be null!");
+                "The argument '" + argument + "' cannot be null");
         assertThat(ex.getCause()).isNull();
     }
 

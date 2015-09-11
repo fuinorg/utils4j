@@ -20,12 +20,16 @@ package org.fuin.utils4j;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
@@ -879,7 +883,7 @@ public final class Utils4J {
     public static void checkNotEmpty(final String name, final String value) {
         if (value.length() == 0) {
             throw new IllegalArgumentException("The argument '" + name
-                    + "' cannot be empty!!");
+                    + "' cannot be empty");
         }
     }
 
@@ -1747,6 +1751,65 @@ public final class Utils4J {
 
         zipDir(srcDir, null, destPath, destFile);
 
+    }
+
+    /**
+     * Serializes the given object. A <code>null</code> argument returns
+     * <code>null</code>.
+     * 
+     * @param obj
+     *            Object to serialize or <code>null</code>.
+     * 
+     * @return Serialized object or <code>null</code>.
+     */
+    public static byte[] serialize(final Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        try {
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                final ObjectOutputStream out = new ObjectOutputStream(baos);
+                out.writeObject(obj);
+                return baos.toByteArray();
+            } finally {
+                baos.close();
+            }
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Deserializes a byte array to an object. A <code>null</code> argument
+     * returns <code>null</code>.
+     * 
+     * @param data
+     *            Byte array to deserialize or <code>null</code>.
+     * 
+     * @return Object created from data or <code>null</code>.
+     * 
+     * @param <T>
+     *            Type of returned data.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T deserialize(final byte[] data) {
+        if (data == null) {
+            return null;
+        }
+        try {
+            final ByteArrayInputStream bais = new ByteArrayInputStream(data);
+            try {
+                final ObjectInputStream in = new ObjectInputStream(bais);
+                return (T) in.readObject();
+            } finally {
+                bais.close();
+            }
+        } catch (final ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     /**

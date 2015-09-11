@@ -23,11 +23,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Represents a simple implementation of the {@link StringVariable} interface.
+ * Represents a simple implementation of the {@link Variable} interface.
  */
 @XmlRootElement(name = "variable")
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class SimpleStringVariable implements StringVariable {
+public final class SimpleVariable implements Variable {
 
     @XmlAttribute(name = "name")
     private String name;
@@ -38,7 +38,7 @@ public final class SimpleStringVariable implements StringVariable {
     /**
      * Default constructor for JAXB.
      */
-    protected SimpleStringVariable() {
+    protected SimpleVariable() {
         super();
     }
 
@@ -50,8 +50,9 @@ public final class SimpleStringVariable implements StringVariable {
      * @param value
      *            Variable value - May not be <code>null</code>.
      */
-    public SimpleStringVariable(final String name, final String value) {
+    public SimpleVariable(final String name, final String value) {
         super();
+        Utils4J.checkNotNull("name", name);
         Utils4J.checkNotEmpty("name", name);
         Utils4J.checkNotNull("value", value);
         this.name = name;
@@ -84,7 +85,7 @@ public final class SimpleStringVariable implements StringVariable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SimpleStringVariable other = (SimpleStringVariable) obj;
+        final SimpleVariable other = (SimpleVariable) obj;
         return name.equals(other.name);
     }
 

@@ -21,7 +21,7 @@ package org.fuin.utils4j;
  * Represents a variable definition with name and value (both strings). Hash
  * code and equals are defined based on the name.
  */
-public interface StringVariable {
+public interface Variable {
 
     /**
      * Returns the name.

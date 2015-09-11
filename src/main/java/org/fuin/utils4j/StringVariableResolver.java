@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public final class StringVariableResolver {
 
-    private List<StringVariable> vars;
+    private List<Variable> vars;
 
     private Map<String, String> unresolved;
 
@@ -44,14 +44,14 @@ public final class StringVariableResolver {
      * @param vars
      *            List to use - May be <code>null</code>.
      */
-    public StringVariableResolver(final List<StringVariable> vars) {
+    public StringVariableResolver(final List<Variable> vars) {
         if (vars == null) {
-            this.vars = new ArrayList<StringVariable>();
+            this.vars = new ArrayList<Variable>();
         } else {
             this.vars = vars;
         }
         unresolved = new HashMap<String, String>();
-        for (final StringVariable var : this.vars) {
+        for (final Variable var : this.vars) {
             unresolved.put(var.getName(), var.getValue());
         }
         depth = new HashMap<String, Integer>();
@@ -61,7 +61,7 @@ public final class StringVariableResolver {
 
     private void resolve() {
         int max = 0;
-        for (final StringVariable var : vars) {
+        for (final Variable var : vars) {
             final int d = resolve(var.getName(), var.getValue(),
                     new ArrayList<String>());
             if (d > max) {
@@ -70,7 +70,7 @@ public final class StringVariableResolver {
         }
 
         for (int d = 0; d <= max; d++) {
-            for (final StringVariable var : vars) {
+            for (final Variable var : vars) {
                 if (depth.get(var.getName()).intValue() == d) {
                     resolved.put(var.getName(),
                             replaceVars(var.getValue(), resolved));

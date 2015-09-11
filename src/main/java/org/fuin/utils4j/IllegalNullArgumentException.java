@@ -36,7 +36,7 @@ public final class IllegalNullArgumentException extends
      *            Name of the argument that caused the exception.
      */
     public IllegalNullArgumentException(final String argument) {
-        super("The argument '" + argument + "' cannot be null!");
+        super("The argument '" + argument + "' cannot be null");
         this.argument = argument;
     }
 

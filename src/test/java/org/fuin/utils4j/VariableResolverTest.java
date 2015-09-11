@@ -17,14 +17,14 @@
  */
 package org.fuin.utils4j;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.MapAssert.entry;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.data.MapEntry.entry;
 import static org.fuin.utils4j.StringVariableResolver.references;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fuin.utils4j.StringVariableResolver;
 import org.junit.Test;
 
 /**
@@ -52,7 +52,7 @@ public class VariableResolverTest {
 
         // PREPARE & TEST
         final StringVariableResolver testee = new StringVariableResolver(
-                new ArrayList<StringVariable>());
+                new ArrayList<Variable>());
 
         // VERIFY
         assertThat(testee.getDepth()).isEmpty();
@@ -65,20 +65,20 @@ public class VariableResolverTest {
     public void testOneLevel() {
 
         // PREPARE
-        final List<StringVariable> vars = new ArrayList<StringVariable>();
-        vars.add(new SimpleStringVariable("a", "1"));
-        vars.add(new SimpleStringVariable("b", "2"));
-        vars.add(new SimpleStringVariable("c", "3"));
+        final List<Variable> vars = new ArrayList<Variable>();
+        vars.add(new SimpleVariable("a", "1"));
+        vars.add(new SimpleVariable("b", "2"));
+        vars.add(new SimpleVariable("c", "3"));
 
         // TEST
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).includes(entry("a", 0), entry("b", 0),
+        assertThat(testee.getDepth()).contains(entry("a", 0), entry("b", 0),
                 entry("c", 0));
-        assertThat(testee.getResolved()).includes(entry("a", "1"),
+        assertThat(testee.getResolved()).contains(entry("a", "1"),
                 entry("b", "2"), entry("c", "3"));
-        assertThat(testee.getUnresolved()).includes(entry("a", "1"),
+        assertThat(testee.getUnresolved()).contains(entry("a", "1"),
                 entry("b", "2"), entry("c", "3"));
 
     }
@@ -87,18 +87,18 @@ public class VariableResolverTest {
     public void testTwoLevels() {
 
         // PREPARE
-        final List<StringVariable> vars = new ArrayList<StringVariable>();
-        vars.add(new SimpleStringVariable("a", "a${b}"));
-        vars.add(new SimpleStringVariable("b", "2"));
+        final List<Variable> vars = new ArrayList<Variable>();
+        vars.add(new SimpleVariable("a", "a${b}"));
+        vars.add(new SimpleVariable("b", "2"));
 
         // TEST
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).includes(entry("a", 1), entry("b", 0));
-        assertThat(testee.getResolved()).includes(entry("a", "a2"),
+        assertThat(testee.getDepth()).contains(entry("a", 1), entry("b", 0));
+        assertThat(testee.getResolved()).contains(entry("a", "a2"),
                 entry("b", "2"));
-        assertThat(testee.getUnresolved()).includes(entry("a", "a${b}"),
+        assertThat(testee.getUnresolved()).contains(entry("a", "a${b}"),
                 entry("b", "2"));
 
     }
@@ -107,20 +107,20 @@ public class VariableResolverTest {
     public void testThreeLevels() {
 
         // PREPARE
-        final List<StringVariable> vars = new ArrayList<StringVariable>();
-        vars.add(new SimpleStringVariable("a", "1${b}"));
-        vars.add(new SimpleStringVariable("b", "2${c}"));
-        vars.add(new SimpleStringVariable("c", "3"));
+        final List<Variable> vars = new ArrayList<Variable>();
+        vars.add(new SimpleVariable("a", "1${b}"));
+        vars.add(new SimpleVariable("b", "2${c}"));
+        vars.add(new SimpleVariable("c", "3"));
 
         // TEST
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).includes(entry("a", 2), entry("b", 1),
+        assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1),
                 entry("c", 0));
-        assertThat(testee.getResolved()).includes(entry("a", "123"),
+        assertThat(testee.getResolved()).contains(entry("a", "123"),
                 entry("b", "23"), entry("c", "3"));
-        assertThat(testee.getUnresolved()).includes(entry("a", "1${b}"),
+        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"),
                 entry("b", "2${c}"), entry("c", "3"));
 
     }
@@ -129,21 +129,21 @@ public class VariableResolverTest {
     public void testFourLevels() {
 
         // PREPARE
-        final List<StringVariable> vars = new ArrayList<StringVariable>();
-        vars.add(new SimpleStringVariable("a", "1${b}"));
-        vars.add(new SimpleStringVariable("b", "2${c}"));
-        vars.add(new SimpleStringVariable("c", "3${d}"));
-        vars.add(new SimpleStringVariable("d", "4"));
+        final List<Variable> vars = new ArrayList<Variable>();
+        vars.add(new SimpleVariable("a", "1${b}"));
+        vars.add(new SimpleVariable("b", "2${c}"));
+        vars.add(new SimpleVariable("c", "3${d}"));
+        vars.add(new SimpleVariable("d", "4"));
 
         // TEST
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).includes(entry("a", 3), entry("b", 2),
+        assertThat(testee.getDepth()).contains(entry("a", 3), entry("b", 2),
                 entry("c", 1), entry("d", 0));
-        assertThat(testee.getResolved()).includes(entry("a", "1234"),
+        assertThat(testee.getResolved()).contains(entry("a", "1234"),
                 entry("b", "234"), entry("c", "34"), entry("d", "4"));
-        assertThat(testee.getUnresolved()).includes(entry("a", "1${b}"),
+        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"),
                 entry("b", "2${c}"), entry("c", "3${d}"), entry("d", "4"));
 
     }
@@ -152,9 +152,9 @@ public class VariableResolverTest {
     public void testCycleOneLevel() {
 
         // PREPARE
-        final List<StringVariable> vars = new ArrayList<StringVariable>();
-        vars.add(new SimpleStringVariable("a", "${b}"));
-        vars.add(new SimpleStringVariable("b", "${a}"));
+        final List<Variable> vars = new ArrayList<Variable>();
+        vars.add(new SimpleVariable("a", "${b}"));
+        vars.add(new SimpleVariable("b", "${a}"));
 
         // TEST
         try {
@@ -169,10 +169,10 @@ public class VariableResolverTest {
     public void testCycleTwoLevels() {
 
         // PREPARE
-        final List<StringVariable> vars = new ArrayList<StringVariable>();
-        vars.add(new SimpleStringVariable("a", "${b}"));
-        vars.add(new SimpleStringVariable("b", "${c}"));
-        vars.add(new SimpleStringVariable("c", "${a}"));
+        final List<Variable> vars = new ArrayList<Variable>();
+        vars.add(new SimpleVariable("a", "${b}"));
+        vars.add(new SimpleVariable("b", "${c}"));
+        vars.add(new SimpleVariable("c", "${a}"));
 
         // TEST
         try {
@@ -187,18 +187,18 @@ public class VariableResolverTest {
     public void testUnresolved() {
 
         // PREPARE
-        final List<StringVariable> vars = new ArrayList<StringVariable>();
-        vars.add(new SimpleStringVariable("a", "1${b}"));
-        vars.add(new SimpleStringVariable("b", "${c}"));
+        final List<Variable> vars = new ArrayList<Variable>();
+        vars.add(new SimpleVariable("a", "1${b}"));
+        vars.add(new SimpleVariable("b", "${c}"));
 
         // TEST
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).includes(entry("a", 2), entry("b", 1));
-        assertThat(testee.getResolved()).includes(entry("a", "1${c}"),
+        assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1));
+        assertThat(testee.getResolved()).contains(entry("a", "1${c}"),
                 entry("b", "${c}"));
-        assertThat(testee.getUnresolved()).includes(entry("a", "1${b}"),
+        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"),
                 entry("b", "${c}"));
 
     }
@@ -218,7 +218,6 @@ public class VariableResolverTest {
 
     }
 
-    
     // CHECKSTYLE:ON
 
 }

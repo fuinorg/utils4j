@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
