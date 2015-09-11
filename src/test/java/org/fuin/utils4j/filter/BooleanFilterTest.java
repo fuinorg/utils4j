@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,44 +13,42 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class BooleanFilterTest {
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCreateAndGet() {
-		Assert.assertEquals((new BooleanFilter(Boolean.TRUE)).getConstValue(), Boolean.TRUE);
-		Assert.assertEquals((new BooleanFilter(Boolean.FALSE)).getConstValue(), Boolean.FALSE);
-	}
+    @Test
+    public final void testCreateAndGet() {
+        assertThat((new BooleanFilter(Boolean.TRUE)).getConstValue())
+                .isEqualTo(Boolean.TRUE);
+        assertThat((new BooleanFilter(Boolean.FALSE)).getConstValue())
+                .isEqualTo(Boolean.FALSE);
+    }
 
-    /**
-     * @testng.test
-     */
-	public final void testComplies() {
-		final Filter trueFilter = new BooleanFilter(Boolean.TRUE);
-		final Filter falseFilter = new BooleanFilter(Boolean.FALSE);
-		Assert.assertTrue(trueFilter.complies(Boolean.TRUE));
-		Assert.assertFalse(trueFilter.complies(Boolean.FALSE));
-		Assert.assertTrue(falseFilter.complies(Boolean.FALSE));
-		Assert.assertFalse(falseFilter.complies(Boolean.TRUE));
-	}
+    @Test
+    public final void testComplies() {
+        final Filter trueFilter = new BooleanFilter(Boolean.TRUE);
+        final Filter falseFilter = new BooleanFilter(Boolean.FALSE);
+        assertThat(trueFilter.complies(Boolean.TRUE)).isTrue();
+        assertThat(trueFilter.complies(Boolean.FALSE)).isFalse();
+        assertThat(falseFilter.complies(Boolean.FALSE)).isTrue();
+        assertThat(falseFilter.complies(Boolean.TRUE)).isFalse();
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testToString() {
-		final Filter trueFilter = new BooleanFilter(Boolean.TRUE);
-		final Filter falseFilter = new BooleanFilter(Boolean.FALSE);
-		Assert.assertEquals(trueFilter.toString(), " = true");
-		Assert.assertEquals(falseFilter.toString(), " = false");
-	}
+    @Test
+    public final void testToString() {
+        final Filter trueFilter = new BooleanFilter(Boolean.TRUE);
+        final Filter falseFilter = new BooleanFilter(Boolean.FALSE);
+        assertThat(trueFilter.toString()).isEqualTo(" = true");
+        assertThat(falseFilter.toString()).isEqualTo(" = false");
+    }
 
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

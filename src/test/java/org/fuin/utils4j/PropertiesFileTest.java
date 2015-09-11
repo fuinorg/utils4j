@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,9 +13,12 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
+
+import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,7 +29,10 @@ import java.util.List;
 import java.util.Properties;
 
 import org.fuin.utils4j.MergeException.Problem;
-import org.testng.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class PropertiesFileTest {
@@ -37,17 +43,15 @@ public class PropertiesFileTest {
 
     private PropertiesFile propFile;
 
-    /**
-     * @testng.before-class
-     */
-    public final void beforeClass() throws IOException {
-        testFile = new File(Utils4J.getTempDir(), "PropertiesFileTest.properties");
-        dir = new File("src/test/resources/" + Utils4J.getPackagePath(PropertiesFileTest.class));
+    @BeforeClass
+    public static void beforeClass() throws IOException {
+        testFile = new File(Utils4J.getTempDir(),
+                "PropertiesFileTest.properties");
+        dir = new File("src/test/resources/"
+                + Utils4J.getPackagePath(PropertiesFileTest.class));
     }
 
-    /**
-     * @testng.before-method
-     */
+    @Before
     public final void beforeMethod() throws IOException {
         // Create the initial content
         createPropertiesFile();
@@ -55,9 +59,7 @@ public class PropertiesFileTest {
         propFile = new PropertiesFile(testFile);
     }
 
-    /**
-     * @testng.after-method
-     */
+    @After
     public final void afterMethod() throws IOException {
         propFile = null;
     }
@@ -75,150 +77,132 @@ public class PropertiesFileTest {
         }
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testConstructionFile() {
         final PropertiesFile propFile = new PropertiesFile(testFile);
-        Assert.assertEquals(propFile.getFile(), testFile);
-        Assert.assertEquals(propFile.getEncoding(), "UTF-8");
-        Assert.assertFalse(propFile.isLoaded());
-        Assert.assertEquals(propFile.size(), 0);
-        Assert.assertEquals(propFile.getKeyList(), new ArrayList());
-        Assert.assertEquals(propFile.getKeyArray(), new String[] {});
+        assertThat(propFile.getFile()).isEqualTo(testFile);
+        assertThat(propFile.getEncoding()).isEqualTo("UTF-8");
+        assertThat(propFile.isLoaded()).isFalse();
+        assertThat(propFile.size()).isEqualTo(0);
+        assertThat(propFile.getKeyList()).isEmpty();
+        assertThat(propFile.getKeyArray()).isEmpty();
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testConstructionFileEncoding() {
         final String encoding = "ISO-8859-1";
         final PropertiesFile propFile = new PropertiesFile(testFile, encoding);
-        Assert.assertEquals(propFile.getFile(), testFile);
-        Assert.assertEquals(propFile.getEncoding(), encoding);
-        Assert.assertFalse(propFile.isLoaded());
-        Assert.assertEquals(propFile.size(), 0);
-        Assert.assertEquals(propFile.getKeyList(), new ArrayList());
-        Assert.assertEquals(propFile.getKeyArray(), new String[] {});
+        assertThat(propFile.getFile()).isEqualTo(testFile);
+        assertThat(propFile.getEncoding()).isEqualTo(encoding);
+        assertThat(propFile.isLoaded()).isFalse();
+        assertThat(propFile.size()).isEqualTo(0);
+        assertThat(propFile.getKeyList()).isEmpty();
+        assertThat(propFile.getKeyArray()).isEmpty();
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testPutAndGet() {
         final String key = "A";
         final String value = "1";
         propFile.put(key, value);
-        Assert.assertEquals(propFile.get(key), value);
-        Assert.assertNull(propFile.get("a"));
+        assertThat(propFile.get(key)).isEqualTo(value);
+        assertThat(propFile.get("a")).isNull();
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testGetKeyArray() {
         propFile.put("A", "1");
         propFile.put("B", "2");
         propFile.put("C", "3");
-        Assert.assertEquals(propFile.getKeyArray(), new String[] { "A", "B", "C" });
+        assertThat(propFile.getKeyArray()).isEqualTo(
+                new String[] { "A", "B", "C" });
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testGetKeyList() {
         propFile.put("A", "1");
         propFile.put("B", "2");
         propFile.put("C", "3");
-        final List list = new ArrayList();
+        final List<String> list = new ArrayList<>();
         list.add("A");
         list.add("B");
         list.add("C");
-        Assert.assertEquals(propFile.getKeyList(), list);
+        assertThat(propFile.getKeyList()).isEqualTo(list);
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testKeyIterator() {
         propFile.put("A", "1");
         propFile.put("B", "2");
         propFile.put("C", "3");
-        final Iterator it = propFile.keyIterator();
-        Assert.assertEquals(it.next(), "A");
-        Assert.assertEquals(it.next(), "B");
-        Assert.assertEquals(it.next(), "C");
+        final Iterator<String> it = propFile.keyIterator();
+        assertThat(it.next()).isEqualTo("A");
+        assertThat(it.next()).isEqualTo("B");
+        assertThat(it.next()).isEqualTo("C");
     }
 
-    /**
-     * @testng.test
-     */
-    public final void testLoad() throws IOException, LockingFailedException, MergeException {
+    @Test
+    public final void testLoad() throws IOException, LockingFailedException,
+            MergeException {
         propFile.load();
-        Assert.assertEquals(propFile.get("A"), "1");
-        Assert.assertEquals(propFile.get("B"), "2");
-        Assert.assertEquals(propFile.get("C"), "3");
+        assertThat(propFile.get("A")).isEqualTo("1");
+        assertThat(propFile.get("B")).isEqualTo("2");
+        assertThat(propFile.get("C")).isEqualTo("3");
     }
 
-    /**
-     * @testng.test
-     */
-    public final void testToProperties() throws IOException, LockingFailedException, MergeException {
+    @Test
+    public final void testToProperties() throws IOException,
+            LockingFailedException, MergeException {
         propFile.load();
         final Properties props = propFile.toProperties();
-        Assert.assertEquals(props.get("A"), "1");
-        Assert.assertEquals(props.get("B"), "2");
-        Assert.assertEquals(props.get("C"), "3");
+        assertThat(props.get("A")).isEqualTo("1");
+        assertThat(props.get("B")).isEqualTo("2");
+        assertThat(props.get("C")).isEqualTo("3");
     }
 
-    /**
-     * @testng.test
-     */
-    public final void testSaveNoChange() throws IOException, MergeException, LockingFailedException {
+    @Test
+    public final void testSaveNoChange() throws IOException, MergeException,
+            LockingFailedException {
         propFile.load();
         propFile.save("Test", true);
-        TestHelper.assertPropertiesEqual(new File(dir, "PropertiesFileTestA.properties"), testFile);
+        TestHelper.assertPropertiesEqual(new File(dir,
+                "PropertiesFileTestA.properties"), testFile);
     }
 
-    /**
-     * @testng.test
-     */
-    public final void testSaveAddProperties() throws IOException, MergeException,
-            LockingFailedException {
+    @Test
+    public final void testSaveAddProperties() throws IOException,
+            MergeException, LockingFailedException {
         propFile.load();
         propFile.put("D", "4");
         propFile.put("E", "5");
         propFile.save("Test", true);
-        TestHelper.assertPropertiesEqual(new File(dir, "PropertiesFileTestB.properties"), testFile);
+        TestHelper.assertPropertiesEqual(new File(dir,
+                "PropertiesFileTestB.properties"), testFile);
     }
 
-    /**
-     * @testng.test
-     */
-    public final void testSaveRemoveProperties() throws IOException, MergeException,
-            LockingFailedException {
+    @Test
+    public final void testSaveRemoveProperties() throws IOException,
+            MergeException, LockingFailedException {
         propFile.load();
         propFile.remove("A");
         propFile.save("Test", true);
-        TestHelper.assertPropertiesEqual(new File(dir, "PropertiesFileTestC.properties"), testFile);
+        TestHelper.assertPropertiesEqual(new File(dir,
+                "PropertiesFileTestC.properties"), testFile);
     }
 
-    /**
-     * @testng.test
-     */
-    public final void testSaveChangeProperties() throws IOException, MergeException,
-            LockingFailedException {
+    @Test
+    public final void testSaveChangeProperties() throws IOException,
+            MergeException, LockingFailedException {
         propFile.load();
         propFile.put("A", "a");
         propFile.put("B", "b");
         propFile.put("C", "c");
         propFile.save("Test", true);
-        TestHelper.assertPropertiesEqual(new File(dir, "PropertiesFileTestD.properties"), testFile);
+        TestHelper.assertPropertiesEqual(new File(dir,
+                "PropertiesFileTestD.properties"), testFile);
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testConcurrentAdd() throws IOException, MergeException,
             LockingFailedException {
 
@@ -243,14 +227,14 @@ public class PropertiesFileTest {
         propFile2.save("Test", true);
 
         // Check result
-        TestHelper.assertPropertiesEqual(new File(dir, "PropertiesFileTestE.properties"), testFile);
+        TestHelper.assertPropertiesEqual(new File(dir,
+                "PropertiesFileTestE.properties"), testFile);
 
     }
 
-    /**
-     * @testng.test
-     */
-    public final void testMergeError() throws IOException, MergeException, LockingFailedException {
+    @Test
+    public final void testMergeError() throws IOException, MergeException,
+            LockingFailedException {
 
         // Load first one
         final PropertiesFile propFile1 = new PropertiesFile(testFile);
@@ -271,15 +255,16 @@ public class PropertiesFileTest {
         try {
             propFile2.save("Test", true);
             System.out.println("------");
-            Assert.fail("Expected " + MergeException.class.getName() + " [" + testFile + "]");
+            fail("Expected " + MergeException.class.getName() + " [" + testFile
+                    + "]");
         } catch (final MergeException ex) {
             final Problem[] problems = ex.getProblems();
-            Assert.assertNotNull(problems);
-            Assert.assertEquals(problems.length, 1);
+            assertThat(problems).isNotNull();
+            assertThat(problems.length).isEqualTo(1);
             final Problem p = problems[0];
-            Assert.assertEquals(p.getProp().getKey(), "A");
-            Assert.assertEquals(p.getProp().getValue(), "x");
-            Assert.assertEquals(p.getFileProp().getValue(), "a");
+            assertThat(p.getProp().getKey()).isEqualTo("A");
+            assertThat(p.getProp().getValue()).isEqualTo("x");
+            assertThat(p.getFileProp().getValue()).isEqualTo("a");
         }
 
     }

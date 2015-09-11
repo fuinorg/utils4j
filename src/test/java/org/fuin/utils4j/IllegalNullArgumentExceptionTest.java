@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,26 +13,30 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 /**
  * Tests for IllegalNullArgumentException.
  */
+//CHECKSTYLE:OFF
 public class IllegalNullArgumentExceptionTest {
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testConstruction() {
         final String argument = "xyz123";
-        final IllegalNullArgumentException ex = new IllegalNullArgumentException(argument);
-        Assert.assertEquals(ex.getArgument(), argument);
-        Assert.assertEquals(ex.getMessage(), "The argument '" + argument + "' cannot be null!");
-        Assert.assertNull(ex.getCause());
+        final IllegalNullArgumentException ex = new IllegalNullArgumentException(
+                argument);
+        assertThat(ex.getArgument()).isEqualTo(argument);
+        assertThat(ex.getMessage()).isEqualTo(
+                "The argument '" + argument + "' cannot be null!");
+        assertThat(ex.getCause()).isNull();
     }
 
 }
+//CHECKSTYLE:ON

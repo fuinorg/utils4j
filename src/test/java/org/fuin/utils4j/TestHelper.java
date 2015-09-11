@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,15 +13,15 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.File;
 import java.util.Iterator;
 import java.util.Properties;
-
-import org.testng.Assert;
 
 /**
  * Helper routines for all test classes.
@@ -57,7 +57,8 @@ public final class TestHelper {
      * @param propsB
      *            First properties.
      */
-    public static void assertPropertiesEqual(final File fileA, final Properties propsB) {
+    public static void assertPropertiesEqual(final File fileA,
+            final Properties propsB) {
         final Properties propsA = Utils4J.loadProperties(fileA);
         assertEqual(propsA, propsB);
     }
@@ -70,14 +71,15 @@ public final class TestHelper {
      * @param propsB
      *            First properties.
      */
-    public static void assertEqual(final Properties propsA, final Properties propsB) {
-        Assert.assertEquals(propsA.size(), propsB.size());
-        final Iterator it = propsA.keySet().iterator();
+    public static void assertEqual(final Properties propsA,
+            final Properties propsB) {
+        assertThat(propsA.size()).isEqualTo(propsB.size());
+        final Iterator<Object> it = propsA.keySet().iterator();
         while (it.hasNext()) {
             final String key = (String) it.next();
             final String valueA = (String) propsA.get(key);
             final String valueB = (String) propsB.get(key);
-            Assert.assertEquals(valueA, valueB);
+            assertThat(valueA).isEqualTo(valueB);
         }
     }
 

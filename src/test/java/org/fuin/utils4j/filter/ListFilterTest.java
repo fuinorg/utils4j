@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,127 +13,119 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.testng.Assert;
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public abstract class ListFilterTest {
 
-	protected abstract ListFilter createTestee(String name);
+    protected abstract ListFilter createTestee(String name);
 
-	/**
-	 * @testng.test
-	 */
-	public final void testAddRemoveFilter() {
-		final ListFilter filter = createTestee(" x ");
-		Assert.assertNull(filter.getFilterList());
+    @Test
+    public final void testAddRemoveFilter() {
+        final ListFilter filter = createTestee(" x ");
+        assertThat(filter.getFilterList()).isNull();
 
-		final DummyFilter subFilter1 = new DummyFilter();
-		filter.addFilter(subFilter1);
-		Assert.assertEquals(filter.getFilterList().size(), 1);
-		Assert.assertEquals(filter.getFilterList().get(0), subFilter1);
+        final DummyFilter subFilter1 = new DummyFilter();
+        filter.addFilter(subFilter1);
+        assertThat(filter.getFilterList().size()).isEqualTo(1);
+        assertThat(filter.getFilterList().get(0)).isEqualTo(subFilter1);
 
-		final DummyFilter subFilter2 = new DummyFilter();
-		filter.addFilter(subFilter2);
-		Assert.assertEquals(filter.getFilterList().size(), 2);
-		Assert.assertEquals(filter.getFilterList().get(0), subFilter1);
-		Assert.assertEquals(filter.getFilterList().get(1), subFilter2);
+        final DummyFilter subFilter2 = new DummyFilter();
+        filter.addFilter(subFilter2);
+        assertThat(filter.getFilterList().size()).isEqualTo(2);
+        assertThat(filter.getFilterList().get(0)).isEqualTo(subFilter1);
+        assertThat(filter.getFilterList().get(1)).isEqualTo(subFilter2);
 
-		// remove first filter from list
-		filter.removeFilter(subFilter1);
-		Assert.assertEquals(filter.getFilterList().size(), 1);
-		Assert.assertEquals(filter.getFilterList().get(0), subFilter2);
+        // remove first filter from list
+        filter.removeFilter(subFilter1);
+        assertThat(filter.getFilterList().size()).isEqualTo(1);
+        assertThat(filter.getFilterList().get(0)).isEqualTo(subFilter2);
 
-		// remove second filter from list
-		filter.removeFilter(subFilter2);
-		Assert.assertNull(filter.getFilterList());
+        // remove second filter from list
+        filter.removeFilter(subFilter2);
+        assertThat(filter.getFilterList()).isNull();
 
-	}
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testToStringString() {
-		final ListFilter filter = createTestee(" x ");
-		final DummyFilter subFilterA = new DummyFilter("A");
-		filter.addFilter(subFilterA);
+    @Test
+    public final void testToStringString() {
+        final ListFilter filter = createTestee(" x ");
+        final DummyFilter subFilterA = new DummyFilter("A");
+        filter.addFilter(subFilterA);
 
-		final DummyFilter subFilterB = new DummyFilter("B");
-		filter.addFilter(subFilterB);
+        final DummyFilter subFilterB = new DummyFilter("B");
+        filter.addFilter(subFilterB);
 
-		Assert.assertEquals(filter.toString(), "(A  x  B)");
+        assertThat(filter.toString()).isEqualTo("(A  x  B)");
 
-		final DummyFilter subFilterC = new DummyFilter("C");
-		filter.addFilter(subFilterC);
+        final DummyFilter subFilterC = new DummyFilter("C");
+        filter.addFilter(subFilterC);
 
-		Assert.assertEquals(filter.toString(), "(A  x  B  x  C)");
+        assertThat(filter.toString()).isEqualTo("(A  x  B  x  C)");
 
-	}
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testSetGetCloseBracket() {
-		final ListFilter filter = createTestee(" x ");
-		filter.setCloseBracket("[");
-		Assert.assertEquals(filter.getCloseBracket(), "[");
-	}
+    @Test
+    public final void testSetGetCloseBracket() {
+        final ListFilter filter = createTestee(" x ");
+        filter.setCloseBracket("[");
+        assertThat(filter.getCloseBracket()).isEqualTo("[");
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testSetGetOpenBracket() {
-		final ListFilter filter = createTestee(" x ");
-		filter.setOpenBracket("[");
-		Assert.assertEquals(filter.getOpenBracket(), "[");
-	}
+    @Test
+    public final void testSetGetOpenBracket() {
+        final ListFilter filter = createTestee(" x ");
+        filter.setOpenBracket("[");
+        assertThat(filter.getOpenBracket()).isEqualTo("[");
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testSetGetFilterList() {
-		final ListFilter filter = createTestee(" x ");
-		final List list = new ArrayList();
-		list.add(new DummyFilter());
-		filter.setFilterList(list);
-		Assert.assertEquals(filter.getFilterList(), list);
-	}
+    @Test
+    public final void testSetGetFilterList() {
+        final ListFilter filter = createTestee(" x ");
+        final List<Filter> list = new ArrayList<>();
+        list.add(new DummyFilter());
+        filter.setFilterList(list);
+        assertThat(filter.getFilterList()).isEqualTo(list);
+    }
 
-	// Add first filter to list
-	protected static class DummyFilter implements Filter {
-		private String name = "XYZ";
+    // Add first filter to list
+    protected static class DummyFilter implements Filter {
+        private String name = "XYZ";
 
-		private boolean value = false;
+        private boolean value = false;
 
-		public DummyFilter() {
-			super();
-		}
+        public DummyFilter() {
+            super();
+        }
 
-		public DummyFilter(final String name) {
-			super();
-			this.name = name;
-		}
+        public DummyFilter(final String name) {
+            super();
+            this.name = name;
+        }
 
-		public DummyFilter(final String name, final boolean value) {
-			super();
-			this.name = name;
-			this.value = value;
-		}
+        public DummyFilter(final String name, final boolean value) {
+            super();
+            this.name = name;
+            this.value = value;
+        }
 
-		public final boolean complies(final Object obj) {
-			return value;
-		}
+        public final boolean complies(final Object obj) {
+            return value;
+        }
 
-		public final String toString() {
-			return name;
-		}
-	}
-	
+        public final String toString() {
+            return name;
+        }
+    }
+
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

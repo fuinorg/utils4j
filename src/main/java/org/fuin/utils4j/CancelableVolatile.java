@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -25,16 +25,12 @@ public class CancelableVolatile implements Cancelable {
 
     private volatile boolean canceled = false;
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final void cancel() {
         canceled = true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final boolean isCanceled() {
         return canceled;
     }

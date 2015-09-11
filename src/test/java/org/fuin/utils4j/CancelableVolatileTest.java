@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,25 +13,25 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 // CHECKSTYLE:OFF
 public class CancelableVolatileTest {
 
     // TODO Some threaded testing would be nice...
 
-    /**
-     * @testng.test
-     */
+    @Test
     public void testCancel() {
         final CancelableVolatile cv = new CancelableVolatile();
-        Assert.assertFalse(cv.isCanceled());
+        assertThat(cv.isCanceled()).isFalse();
         cv.cancel();
-        Assert.assertTrue(cv.isCanceled());
+        assertThat(cv.isCanceled()).isTrue();
     }
 
 }

@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,27 +13,29 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.fileprocessor;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.testng.Assert;
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class FileProcessorTest {
 
-    private static final File DIR = new File("src/test/java/org/fuin/utils4j/test");
-    private static final File FILE = new File(DIR, "ClassWithPrivateConstructor.java");
+    private static final File DIR = new File(
+            "src/test/java/org/fuin/utils4j/test");
+    private static final File FILE = new File(DIR,
+            "ClassWithPrivateConstructor.java");
     private static final File SUB = new File(DIR, "sub");
     private static final File SUB_FILE = new File(SUB, "OtherClass.java");
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testProcessFile() {
 
         // PREPARE
@@ -50,17 +52,15 @@ public class FileProcessorTest {
         testee.process(FILE);
 
         // VERIFY
-        Assert.assertSame(processed.file, FILE);
+        assertThat(processed.file).hasSameContentAs(FILE);
 
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testProcessDir() {
 
         // PREPARE
-        final List processed = new ArrayList();
+        final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
             public FileHandlerResult handleFile(File file) {
                 if (file.isFile()) {
@@ -75,23 +75,21 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        Assert.assertEquals(processed.size(), 2);
+        assertThat(processed.size()).isEqualTo(2);
         if (processed.get(0).equals(FILE)) {
-            Assert.assertEquals(processed.get(1), SUB_FILE);
+            assertThat(processed.get(1)).isEqualTo(SUB_FILE);
         } else {
-            Assert.assertEquals(processed.get(0), SUB_FILE);
-            Assert.assertEquals(processed.get(1), FILE);
+            assertThat(processed.get(0)).isEqualTo(SUB_FILE);
+            assertThat(processed.get(1)).isEqualTo(FILE);
         }
 
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testProcessDirSTOP() {
 
         // PREPARE
-        final List processed = new ArrayList();
+        final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
             public FileHandlerResult handleFile(File file) {
                 // STOP on first directory
@@ -104,17 +102,15 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        Assert.assertEquals(processed.size(), 0);
+        assertThat(processed.size()).isEqualTo(0);
 
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testProcessDirSKIP_ALL() {
 
         // PREPARE
-        final List processed = new ArrayList();
+        final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
             public FileHandlerResult handleFile(File file) {
                 // SKIP_ALL on all directories
@@ -127,17 +123,15 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        Assert.assertEquals(processed.size(), 0);
+        assertThat(processed.size()).isEqualTo(0);
 
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testProcessDirSKIP_SUBDIRS() {
 
         // PREPARE
-        final List processed = new ArrayList();
+        final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
             public FileHandlerResult handleFile(File file) {
                 if (file.isFile()) {
@@ -152,18 +146,16 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        Assert.assertEquals(processed.size(), 1);
-        Assert.assertEquals(processed.get(0), FILE);
+        assertThat(processed.size()).isEqualTo(1);
+        assertThat(processed.get(0)).isEqualTo(FILE);
 
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testProcessDirSKIP_FILES() {
 
         // PREPARE
-        final List processed = new ArrayList();
+        final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
             public FileHandlerResult handleFile(File file) {
                 if (file.getName().equals("test")) {
@@ -182,8 +174,8 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        Assert.assertEquals(processed.size(), 1);
-        Assert.assertEquals(processed.get(0), SUB_FILE);
+        assertThat(processed.size()).isEqualTo(1);
+        assertThat(processed.get(0)).isEqualTo(SUB_FILE);
 
     }
 

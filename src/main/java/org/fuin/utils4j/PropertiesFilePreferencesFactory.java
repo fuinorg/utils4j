@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -26,7 +26,8 @@ import java.util.prefs.PreferencesFactory;
  * A factory for creating root nodes using the
  * <code>PropertiesFilePreferences</code> implementation.
  */
-public final class PropertiesFilePreferencesFactory implements PreferencesFactory {
+public final class PropertiesFilePreferencesFactory implements
+        PreferencesFactory {
 
     /**
      * System property key used containing the path and name of the "system"
@@ -52,7 +53,8 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
      * Default constructor.
      */
     public PropertiesFilePreferencesFactory() {
-        this(System.getProperty(SYSTEM_PREF_DIR), System.getProperty(USER_PREF_DIR));
+        this(System.getProperty(SYSTEM_PREF_DIR), System
+                .getProperty(USER_PREF_DIR));
     }
 
     /**
@@ -64,25 +66,26 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
      * @param userPrefDir
      *            Path and name of the "user" preferences directory.
      */
-    public PropertiesFilePreferencesFactory(final String systemPrefDir, final String userPrefDir) {
+    public PropertiesFilePreferencesFactory(final String systemPrefDir,
+            final String userPrefDir) {
         super();
         this.systemPrefDir = systemPrefDir;
         this.userPrefDir = userPrefDir;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final synchronized Preferences systemRoot() {
         if (systemRoot == null) {
-            systemRoot = new PropertiesFilePreferences(getValidDir(SYSTEM_PREF_DIR, systemPrefDir));
+            systemRoot = new PropertiesFilePreferences(getValidDir(
+                    SYSTEM_PREF_DIR, systemPrefDir));
             // Always sync at shutdown
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     try {
                         systemRoot.flush();
                     } catch (final BackingStoreException ex) {
-                        System.err.println("Failed to save 'systemRoot' preferences!");
+                        System.err
+                                .println("Failed to save 'systemRoot' preferences!");
                         ex.printStackTrace(System.err);
                     }
                 }
@@ -91,19 +94,19 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
         return systemRoot;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final synchronized Preferences userRoot() {
         if (userRoot == null) {
-            userRoot = new PropertiesFilePreferences(getValidDir(USER_PREF_DIR, userPrefDir));
+            userRoot = new PropertiesFilePreferences(getValidDir(USER_PREF_DIR,
+                    userPrefDir));
             // Always sync at shutdown
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     try {
                         userRoot.flush();
                     } catch (final BackingStoreException ex) {
-                        System.err.println("Failed to save 'userRoot' preferences!");
+                        System.err
+                                .println("Failed to save 'userRoot' preferences!");
                         ex.printStackTrace(System.err);
                     }
                 }
@@ -125,7 +128,8 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
      */
     private File getValidDir(final String varName, final String dirName) {
         if (dirName == null) {
-            throw new RuntimeException("The system variable '" + varName + "' is not set!");
+            throw new RuntimeException("The system variable '" + varName
+                    + "' is not set!");
         }
         final File dir = new File(dirName);
         if (!dir.exists()) {
@@ -134,7 +138,8 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
         }
         if (!dir.isDirectory()) {
             throw new IllegalArgumentException("The name '" + dir
-                    + "' is not a directory! [system variable '" + varName + "']");
+                    + "' is not a directory! [system variable '" + varName
+                    + "']");
         }
         return dir;
     }

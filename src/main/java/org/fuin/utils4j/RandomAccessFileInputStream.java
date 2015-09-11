@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -90,30 +90,23 @@ public final class RandomAccessFileInputStream extends InputStream {
         file = out.getRandomAccessFile();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final int read() throws IOException {
         return file.read();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final int read(final byte[] b) throws IOException {
         return file.read(b);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final int read(final byte[] b, final int off, final int len) throws IOException {
+    @Override
+    public final int read(final byte[] b, final int off, final int len)
+            throws IOException {
         return file.read(b, off, len);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final long skip(final long n) throws IOException {
         if (n > Integer.MAX_VALUE) {
             return super.skip(Integer.MAX_VALUE);
@@ -133,9 +126,7 @@ public final class RandomAccessFileInputStream extends InputStream {
         return file.length();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final int available() throws IOException {
         if (file.getFilePointer() > file.length()) {
             return 0;
@@ -147,18 +138,14 @@ public final class RandomAccessFileInputStream extends InputStream {
         return (int) avail;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final void close() throws IOException {
         if (file.getChannel().isOpen()) {
             file.close();
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public synchronized void mark(final int readlimit) {
         if (file.getChannel().isOpen()) {
             try {
@@ -169,9 +156,7 @@ public final class RandomAccessFileInputStream extends InputStream {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final synchronized void reset() throws IOException {
         if (mark == -1) {
             throw new IOException("The method 'mark()' has not been called "
@@ -180,9 +165,7 @@ public final class RandomAccessFileInputStream extends InputStream {
         file.seek(mark);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final boolean markSupported() {
         return true;
     }

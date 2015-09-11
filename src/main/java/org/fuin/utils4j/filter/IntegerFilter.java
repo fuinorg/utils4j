@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
 
@@ -22,33 +22,37 @@ package org.fuin.utils4j.filter;
  */
 public class IntegerFilter extends ComparableFilter {
 
-	/**
-	 * Constructor with a string and a value.
-	 * 
-	 * @param newOperator Operator to use.
-	 * @param constValue Integer value to compare with.
-	 */
-	public IntegerFilter(final String newOperator, final Integer constValue) {
-		super(ComparableFilter.Operator.getInstance(newOperator), constValue);
-	}
+    /**
+     * Constructor with a string and a value.
+     * 
+     * @param newOperator
+     *            Operator to use.
+     * @param constValue
+     *            Integer value to compare with.
+     */
+    public IntegerFilter(final String newOperator, final Integer constValue) {
+        super(ComparableFilter.Operator.getInstance(newOperator), constValue);
+    }
 
-	/**
-	 * Constructor with an operator and a value.
-	 * 
-	 * @param newOperator Operator to use.
-	 * @param constValue Integer value to compare with.
-	 */
-	public IntegerFilter(final Operator newOperator, final Integer constValue) {
-		super(newOperator, constValue);
-	}
+    /**
+     * Constructor with an operator and a value.
+     * 
+     * @param newOperator
+     *            Operator to use.
+     * @param constValue
+     *            Integer value to compare with.
+     */
+    public IntegerFilter(final Operator newOperator, final Integer constValue) {
+        super(newOperator, constValue);
+    }
 
-	/**
-	 * Returns the constant value any value is compared with.
-	 * 
-	 * @return Integer value.
-	 */
-	public final Integer getConstValue() {
-		return (Integer) getConstValueIntern();
-	}
+    /**
+     * Returns the constant value any value is compared with.
+     * 
+     * @return Integer value.
+     */
+    public final Integer getConstValue() {
+        return (Integer) getConstValueIntern();
+    }
 
 }

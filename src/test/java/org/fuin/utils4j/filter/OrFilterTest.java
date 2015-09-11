@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,82 +13,80 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class OrFilterTest extends ListFilterTest {
 
-	protected final ListFilter createTestee(final String name) {
-		final OrFilter filter = new OrFilter();
-		filter.setOrStr(name);
-		return filter;
-	}
+    protected final ListFilter createTestee(final String name) {
+        final OrFilter filter = new OrFilter();
+        filter.setOrStr(name);
+        return filter;
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testConstructor() {
-		final Filter filterA = new DummyFilter();
-		final Filter filterB = new DummyFilter();
-		final OrFilter filter = new OrFilter(filterA, filterB);
-		Assert.assertNotNull(filter.getFilterList());
-		Assert.assertEquals(filter.getFilterList().size(), 2);
-		Assert.assertEquals(filter.getFilterList().get(0), filterA);
-		Assert.assertEquals(filter.getFilterList().get(1), filterB);
-	}
+    @Test
+    public final void testConstructor() {
+        final Filter filterA = new DummyFilter();
+        final Filter filterB = new DummyFilter();
+        final OrFilter filter = new OrFilter(filterA, filterB);
+        assertThat(filter.getFilterList()).isNotNull();
+        assertThat(filter.getFilterList().size()).isEqualTo(2);
+        assertThat(filter.getFilterList().get(0)).isEqualTo(filterA);
+        assertThat(filter.getFilterList().get(1)).isEqualTo(filterB);
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testComplies() {
+    @Test
+    public final void testComplies() {
 
-		final Filter filterTRUE = new DummyFilter("true", true);
-		final Filter filterFALSE = new DummyFilter("false", false);
+        final Filter filterTRUE = new DummyFilter("true", true);
+        final Filter filterFALSE = new DummyFilter("false", false);
 
-		Assert.assertTrue((new OrFilter(filterTRUE, filterTRUE))
-				.complies("Does not matter"));
-		Assert.assertTrue((new OrFilter(filterTRUE, filterFALSE))
-				.complies("Does not matter"));
-		Assert.assertTrue((new OrFilter(filterFALSE, filterTRUE))
-				.complies("Does not matter"));
-		Assert.assertFalse((new OrFilter(filterFALSE, filterFALSE))
-				.complies("Does not matter"));
+        assertThat(
+                (new OrFilter(filterTRUE, filterTRUE))
+                        .complies("Does not matter")).isTrue();
+        assertThat(
+                (new OrFilter(filterTRUE, filterFALSE))
+                        .complies("Does not matter")).isTrue();
+        assertThat(
+                (new OrFilter(filterFALSE, filterTRUE))
+                        .complies("Does not matter")).isTrue();
+        assertThat(
+                (new OrFilter(filterFALSE, filterFALSE))
+                        .complies("Does not matter")).isFalse();
 
-	}
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testSetGetAndStr() {
-		final OrFilter filter = new OrFilter();
-		filter.setOrStr("||");
-		Assert.assertEquals(filter.getOrStr(), "||");
-	}
+    @Test
+    public final void testSetGetAndStr() {
+        final OrFilter filter = new OrFilter();
+        filter.setOrStr("||");
+        assertThat(filter.getOrStr()).isEqualTo("||");
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testToString() {
-		final Filter filterA = new DummyFilter("A");
-		final Filter filterB = new DummyFilter("B");
-		final Filter filterC = new DummyFilter("C");
-		final OrFilter filter = new OrFilter(filterA, filterB);
+    @Test
+    public final void testToString() {
+        final Filter filterA = new DummyFilter("A");
+        final Filter filterB = new DummyFilter("B");
+        final Filter filterC = new DummyFilter("C");
+        final OrFilter filter = new OrFilter(filterA, filterB);
 
-		filter.setOrStr("||");
-		Assert.assertEquals(filter.toString(), "(A || B)");
+        filter.setOrStr("||");
+        assertThat(filter.toString()).isEqualTo("(A || B)");
 
-		filter.setOrStr("or");
-		filter.setOpenBracket("[");
-		filter.setCloseBracket("]");
-		Assert.assertEquals(filter.toString(), "[A or B]");
+        filter.setOrStr("or");
+        filter.setOpenBracket("[");
+        filter.setCloseBracket("]");
+        assertThat(filter.toString()).isEqualTo("[A or B]");
 
-		filter.addFilter(filterC);
-		Assert.assertEquals(filter.toString(), "[A or B or C]");
-	}
+        filter.addFilter(filterC);
+        assertThat(filter.toString()).isEqualTo("[A or B or C]");
+    }
 
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,17 +13,21 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
-import org.testng.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class RandomAccessFileOutputStreamTest {
@@ -34,35 +38,32 @@ public class RandomAccessFileOutputStreamTest {
 
     private RandomAccessFileOutputStream outputStream;
 
-    /**
-     * @testng.before-class
-     */
-    public final void beforeClass() throws IOException {
+    @BeforeClass
+    public static void beforeClass() throws IOException {
         final File dir = new File("src/test/resources/"
                 + Utils4J.getPackagePath(RandomAccessFileOutputStream.class));
-        file = new File(Utils4J.getTempDir(), "RandomAccessFileOutputStreamData.bin");
+        file = new File(Utils4J.getTempDir(),
+                "RandomAccessFileOutputStreamData.bin");
         inputFile = new File(dir, "RandomAccessFileInputStreamData.bin");
         if (!inputFile.exists()) {
-            throw new IllegalStateException("File '" + inputFile + "' not found!");
+            throw new IllegalStateException("File '" + inputFile
+                    + "' not found!");
         }
     }
 
-    /**
-     * @testng.before-method
-     */
+    @Before
     public final void beforeMethod() throws IOException {
         file.delete();
     }
 
-    /**
-     * @testng.after-method
-     */
+    @After
     public final void afterMethod() throws IOException {
         outputStream.close();
         outputStream = null;
     }
 
-    private final RandomAccessFileOutputStream createOutputStream() throws IOException {
+    private final RandomAccessFileOutputStream createOutputStream()
+            throws IOException {
         return new RandomAccessFileOutputStream(file, "rw");
     }
 
@@ -83,9 +84,7 @@ public class RandomAccessFileOutputStreamTest {
         }
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testWriteByte() throws IOException {
         outputStream = createOutputStream();
         for (int i = 0; i < 256; i++) {
@@ -93,23 +92,19 @@ public class RandomAccessFileOutputStreamTest {
         }
         outputStream.truncate();
         outputStream.close();
-        Assert.assertTrue(FileUtils.contentEquals(inputFile, file));
+        assertThat(file).hasSameContentAs(inputFile);
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testWriteByteArray() throws IOException {
         outputStream = createOutputStream();
         outputStream.write(create256bytes());
         outputStream.truncate();
         outputStream.close();
-        Assert.assertTrue(FileUtils.contentEquals(inputFile, file));
+        assertThat(file).hasSameContentAs(inputFile);
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testWriteByteArrayOffsetLength() throws IOException {
 
         // Create file filled with "0..255"
@@ -118,7 +113,8 @@ public class RandomAccessFileOutputStreamTest {
         // Open the file
         outputStream = createOutputStream();
         // Use only the bytes 1+2 from the array
-        final byte[] buf = new byte[] { (byte) 254, (byte) 255, (byte) 255, (byte) 255 };
+        final byte[] buf = new byte[] { (byte) 254, (byte) 255, (byte) 255,
+                (byte) 255 };
         outputStream.write(buf, 0, 2);
         for (int i = 2; i < 256; i++) {
             outputStream.write(i);
@@ -128,10 +124,10 @@ public class RandomAccessFileOutputStreamTest {
         // Read again and check if above content was written
         final FileInputStream in = new FileInputStream(file);
         try {
-            Assert.assertEquals(in.read(), 254);
-            Assert.assertEquals(in.read(), 255);
+            assertThat(in.read()).isEqualTo(254);
+            assertThat(in.read()).isEqualTo(255);
             for (int i = 2; i < 256; i++) {
-                Assert.assertEquals(in.read(), i);
+                assertThat(in.read()).isEqualTo(i);
             }
         } finally {
             in.close();
@@ -139,9 +135,7 @@ public class RandomAccessFileOutputStreamTest {
 
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testTruncate() throws IOException {
 
         // Create file filled with "0..255"
@@ -153,30 +147,28 @@ public class RandomAccessFileOutputStreamTest {
         outputStream.truncate();
         outputStream.close();
 
-        Assert.assertEquals(file.length(), 1);
+        assertThat(file.length()).isEqualTo(1);
 
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testCounter() throws IOException {
 
         // Open the file and write one byte
         outputStream = createOutputStream();
 
-        Assert.assertEquals(outputStream.getCounter(), 0);
+        assertThat(outputStream.getCounter()).isEqualTo(0);
         outputStream.write(255);
-        Assert.assertEquals(outputStream.getCounter(), 1);
+        assertThat(outputStream.getCounter()).isEqualTo(1);
         outputStream.write(255);
-        Assert.assertEquals(outputStream.getCounter(), 2);
+        assertThat(outputStream.getCounter()).isEqualTo(2);
         outputStream.write(new byte[] { 1, 2, 3 });
-        Assert.assertEquals(outputStream.getCounter(), 5);
+        assertThat(outputStream.getCounter()).isEqualTo(5);
         outputStream.write(new byte[] { 1, 2, 3 }, 0, 1);
-        Assert.assertEquals(outputStream.getCounter(), 6);
+        assertThat(outputStream.getCounter()).isEqualTo(6);
 
         outputStream.resetCounter();
-        Assert.assertEquals(outputStream.getCounter(), 0);
+        assertThat(outputStream.getCounter()).isEqualTo(0);
         outputStream.close();
 
     }

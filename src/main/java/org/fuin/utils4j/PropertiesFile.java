@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -42,7 +42,7 @@ public class PropertiesFile {
 
     private final String encoding;
 
-    private final List props;
+    private final List<Property> props;
 
     private int tryLockMax = 3;
 
@@ -76,7 +76,7 @@ public class PropertiesFile {
         Utils4J.checkNotNull("encoding", encoding);
         this.encoding = encoding;
 
-        this.props = new ArrayList();
+        this.props = new ArrayList<>();
 
     }
 
@@ -118,10 +118,12 @@ public class PropertiesFile {
      *             A problem occurred when merging the properties in memory and
      *             from disk.
      */
-    public final void load() throws IOException, LockingFailedException, MergeException {
+    public final void load() throws IOException, LockingFailedException,
+            MergeException {
 
         // Load new data from file
-        final RandomAccessFileInputStream in = new RandomAccessFileInputStream(file, "rw");
+        final RandomAccessFileInputStream in = new RandomAccessFileInputStream(
+                file, "rw");
         try {
             final FileLock lock = in.lock(tryLockMax, tryWaitMillis);
             try {
@@ -139,11 +141,12 @@ public class PropertiesFile {
 
     }
 
-    private void load(final RandomAccessFileInputStream in, final File file, final List props,
-            final String encoding) throws IOException {
+    private void load(final RandomAccessFileInputStream in, final File file,
+            final List<Property> props, final String encoding)
+            throws IOException {
 
-        final LineNumberReader reader = new LineNumberReader(new InputStreamReader(
-                new BufferedInputStream(in), encoding));
+        final LineNumberReader reader = new LineNumberReader(
+                new InputStreamReader(new BufferedInputStream(in), encoding));
         String line;
         while ((line = reader.readLine()) != null) {
             final int p = line.indexOf('=');
@@ -158,11 +161,12 @@ public class PropertiesFile {
         loaded = true;
     }
 
-    private void merge(final RandomAccessFileInputStream in) throws MergeException, IOException {
+    private void merge(final RandomAccessFileInputStream in)
+            throws MergeException, IOException {
 
-        final List problems = new ArrayList();
+        final List<MergeException.Problem> problems = new ArrayList<>();
 
-        final List currentProps = new ArrayList();
+        final List<Property> currentProps = new ArrayList<>();
         load(in, file, currentProps, encoding);
 
         for (int i = 0; i < currentProps.size(); i++) {
@@ -178,20 +182,22 @@ public class PropertiesFile {
                         // New property
                         if (!prop.getValue().equals(currentProp.getValue())) {
                             problems.add(new MergeException.Problem(
-                                    "Same new property in file with a different value!", prop,
-                                    currentProp));
+                                    "Same new property in file with a different value!",
+                                    prop, currentProp));
                         }
                     } else {
                         if (prop.isDeleted()) {
                             // Deleted property
-                            if (!prop.getInitialValue().equals(currentProp.getValue())) {
+                            if (!prop.getInitialValue().equals(
+                                    currentProp.getValue())) {
                                 problems.add(new MergeException.Problem(
-                                        "Modified property in file we want to delete!", prop,
-                                        currentProp));
+                                        "Modified property in file we want to delete!",
+                                        prop, currentProp));
                             }
                         } else {
                             // Changed property
-                            if (!prop.getInitialValue().equals(currentProp.getValue())) {
+                            if (!prop.getInitialValue().equals(
+                                    currentProp.getValue())) {
                                 problems.add(new MergeException.Problem(
                                         "Same property modified in file but different value!",
                                         prop, currentProp));
@@ -206,8 +212,9 @@ public class PropertiesFile {
         }
 
         if (problems.size() > 0) {
-            throw new MergeException(file, (MergeException.Problem[]) problems
-                    .toArray(new MergeException.Problem[0]));
+            throw new MergeException(file,
+                    (MergeException.Problem[]) problems
+                            .toArray(new MergeException.Problem[0]));
         }
 
     }
@@ -225,8 +232,8 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final boolean sortByKey) throws IOException, MergeException,
-            LockingFailedException {
+    public final void save(final boolean sortByKey) throws IOException,
+            MergeException, LockingFailedException {
         save(new String[] {}, sortByKey);
     }
 
@@ -246,8 +253,8 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final String comment, final boolean sortByKey) throws IOException,
-            MergeException, LockingFailedException {
+    public final void save(final String comment, final boolean sortByKey)
+            throws IOException, MergeException, LockingFailedException {
         save(new String[] { comment }, sortByKey);
     }
 
@@ -267,10 +274,11 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final String[] comments, final boolean sortByKey) throws IOException,
-            MergeException, LockingFailedException {
+    public final void save(final String[] comments, final boolean sortByKey)
+            throws IOException, MergeException, LockingFailedException {
 
-        final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(file, "rw");
+        final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(
+                file, "rw");
         try {
             final FileLock lock = out.lock(tryLockMax, tryWaitMillis);
             try {
@@ -307,7 +315,9 @@ public class PropertiesFile {
                         writer.write(prop.toKeyValue());
                         writer.write(lf);
                         // Replace the property with the new status
-                        props.set(i, new Property(prop.getKey(), prop.getValue(), prop.getValue()));
+                        props.set(i,
+                                new Property(prop.getKey(), prop.getValue(),
+                                        prop.getValue()));
                     }
                 }
                 writer.flush();
@@ -446,9 +456,9 @@ public class PropertiesFile {
      * 
      * @return List of keys.
      */
-    public final List getKeyList() {
-        final List keys = new ArrayList();
-        final Iterator it = keyIterator();
+    public final List<String> getKeyList() {
+        final List<String> keys = new ArrayList<>();
+        final Iterator<String> it = keyIterator();
         while (it.hasNext()) {
             keys.add(it.next());
         }
@@ -461,7 +471,7 @@ public class PropertiesFile {
      * @return Array of keys.
      */
     public final String[] getKeyArray() {
-        return (String[]) getKeyList().toArray(new String[0]);
+        return getKeyList().toArray(new String[0]);
     }
 
     /**
@@ -469,16 +479,16 @@ public class PropertiesFile {
      * 
      * @return Iterates over all keys including the deleted ones.
      */
-    public final Iterator keyIterator() {
-        return new Iterator() {
-            private final Iterator it = props.iterator();
+    public final Iterator<String> keyIterator() {
+        return new Iterator<String>() {
+            private final Iterator<Property> it = props.iterator();
 
             public boolean hasNext() {
                 return it.hasNext();
             }
 
-            public Object next() {
-                final Property prop = (Property) it.next();
+            public String next() {
+                final Property prop = it.next();
                 return prop.getKey();
             }
 

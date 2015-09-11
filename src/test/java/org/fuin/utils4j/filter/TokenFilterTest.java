@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,55 +13,53 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class TokenFilterTest {
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesObject() {
-		Filter testee;
+    @Test
+    public final void testCompliesObject() {
+        Filter testee;
 
-		testee = new TokenFilter("one", ",");
-		Assert.assertTrue(testee.complies("one"));
-		Assert.assertTrue(testee.complies("one,two"));
-		Assert.assertTrue(testee.complies("one,two,three"));
-		Assert.assertTrue(testee.complies("two,one,three"));
-		Assert.assertTrue(testee.complies("two,three,one"));
-		Assert.assertTrue(testee.complies("two,one"));
+        testee = new TokenFilter("one", ",");
+        assertThat(testee.complies("one")).isTrue();
+        assertThat(testee.complies("one,two")).isTrue();
+        assertThat(testee.complies("one,two,three")).isTrue();
+        assertThat(testee.complies("two,one,three")).isTrue();
+        assertThat(testee.complies("two,three,one")).isTrue();
+        assertThat(testee.complies("two,one")).isTrue();
 
-		testee = new TokenFilter("one", ";");
-		Assert.assertTrue(testee.complies("one"));
-		Assert.assertTrue(testee.complies("one;two"));
-		Assert.assertTrue(testee.complies("one;two;three"));
-		Assert.assertTrue(testee.complies("two;one;three"));
-		Assert.assertTrue(testee.complies("two;three;one"));
-		Assert.assertTrue(testee.complies("two;one"));
+        testee = new TokenFilter("one", ";");
+        assertThat(testee.complies("one")).isTrue();
+        assertThat(testee.complies("one;two")).isTrue();
+        assertThat(testee.complies("one;two;three")).isTrue();
+        assertThat(testee.complies("two;one;three")).isTrue();
+        assertThat(testee.complies("two;three;one")).isTrue();
+        assertThat(testee.complies("two;one")).isTrue();
 
-		testee = new TokenFilter("four", ";");
-		Assert.assertFalse(testee.complies("one;two;three"));
+        testee = new TokenFilter("four", ";");
+        assertThat(testee.complies("one;two;three")).isFalse();
 
-		testee = new TokenFilter("x", ";");
-		Assert.assertFalse(testee.complies("one;two;three"));
+        testee = new TokenFilter("x", ";");
+        assertThat(testee.complies("one;two;three")).isFalse();
 
-		testee = new TokenFilter(" ", ";");
-		Assert.assertTrue(testee.complies("one;two;three; ;five"));
+        testee = new TokenFilter(" ", ";");
+        assertThat(testee.complies("one;two;three; ;five")).isTrue();
 
-	}
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testToString() {
-		Assert.assertEquals("" + new TokenFilter("one", ","), " contains 'one' [,]");
-	}
-
+    @Test
+    public final void testToString() {
+        assertThat("" + new TokenFilter("one", ",")).isEqualTo(
+                " contains 'one' [,]");
+    }
 
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

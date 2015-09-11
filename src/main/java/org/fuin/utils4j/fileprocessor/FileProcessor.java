@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.fileprocessor;
 
@@ -66,13 +66,16 @@ public final class FileProcessor {
      * @param sort
      *            Sort files or not.
      */
-    public FileProcessor(final FileHandler handler, final FileOrder order, final boolean sort) {
+    public FileProcessor(final FileHandler handler, final FileOrder order,
+            final boolean sort) {
         super();
         if (handler == null) {
-            throw new IllegalArgumentException("Argument 'handler' cannot be NULL");
+            throw new IllegalArgumentException(
+                    "Argument 'handler' cannot be NULL");
         }
         if (order == null) {
-            throw new IllegalArgumentException("Argument 'order' cannot be NULL");
+            throw new IllegalArgumentException(
+                    "Argument 'order' cannot be NULL");
         }
         this.handler = handler;
         this.order = order;
@@ -119,13 +122,15 @@ public final class FileProcessor {
 
         final File[] files = dir.listFiles();
         if (files != null) {
-            final List sortedFiles = asList(files);
+            final List<File> sortedFiles = asList(files);
             for (int i = 0; i < sortedFiles.size(); i++) {
                 final File file = (File) sortedFiles.get(i);
                 FileHandlerResult result = FileHandlerResult.CONTINUE;
-                if (file.isDirectory() && (dirResult != FileHandlerResult.SKIP_SUBDIRS)) {
+                if (file.isDirectory()
+                        && (dirResult != FileHandlerResult.SKIP_SUBDIRS)) {
                     result = processDir(file);
-                } else if (file.isFile() && (dirResult != FileHandlerResult.SKIP_FILES)) {
+                } else if (file.isFile()
+                        && (dirResult != FileHandlerResult.SKIP_FILES)) {
                     result = handler.handleFile(file);
                 }
                 if (result == FileHandlerResult.STOP) {
@@ -141,18 +146,18 @@ public final class FileProcessor {
 
     }
 
-    private List asList(final File[] files) {
+    private List<File> asList(final File[] files) {
         if (order == FileOrder.DEFAULT) {
             return defaultList(files);
         }
         return orderedList(files);
     }
 
-    private List orderedList(final File[] files) {
+    private List<File> orderedList(final File[] files) {
 
         // Create separate lists for files and directories
-        final List dirList = new ArrayList();
-        final List fileList = new ArrayList();
+        final List<File> dirList = new ArrayList<>();
+        final List<File> fileList = new ArrayList<>();
         for (int i = 0; i < files.length; i++) {
             final File file = (File) files[i];
             if (file.isDirectory()) {
@@ -169,19 +174,19 @@ public final class FileProcessor {
         }
 
         // Create result list
-        final List list;
+        final List<File> list;
         if (order == FileOrder.DIR_FIRST) {
-            list = new ArrayList(dirList);
+            list = new ArrayList<>(dirList);
             list.addAll(fileList);
         } else {
-            list = new ArrayList(fileList);
+            list = new ArrayList<>(fileList);
             list.addAll(dirList);
         }
         return list;
     }
 
-    private List defaultList(final File[] files) {
-        final List list = new ArrayList(files.length);
+    private List<File> defaultList(final File[] files) {
+        final List<File> list = new ArrayList<>(files.length);
         for (int i = 0; i < files.length; i++) {
             final File file = (File) files[i];
             list.add(file);
@@ -195,11 +200,9 @@ public final class FileProcessor {
     /**
      * Compare two files only by the name (not including the path).
      */
-    private static class FilenameComparator implements Comparator {
+    private static class FilenameComparator implements Comparator<File> {
 
-        public final int compare(final Object o1, final Object o2) {
-            final File f1 = (File) o1;
-            final File f2 = (File) o2;
+        public final int compare(final File f1, final File f2) {
             return f1.getName().compareTo(f2.getName());
         }
 

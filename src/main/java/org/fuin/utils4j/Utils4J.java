@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -73,8 +73,8 @@ public final class Utils4J {
     /**
      * Used building output as Hex.
      */
-    private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a',
-            'b', 'c', 'd', 'e', 'f' };
+    private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
+            '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     /**
      * Private default constructor.
@@ -127,7 +127,8 @@ public final class Utils4J {
      * 
      * @return Properties.
      */
-    public static Properties loadProperties(final Class clasz, final String filename) {
+    public static Properties loadProperties(final Class clasz,
+            final String filename) {
         checkNotNull("clasz", clasz);
         checkNotNull("filename", filename);
 
@@ -137,7 +138,8 @@ public final class Utils4J {
             final Properties props = new Properties();
             final InputStream inStream = clasz.getResourceAsStream(resPath);
             if (inStream == null) {
-                throw new IllegalArgumentException("Resource '" + resPath + "' was not found!");
+                throw new IllegalArgumentException("Resource '" + resPath
+                        + "' was not found!");
             }
             try {
                 props.load(inStream);
@@ -186,10 +188,12 @@ public final class Utils4J {
     public static void checkValidFile(final File file) {
         checkNotNull("file", file);
         if (!file.exists()) {
-            throw new IllegalArgumentException("The file '" + file + "' does not exist!");
+            throw new IllegalArgumentException("The file '" + file
+                    + "' does not exist!");
         }
         if (!file.isFile()) {
-            throw new IllegalArgumentException("The name '" + file + "' is not a file!");
+            throw new IllegalArgumentException("The name '" + file
+                    + "' is not a file!");
         }
     }
 
@@ -203,10 +207,12 @@ public final class Utils4J {
     public static void checkValidDir(final File dir) {
         checkNotNull("dir", dir);
         if (!dir.exists()) {
-            throw new IllegalArgumentException("The directory '" + dir + "' does not exist!");
+            throw new IllegalArgumentException("The directory '" + dir
+                    + "' does not exist!");
         }
         if (!dir.isDirectory()) {
-            throw new IllegalArgumentException("The name '" + dir + "' is not a directory!");
+            throw new IllegalArgumentException("The name '" + dir
+                    + "' is not a directory!");
         }
     }
 
@@ -221,13 +227,15 @@ public final class Utils4J {
      * @param comment
      *            Comment for the file.
      */
-    public static void saveProperties(final File file, final Properties props, final String comment) {
+    public static void saveProperties(final File file, final Properties props,
+            final String comment) {
         checkNotNull("file", file);
         checkNotNull("props", props);
 
         if (!file.getParentFile().exists()) {
-            throw new IllegalArgumentException("The parent directory '" + file.getParentFile()
-                    + "' does not exist [file='" + file + "']!");
+            throw new IllegalArgumentException("The parent directory '"
+                    + file.getParentFile() + "' does not exist [file='" + file
+                    + "']!");
         }
         try {
             final OutputStream outStream = new FileOutputStream(file);
@@ -265,7 +273,8 @@ public final class Utils4J {
      * 
      * @return New instance of the class.
      */
-    public static Object createInstance(final String className, final ClassLoader classLoader) {
+    public static Object createInstance(final String className,
+            final ClassLoader classLoader) {
         checkNotNull("className", className);
         checkNotNull("classLoader", classLoader);
         try {
@@ -298,7 +307,8 @@ public final class Utils4J {
      * @param classLoader
      *            Class loader to use - Cannot be <code>null</code>.
      */
-    public static void addToClasspath(final File file, final ClassLoader classLoader) {
+    public static void addToClasspath(final File file,
+            final ClassLoader classLoader) {
         checkNotNull("file", file);
         try {
             addToClasspath(file.toURI().toURL(), classLoader);
@@ -325,7 +335,8 @@ public final class Utils4J {
      * @param classLoader
      *            Class loader to use - Cannot be <code>null</code>.
      */
-    public static void addToClasspath(final String url, final ClassLoader classLoader) {
+    public static void addToClasspath(final String url,
+            final ClassLoader classLoader) {
         checkNotNull("url", url);
         try {
             addToClasspath(new URL(url), classLoader);
@@ -421,11 +432,13 @@ public final class Utils4J {
      * 
      * @return HEX encoded hash.
      */
-    public static String createHash(final InputStream inputStream, final String algorithm) {
+    public static String createHash(final InputStream inputStream,
+            final String algorithm) {
         checkNotNull("inputStream", inputStream);
         checkNotNull("algorithm", algorithm);
         try {
-            final MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+            final MessageDigest messageDigest = MessageDigest
+                    .getInstance(algorithm);
             final BufferedInputStream in = new BufferedInputStream(inputStream);
             try {
                 final byte[] buf = new byte[1024];
@@ -468,7 +481,8 @@ public final class Utils4J {
             final char[] password, final byte[] salt, final int count)
             throws GeneralSecurityException {
 
-        final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(algorithm);
+        final SecretKeyFactory keyFactory = SecretKeyFactory
+                .getInstance(algorithm);
         final PBEKeySpec keySpec = new PBEKeySpec(password);
         final SecretKey key = keyFactory.generateSecret(keySpec);
         final Cipher cipher = Cipher.getInstance(algorithm);
@@ -495,8 +509,9 @@ public final class Utils4J {
      * 
      * @return Encrypted data.
      */
-    public static byte[] encryptPasswordBased(final String algorithm, final byte[] data,
-            final char[] password, final byte[] salt, final int count) {
+    public static byte[] encryptPasswordBased(final String algorithm,
+            final byte[] data, final char[] password, final byte[] salt,
+            final int count) {
 
         checkNotNull("algorithm", algorithm);
         checkNotNull("data", data);
@@ -504,8 +519,8 @@ public final class Utils4J {
         checkNotNull("salt", salt);
 
         try {
-            final Cipher cipher = createCipher(algorithm, Cipher.ENCRYPT_MODE, password, salt,
-                    count);
+            final Cipher cipher = createCipher(algorithm, Cipher.ENCRYPT_MODE,
+                    password, salt, count);
             return cipher.doFinal(data);
         } catch (final Exception ex) {
             throw new RuntimeException("Error encrypting the password!", ex);
@@ -529,8 +544,9 @@ public final class Utils4J {
      * 
      * @return Encrypted data.
      */
-    public static byte[] decryptPasswordBased(final String algorithm, final byte[] encryptedData,
-            final char[] password, final byte[] salt, final int count) {
+    public static byte[] decryptPasswordBased(final String algorithm,
+            final byte[] encryptedData, final char[] password,
+            final byte[] salt, final int count) {
 
         checkNotNull("algorithm", algorithm);
         checkNotNull("encryptedData", encryptedData);
@@ -538,8 +554,8 @@ public final class Utils4J {
         checkNotNull("salt", salt);
 
         try {
-            final Cipher cipher = createCipher(algorithm, Cipher.DECRYPT_MODE, password, salt,
-                    count);
+            final Cipher cipher = createCipher(algorithm, Cipher.DECRYPT_MODE,
+                    password, salt, count);
             return cipher.doFinal(encryptedData);
         } catch (final Exception ex) {
             throw new RuntimeException("Error decrypting the password!", ex);
@@ -561,7 +577,8 @@ public final class Utils4J {
      * 
      * @return URL.
      */
-    public static URL createUrl(final URL baseUrl, final String path, final String filename) {
+    public static URL createUrl(final URL baseUrl, final String path,
+            final String filename) {
         checkNotNull("baseUrl", baseUrl);
         checkNotNull("filename", filename);
         try {
@@ -653,7 +670,8 @@ public final class Utils4J {
         try {
             return file.getCanonicalPath();
         } catch (final IOException ex) {
-            throw new RuntimeException("Couldn't get canonical path for: " + file, ex);
+            throw new RuntimeException("Couldn't get canonical path for: "
+                    + file, ex);
         }
     }
 
@@ -675,7 +693,8 @@ public final class Utils4J {
         try {
             return file.getCanonicalFile();
         } catch (final IOException ex) {
-            throw new RuntimeException("Couldn't get canonical file for: " + file, ex);
+            throw new RuntimeException("Couldn't get canonical file for: "
+                    + file, ex);
         }
     }
 
@@ -695,7 +714,8 @@ public final class Utils4J {
      * 
      * @return Relative path with ".." (dot dot)
      */
-    public static String getBackToRootPath(final String relativePath, final char fileSeparatorChar) {
+    public static String getBackToRootPath(final String relativePath,
+            final char fileSeparatorChar) {
 
         checkNotNull("relativePath", relativePath);
 
@@ -724,7 +744,8 @@ public final class Utils4J {
      * 
      * @return Properties.
      */
-    public static Properties loadProperties(final URL baseUrl, final String filename) {
+    public static Properties loadProperties(final URL baseUrl,
+            final String filename) {
         return loadProperties(createUrl(baseUrl, "", filename));
     }
 
@@ -765,7 +786,8 @@ public final class Utils4J {
      * 
      * @return Properties.
      */
-    public static Properties loadProperties(final String baseUrl, final String filename) {
+    public static Properties loadProperties(final String baseUrl,
+            final String filename) {
         checkNotNull("baseUrl", baseUrl);
         checkNotNull("filename", filename);
 
@@ -775,8 +797,9 @@ public final class Utils4J {
         } catch (final MalformedURLException ex) {
             // Should be an IllegalArgumentException but 1.4 has no "String,
             // Throwable" constructor...
-            throw new RuntimeException("The argument 'srcUrl' is not a valid URL [" + baseUrl
-                    + "]!", ex);
+            throw new RuntimeException(
+                    "The argument 'srcUrl' is not a valid URL [" + baseUrl
+                            + "]!", ex);
         }
 
     }
@@ -799,7 +822,8 @@ public final class Utils4J {
      * @param classLoader
      *            Class loader to use - Cannot be <code>null</code>.
      */
-    public static void addToClasspath(final URL url, final ClassLoader classLoader) {
+    public static void addToClasspath(final URL url,
+            final ClassLoader classLoader) {
         checkNotNull("url", url);
         checkNotNull("classLoader", classLoader);
         if (!(classLoader instanceof URLClassLoader)) {
@@ -810,8 +834,8 @@ public final class Utils4J {
         if (!containsURL(urlClassLoader.getURLs(), url)) {
             try {
 
-                final Method addURL = URLClassLoader.class.getDeclaredMethod("addURL",
-                        new Class[] { URL.class });
+                final Method addURL = URLClassLoader.class.getDeclaredMethod(
+                        "addURL", new Class[] { URL.class });
                 addURL.setAccessible(true);
                 addURL.invoke(urlClassLoader, new Object[] { url });
             } catch (final NoSuchMethodException e) {
@@ -854,7 +878,8 @@ public final class Utils4J {
      */
     public static void checkNotEmpty(final String name, final String value) {
         if (value.length() == 0) {
-            throw new IllegalArgumentException("The argument '" + name + "' cannot be empty!!");
+            throw new IllegalArgumentException("The argument '" + name
+                    + "' cannot be empty!!");
         }
     }
 
@@ -870,8 +895,8 @@ public final class Utils4J {
      * 
      * @return Textual signature of the method.
      */
-    private static String getMethodSignature(final String returnType, final String methodName,
-            final Class[] argTypes) {
+    private static String getMethodSignature(final String returnType,
+            final String methodName, final Class[] argTypes) {
         final StringBuffer sb = new StringBuffer();
         if (returnType != null) {
             sb.append(returnType);
@@ -911,8 +936,9 @@ public final class Utils4J {
      * @throws InvokeMethodFailedException
      *             Invoking the method failed for some reason.
      */
-    public static Object invoke(final Object obj, final String methodName, final Class[] argTypes,
-            final Object[] args) throws InvokeMethodFailedException {
+    public static Object invoke(final Object obj, final String methodName,
+            final Class[] argTypes, final Object[] args)
+            throws InvokeMethodFailedException {
 
         checkNotNull("obj", obj);
         checkNotNull("methodName", methodName);
@@ -922,15 +948,17 @@ public final class Utils4J {
         if (argTypes == null) {
             argTypesIntern = new Class[] {};
             if (args != null) {
-                throw new IllegalArgumentException("The argument 'argTypes' is null but "
-                        + "'args' containes values!");
+                throw new IllegalArgumentException(
+                        "The argument 'argTypes' is null but "
+                                + "'args' containes values!");
             }
             argsIntern = new Object[] {};
         } else {
             argTypesIntern = argTypes;
             if (args == null) {
-                throw new IllegalArgumentException("The argument 'argTypes' contains classes "
-                        + "but 'args' is null!");
+                throw new IllegalArgumentException(
+                        "The argument 'argTypes' contains classes "
+                                + "but 'args' is null!");
             }
             argsIntern = args;
         }
@@ -938,7 +966,8 @@ public final class Utils4J {
 
         String returnType = null;
         try {
-            final Method method = obj.getClass().getMethod(methodName, argTypesIntern);
+            final Method method = obj.getClass().getMethod(methodName,
+                    argTypesIntern);
             if (method.getReturnType() == null) {
                 returnType = "void";
             } else {
@@ -946,34 +975,46 @@ public final class Utils4J {
             }
             return method.invoke(obj, argsIntern);
         } catch (final SecurityException ex) {
-            throw new InvokeMethodFailedException("Security problem with '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Security problem with '"
+                            + getMethodSignature(returnType, methodName,
+                                    argTypesIntern) + "'! ["
+                            + obj.getClass().getName() + "]", ex);
         } catch (final NoSuchMethodException ex) {
-            throw new InvokeMethodFailedException("Method '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "' not found! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Method '"
+                            + getMethodSignature(returnType, methodName,
+                                    argTypesIntern) + "' not found! ["
+                            + obj.getClass().getName() + "]", ex);
         } catch (final IllegalArgumentException ex) {
-            throw new InvokeMethodFailedException("Argument problem with '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Argument problem with '"
+                            + getMethodSignature(returnType, methodName,
+                                    argTypesIntern) + "'! ["
+                            + obj.getClass().getName() + "]", ex);
         } catch (final IllegalAccessException ex) {
-            throw new InvokeMethodFailedException("Access problem with '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Access problem with '"
+                            + getMethodSignature(returnType, methodName,
+                                    argTypesIntern) + "'! ["
+                            + obj.getClass().getName() + "]", ex);
         } catch (final InvocationTargetException ex) {
-            throw new InvokeMethodFailedException("Got an exception when calling '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Got an exception when calling '"
+                            + getMethodSignature(returnType, methodName,
+                                    argTypesIntern) + "'! ["
+                            + obj.getClass().getName() + "]", ex);
         }
 
     }
 
-    private static void checkSameLength(final Class[] argTypes, final Object[] args) {
+    private static void checkSameLength(final Class[] argTypes,
+            final Object[] args) {
         if (argTypes.length != args.length) {
-            throw new IllegalArgumentException("The argument 'argTypes' contains "
-                    + argTypes.length + " classes " + "but 'args' only contains " + args.length
-                    + " arguments!");
+            throw new IllegalArgumentException(
+                    "The argument 'argTypes' contains " + argTypes.length
+                            + " classes " + "but 'args' only contains "
+                            + args.length + " arguments!");
         }
     }
 
@@ -991,7 +1032,8 @@ public final class Utils4J {
      * @throws IOException
      *             Error unzipping the file.
      */
-    public static void unzip(final File zipFile, final File destDir) throws IOException {
+    public static void unzip(final File zipFile, final File destDir)
+            throws IOException {
         unzip(zipFile, destDir, null, null);
     }
 
@@ -1018,7 +1060,8 @@ public final class Utils4J {
      *             Error unzipping the file.
      */
     public static void unzip(final File zipFile, final File destDir,
-            final UnzipInputStreamWrapper wrapper, final Cancelable cancelable) throws IOException {
+            final UnzipInputStreamWrapper wrapper, final Cancelable cancelable)
+            throws IOException {
 
         checkNotNull("zipFile", zipFile);
         checkValidFile(zipFile);
@@ -1028,12 +1071,14 @@ public final class Utils4J {
         final ZipFile zip = new ZipFile(zipFile);
         try {
             final Enumeration enu = zip.entries();
-            while (enu.hasMoreElements() && ((cancelable == null) || !cancelable.isCanceled())) {
+            while (enu.hasMoreElements()
+                    && ((cancelable == null) || !cancelable.isCanceled())) {
                 final ZipEntry entry = (ZipEntry) enu.nextElement();
                 final File file = new File(entry.getName());
                 if (file.isAbsolute()) {
-                    throw new IllegalArgumentException("Only relative path entries are allowed! ["
-                            + entry.getName() + "]");
+                    throw new IllegalArgumentException(
+                            "Only relative path entries are allowed! ["
+                                    + entry.getName() + "]");
                 }
                 if (entry.isDirectory()) {
                     final File dir = new File(destDir, entry.getName());
@@ -1049,8 +1094,8 @@ public final class Utils4J {
                                 zip.getInputStream(entry), entry, outFile));
                     }
                     try {
-                        final OutputStream out = new BufferedOutputStream(new FileOutputStream(
-                                outFile));
+                        final OutputStream out = new BufferedOutputStream(
+                                new FileOutputStream(outFile));
                         try {
                             final byte[] buf = new byte[4096];
                             int len;
@@ -1088,11 +1133,13 @@ public final class Utils4J {
     public static File getUserHomeDir() {
         final String str = System.getProperty(USER_HOME_KEY);
         if (str == null) {
-            throw new IllegalStateException("System property '" + USER_HOME_KEY + "' not found!");
+            throw new IllegalStateException("System property '" + USER_HOME_KEY
+                    + "' not found!");
         }
         final String userHome = str.trim();
         if (userHome.length() == 0) {
-            throw new IllegalStateException("System property '" + USER_HOME_KEY + "' is empty!");
+            throw new IllegalStateException("System property '" + USER_HOME_KEY
+                    + "' is empty!");
         }
         final File dir = new File(userHome);
         try {
@@ -1113,11 +1160,13 @@ public final class Utils4J {
     public static File getTempDir() {
         final String str = System.getProperty(TEMP_DIR_KEY);
         if (str == null) {
-            throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' not found!");
+            throw new IllegalStateException("System property '" + TEMP_DIR_KEY
+                    + "' not found!");
         }
         final String tempDirStr = str.trim();
         if (tempDirStr.length() == 0) {
-            throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' is empty!");
+            throw new IllegalStateException("System property '" + TEMP_DIR_KEY
+                    + "' is empty!");
         }
         final File dir = new File(tempDirStr);
         try {
@@ -1249,30 +1298,34 @@ public final class Utils4J {
      *             Error writing the file.
      */
     // CHECKSTYLE:OFF Maximum Parameters
-    public static void createWindowsDesktopUrlLink(final String baseUrl, final String url,
-            final File workingDir, final Integer showCommand, final Integer iconIndex,
-            final File iconFile, final Integer hotKey, final String linkFilenameWithoutExtension,
-            final boolean overwrite, final Date modified) throws IOException {
+    public static void createWindowsDesktopUrlLink(final String baseUrl,
+            final String url, final File workingDir, final Integer showCommand,
+            final Integer iconIndex, final File iconFile, final Integer hotKey,
+            final String linkFilenameWithoutExtension, final boolean overwrite,
+            final Date modified) throws IOException {
         // CHECKSTYLE:ON
 
         checkNotNull("baseUrl", baseUrl);
         checkNotEmpty("baseUrl", baseUrl);
         checkNotNull("url", url);
         checkNotEmpty("url", url);
-        checkNotNull("linkFilenameWithoutExtension", linkFilenameWithoutExtension);
-        checkNotEmpty("linkFilenameWithoutExtension", linkFilenameWithoutExtension);
+        checkNotNull("linkFilenameWithoutExtension",
+                linkFilenameWithoutExtension);
+        checkNotEmpty("linkFilenameWithoutExtension",
+                linkFilenameWithoutExtension);
 
         final File userHomeDir = new File(System.getProperty("user.home"));
         final File desktopDir = new File(userHomeDir, "Desktop");
-        final File linkFile = new File(desktopDir, linkFilenameWithoutExtension + ".url");
+        final File linkFile = new File(desktopDir, linkFilenameWithoutExtension
+                + ".url");
         if (linkFile.exists() && !overwrite) {
             // Do nothing
             return;
         }
-        final String content = createWindowsDesktopUrlLinkContent(baseUrl, url, workingDir,
-                showCommand, iconIndex, iconFile, hotKey, modified);
-        final Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                linkFile), "Cp1252"));
+        final String content = createWindowsDesktopUrlLinkContent(baseUrl, url,
+                workingDir, showCommand, iconIndex, iconFile, hotKey, modified);
+        final Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(linkFile), "Cp1252"));
         try {
             writer.write(content);
         } finally {
@@ -1321,8 +1374,9 @@ public final class Utils4J {
      * @return INI file text.
      */
     // CHECKSTYLE:OFF
-    public static String createWindowsDesktopUrlLinkContent(final String baseUrl, final String url,
-            final File workingDir, final Integer showCommand, final Integer iconIndex,
+    public static String createWindowsDesktopUrlLinkContent(
+            final String baseUrl, final String url, final File workingDir,
+            final Integer showCommand, final Integer iconIndex,
             final File iconFile, final Integer hotKey, final Date modified) {
         // CHECKSTYLE:ON
 
@@ -1372,8 +1426,8 @@ public final class Utils4J {
      * 
      * @return Path and filename divided by the separator.
      */
-    public static String concatPathAndFilename(final String path, final String filename,
-            final String separator) {
+    public static String concatPathAndFilename(final String path,
+            final String filename, final String separator) {
 
         checkNotNull("filename", filename);
         checkNotNull("separator", separator);
@@ -1486,7 +1540,8 @@ public final class Utils4J {
     private static int toDigit(final char ch, final int index) {
         final int digit = Character.digit(ch, 16);
         if (digit == -1) {
-            throw new RuntimeException("Illegal hexadecimal charcter " + ch + " at index " + index);
+            throw new RuntimeException("Illegal hexadecimal charcter " + ch
+                    + " at index " + index);
         }
         return digit;
     }
@@ -1506,8 +1561,9 @@ public final class Utils4J {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public static FileLock lockRandomAccessFile(final RandomAccessFile file, final int tryLockMax,
-            final long tryWaitMillis) throws LockingFailedException {
+    public static FileLock lockRandomAccessFile(final RandomAccessFile file,
+            final int tryLockMax, final long tryWaitMillis)
+            throws LockingFailedException {
 
         checkNotNull("file", file);
 
@@ -1522,7 +1578,8 @@ public final class Utils4J {
                     return lock;
                 }
             } catch (final IOException ex) {
-                throw new LockingFailedException("Unexpected I/O-Exception!", ex);
+                throw new LockingFailedException("Unexpected I/O-Exception!",
+                        ex);
             } catch (final OverlappingFileLockException ex) {
                 ignore();
             }
@@ -1532,7 +1589,8 @@ public final class Utils4J {
                 throw new LockingFailedException("Unexpected interrupt!", ex);
             }
         }
-        throw new LockingFailedException("Number of max tries (" + tryLockMax + ") exceeded!");
+        throw new LockingFailedException("Number of max tries (" + tryLockMax
+                + ") exceeded!");
 
     }
 
@@ -1553,14 +1611,15 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    private static void zipFile(final File srcFile, final String destPath, final ZipOutputStream out)
-            throws IOException {
+    private static void zipFile(final File srcFile, final String destPath,
+            final ZipOutputStream out) throws IOException {
 
         final byte[] buf = new byte[1024];
-        final InputStream in = new BufferedInputStream(new FileInputStream(srcFile));
+        final InputStream in = new BufferedInputStream(new FileInputStream(
+                srcFile));
         try {
-            final ZipEntry zipEntry = new ZipEntry(concatPathAndFilename(destPath,
-                    srcFile.getName(), File.separator));
+            final ZipEntry zipEntry = new ZipEntry(concatPathAndFilename(
+                    destPath, srcFile.getName(), File.separator));
             zipEntry.setTime(srcFile.lastModified());
             out.putNextEntry(zipEntry);
             int len;
@@ -1613,14 +1672,17 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    private static void zipDir(final File srcDir, final FileFilter filter, final String destPath,
-            final ZipOutputStream out) throws IOException {
+    private static void zipDir(final File srcDir, final FileFilter filter,
+            final String destPath, final ZipOutputStream out)
+            throws IOException {
 
         final File[] files = listFiles(srcDir, filter);
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
-                zipDir(files[i], filter,
-                        concatPathAndFilename(destPath, files[i].getName(), File.separator), out);
+                zipDir(files[i],
+                        filter,
+                        concatPathAndFilename(destPath, files[i].getName(),
+                                File.separator), out);
             } else {
                 zipFile(files[i], destPath, out);
             }
@@ -1647,15 +1709,15 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final FileFilter filter, final String destPath,
-            final File destFile) throws IOException {
+    public static void zipDir(final File srcDir, final FileFilter filter,
+            final String destPath, final File destFile) throws IOException {
 
         Utils4J.checkNotNull("srcDir", srcDir);
         Utils4J.checkValidDir(srcDir);
         Utils4J.checkNotNull("destFile", destFile);
 
-        final ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(
-                new FileOutputStream(destFile)));
+        final ZipOutputStream out = new ZipOutputStream(
+                new BufferedOutputStream(new FileOutputStream(destFile)));
         try {
             zipDir(srcDir, filter, destPath, out);
         } finally {
@@ -1680,8 +1742,8 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final String destPath, final File destFile)
-            throws IOException {
+    public static void zipDir(final File srcDir, final String destPath,
+            final File destFile) throws IOException {
 
         zipDir(srcDir, null, destPath, destFile);
 
@@ -1704,7 +1766,8 @@ public final class Utils4J {
          * 
          * @return Wrapped input stream.
          */
-        public InputStream wrapInputStream(InputStream in, ZipEntry entry, File destFile);
+        public InputStream wrapInputStream(InputStream in, ZipEntry entry,
+                File destFile);
 
     }
 

@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
 
@@ -22,43 +22,40 @@ package org.fuin.utils4j.filter;
  */
 public class BooleanFilter implements Filter {
 
-	private final Boolean constValue;
+    private final Boolean constValue;
 
-	/**
-	 * Constructor with all necessary values.
-	 * 
-	 * @param constValue Value the property is compared with.
-	 */
-	public BooleanFilter(final Boolean constValue) {
-		super();
-		this.constValue = constValue;
-	}
+    /**
+     * Constructor with all necessary values.
+     * 
+     * @param constValue
+     *            Value the property is compared with.
+     */
+    public BooleanFilter(final Boolean constValue) {
+        super();
+        this.constValue = constValue;
+    }
 
-	/**
-	 * Returns the value the property is compared with.
-	 * 
-	 * @return Value.
-	 */
-	public final Boolean getConstValue() {
-		return constValue;
-	}
+    /**
+     * Returns the value the property is compared with.
+     * 
+     * @return Value.
+     */
+    public final Boolean getConstValue() {
+        return constValue;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean complies(final Object value) {
-		if (value == null) {
-			return (constValue == null);
-		} else {
-			return value.equals(constValue);
-		}
-	}
+    @Override
+    public final boolean complies(final Object value) {
+        if (value == null) {
+            return (constValue == null);
+        } else {
+            return value.equals(constValue);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final String toString() {
-		return " = " + constValue.toString();
-	}
+    @Override
+    public final String toString() {
+        return " = " + constValue.toString();
+    }
 
 }

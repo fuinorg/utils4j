@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,34 +13,35 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 // CHECKSTYLE:OFF
 public class InvokeMethodFailedExceptionTest {
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testConstructionMessage() {
         final String message = "xyz123";
-        final InvokeMethodFailedException ex = new InvokeMethodFailedException(message);
-        Assert.assertEquals(ex.getMessage(), message);
-        Assert.assertNull(ex.getCause());
+        final InvokeMethodFailedException ex = new InvokeMethodFailedException(
+                message);
+        assertThat(ex.getMessage()).isEqualTo(message);
+        assertThat(ex.getCause()).isNull();
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testConstructionMessageCause() {
-        final IllegalArgumentException cause = new IllegalArgumentException("Test");
+        final IllegalArgumentException cause = new IllegalArgumentException(
+                "Test");
         final String message = "xyz123";
-        final InvokeMethodFailedException ex = new InvokeMethodFailedException(message, cause);
-        Assert.assertEquals(ex.getMessage(), message);
-        Assert.assertEquals(ex.getCause(), cause);
+        final InvokeMethodFailedException ex = new InvokeMethodFailedException(
+                message, cause);
+        assertThat(ex.getMessage()).isEqualTo(message);
+        assertThat(ex.getCause()).isEqualTo(cause);
     }
 
 }

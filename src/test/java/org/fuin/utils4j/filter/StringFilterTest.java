@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,94 +13,82 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class StringFilterTest {
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesLT() {
-		final Filter filter = new StringFilter(StringFilter.Operator.LT, "2");
-		Assert.assertTrue(filter.complies("1"));
-		Assert.assertFalse(filter.complies("2"));
-		Assert.assertFalse(filter.complies("3"));
-	}
+    @Test
+    public final void testCompliesLT() {
+        final Filter filter = new StringFilter(StringFilter.Operator.LT, "2");
+        assertThat(filter.complies("1")).isTrue();
+        assertThat(filter.complies("2")).isFalse();
+        assertThat(filter.complies("3")).isFalse();
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesLTE() {
-		final Filter filter = new StringFilter(StringFilter.Operator.LTE, "2");
-		Assert.assertTrue(filter.complies("1"));
-		Assert.assertTrue(filter.complies("2"));
-		Assert.assertFalse(filter.complies("3"));
-	}
+    @Test
+    public final void testCompliesLTE() {
+        final Filter filter = new StringFilter(StringFilter.Operator.LTE, "2");
+        assertThat(filter.complies("1")).isTrue();
+        assertThat(filter.complies("2")).isTrue();
+        assertThat(filter.complies("3")).isFalse();
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesEQ() {
-		final Filter filter = new StringFilter(StringFilter.Operator.EQ, "2");
-		Assert.assertFalse(filter.complies("1"));
-		Assert.assertTrue(filter.complies("2"));
-		Assert.assertFalse(filter.complies("3"));
-	}
+    @Test
+    public final void testCompliesEQ() {
+        final Filter filter = new StringFilter(StringFilter.Operator.EQ, "2");
+        assertThat(filter.complies("1")).isFalse();
+        assertThat(filter.complies("2")).isTrue();
+        assertThat(filter.complies("3")).isFalse();
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesEQRELAXED() {
-		Filter filter;
-		filter = new StringFilter(StringFilter.Operator.EQ_RELAXED, "abc");
-		Assert.assertFalse(filter.complies("ab"));
-		Assert.assertTrue(filter.complies("abc"));
-		Assert.assertTrue(filter.complies("abcd"));
-		Assert.assertTrue(filter.complies("abcde"));
-	}
+    @Test
+    public final void testCompliesEQRELAXED() {
+        Filter filter;
+        filter = new StringFilter(StringFilter.Operator.EQ_RELAXED, "abc");
+        assertThat(filter.complies("ab")).isFalse();
+        assertThat(filter.complies("abc")).isTrue();
+        assertThat(filter.complies("abcd")).isTrue();
+        assertThat(filter.complies("abcde")).isTrue();
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesGT() {
-		final Filter filter = new StringFilter(StringFilter.Operator.GT, "2");
-		Assert.assertFalse(filter.complies("1"));
-		Assert.assertFalse(filter.complies("2"));
-		Assert.assertTrue(filter.complies("3"));
-	}
+    @Test
+    public final void testCompliesGT() {
+        final Filter filter = new StringFilter(StringFilter.Operator.GT, "2");
+        assertThat(filter.complies("1")).isFalse();
+        assertThat(filter.complies("2")).isFalse();
+        assertThat(filter.complies("3")).isTrue();
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesGTE() {
-		final Filter filter = new StringFilter(StringFilter.Operator.GTE, "2");
-		Assert.assertFalse(filter.complies("1"));
-		Assert.assertTrue(filter.complies("2"));
-		Assert.assertTrue(filter.complies("3"));
-	}
+    @Test
+    public final void testCompliesGTE() {
+        final Filter filter = new StringFilter(StringFilter.Operator.GTE, "2");
+        assertThat(filter.complies("1")).isFalse();
+        assertThat(filter.complies("2")).isTrue();
+        assertThat(filter.complies("3")).isTrue();
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testToString() {
-		Assert.assertEquals(""
-				+ new StringFilter(StringFilter.Operator.LT, "2"), " < '2'");
-		Assert.assertEquals(""
-				+ new StringFilter(StringFilter.Operator.LTE, "2"), " <= '2'");
-		Assert.assertEquals(""
-				+ new StringFilter(StringFilter.Operator.EQ, "2"), " = '2'");
-		Assert.assertEquals(""
-				+ new StringFilter(StringFilter.Operator.EQ_RELAXED, "2"), " ~ '2'");
-		Assert.assertEquals(""
-				+ new StringFilter(StringFilter.Operator.GT, "2"), " > '2'");
-		Assert.assertEquals(""
-				+ new StringFilter(StringFilter.Operator.GTE, "2"), " >= '2'");
-	}
+    @Test
+    public final void testToString() {
+        assertThat("" + new StringFilter(StringFilter.Operator.LT, "2"))
+                .isEqualTo(" < '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.LTE, "2"))
+                .isEqualTo(" <= '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.EQ, "2"))
+                .isEqualTo(" = '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.EQ_RELAXED, "2"))
+                .isEqualTo(" ~ '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.GT, "2"))
+                .isEqualTo(" > '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.GTE, "2"))
+                .isEqualTo(" >= '2'");
+    }
 
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

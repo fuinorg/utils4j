@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -39,8 +39,8 @@ public final class MergeException extends Exception {
      *            List of one or more problems.
      */
     public MergeException(final File file, final Problem[] problems) {
-        super("The properties file '" + file + "' was modified by someone else "
-                + "and cannot be merged!");
+        super("The properties file '" + file
+                + "' was modified by someone else " + "and cannot be merged!");
 
         Utils4J.checkNotNull("file", file);
         this.file = file;
@@ -91,7 +91,8 @@ public final class MergeException extends Exception {
          * @param fileProp
          *            Property from file.
          */
-        public Problem(final String text, final Property prop, final Property fileProp) {
+        public Problem(final String text, final Property prop,
+                final Property fileProp) {
             super();
 
             Utils4J.checkNotNull("text", text);
@@ -132,11 +133,10 @@ public final class MergeException extends Exception {
             return fileProp;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public final String toString() {
-            return text + " - Property: {" + prop + "}, File Property: {" + fileProp + "}";
+            return text + " - Property: {" + prop + "}, File Property: {"
+                    + fileProp + "}";
         }
 
     }

@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -24,7 +24,7 @@ package org.fuin.utils4j;
  * <code>equals(Object)</code> are based on the <code>key</code> attribute. The
  * attributes <code>key</code> and <code>initialValue</code> are immutable.
  */
-public class Property implements Comparable {
+public final class Property implements Comparable<Property> {
 
     private final String key;
 
@@ -42,7 +42,8 @@ public class Property implements Comparable {
      * @param value
      *            Value.
      */
-    public Property(final String key, final String initialValue, final String value) {
+    public Property(final String key, final String initialValue,
+            final String value) {
         super();
         Utils4J.checkNotNull("key", key);
         this.key = key;
@@ -127,19 +128,12 @@ public class Property implements Comparable {
         return (value != null);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((key == null) ? 0 : key.hashCode());
-        return result;
+        return key.hashCode();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
@@ -147,7 +141,7 @@ public class Property implements Comparable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Property)) {
             return false;
         }
         final Property other = (Property) obj;
@@ -161,11 +155,8 @@ public class Property implements Comparable {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final int compareTo(final Object o) {
-        final Property other = (Property) o;
+    @Override
+    public final int compareTo(final Property other) {
         return key.compareTo(other.key);
     }
 
@@ -197,9 +188,7 @@ public class Property implements Comparable {
         return "---";
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final String toString() {
         return "[" + getStatus() + "] " + key + "=" + value;
     }

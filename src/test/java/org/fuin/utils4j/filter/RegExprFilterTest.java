@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,128 +13,129 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.filter;
 
-import org.testng.Assert;
+import static org.fest.assertions.Assertions.assertThat;
+
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class RegExprFilterTest {
 
-	/**
-	 * @testng.test
-	 */
-	public final void testSetGetType() {
-		final RegExprFilter filter = new RegExprFilter("a*b");
+    @Test
+    public final void testSetGetType() {
+        final RegExprFilter filter = new RegExprFilter("a*b");
 
-		filter.setType(RegExprFilter.MATCHES);
-		Assert.assertEquals(filter.getType(), RegExprFilter.MATCHES);
-		Assert.assertEquals(filter.getTypeName(), "matches");
+        filter.setType(RegExprFilter.MATCHES);
+        assertThat(filter.getType()).isEqualTo(RegExprFilter.MATCHES);
+        assertThat(filter.getTypeName()).isEqualTo("matches");
 
-		filter.setType(RegExprFilter.LOOKING_AT);
-		Assert.assertEquals(filter.getType(), RegExprFilter.LOOKING_AT);
-		Assert.assertNull(filter.getTypeName());
+        filter.setType(RegExprFilter.LOOKING_AT);
+        assertThat(filter.getType()).isEqualTo(RegExprFilter.LOOKING_AT);
+        assertThat(filter.getTypeName()).isNull();
 
-		filter.setType(RegExprFilter.FIND);
-		Assert.assertEquals(filter.getType(), RegExprFilter.FIND);
-		Assert.assertEquals(filter.getTypeName(), "find");
-	}
+        filter.setType(RegExprFilter.FIND);
+        assertThat(filter.getType()).isEqualTo(RegExprFilter.FIND);
+        assertThat(filter.getTypeName()).isEqualTo("find");
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testSetGetTypeName() {
-		final RegExprFilter filter = new RegExprFilter("a*b");
+    @Test
+    public final void testSetGetTypeName() {
+        final RegExprFilter filter = new RegExprFilter("a*b");
 
-		filter.setTypeName("matches");
-		Assert.assertEquals(filter.getTypeName(), "matches");
-		Assert.assertEquals(filter.getType(), RegExprFilter.MATCHES);
+        filter.setTypeName("matches");
+        assertThat(filter.getTypeName()).isEqualTo("matches");
+        assertThat(filter.getType()).isEqualTo(RegExprFilter.MATCHES);
 
-		filter.setTypeName("lookingAt");
-		Assert.assertNull(filter.getTypeName());
-		Assert.assertEquals(filter.getType(), RegExprFilter.LOOKING_AT);
+        filter.setTypeName("lookingAt");
+        assertThat(filter.getTypeName()).isNull();
+        assertThat(filter.getType()).isEqualTo(RegExprFilter.LOOKING_AT);
 
-		filter.setTypeName("find");
-		Assert.assertEquals(filter.getTypeName(), "find");
-		Assert.assertEquals(filter.getType(), RegExprFilter.FIND);
+        filter.setTypeName("find");
+        assertThat(filter.getTypeName()).isEqualTo("find");
+        assertThat(filter.getType()).isEqualTo(RegExprFilter.FIND);
 
-	}
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesMatches() {
+    @Test
+    public final void testCompliesMatches() {
 
-		final RegExprFilter filter1 = new RegExprFilter("a*b");
-		filter1.setType(RegExprFilter.MATCHES);
-		Assert.assertTrue(filter1.complies("ab"));
-		Assert.assertTrue(filter1.complies("aab"));
-		Assert.assertTrue(filter1.complies("aaab"));
-		Assert.assertFalse(filter1.complies("aaabb"));
-		Assert.assertFalse(filter1.complies("abc"));
-		Assert.assertFalse(filter1.complies("bab"));
-		Assert.assertFalse(filter1.complies("xbab"));
+        final RegExprFilter filter1 = new RegExprFilter("a*b");
+        filter1.setType(RegExprFilter.MATCHES);
+        assertThat(filter1.complies("ab")).isTrue();
+        assertThat(filter1.complies("aab")).isTrue();
+        assertThat(filter1.complies("aaab")).isTrue();
+        assertThat(filter1.complies("aaabb")).isFalse();
+        assertThat(filter1.complies("abc")).isFalse();
+        assertThat(filter1.complies("bab")).isFalse();
+        assertThat(filter1.complies("xbab")).isFalse();
 
-		final RegExprFilter filter2 = new RegExprFilter(
-				".*schlemmerinfo\\.de.*");
-		filter2.setType(RegExprFilter.MATCHES);
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/eng/"));
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"));
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/deu"));
-		Assert.assertTrue(filter2.complies("www.schlemmerinfo.de"));
+        final RegExprFilter filter2 = new RegExprFilter(
+                ".*schlemmerinfo\\.de.*");
+        filter2.setType(RegExprFilter.MATCHES);
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/"))
+                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"))
+                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu"))
+                .isTrue();
+        assertThat(filter2.complies("www.schlemmerinfo.de")).isTrue();
 
-	}
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesLookingAt() {
+    @Test
+    public final void testCompliesLookingAt() {
 
-		final RegExprFilter filter1 = new RegExprFilter("a*b");
-		filter1.setType(RegExprFilter.LOOKING_AT);
-		Assert.assertTrue(filter1.complies("ab"));
-		Assert.assertTrue(filter1.complies("aab"));
-		Assert.assertTrue(filter1.complies("aaab"));
-		Assert.assertTrue(filter1.complies("aaabb"));
-		Assert.assertTrue(filter1.complies("abc"));
-		Assert.assertTrue(filter1.complies("bab"));
-		Assert.assertFalse(filter1.complies("xbab"));
+        final RegExprFilter filter1 = new RegExprFilter("a*b");
+        filter1.setType(RegExprFilter.LOOKING_AT);
+        assertThat(filter1.complies("ab")).isTrue();
+        assertThat(filter1.complies("aab")).isTrue();
+        assertThat(filter1.complies("aaab")).isTrue();
+        assertThat(filter1.complies("aaabb")).isTrue();
+        assertThat(filter1.complies("abc")).isTrue();
+        assertThat(filter1.complies("bab")).isTrue();
+        assertThat(filter1.complies("xbab")).isFalse();
 
-		final RegExprFilter filter2 = new RegExprFilter(
-				".*schlemmerinfo\\.de.*");
-		filter2.setType(RegExprFilter.LOOKING_AT);
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/eng/"));
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"));
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/deu"));
-		Assert.assertTrue(filter2.complies("www.schlemmerinfo.de"));
+        final RegExprFilter filter2 = new RegExprFilter(
+                ".*schlemmerinfo\\.de.*");
+        filter2.setType(RegExprFilter.LOOKING_AT);
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/"))
+                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"))
+                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu"))
+                .isTrue();
+        assertThat(filter2.complies("www.schlemmerinfo.de")).isTrue();
 
-	}
+    }
 
-	/**
-	 * @testng.test
-	 */
-	public final void testCompliesFind() {
+    @Test
+    public final void testCompliesFind() {
 
-		final RegExprFilter filter1 = new RegExprFilter("a*b");
-		filter1.setType(RegExprFilter.FIND);
-		Assert.assertTrue(filter1.complies("ab"));
-		Assert.assertTrue(filter1.complies("aab"));
-		Assert.assertTrue(filter1.complies("aaab"));
-		Assert.assertTrue(filter1.complies("aaabb"));
-		Assert.assertTrue(filter1.complies("abc"));
-		Assert.assertTrue(filter1.complies("bab"));
-		Assert.assertTrue(filter1.complies("xbab"));
+        final RegExprFilter filter1 = new RegExprFilter("a*b");
+        filter1.setType(RegExprFilter.FIND);
+        assertThat(filter1.complies("ab")).isTrue();
+        assertThat(filter1.complies("aab")).isTrue();
+        assertThat(filter1.complies("aaab")).isTrue();
+        assertThat(filter1.complies("aaabb")).isTrue();
+        assertThat(filter1.complies("abc")).isTrue();
+        assertThat(filter1.complies("bab")).isTrue();
+        assertThat(filter1.complies("xbab")).isTrue();
 
-		final RegExprFilter filter2 = new RegExprFilter(
-				".*schlemmerinfo\\.de.*");
-		filter2.setType(RegExprFilter.FIND);
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/eng/"));
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"));
-		Assert.assertTrue(filter2.complies("http://www.schlemmerinfo.de/deu"));
-		Assert.assertTrue(filter2.complies("www.schlemmerinfo.de"));
+        final RegExprFilter filter2 = new RegExprFilter(
+                ".*schlemmerinfo\\.de.*");
+        filter2.setType(RegExprFilter.FIND);
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/"))
+                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"))
+                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu"))
+                .isTrue();
+        assertThat(filter2.complies("www.schlemmerinfo.de")).isTrue();
 
-	}
+    }
 
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

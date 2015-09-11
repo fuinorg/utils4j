@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -59,7 +59,8 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
      * @param dir
      *            Directory where the preferences are stored.
      */
-    public PropertiesFilePreferences(final PropertiesFilePreferences parent, final File dir) {
+    public PropertiesFilePreferences(final PropertiesFilePreferences parent,
+            final File dir) {
         this(parent, dir, dir.getName());
     }
 
@@ -73,28 +74,24 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
      * @param name
      *            Name of the node.
      */
-    private PropertiesFilePreferences(final PropertiesFilePreferences parent, final File dir,
-            final String name) {
+    private PropertiesFilePreferences(final PropertiesFilePreferences parent,
+            final File dir, final String name) {
         super(parent, name);
         this.dir = dir;
         this.file = new PropertiesFile(new File(dir, FILENAME));
         this.removed = false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final AbstractPreferences childSpi(final String name) {
         final File childDir = new File(dir, name);
         return new PropertiesFilePreferences(this, childDir, name);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final String[] childrenNamesSpi() throws BackingStoreException {
         try {
-            final List childs = new ArrayList();
+            final List<String> childs = new ArrayList<>();
             final File[] files = dir.listFiles();
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
@@ -109,18 +106,18 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected void flushSpi() throws BackingStoreException {
         try {
             if (removed) {
                 file.delete();
                 dir.delete();
             } else {
-                final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                final SimpleDateFormat sdf = new SimpleDateFormat(
+                        "yyyy-MM-dd HH:mm:ss");
                 final String[] comments = new String[] { "DO NOT EDIT!",
-                        "Created by " + this.getClass().getName(), sdf.format(new Date()) };
+                        "Created by " + this.getClass().getName(),
+                        sdf.format(new Date()) };
                 mkdirIfNecessary();
                 file.save(comments, true);
             }
@@ -131,45 +128,36 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
 
     private void mkdirIfNecessary() throws BackingStoreException {
         if (!dir.exists() && !dir.mkdirs()) {
-            throw new BackingStoreException("Failed to create directory '" + dir + "'!");
+            throw new BackingStoreException("Failed to create directory '"
+                    + dir + "'!");
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final String getSpi(final String key) {
         loadIfNecessary();
         return file.get(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final String[] keysSpi() throws BackingStoreException {
         loadIfNecessary();
         return file.getKeyArray();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final void putSpi(final String key, final String value) {
         loadIfNecessary();
         file.put(key, value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final void removeNodeSpi() throws BackingStoreException {
         file.clear();
         removed = true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final void removeSpi(final String key) {
         loadIfNecessary();
         file.remove(key);
@@ -185,9 +173,7 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     protected final void syncSpi() throws BackingStoreException {
         if (dir.exists() && file.exists()) {
             try {

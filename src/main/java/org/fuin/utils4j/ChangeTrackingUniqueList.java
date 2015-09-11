@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
 
@@ -28,16 +28,19 @@ import java.util.ListIterator;
  * A wrapper for lists that keeps track of all changes made to the list since
  * construction. Only adding, replacing or deleting elements is tracked (not
  * changes inside the objects). Duplicates elements are not allowed for the list
- * - This is like a {@link java.util.Set} but at the same time ordered like a {@link List}
- * . It's also possible to revert all changes.
+ * - This is like a {@link java.util.Set} but at the same time ordered like a
+ * {@link List} . It's also possible to revert all changes.
+ * 
+ * @param <T>
+ *            Type of objects contained in the list.
  */
-public class ChangeTrackingUniqueList implements List, Taggable {
+public class ChangeTrackingUniqueList<T> implements List<T>, Taggable {
 
-    private final List list;
+    private final List<T> list;
 
-    private final List added;
+    private final List<T> added;
 
-    private final List deleted;
+    private final List<T> deleted;
 
     private boolean tagged;
 
@@ -52,12 +55,12 @@ public class ChangeTrackingUniqueList implements List, Taggable {
      *            class. There is no internal copy of the list - The reference
      *            itself is used.
      */
-    public ChangeTrackingUniqueList(final List list) {
+    public ChangeTrackingUniqueList(final List<T> list) {
         super();
         Utils4J.checkNotNull("list", list);
         this.list = list;
-        this.added = new ArrayList();
-        this.deleted = new ArrayList();
+        this.added = new ArrayList<>();
+        this.deleted = new ArrayList<>();
         tagged = true;
     }
 
@@ -81,7 +84,7 @@ public class ChangeTrackingUniqueList implements List, Taggable {
      * @return Elements that have been deleted since construction of this
      *         instance - Unmodifiable list!
      */
-    public final List getDeleted() {
+    public final List<T> getDeleted() {
         return Collections.unmodifiableList(deleted);
     }
 
@@ -93,7 +96,7 @@ public class ChangeTrackingUniqueList implements List, Taggable {
      * @return Elements that have been added since construction of this instance
      *         - Unmodifiable list!
      */
-    public final List getAdded() {
+    public final List<T> getAdded() {
         return Collections.unmodifiableList(added);
     }
 
@@ -109,7 +112,7 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         if (tagged) {
 
             // Remove the added entries
-            final Iterator addedIt = added.iterator();
+            final Iterator<T> addedIt = added.iterator();
             while (addedIt.hasNext()) {
                 final Object entry = addedIt.next();
                 list.remove(entry);
@@ -117,9 +120,9 @@ public class ChangeTrackingUniqueList implements List, Taggable {
             }
 
             // Add the removed entries
-            final Iterator removedIt = deleted.iterator();
+            final Iterator<T> removedIt = deleted.iterator();
             while (removedIt.hasNext()) {
-                final Object entry = removedIt.next();
+                final T entry = removedIt.next();
                 list.add(entry);
                 removedIt.remove();
             }
@@ -128,7 +131,7 @@ public class ChangeTrackingUniqueList implements List, Taggable {
 
     }
 
-    private void addIntern(final Object o) {
+    private void addIntern(final T o) {
         if (tagged) {
             final int idx = deleted.indexOf(o);
             if (idx == -1) {
@@ -139,12 +142,11 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final boolean add(final Object o) {
+    @Override
+    public final boolean add(final T o) {
         if (list.contains(o)) {
-            throw new IllegalArgumentException("The argument is already in the list: " + o);
+            throw new IllegalArgumentException(
+                    "The argument is already in the list: " + o);
         }
         final boolean b = list.add(o);
         if (b) {
@@ -153,23 +155,20 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         return b;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final void add(final int index, final Object o) {
+    @Override
+    public final void add(final int index, final T o) {
         if (list.contains(o)) {
-            throw new IllegalArgumentException("The argument is already in the list: " + o);
+            throw new IllegalArgumentException(
+                    "The argument is already in the list: " + o);
         }
         list.add(index, o);
         addIntern(o);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final boolean addAll(final Collection c) {
+    @Override
+    public final boolean addAll(final Collection<? extends T> c) {
         int count = 0;
-        final Iterator it = c.iterator();
+        final Iterator<? extends T> it = c.iterator();
         while (it.hasNext()) {
             if (add(it.next())) {
                 count++;
@@ -178,12 +177,10 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         return (count > 0);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final boolean addAll(final int index, final Collection c) {
+    @Override
+    public final boolean addAll(final int index, final Collection<? extends T> c) {
         int count = 0;
-        final Iterator it = c.iterator();
+        final Iterator<? extends T> it = c.iterator();
         while (it.hasNext()) {
             add(index + count, it.next());
             count++;
@@ -191,12 +188,10 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         return (count > 0);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final void clear() {
         for (int i = 0; i < list.size(); i++) {
-            final Object o = list.get(i);
+            final T o = list.get(i);
             if (tagged && !added.contains(o)) {
                 deleted.add(o);
             }
@@ -207,70 +202,52 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         list.clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final boolean contains(final Object o) {
         return list.contains(o);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final boolean containsAll(final Collection c) {
+    @Override
+    public final boolean containsAll(final Collection<?> c) {
         return list.containsAll(c);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final Object get(final int index) {
+    @Override
+    public final T get(final int index) {
         return list.get(index);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final int indexOf(final Object o) {
         return list.indexOf(o);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final boolean isEmpty() {
         return list.isEmpty();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final Iterator iterator() {
+    @Override
+    public final Iterator<T> iterator() {
         return list.iterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final int lastIndexOf(final Object o) {
         return list.lastIndexOf(o);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final ListIterator listIterator() {
+    @Override
+    public final ListIterator<T> listIterator() {
         return list.listIterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final ListIterator listIterator(final int index) {
+    @Override
+    public final ListIterator<T> listIterator(final int index) {
         return list.listIterator(index);
     }
 
-    private void removeIntern(final Object o) {
+    private void removeIntern(final T o) {
         if (tagged) {
             final int idx = added.indexOf(o);
             if (idx == -1) {
@@ -281,34 +258,29 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @SuppressWarnings("unchecked")
+    @Override
     public final boolean remove(final Object o) {
         final boolean b = list.remove(o);
         if (b) {
-            removeIntern(o);
+            removeIntern((T) o);
         }
         return b;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final Object remove(final int index) {
-        final Object o = list.remove(index);
+    @Override
+    public final T remove(final int index) {
+        final T o = (T) list.remove(index);
         if (o != null) {
             removeIntern(o);
         }
         return o;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final boolean removeAll(final Collection c) {
+    @Override
+    public final boolean removeAll(final Collection<?> c) {
         boolean changed = false;
-        final Iterator it = c.iterator();
+        final Iterator<?> it = c.iterator();
         while (it.hasNext()) {
             final Object o = it.next();
             if (remove(o)) {
@@ -318,10 +290,8 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         return changed;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final boolean retainAll(final Collection c) {
+    @Override
+    public final boolean retainAll(final Collection<?> c) {
         boolean changed = false;
         for (int i = list.size() - 1; i >= 0; i--) {
             final Object o = list.get(i);
@@ -333,84 +303,62 @@ public class ChangeTrackingUniqueList implements List, Taggable {
         return changed;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final Object set(final int index, final Object o) {
-        final Object removed = list.set(index, o);
+    @Override
+    public final T set(final int index, final T o) {
+        final T removed = list.set(index, o);
         addIntern(o);
         removeIntern(removed);
         return removed;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final int size() {
         return list.size();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final List subList(final int fromIndex, final int toIndex) {
+    @Override
+    public final List<T> subList(final int fromIndex, final int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final Object[] toArray() {
         return list.toArray();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final Object[] toArray(final Object[] a) {
+    @Override
+    public final <E> E[] toArray(final E[] a) {
         return list.toArray(a);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final String toString() {
         return list.toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final boolean hasChangedSinceTagging() {
         return isChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final boolean isTagged() {
         return tagged;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final void revertToTag() {
         revert();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final void tag() {
         if (!tagged) {
             tagged = true;
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final void untag() {
         if (tagged) {
             tagged = false;

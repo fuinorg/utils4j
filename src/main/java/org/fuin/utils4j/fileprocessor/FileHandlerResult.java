@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j.fileprocessor;
 
@@ -23,23 +23,27 @@ package org.fuin.utils4j.fileprocessor;
 public final class FileHandlerResult {
 
     /** Continue processing. */
-    public static final FileHandlerResult CONTINUE = new FileHandlerResult("CONTINUE");
+    public static final FileHandlerResult CONTINUE = new FileHandlerResult(
+            "CONTINUE");
 
     /** Skips all files and sub directories in the current one. */
-    public static final FileHandlerResult SKIP_ALL = new FileHandlerResult("SKIP_ALL");
+    public static final FileHandlerResult SKIP_ALL = new FileHandlerResult(
+            "SKIP_ALL");
 
     /** Skip all other files in the current directory. */
-    public static final FileHandlerResult SKIP_FILES = new FileHandlerResult("SKIP_FILES");
+    public static final FileHandlerResult SKIP_FILES = new FileHandlerResult(
+            "SKIP_FILES");
 
     /** Skip all other sub directories of the current one. */
-    public static final FileHandlerResult SKIP_SUBDIRS = new FileHandlerResult("SKIP_SUBDIRS");
+    public static final FileHandlerResult SKIP_SUBDIRS = new FileHandlerResult(
+            "SKIP_SUBDIRS");
 
     /** Stop searching. */
     public static final FileHandlerResult STOP = new FileHandlerResult("STOP");
 
     /** All enumeration instances. */
-    public static final FileHandlerResult[] INSTANCES = new FileHandlerResult[] { CONTINUE,
-            SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP };
+    public static final FileHandlerResult[] INSTANCES = new FileHandlerResult[] {
+            CONTINUE, SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP };
 
     private final String name;
 
@@ -80,9 +84,7 @@ public final class FileHandlerResult {
 
     // CHECKSTYLE:ON
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public final String toString() {
         return name;
     }

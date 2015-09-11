@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 Future Invent Informationsmanagement GmbH. All rights
- * reserved. <http://www.fuin.org/>
+ * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,15 +13,20 @@
  * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * along with this library. If not, see http://www.gnu.org/licenses/.
  */
 package org.fuin.utils4j;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.testng.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public final class RandomAccessFileInputStreamTest {
@@ -30,10 +35,8 @@ public final class RandomAccessFileInputStreamTest {
 
     private RandomAccessFileInputStream inputStream;
 
-    /**
-     * @testng.before-class
-     */
-    public final void beforeClass() throws IOException {
+    @BeforeClass
+    public static void beforeClass() throws IOException {
         final File dir = new File("src/test/resources/"
                 + Utils4J.getPackagePath(RandomAccessFileInputStreamTest.class));
         file = new File(dir, "RandomAccessFileInputStreamData.bin");
@@ -42,113 +45,91 @@ public final class RandomAccessFileInputStreamTest {
         }
     }
 
-    /**
-     * @testng.before-method
-     */
+    @Before
     public final void beforeMethod() throws FileNotFoundException {
         inputStream = new RandomAccessFileInputStream(file, "r");
     }
 
-    /**
-     * @testng.after-method
-     */
+    @After
     public final void afterMethod() throws IOException {
         inputStream.close();
         inputStream = null;
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testRead() throws IOException {
         for (int i = 0; i < 256; i++) {
-            Assert.assertEquals(inputStream.read(), i);
+            assertThat(inputStream.read()).isEqualTo(i);
         }
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testReadBytes() throws IOException {
         final byte[] buf = new byte[128];
         inputStream.read(buf);
         for (int i = 0; i < 128; i++) {
-            Assert.assertEquals(buf[i], i);
+            assertThat(buf[i]).isEqualTo((byte) i);
         }
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testReadBytesOffsetLength() throws IOException {
         final byte[] buf = new byte[128];
         inputStream.read(buf, 100, 28);
         for (int i = 0; i < 100; i++) {
-            Assert.assertEquals(buf[i], 0);
+            assertThat(buf[i]).isEqualTo((byte) 0);
         }
         for (int i = 0; i < 28; i++) {
-            Assert.assertEquals(buf[100 + i], i);
+            assertThat(buf[100 + i]).isEqualTo((byte) i);
         }
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testSkip() throws IOException {
-        Assert.assertEquals(inputStream.read(), 0);
+        assertThat(inputStream.read()).isEqualTo(0);
         inputStream.skip(1);
-        Assert.assertEquals(inputStream.read(), 2);
+        assertThat(inputStream.read()).isEqualTo(2);
         inputStream.skip(2);
-        Assert.assertEquals(inputStream.read(), 5);
+        assertThat(inputStream.read()).isEqualTo(5);
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testFileSize() throws IOException {
-        Assert.assertEquals(inputStream.fileSize(), 256);
+        assertThat(inputStream.fileSize()).isEqualTo(256);
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testAvailable() throws IOException {
         for (int i = 256; i >= 0; i--) {
-            Assert.assertEquals(inputStream.available(), i);
+            assertThat(inputStream.available()).isEqualTo(i);
             inputStream.read();
         }
-        Assert.assertEquals(inputStream.available(), 0);
+        assertThat(inputStream.available()).isEqualTo(0);
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testMarkSupported() {
-        Assert.assertEquals(inputStream.markSupported(), true);
+        assertThat(inputStream.markSupported()).isTrue();
     }
 
-    /**
-     * @testng.test expectedExceptions="java.io.IOException"
-     */
+    @Test(expected = IOException.class)
     public final void testResetWithoutMark() throws IOException {
         inputStream.reset();
     }
 
-    /**
-     * @testng.test
-     */
+    @Test
     public final void testMarkAndReset() throws IOException {
-        Assert.assertEquals(inputStream.read(), 0);
-        Assert.assertEquals(inputStream.read(), 1);
-        Assert.assertEquals(inputStream.read(), 2);
+        assertThat(inputStream.read()).isEqualTo(0);
+        assertThat(inputStream.read()).isEqualTo(1);
+        assertThat(inputStream.read()).isEqualTo(2);
         inputStream.mark(Integer.MAX_VALUE);
-        Assert.assertEquals(inputStream.read(), 3);
-        Assert.assertEquals(inputStream.read(), 4);
-        Assert.assertEquals(inputStream.read(), 5);
+        assertThat(inputStream.read()).isEqualTo(3);
+        assertThat(inputStream.read()).isEqualTo(4);
+        assertThat(inputStream.read()).isEqualTo(5);
         inputStream.reset();
-        Assert.assertEquals(inputStream.read(), 3);
-        Assert.assertEquals(inputStream.read(), 4);
-        Assert.assertEquals(inputStream.read(), 5);
+        assertThat(inputStream.read()).isEqualTo(3);
+        assertThat(inputStream.read()).isEqualTo(4);
+        assertThat(inputStream.read()).isEqualTo(5);
     }
 
 }
