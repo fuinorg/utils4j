@@ -3,9 +3,6 @@ utils4j
 
 A small Java library that contains several helpful utility classes.
 
-For more details and examples see:
-http://www.fuin.org/utils4j/index.html
-
 [![Build Status](https://fuin-org.ci.cloudbees.com/job/utils4j/badge/icon)](https://fuin-org.ci.cloudbees.com/job/utils4j/)
 [![Coverage Status](https://coveralls.io/repos/fuinorg/utils4j/badge.svg?branch=master)](https://coveralls.io/r/fuinorg/utils4j?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/)
@@ -207,4 +204,5 @@ Add the following to your .m2/settings.xml to enable snapshots in your Maven bui
     </snapshots>
 </repository>
 ```
+
  
