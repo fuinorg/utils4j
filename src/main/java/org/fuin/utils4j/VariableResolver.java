@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public final class VariableResolver {
 
-    private List<Variable> vars;
+    private List<? extends Variable> vars;
 
     private final Map<String, String> unresolved;
 
@@ -44,7 +44,7 @@ public final class VariableResolver {
      * @param vars
      *            List to use - May be <code>null</code>.
      */
-    public VariableResolver(final List<Variable> vars) {
+    public VariableResolver(final List<? extends Variable> vars) {
         if (vars == null) {
             this.vars = new ArrayList<Variable>();
         } else {
