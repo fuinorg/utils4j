@@ -17,9 +17,12 @@
  */
 package org.fuin.utils4j;
 
+import java.net.URL;
+
 /**
  * Represents a variable definition with name and value (both strings). Hash
- * code and equals are defined based on the name.
+ * code and equals are defined based on the name. Either value or URL has has to
+ * be defined.
  */
 public interface Variable {
 
@@ -36,5 +39,26 @@ public interface Variable {
      * @return Current value - Never <code>null</code>.
      */
     public String getValue();
+
+    /**
+     * Returns the URL.
+     * 
+     * @return URL - May be <code>null</code>.
+     */
+    public URL getURL();
+
+    /**
+     * Returns the encoding.
+     * 
+     * @return Encoding - May be <code>null</code>.
+     */
+    public String getEncoding();
+    
+    /**
+     * Returns the encoding or a default value of 'utf-8'.
+     * 
+     * @return Encoding - Never <code>null</code>.
+     */
+    public String getEncodingOrDefault();
 
 }

@@ -799,6 +799,28 @@ public class Utils4JTest {
 
     }
 
+    @Test 
+    public void testReadAsString() throws MalformedURLException {
+        
+        // TEST
+        final String text = Utils4J.readAsString(TEST_PROPERTIES_FILE.toURI().toURL(), "utf-8", 1024);
+        
+        // VERIFY
+        assertThat(text).isEqualTo("one=1\r\ntwo=2\r\nthree=3\r\n");
+        
+    }
+
+    @Test 
+    public void testUrl() throws MalformedURLException {
+        
+        // TEST
+        final URL url = Utils4J.url("http://www.fuin.org/");        
+        
+        // VERIFY
+        assertThat(url).isEqualTo(new URL("http://www.fuin.org/"));
+        
+    }
+    
     private static String getRoot() {
         try {
             return new File("/").getCanonicalPath();

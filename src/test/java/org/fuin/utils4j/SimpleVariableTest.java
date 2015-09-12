@@ -23,6 +23,9 @@ import static org.fuin.utils4j.JaxbUtils.marshal;
 import static org.fuin.utils4j.JaxbUtils.unmarshal;
 import static org.junit.Assert.fail;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -54,8 +57,63 @@ public class SimpleVariableTest {
     }
 
     @Test
-    public void testEqualsHashCode() {
-        EqualsVerifier.forClass(SimpleVariable.class)
+    public void testConstructorNameValue() {
+        
+        // TEST
+        final SimpleVariable testee = new SimpleVariable(NAME, VALUE);
+            
+        // VERIFY
+        assertThat(testee.getName()).isEqualTo(NAME);
+        assertThat(testee.getValue()).isEqualTo(VALUE);
+        assertThat(testee.getURL()).isNull();
+        assertThat(testee.getEncoding()).isNull();
+        assertThat(testee.getEncodingOrDefault()).isEqualTo("utf-8");
+        
+    }
+    
+    @Test
+    public void testConstructorUrl() {
+        
+        // PREPARE
+        final URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
+
+        // TEST
+        final SimpleVariable testee = new SimpleVariable(NAME, url);
+            
+        // VERIFY
+        assertThat(testee.getName()).isEqualTo(NAME);
+        assertThat(testee.getValue()).isEqualTo("one=1\r\ntwo=2\r\nthree=3\r\n");
+        assertThat(testee.getURL()).isEqualTo(url);
+        assertThat(testee.getEncoding()).isNull();
+        assertThat(testee.getEncodingOrDefault()).isEqualTo("utf-8");
+        
+    }
+
+    @Test
+    public void testConstructorUrlEncoding() {
+        
+        // PREPARE
+        final URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
+
+        // TEST
+        final SimpleVariable testee = new SimpleVariable(NAME, url, "ISO-8859-1");
+            
+        // VERIFY
+        assertThat(testee.getName()).isEqualTo(NAME);
+        assertThat(testee.getValue()).isEqualTo("one=1\r\ntwo=2\r\nthree=3\r\n");
+        assertThat(testee.getURL()).isEqualTo(url);
+        assertThat(testee.getEncoding()).isEqualTo("ISO-8859-1");
+        assertThat(testee.getEncodingOrDefault()).isEqualTo("ISO-8859-1");
+        
+    }
+    
+    @Test
+    public void testEqualsHashCode() throws MalformedURLException {
+        EqualsVerifier
+                .forClass(SimpleVariable.class)
+                .withPrefabValues(URL.class,
+                        new URL("http://www.fuin.org/text1.txt"),
+                        new URL("http://www.fuin.org/text2.txt"))
                 .suppress(Warning.NONFINAL_FIELDS, Warning.NULL_FIELDS)
                 .verify();
     }
@@ -85,7 +143,7 @@ public class SimpleVariableTest {
     @Test
     public void testNullValue() {
         try {
-            new SimpleVariable(NAME, null);
+            new SimpleVariable(NAME, (String) null);
             fail();
         } catch (final IllegalArgumentException ex) {
             assertThat(ex.getMessage()).isEqualTo(
@@ -93,6 +151,40 @@ public class SimpleVariableTest {
         }
     }
 
+    @Test
+    public void testNullURL() {
+        try {
+            new SimpleVariable(NAME, (URL) null);
+            fail();
+        } catch (final IllegalArgumentException ex) {
+            assertThat(ex.getMessage()).isEqualTo(
+                    "The argument 'url' cannot be null");
+        }
+    }
+
+    @Test
+    public void testNullURL2() {
+        try {
+            new SimpleVariable(NAME, (URL) null, "utf-8");
+            fail();
+        } catch (final IllegalArgumentException ex) {
+            assertThat(ex.getMessage()).isEqualTo(
+                    "The argument 'url' cannot be null");
+        }
+    }
+
+    @Test
+    public void testEmptyEncoding() throws MalformedURLException {
+        try {
+            new SimpleVariable(NAME, new URL("http://www.fuin.org/test.txt"),
+                    "");
+            fail();
+        } catch (final IllegalArgumentException ex) {
+            assertThat(ex.getMessage()).isEqualTo(
+                    "The argument 'encoding' cannot be empty");
+        }
+    }
+    
     @Test
     public final void testMarshalUnmarshalXML() throws Exception {
 

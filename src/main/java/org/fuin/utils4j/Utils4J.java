@@ -28,11 +28,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
+import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -96,7 +98,7 @@ public final class Utils4J {
      * 
      * @return Package path for the class.
      */
-    public static String getPackagePath(final Class clasz) {
+    public static String getPackagePath(final Class<?> clasz) {
         checkNotNull("clasz", clasz);
         return clasz.getPackage().getName().replace('.', '/');
     }
@@ -112,7 +114,7 @@ public final class Utils4J {
      * 
      * @return Resource URL.
      */
-    public static URL getResource(final Class clasz, final String name) {
+    public static URL getResource(final Class<?> clasz, final String name) {
         checkNotNull("clasz", clasz);
         checkNotNull("name", name);
         final String nameAndPath = "/" + getPackagePath(clasz) + "/" + name;
@@ -131,7 +133,7 @@ public final class Utils4J {
      * 
      * @return Properties.
      */
-    public static Properties loadProperties(final Class clasz,
+    public static Properties loadProperties(final Class<?> clasz,
             final String filename) {
         checkNotNull("clasz", clasz);
         checkNotNull("filename", filename);
@@ -282,7 +284,7 @@ public final class Utils4J {
         checkNotNull("className", className);
         checkNotNull("classLoader", classLoader);
         try {
-            final Class clasz = Class.forName(className, true, classLoader);
+            final Class<?> clasz = Class.forName(className, true, classLoader);
             return clasz.newInstance();
         } catch (final ClassNotFoundException e) {
             throw new RuntimeException("Unknown class!", e);
@@ -900,7 +902,7 @@ public final class Utils4J {
      * @return Textual signature of the method.
      */
     private static String getMethodSignature(final String returnType,
-            final String methodName, final Class[] argTypes) {
+            final String methodName, final Class<?>[] argTypes) {
         final StringBuffer sb = new StringBuffer();
         if (returnType != null) {
             sb.append(returnType);
@@ -941,13 +943,13 @@ public final class Utils4J {
      *             Invoking the method failed for some reason.
      */
     public static Object invoke(final Object obj, final String methodName,
-            final Class[] argTypes, final Object[] args)
+            final Class<?>[] argTypes, final Object[] args)
             throws InvokeMethodFailedException {
 
         checkNotNull("obj", obj);
         checkNotNull("methodName", methodName);
 
-        final Class[] argTypesIntern;
+        final Class<?>[] argTypesIntern;
         final Object[] argsIntern;
         if (argTypes == null) {
             argTypesIntern = new Class[] {};
@@ -1012,7 +1014,7 @@ public final class Utils4J {
 
     }
 
-    private static void checkSameLength(final Class[] argTypes,
+    private static void checkSameLength(final Class<?>[] argTypes,
             final Object[] args) {
         if (argTypes.length != args.length) {
             throw new IllegalArgumentException(
@@ -1074,10 +1076,10 @@ public final class Utils4J {
 
         final ZipFile zip = new ZipFile(zipFile);
         try {
-            final Enumeration enu = zip.entries();
+            final Enumeration<? extends ZipEntry> enu = zip.entries();
             while (enu.hasMoreElements()
                     && ((cancelable == null) || !cancelable.isCanceled())) {
-                final ZipEntry entry = (ZipEntry) enu.nextElement();
+                final ZipEntry entry = enu.nextElement();
                 final File file = new File(entry.getName());
                 if (file.isAbsolute()) {
                     throw new IllegalArgumentException(
@@ -1809,6 +1811,62 @@ public final class Utils4J {
             throw new RuntimeException(ex);
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Reads a given URL and returns the content as String.
+     * 
+     * @param url
+     *            URL to read.
+     * @param encoding
+     *            Encoding (like 'utf-8').
+     * @param bufSize
+     *            Size of the buffer to use.
+     * 
+     * @return File content as String.
+     */
+    public static String readAsString(final URL url, final String encoding,
+            final int bufSize) {
+        try {
+            final Reader reader = new InputStreamReader(url.openStream(),
+                    encoding);
+            try {
+                final StringBuilder sb = new StringBuilder();
+                final char[] cbuf = new char[bufSize];
+                int count;
+                while ((count = reader.read(cbuf)) > -1) {
+                    sb.append(String.valueOf(cbuf, 0, count));
+                }
+                return sb.toString();
+            } finally {
+                reader.close();
+            }
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Returns a given string as URL and supports "classpath:" scheme. A
+     * <code>null</code> argument returns <code>null</code>.
+     * 
+     * @param url
+     *            String to convert into an URL or <code>null</code>.
+     * 
+     * @return URL or <code>null</code>
+     */
+    public static URL url(final String url) {
+        if (url == null) {
+            return null;
+        }
+        try {
+            if (url.startsWith("classpath:")) {
+                return new URL(null, url, new ClasspathURLStreamHandler());
+            }
+            return new URL(url);
+        } catch (final MalformedURLException ex) {
+            throw new IllegalArgumentException("Invalid URL: " + url, ex);
         }
     }
 

@@ -8,7 +8,7 @@ Bundle-Name: Utils4J
 Bundle-SymbolicName: org.fuin.utils4j
 Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
  ny)
-Bundle-Version: 0.9.0
+Bundle-Version: 0.9.1.SNAPSHOT
 Export-Package: org.fuin.utils4j;version="0.9.0";uses:="javax.xml.bind,j
  avax.xml.bind.annotation,javax.xml.bind.annotation.adapters",org.fuin.u
  tils4j.filter;version="0.9.0",org.fuin.utils4j.fileprocessor;version="0

@@ -17,6 +17,11 @@
  */
 package org.fuin.utils4j;
 
+import static org.fuin.utils4j.Utils4J.readAsString;
+import static org.fuin.utils4j.Utils4J.url;
+
+import java.net.URL;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -35,6 +40,14 @@ public final class SimpleVariable implements Variable {
     @XmlAttribute(name = "value")
     private String value;
 
+    @XmlAttribute(name = "url")
+    private String urlStr;
+
+    @XmlAttribute(name = "encoding")
+    private String encoding;
+
+    private transient URL url;
+
     /**
      * Default constructor for JAXB.
      */
@@ -43,7 +56,7 @@ public final class SimpleVariable implements Variable {
     }
 
     /**
-     * Constructor with mandatory data.
+     * Constructor with value.
      * 
      * @param name
      *            Unique name - May not be <code>null</code> or empty.
@@ -59,6 +72,45 @@ public final class SimpleVariable implements Variable {
         this.value = value;
     }
 
+    /**
+     * Constructor with URL.
+     * 
+     * @param name
+     *            Unique name - May not be <code>null</code> or empty.
+     * @param url
+     *            URL that references a text resource - May not be
+     *            <code>null</code>.
+     */
+    public SimpleVariable(final String name, final URL url) {
+        this(name, url, null);
+    }
+
+    /**
+     * Constructor with URL.
+     * 
+     * @param name
+     *            Unique name - May not be <code>null</code> or empty.
+     * @param url
+     *            URL that references a text resource - May not be
+     *            <code>null</code>.
+     * @param encoding
+     *            Encoding of the text resource the URL points to - May be
+     *            <code>null</code> but not empty.
+     */
+    public SimpleVariable(final String name, final URL url,
+            final String encoding) {
+        super();
+        Utils4J.checkNotNull("name", name);
+        Utils4J.checkNotEmpty("name", name);
+        Utils4J.checkNotNull("url", url);
+        if (encoding != null) {
+            Utils4J.checkNotEmpty("encoding", encoding);
+        }
+        this.name = name;
+        this.urlStr = url.toString();
+        this.encoding = encoding;
+    }
+
     @Override
     public final String getName() {
         return name;
@@ -66,7 +118,39 @@ public final class SimpleVariable implements Variable {
 
     @Override
     public final String getValue() {
+        if ((value == null) && (urlStr != null)) {
+            value = readAsString(getURL(), getEncodingOrDefault(), 1024);
+            if (value == null) {
+                throw new IllegalStateException("Reading the URL returned null: " + urlStr);
+            }
+        }
         return value;
+    }
+
+    @Override
+    public final URL getURL() {
+        if (url == null) {
+            try {
+                url = url(urlStr);
+            } catch (final IllegalArgumentException ex) {
+                throw new RuntimeException("Variable '" + name
+                        + "' has a wrong URL", ex);
+            }
+        }
+        return url;
+    }
+
+    @Override
+    public final String getEncoding() {
+        return encoding;
+    }
+
+    @Override
+    public final String getEncodingOrDefault() {
+        if (encoding == null) {
+            return "utf-8";
+        }
+        return encoding;
     }
 
     @Override
