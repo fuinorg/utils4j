@@ -81,15 +81,15 @@ public abstract class ComparableFilter implements Filter {
     private boolean simpleCompareTo(final Comparable propValue) {
         final int result = propValue.compareTo(constValue);
         if (operator == Operator.GT) {
-            return (result == 1);
+            return (result > 0);
         } else if (operator == Operator.GTE) {
-            return ((result == 1) || (result == 0));
+            return (result >= 0);
         } else if (operator == Operator.EQ) {
             return (result == 0);
         } else if (operator == Operator.LT) {
-            return (result == -1);
+            return (result < 0);
         } else if (operator == Operator.LTE) {
-            return ((result == -1) || (result == 0));
+            return (result <= 0);
         } else {
             throw new IllegalStateException("Unknown operator '" + operator + "'!");
         }

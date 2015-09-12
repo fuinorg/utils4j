@@ -117,16 +117,6 @@ public class SimpleVariableTest {
     }
 
     @Test
-    public void testNullName() {
-        try {
-            new SimpleVariable(null, VALUE);
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("The argument 'name' cannot be null");
-        }
-    }
-
-    @Test
     public void testEmptyName() {
         try {
             new SimpleVariable("", VALUE);
@@ -143,26 +133,6 @@ public class SimpleVariableTest {
             fail();
         } catch (final IllegalArgumentException ex) {
             assertThat(ex.getMessage()).isEqualTo("The argument 'value' cannot be null");
-        }
-    }
-
-    @Test
-    public void testNullURL() {
-        try {
-            new SimpleVariable(NAME, (URL) null);
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("The argument 'url' cannot be null");
-        }
-    }
-
-    @Test
-    public void testNullURL2() {
-        try {
-            new SimpleVariable(NAME, (URL) null, "utf-8");
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("The argument 'url' cannot be null");
         }
     }
 
