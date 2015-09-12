@@ -24,7 +24,7 @@ URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 A full example can be found here: [ClasspathURLExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ClasspathURLExample.java)
 
 ###Variable resolver
-Resolves variable references in a map and fails on cycles.
+Resolves variable references in a map and prevents on cycles.
 ```
 a=1
 b=${a}/2
