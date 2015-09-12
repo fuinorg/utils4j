@@ -22,8 +22,8 @@ import static org.assertj.core.api.StrictAssertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
 import static org.fuin.utils4j.VariableResolver.references;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class VariableResolverTest {
     public void testEmptyConstruction() {
 
         // PREPARE & TEST
-        final VariableResolver testee = new VariableResolver(new ArrayList<Variable>());
+        final VariableResolver testee = new VariableResolver(new HashMap<String, String>());
 
         // VERIFY
         assertThat(testee.getDepth()).isEmpty();
@@ -64,10 +64,10 @@ public class VariableResolverTest {
     public void testOneLevel() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new SimpleVariable("a", "1"));
-        vars.add(new SimpleVariable("b", "2"));
-        vars.add(new SimpleVariable("c", "3"));
+        final Map<String, String> vars = new HashMap<>();
+        vars.put("a", "1");
+        vars.put("b", "2");
+        vars.put("c", "3");
 
         // TEST
         final VariableResolver testee = new VariableResolver(vars);
@@ -83,9 +83,9 @@ public class VariableResolverTest {
     public void testTwoLevels() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new SimpleVariable("a", "a${b}"));
-        vars.add(new SimpleVariable("b", "2"));
+        final Map<String, String> vars = new HashMap<>();
+        vars.put("a", "a${b}");
+        vars.put("b", "2");
 
         // TEST
         final VariableResolver testee = new VariableResolver(vars);
@@ -101,10 +101,10 @@ public class VariableResolverTest {
     public void testThreeLevels() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new SimpleVariable("a", "1${b}"));
-        vars.add(new SimpleVariable("b", "2${c}"));
-        vars.add(new SimpleVariable("c", "3"));
+        final Map<String, String> vars = new HashMap<>();
+        vars.put("a", "1${b}");
+        vars.put("b", "2${c}");
+        vars.put("c", "3");
 
         // TEST
         final VariableResolver testee = new VariableResolver(vars);
@@ -121,11 +121,11 @@ public class VariableResolverTest {
     public void testFourLevels() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new SimpleVariable("a", "1${b}"));
-        vars.add(new SimpleVariable("b", "2${c}"));
-        vars.add(new SimpleVariable("c", "3${d}"));
-        vars.add(new SimpleVariable("d", "4"));
+        final Map<String, String> vars = new HashMap<>();
+        vars.put("a", "1${b}");
+        vars.put("b", "2${c}");
+        vars.put("c", "3${d}");
+        vars.put("d", "4");
 
         // TEST
         final VariableResolver testee = new VariableResolver(vars);
@@ -143,9 +143,9 @@ public class VariableResolverTest {
     public void testCycleOneLevel() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new SimpleVariable("a", "${b}"));
-        vars.add(new SimpleVariable("b", "${a}"));
+        final Map<String, String> vars = new HashMap<>();
+        vars.put("a", "${b}");
+        vars.put("b", "${a}");
 
         // TEST
         try {
@@ -160,10 +160,10 @@ public class VariableResolverTest {
     public void testCycleTwoLevels() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new SimpleVariable("a", "${b}"));
-        vars.add(new SimpleVariable("b", "${c}"));
-        vars.add(new SimpleVariable("c", "${a}"));
+        final Map<String, String> vars = new HashMap<>();
+        vars.put("a", "${b}");
+        vars.put("b", "${c}");
+        vars.put("c", "${a}");
 
         // TEST
         try {
@@ -178,9 +178,9 @@ public class VariableResolverTest {
     public void testUnresolved() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new SimpleVariable("a", "1${b}"));
-        vars.add(new SimpleVariable("b", "${c}"));
+        final Map<String, String> vars = new HashMap<>();
+        vars.put("a", "1${b}");
+        vars.put("b", "${c}");
 
         // TEST
         final VariableResolver testee = new VariableResolver(vars);

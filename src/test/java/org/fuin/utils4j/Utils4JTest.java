@@ -740,7 +740,7 @@ public class Utils4JTest {
 
     @Test
     public void testReplaceCrLfTab() {
-        
+
         assertThat(Utils4J.replaceCrLfTab(null)).isNull();
         assertThat(Utils4J.replaceCrLfTab("")).isEqualTo("");
         assertThat(Utils4J.replaceCrLfTab("\r")).isEqualTo("\r");
@@ -750,12 +750,12 @@ public class Utils4JTest {
         assertThat(Utils4J.replaceCrLfTab("\t")).isEqualTo("\t");
         assertThat(Utils4J.replaceCrLfTab("\\t")).isEqualTo("\t");
         assertThat(Utils4J.replaceCrLfTab("a\\nb\\nc\\n")).isEqualTo("a\nb\nc\n");
-        
+
     }
-    
+
     @Test
     public void testDateToFileTime() {
-        
+
         // PREPARE
         final Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 1601);
@@ -766,29 +766,12 @@ public class Utils4JTest {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         cal.setTimeZone(TimeZone.getTimeZone("GMT"));
-        
+
         // TEST & VERIFY
         assertThat(Utils4J.dateToFileTime(cal.getTime())).isEqualTo(0);
-        
+
     }
-    
-    @Test
-    public void testSerializeDeserialize() {
-        
-        // PREPARE
-        final SimpleVariable var = new SimpleVariable("a", "1");
-        
-        // TEST
-        final byte[] data = Utils4J.serialize(var);
-        final SimpleVariable copy = Utils4J.deserialize(data);
-        
-        // VERIFY
-        assertThat(copy).isEqualTo(var);
-        assertThat(copy.getName()).isEqualTo(var.getName());
-        assertThat(copy.getValue()).isEqualTo(var.getValue());
-        
-    }    
-    
+
     private static String getRoot() {
         try {
             return new File("/").getCanonicalPath();

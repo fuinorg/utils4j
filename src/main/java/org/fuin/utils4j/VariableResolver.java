@@ -30,8 +30,6 @@ import java.util.Set;
  */
 public final class VariableResolver {
 
-    private List<? extends Variable> vars;
-
     private final Map<String, String> unresolved;
 
     private final Map<String, Integer> depth;
@@ -39,20 +37,16 @@ public final class VariableResolver {
     private final Map<String, String> resolved;
 
     /**
-     * Constructor with variable list.
+     * Constructor with variable map.
      * 
-     * @param vars
-     *            List to use - May be <code>null</code>.
+     * @param unresolved
+     *            Map to use - May be <code>null</code>.
      */
-    public VariableResolver(final List<? extends Variable> vars) {
-        if (vars == null) {
-            this.vars = new ArrayList<Variable>();
+    public VariableResolver(final Map<String, String> unresolved) {
+        if (unresolved == null) {
+            this.unresolved = new HashMap<>();
         } else {
-            this.vars = vars;
-        }
-        unresolved = new HashMap<String, String>();
-        for (final Variable var : this.vars) {
-            unresolved.put(var.getName(), var.getValue());
+            this.unresolved = new HashMap<String, String>(unresolved);
         }
         depth = new HashMap<String, Integer>();
         resolved = new HashMap<String, String>();
@@ -61,17 +55,23 @@ public final class VariableResolver {
 
     private void resolve() {
         int max = 0;
-        for (final Variable var : vars) {
-            final int d = resolve(var.getName(), var.getValue(), new ArrayList<String>());
+        Iterator<String> it = unresolved.keySet().iterator();
+        while (it.hasNext()) {
+            final String name = it.next();
+            final String value = unresolved.get(name);
+            final int d = resolve(name, value, new ArrayList<String>());
             if (d > max) {
                 max = d;
             }
         }
 
         for (int d = 0; d <= max; d++) {
-            for (final Variable var : vars) {
-                if (depth.get(var.getName()).intValue() == d) {
-                    resolved.put(var.getName(), replaceVars(var.getValue(), resolved));
+            it = unresolved.keySet().iterator();
+            while (it.hasNext()) {
+                final String name = it.next();
+                final String value = unresolved.get(name);
+                if (depth.get(name).intValue() == d) {
+                    resolved.put(name, replaceVars(value, resolved));
                 }
             }
         }

@@ -17,13 +17,10 @@
  */
 package org.fuin.utils4j.examples;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
-import org.fuin.utils4j.SimpleVariable;
-import org.fuin.utils4j.Variable;
 import org.fuin.utils4j.VariableResolver;
 
 /**
@@ -41,11 +38,11 @@ public class VariableResolverExample {
     public static void main(String[] args) {
 
         // Define some variables
-        List<Variable> vars = new ArrayList<>();
-        vars.add(new SimpleVariable("a", "1"));
-        vars.add(new SimpleVariable("b", "${a}/2"));
-        vars.add(new SimpleVariable("c", "${b}/3"));
-        vars.add(new SimpleVariable("d", "${a}/${e}")); // Does not exist
+        Map<String, String> vars = new HashMap<>();
+        vars.put("a", "1");
+        vars.put("b", "${a}/2");
+        vars.put("c", "${b}/3");
+        vars.put("d", "${a}/${e}"); // Does not exist
 
         // Create a resolver
         VariableResolver resolver = new VariableResolver(vars);
