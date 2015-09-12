@@ -33,20 +33,7 @@ Utils4J.unzip(zipFile, Utils4J.getTempDir());
 ```
 A full example can be found here: [ZipDirExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ZipDirExample.java)
 
-###Tracking changes of a map
-This is a wrapper for maps that keeps track of all changes made to the map. This means adding, replacing or deleting elements is tracked - not the changes to the objects itself. It's also possible to revert (undo) all changes made to the map. 
-```Java
-Map<String, Integer> map = new HashMap<>();
-ChangeTrackingMap<String, Integer> trackingMap = new ChangeTrackingMap<>(map);
-System.out.println(trackingMap.isChanged());
-System.out.println(trackingMap.getAdded());
-System.out.println(trackingMap.getChanged());
-System.out.println(trackingMap.getRemoved());
-trackingMap.revert();
-```
-A full example can be found here: [ChangeTrackingMapExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingMapExample.java)
-
-###Tracking changes of a list
+###Tracking changes of a list / map
 This is a wrapper for lists that keeps track of all changes made to the list. This means adding, replacing or deleting elements is tracked - not the changes to the objects itself. It's also possible to revert (undo) all changes made to the list. A restriction is that no duplicate elements are allowed in the list.
 ```Java
 List<String> list = new ArrayList<>();
@@ -56,7 +43,8 @@ System.out.println(trackingList.getDeleted());
 System.out.println(trackingList.getAdded());
 trackingList.revert();
 ```
-A full example can be found here: [ChangeTrackingUniqueListExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingUniqueListExample.java)
+A list example can be found here: [ChangeTrackingUniqueListExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingUniqueListExample.java)
+A map example can be found here: [ChangeTrackingMapExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingMapExample.java)
 
 ###Easy file locking
 ```Java
