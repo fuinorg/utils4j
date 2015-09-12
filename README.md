@@ -15,7 +15,7 @@ A small Java library that contains several helpful utility classes.
 
 * * *
 
-##Examples
+##Features
 
 ###URL support for "classpath:" scheme
 ```Java
