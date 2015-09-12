@@ -20,3 +20,4 @@
  * A tiny framework for filtering Java objects.
  */
 package org.fuin.utils4j.filter;
+

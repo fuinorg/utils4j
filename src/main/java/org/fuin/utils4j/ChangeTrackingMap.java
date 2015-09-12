@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A wrapper for maps that keeps track of all changes made to the map since
- * construction. Only adding, replacing or deleting elements is tracked (not
- * changes inside the objects). It's also possible to revert all changes.
+ * A wrapper for maps that keeps track of all changes made to the map since construction. Only adding,
+ * replacing or deleting elements is tracked (not changes inside the objects). It's also possible to revert
+ * all changes.
  * 
  * @param <K>
  *            the type of keys maintained by this map
@@ -47,15 +47,13 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
     private boolean tagged;
 
     /**
-     * Constructor with covered map. The map is tagged at construction time -
-     * This means {@link #isTagged()} will return <code>true</code> without
-     * calling {@link #tag()} first. If this behavior is not wanted you can call
-     * {@link #untag()} after constructing the map.
+     * Constructor with covered map. The map is tagged at construction time - This means {@link #isTagged()}
+     * will return <code>true</code> without calling {@link #tag()} first. If this behavior is not wanted you
+     * can call {@link #untag()} after constructing the map.
      * 
      * @param map
-     *            Wrapped map - Be aware that this map will be changed by this
-     *            class. There is no internal copy of the map - The reference
-     *            itself is used.
+     *            Wrapped map - Be aware that this map will be changed by this class. There is no internal
+     *            copy of the map - The reference itself is used.
      */
     public ChangeTrackingMap(final Map<K, V> map) {
         super();
@@ -68,47 +66,39 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
     }
 
     /**
-     * Returns if the list has changed. If the map is not in tag mode (this
-     * means {@link #isTagged()} returns <code>true</code>) this method will
-     * always return <code>false</code>.
+     * Returns if the list has changed. If the map is not in tag mode (this means {@link #isTagged()} returns
+     * <code>true</code>) this method will always return <code>false</code>.
      * 
-     * @return If elements have been added or deleted <code>true</code> else
-     *         <code>false</code>.
+     * @return If elements have been added or deleted <code>true</code> else <code>false</code>.
      */
     public final boolean isChanged() {
-        return (added.size() > 0) || (changed.size() > 0)
-                || (removed.size() > 0);
+        return (added.size() > 0) || (changed.size() > 0) || (removed.size() > 0);
     }
 
     /**
-     * Returns removed elements. If the map is not in tag mode (this means
-     * {@link #isTagged()} returns <code>true</code>) this method will always
-     * return an empty map.
+     * Returns removed elements. If the map is not in tag mode (this means {@link #isTagged()} returns
+     * <code>true</code>) this method will always return an empty map.
      * 
-     * @return Elements that have been deleted since construction of this
-     *         instance - Unmodifiable map!
+     * @return Elements that have been deleted since construction of this instance - Unmodifiable map!
      */
     public final Map<K, V> getRemoved() {
         return Collections.unmodifiableMap(removed);
     }
 
     /**
-     * Returns changed elements. If the map is not in tag mode (this means
-     * {@link #isTagged()} returns <code>true</code>) this method will always
-     * return an empty map.
+     * Returns changed elements. If the map is not in tag mode (this means {@link #isTagged()} returns
+     * <code>true</code>) this method will always return an empty map.
      * 
-     * @return Elements that have been changed since construction of this
-     *         instance - Unmodifiable map!
+     * @return Elements that have been changed since construction of this instance - Unmodifiable map!
      */
     public final Map<K, V> getChanged() {
         return Collections.unmodifiableMap(changed);
     }
 
     /**
-     * Roll back all changes made since construction. This is the same function
-     * ad {@link #revertToTag()}. If the map is not in tag mode ( this means
-     * {@link #isTagged()} returns <code>true</code>) this method will do
-     * nothing.
+     * Roll back all changes made since construction. This is the same function ad {@link #revertToTag()}. If
+     * the map is not in tag mode ( this means {@link #isTagged()} returns <code>true</code>) this method will
+     * do nothing.
      */
     public final void revert() {
 
@@ -145,12 +135,10 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
     }
 
     /**
-     * Returns added elements. If the map is not in tag mode (this means
-     * {@link #isTagged()} returns <code>true</code>) this method will always
-     * return an empty map.
+     * Returns added elements. If the map is not in tag mode (this means {@link #isTagged()} returns
+     * <code>true</code>) this method will always return an empty map.
      * 
-     * @return Elements that have been added since construction of this instance
-     *         - Unmodifiable map!
+     * @return Elements that have been added since construction of this instance - Unmodifiable map!
      */
     public final Map<K, V> getAdded() {
         return Collections.unmodifiableMap(added);

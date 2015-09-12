@@ -176,8 +176,7 @@ public abstract class ListFilter implements Filter {
     }
 
     /**
-     * Set a list of subfilters. A NULL argument will simply clear the internal.
-     * list.
+     * Set a list of subfilters. A NULL argument will simply clear the internal. list.
      * 
      * @param newList
      *            List with filters to be used

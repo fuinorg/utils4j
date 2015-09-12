@@ -35,14 +35,11 @@ public final class ZipDirExample {
      * Private constructor.
      */
     private ZipDirExample() {
-        throw new UnsupportedOperationException(
-                "It's not allowed to create an instance of this class!");
+        throw new UnsupportedOperationException("It's not allowed to create an instance of this class!");
     }
 
-    private static void copyResourceToFile(final String resource,
-            final File target) throws IOException {
-        final InputStream in = ZipDirExample.class
-                .getResourceAsStream(resource);
+    private static void copyResourceToFile(final String resource, final File target) throws IOException {
+        final InputStream in = ZipDirExample.class.getResourceAsStream(resource);
         try {
             final OutputStream out = new FileOutputStream(target);
             try {
@@ -54,7 +51,7 @@ public final class ZipDirExample {
             in.close();
         }
     }
-    
+
     /**
      * Executes the example.
      * 
@@ -68,7 +65,7 @@ public final class ZipDirExample {
 
         // Create a directory named 'mydir' in the tmp directory
         final File zipDir = new File(Utils4J.getTempDir(), "mydir");
-        
+
         // Unpack example ZIP file
         final File zipFile = File.createTempFile("ZipDirExample", ".zip");
         try {
@@ -94,5 +91,5 @@ public final class ZipDirExample {
         // z.txt
 
     }
-    
+
 }

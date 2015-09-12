@@ -34,22 +34,20 @@ public class TokenPropertyFilter extends PropertyFilter {
      * @param newSeparators
      *            Separators
      */
-    public TokenPropertyFilter(final String newPropertyName,
-            final String constValue, final String newSeparators) {
+    public TokenPropertyFilter(final String newPropertyName, final String constValue,
+            final String newSeparators) {
         super(newPropertyName);
         this.filter = new TokenFilter(constValue, newSeparators);
     }
 
     @Override
     protected final String[] createGetterNames(final String property) {
-        return new String[] { "get" + Character.toUpperCase(property.charAt(0))
-                + property.substring(1) };
+        return new String[] { "get" + Character.toUpperCase(property.charAt(0)) + property.substring(1) };
     }
 
     @Override
     public final boolean complies(final Object obj) {
-        final String value = (String) this.getProperty(obj,
-                this.getPropertyName());
+        final String value = (String) this.getProperty(obj, this.getPropertyName());
         return filter.complies(value);
     }
 

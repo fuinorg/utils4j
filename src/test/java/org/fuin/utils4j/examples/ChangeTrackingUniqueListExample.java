@@ -32,11 +32,10 @@ public final class ChangeTrackingUniqueListExample {
      * Private constructor.
      */
     private ChangeTrackingUniqueListExample() {
-        throw new UnsupportedOperationException(
-                "It's not allowed to create an instance of this class!");
+        throw new UnsupportedOperationException("It's not allowed to create an instance of this class!");
     }
 
-    private static void printList(List<String> list) {
+    private static void printList(final List<String> list) {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
         }
@@ -52,7 +51,7 @@ public final class ChangeTrackingUniqueListExample {
     public static void main(final String[] args) {
 
         // Create a standard string list
-        List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
 
         // Add some initial content
         list.add("one");
@@ -60,8 +59,7 @@ public final class ChangeTrackingUniqueListExample {
         list.add("three");
 
         // Wrap the list to track changes
-        final ChangeTrackingUniqueList<String> trackingList = new ChangeTrackingUniqueList<>(
-                list);
+        final ChangeTrackingUniqueList<String> trackingList = new ChangeTrackingUniqueList<>(list);
 
         // Add and remove some items
         trackingList.add("four");

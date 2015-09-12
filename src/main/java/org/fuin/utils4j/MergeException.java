@@ -39,8 +39,7 @@ public final class MergeException extends Exception {
      *            List of one or more problems.
      */
     public MergeException(final File file, final Problem[] problems) {
-        super("The properties file '" + file
-                + "' was modified by someone else " + "and cannot be merged!");
+        super("The properties file '" + file + "' was modified by someone else " + "and cannot be merged!");
 
         Utils4J.checkNotNull("file", file);
         this.file = file;
@@ -91,8 +90,7 @@ public final class MergeException extends Exception {
          * @param fileProp
          *            Property from file.
          */
-        public Problem(final String text, final Property prop,
-                final Property fileProp) {
+        public Problem(final String text, final Property prop, final Property fileProp) {
             super();
 
             Utils4J.checkNotNull("text", text);
@@ -135,8 +133,7 @@ public final class MergeException extends Exception {
 
         @Override
         public final String toString() {
-            return text + " - Property: {" + prop + "}, File Property: {"
-                    + fileProp + "}";
+            return text + " - Property: {" + prop + "}, File Property: {" + fileProp + "}";
         }
 
     }

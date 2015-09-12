@@ -36,16 +36,15 @@ public class StringPropertyFilter extends PropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public StringPropertyFilter(final String newPropertyName,
-            final StringFilter.Operator newOperator, final String constValue) {
+    public StringPropertyFilter(final String newPropertyName, final StringFilter.Operator newOperator,
+            final String constValue) {
         super(newPropertyName);
         this.filter = new StringFilter(newOperator, constValue);
     }
 
     @Override
     protected final String[] createGetterNames(final String property) {
-        return new String[] { "get" + Character.toUpperCase(property.charAt(0))
-                + property.substring(1) };
+        return new String[] { "get" + Character.toUpperCase(property.charAt(0)) + property.substring(1) };
     }
 
     /**
@@ -58,16 +57,15 @@ public class StringPropertyFilter extends PropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public StringPropertyFilter(final String newPropertyName,
-            final String newOperator, final String constValue) {
+    public StringPropertyFilter(final String newPropertyName, final String newOperator,
+            final String constValue) {
         super(newPropertyName);
         this.filter = new StringFilter(newOperator, constValue);
     }
 
     @Override
     public final boolean complies(final Object obj) {
-        final String value = (String) this.getProperty(obj,
-                this.getPropertyName());
+        final String value = (String) this.getProperty(obj, this.getPropertyName());
         return filter.complies(value);
     }
 

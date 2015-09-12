@@ -42,8 +42,7 @@ public final class Person {
      * @param unknown
      *            Is the person known?
      */
-    public Person(final int id, final String firstName, final String lastName,
-            final boolean unknown) {
+    public Person(final int id, final String firstName, final String lastName, final boolean unknown) {
         super();
         this.id = id;
         this.firstName = firstName;

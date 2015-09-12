@@ -23,21 +23,17 @@ import java.util.prefs.Preferences;
 import java.util.prefs.PreferencesFactory;
 
 /**
- * A factory for creating root nodes using the
- * <code>PropertiesFilePreferences</code> implementation.
+ * A factory for creating root nodes using the <code>PropertiesFilePreferences</code> implementation.
  */
-public final class PropertiesFilePreferencesFactory implements
-        PreferencesFactory {
+public final class PropertiesFilePreferencesFactory implements PreferencesFactory {
 
     /**
-     * System property key used containing the path and name of the "system"
-     * preferences directory.
+     * System property key used containing the path and name of the "system" preferences directory.
      */
     public static final String SYSTEM_PREF_DIR = "PropertiesFilePreferences.SystemDir";
 
     /**
-     * System property key used containing the path and name of the "user"
-     * preferences directory.
+     * System property key used containing the path and name of the "user" preferences directory.
      */
     public static final String USER_PREF_DIR = "PropertiesFilePreferences.UserDir";
 
@@ -53,21 +49,18 @@ public final class PropertiesFilePreferencesFactory implements
      * Default constructor.
      */
     public PropertiesFilePreferencesFactory() {
-        this(System.getProperty(SYSTEM_PREF_DIR), System
-                .getProperty(USER_PREF_DIR));
+        this(System.getProperty(SYSTEM_PREF_DIR), System.getProperty(USER_PREF_DIR));
     }
 
     /**
-     * Constructor with path and filenames of the system and user root
-     * directories.
+     * Constructor with path and filenames of the system and user root directories.
      * 
      * @param systemPrefDir
      *            Path and name of the "system" preferences directory.
      * @param userPrefDir
      *            Path and name of the "user" preferences directory.
      */
-    public PropertiesFilePreferencesFactory(final String systemPrefDir,
-            final String userPrefDir) {
+    public PropertiesFilePreferencesFactory(final String systemPrefDir, final String userPrefDir) {
         super();
         this.systemPrefDir = systemPrefDir;
         this.userPrefDir = userPrefDir;
@@ -76,16 +69,15 @@ public final class PropertiesFilePreferencesFactory implements
     @Override
     public final synchronized Preferences systemRoot() {
         if (systemRoot == null) {
-            systemRoot = new PropertiesFilePreferences(getValidDir(
-                    SYSTEM_PREF_DIR, systemPrefDir));
+            systemRoot = new PropertiesFilePreferences(getValidDir(SYSTEM_PREF_DIR, systemPrefDir));
             // Always sync at shutdown
             Runtime.getRuntime().addShutdownHook(new Thread() {
+                @Override
                 public void run() {
                     try {
                         systemRoot.flush();
                     } catch (final BackingStoreException ex) {
-                        System.err
-                                .println("Failed to save 'systemRoot' preferences!");
+                        System.err.println("Failed to save 'systemRoot' preferences!");
                         ex.printStackTrace(System.err);
                     }
                 }
@@ -97,16 +89,15 @@ public final class PropertiesFilePreferencesFactory implements
     @Override
     public final synchronized Preferences userRoot() {
         if (userRoot == null) {
-            userRoot = new PropertiesFilePreferences(getValidDir(USER_PREF_DIR,
-                    userPrefDir));
+            userRoot = new PropertiesFilePreferences(getValidDir(USER_PREF_DIR, userPrefDir));
             // Always sync at shutdown
             Runtime.getRuntime().addShutdownHook(new Thread() {
+                @Override
                 public void run() {
                     try {
                         userRoot.flush();
                     } catch (final BackingStoreException ex) {
-                        System.err
-                                .println("Failed to save 'userRoot' preferences!");
+                        System.err.println("Failed to save 'userRoot' preferences!");
                         ex.printStackTrace(System.err);
                     }
                 }
@@ -116,8 +107,8 @@ public final class PropertiesFilePreferencesFactory implements
     }
 
     /**
-     * Checks if the system variable is set and is a valid directory. If this is
-     * not the case a {@link RuntimeException} will be thrown.
+     * Checks if the system variable is set and is a valid directory. If this is not the case a
+     * {@link RuntimeException} will be thrown.
      * 
      * @param varName
      *            Name of the system variable.
@@ -128,8 +119,7 @@ public final class PropertiesFilePreferencesFactory implements
      */
     private File getValidDir(final String varName, final String dirName) {
         if (dirName == null) {
-            throw new RuntimeException("The system variable '" + varName
-                    + "' is not set!");
+            throw new RuntimeException("The system variable '" + varName + "' is not set!");
         }
         final File dir = new File(dirName);
         if (!dir.exists()) {
@@ -138,8 +128,7 @@ public final class PropertiesFilePreferencesFactory implements
         }
         if (!dir.isDirectory()) {
             throw new IllegalArgumentException("The name '" + dir
-                    + "' is not a directory! [system variable '" + varName
-                    + "']");
+                    + "' is not a directory! [system variable '" + varName + "']");
         }
         return dir;
     }

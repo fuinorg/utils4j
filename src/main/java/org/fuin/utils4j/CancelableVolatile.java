@@ -18,8 +18,8 @@
 package org.fuin.utils4j;
 
 /**
- * A simple <code>Cancelable</code> implementation that can be used to
- * synchronize a cancel request between threads without locking.
+ * A simple <code>Cancelable</code> implementation that can be used to synchronize a cancel request between
+ * threads without locking.
  */
 public class CancelableVolatile implements Cancelable {
 

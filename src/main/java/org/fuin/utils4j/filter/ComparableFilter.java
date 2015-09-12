@@ -36,8 +36,7 @@ public abstract class ComparableFilter implements Filter {
      * @param constValue
      *            Value to compare with.
      */
-    public ComparableFilter(final Operator newOperator,
-            final Comparable constValue) {
+    public ComparableFilter(final Operator newOperator, final Comparable constValue) {
         super();
         this.operator = newOperator;
         this.constValue = constValue;
@@ -92,8 +91,7 @@ public abstract class ComparableFilter implements Filter {
         } else if (operator == Operator.LTE) {
             return ((result == -1) || (result == 0));
         } else {
-            throw new IllegalStateException("Unknown operator '" + operator
-                    + "'!");
+            throw new IllegalStateException("Unknown operator '" + operator + "'!");
         }
     }
 
@@ -121,8 +119,7 @@ public abstract class ComparableFilter implements Filter {
         public static final Operator GTE = new Operator("GTE", ">=");
 
         /** List of all known instances. */
-        public static final Operator[] INSTANCES = new Operator[] { LT, LTE,
-                EQ, GT, GTE };
+        public static final Operator[] INSTANCES = new Operator[] { LT, LTE, EQ, GT, GTE };
 
         private final String id;
 
@@ -159,8 +156,7 @@ public abstract class ComparableFilter implements Filter {
          * @param id
          *            Name to check - Cannot be <code>null</code>.
          * 
-         * @return If the name is valid <code>true</code> else
-         *         <code>false</code>.
+         * @return If the name is valid <code>true</code> else <code>false</code>.
          */
         public static boolean isValid(final String id) {
             Utils4J.checkNotNull("id", id);
@@ -176,8 +172,7 @@ public abstract class ComparableFilter implements Filter {
          * Returns an instance for a given id.
          * 
          * @param id
-         *            Name to return an instance for - Cannot be
-         *            <code>null</code> and must be a valid name.
+         *            Name to return an instance for - Cannot be <code>null</code> and must be a valid name.
          * 
          * @return Instance.
          */
@@ -188,8 +183,7 @@ public abstract class ComparableFilter implements Filter {
                     return INSTANCES[i];
                 }
             }
-            throw new IllegalArgumentException("The id '" + id
-                    + "' is unknown!");
+            throw new IllegalArgumentException("The id '" + id + "' is unknown!");
         }
 
         @Override

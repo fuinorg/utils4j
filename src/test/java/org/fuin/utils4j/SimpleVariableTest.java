@@ -58,64 +58,62 @@ public class SimpleVariableTest {
 
     @Test
     public void testConstructorNameValue() {
-        
+
         // TEST
         final SimpleVariable testee = new SimpleVariable(NAME, VALUE);
-            
+
         // VERIFY
         assertThat(testee.getName()).isEqualTo(NAME);
         assertThat(testee.getValue()).isEqualTo(VALUE);
         assertThat(testee.getURL()).isNull();
         assertThat(testee.getEncoding()).isNull();
         assertThat(testee.getEncodingOrDefault()).isEqualTo("utf-8");
-        
+
     }
-    
+
     @Test
     public void testConstructorUrl() {
-        
+
         // PREPARE
         final URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 
         // TEST
         final SimpleVariable testee = new SimpleVariable(NAME, url);
-            
+
         // VERIFY
         assertThat(testee.getName()).isEqualTo(NAME);
         assertThat(testee.getValue()).isEqualTo("one=1\r\ntwo=2\r\nthree=3\r\n");
         assertThat(testee.getURL()).isEqualTo(url);
         assertThat(testee.getEncoding()).isNull();
         assertThat(testee.getEncodingOrDefault()).isEqualTo("utf-8");
-        
+
     }
 
     @Test
     public void testConstructorUrlEncoding() {
-        
+
         // PREPARE
         final URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 
         // TEST
         final SimpleVariable testee = new SimpleVariable(NAME, url, "ISO-8859-1");
-            
+
         // VERIFY
         assertThat(testee.getName()).isEqualTo(NAME);
         assertThat(testee.getValue()).isEqualTo("one=1\r\ntwo=2\r\nthree=3\r\n");
         assertThat(testee.getURL()).isEqualTo(url);
         assertThat(testee.getEncoding()).isEqualTo("ISO-8859-1");
         assertThat(testee.getEncodingOrDefault()).isEqualTo("ISO-8859-1");
-        
+
     }
-    
+
     @Test
     public void testEqualsHashCode() throws MalformedURLException {
         EqualsVerifier
                 .forClass(SimpleVariable.class)
-                .withPrefabValues(URL.class,
-                        new URL("http://www.fuin.org/text1.txt"),
+                .withPrefabValues(URL.class, new URL("http://www.fuin.org/text1.txt"),
                         new URL("http://www.fuin.org/text2.txt"))
-                .suppress(Warning.NONFINAL_FIELDS, Warning.NULL_FIELDS)
-                .verify();
+                .suppress(Warning.NONFINAL_FIELDS, Warning.NULL_FIELDS).verify();
     }
 
     @Test
@@ -124,8 +122,7 @@ public class SimpleVariableTest {
             new SimpleVariable(null, VALUE);
             fail();
         } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo(
-                    "The argument 'name' cannot be null");
+            assertThat(ex.getMessage()).isEqualTo("The argument 'name' cannot be null");
         }
     }
 
@@ -135,8 +132,7 @@ public class SimpleVariableTest {
             new SimpleVariable("", VALUE);
             fail();
         } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo(
-                    "The argument 'name' cannot be empty");
+            assertThat(ex.getMessage()).isEqualTo("The argument 'name' cannot be empty");
         }
     }
 
@@ -146,8 +142,7 @@ public class SimpleVariableTest {
             new SimpleVariable(NAME, (String) null);
             fail();
         } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo(
-                    "The argument 'value' cannot be null");
+            assertThat(ex.getMessage()).isEqualTo("The argument 'value' cannot be null");
         }
     }
 
@@ -157,8 +152,7 @@ public class SimpleVariableTest {
             new SimpleVariable(NAME, (URL) null);
             fail();
         } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo(
-                    "The argument 'url' cannot be null");
+            assertThat(ex.getMessage()).isEqualTo("The argument 'url' cannot be null");
         }
     }
 
@@ -168,23 +162,20 @@ public class SimpleVariableTest {
             new SimpleVariable(NAME, (URL) null, "utf-8");
             fail();
         } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo(
-                    "The argument 'url' cannot be null");
+            assertThat(ex.getMessage()).isEqualTo("The argument 'url' cannot be null");
         }
     }
 
     @Test
     public void testEmptyEncoding() throws MalformedURLException {
         try {
-            new SimpleVariable(NAME, new URL("http://www.fuin.org/test.txt"),
-                    "");
+            new SimpleVariable(NAME, new URL("http://www.fuin.org/test.txt"), "");
             fail();
         } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo(
-                    "The argument 'encoding' cannot be empty");
+            assertThat(ex.getMessage()).isEqualTo("The argument 'encoding' cannot be empty");
         }
     }
-    
+
     @Test
     public final void testMarshalUnmarshalXML() throws Exception {
 
@@ -192,15 +183,12 @@ public class SimpleVariableTest {
         final SimpleVariable original = new SimpleVariable(NAME, VALUE);
 
         // TEST
-        final String xml = marshal(original, createXmlAdapter(),
-                SimpleVariable.class);
+        final String xml = marshal(original, createXmlAdapter(), SimpleVariable.class);
 
         // VERIFY
         XMLUnit.setIgnoreWhitespace(true);
-        XMLAssert.assertXMLEqual(XML_PREFIX
-                + "<variable name=\"a\" value=\"1\"/>", xml);
-        final SimpleVariable copy = unmarshal(xml, createXmlAdapter(),
-                SimpleVariable.class);
+        XMLAssert.assertXMLEqual(XML_PREFIX + "<variable name=\"a\" value=\"1\"/>", xml);
+        final SimpleVariable copy = unmarshal(xml, createXmlAdapter(), SimpleVariable.class);
         assertThat(copy.getName()).isEqualTo("a");
         assertThat(copy.getValue()).isEqualTo("1");
     }
@@ -212,11 +200,9 @@ public class SimpleVariableTest {
         final SimpleVariable original = testee;
 
         // TEST
-        final String xml = marshal(original, createXmlAdapter(),
-                SimpleVariable.class);
+        final String xml = marshal(original, createXmlAdapter(), SimpleVariable.class);
 
-        final SimpleVariable copy = unmarshal(xml, createXmlAdapter(),
-                SimpleVariable.class);
+        final SimpleVariable copy = unmarshal(xml, createXmlAdapter(), SimpleVariable.class);
 
         // VERIFY
         assertThat(copy).isEqualTo(original);

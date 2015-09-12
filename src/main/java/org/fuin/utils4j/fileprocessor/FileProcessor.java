@@ -66,16 +66,13 @@ public final class FileProcessor {
      * @param sort
      *            Sort files or not.
      */
-    public FileProcessor(final FileHandler handler, final FileOrder order,
-            final boolean sort) {
+    public FileProcessor(final FileHandler handler, final FileOrder order, final boolean sort) {
         super();
         if (handler == null) {
-            throw new IllegalArgumentException(
-                    "Argument 'handler' cannot be NULL");
+            throw new IllegalArgumentException("Argument 'handler' cannot be NULL");
         }
         if (order == null) {
-            throw new IllegalArgumentException(
-                    "Argument 'order' cannot be NULL");
+            throw new IllegalArgumentException("Argument 'order' cannot be NULL");
         }
         this.handler = handler;
         this.order = order;
@@ -105,8 +102,8 @@ public final class FileProcessor {
      * @param dir
      *            Directory to handle.
      * 
-     * @return Result of the processing - Either {@link FileHandlerResult#STOP}
-     *         or {@link FileHandlerResult#CONTINUE}.
+     * @return Result of the processing - Either {@link FileHandlerResult#STOP} or
+     *         {@link FileHandlerResult#CONTINUE}.
      */
     // CHECKSTYLE:OFF Cyclomatic complexity of 11 is OK here
     private FileHandlerResult processDir(final File dir) {
@@ -124,13 +121,11 @@ public final class FileProcessor {
         if (files != null) {
             final List<File> sortedFiles = asList(files);
             for (int i = 0; i < sortedFiles.size(); i++) {
-                final File file = (File) sortedFiles.get(i);
+                final File file = sortedFiles.get(i);
                 FileHandlerResult result = FileHandlerResult.CONTINUE;
-                if (file.isDirectory()
-                        && (dirResult != FileHandlerResult.SKIP_SUBDIRS)) {
+                if (file.isDirectory() && (dirResult != FileHandlerResult.SKIP_SUBDIRS)) {
                     result = processDir(file);
-                } else if (file.isFile()
-                        && (dirResult != FileHandlerResult.SKIP_FILES)) {
+                } else if (file.isFile() && (dirResult != FileHandlerResult.SKIP_FILES)) {
                     result = handler.handleFile(file);
                 }
                 if (result == FileHandlerResult.STOP) {
@@ -159,7 +154,7 @@ public final class FileProcessor {
         final List<File> dirList = new ArrayList<>();
         final List<File> fileList = new ArrayList<>();
         for (int i = 0; i < files.length; i++) {
-            final File file = (File) files[i];
+            final File file = files[i];
             if (file.isDirectory()) {
                 dirList.add(file);
             } else {
@@ -188,7 +183,7 @@ public final class FileProcessor {
     private List<File> defaultList(final File[] files) {
         final List<File> list = new ArrayList<>(files.length);
         for (int i = 0; i < files.length; i++) {
-            final File file = (File) files[i];
+            final File file = files[i];
             list.add(file);
         }
         if (sort) {
@@ -202,6 +197,7 @@ public final class FileProcessor {
      */
     private static class FilenameComparator implements Comparator<File> {
 
+        @Override
         public final int compare(final File f1, final File f2) {
             return f1.getName().compareTo(f2.getName());
         }

@@ -27,17 +27,17 @@ import org.junit.Test;
 //CHECKSTYLE:OFF
 public class ClasspathURLStreamHandlerTest {
 
-    @Test 
+    @Test
     public void testUrlClasspath() throws MalformedURLException {
-        
+
         // TEST
         final URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
-        
+
         // VERIFY
         final String text = Utils4J.readAsString(url, "utf-8", 1024);
         assertThat(text).isEqualTo("one=1\r\ntwo=2\r\nthree=3\r\n");
-        
+
     }
-    
+
 }
 // CHECKSTYLE:ON

@@ -25,26 +25,23 @@ import java.util.regex.Pattern;
 public class RegExprFilter implements Filter {
 
     /**
-     * The matches method attempts to match the entire input sequence against
-     * the pattern.
+     * The matches method attempts to match the entire input sequence against the pattern.
      */
     public static final int MATCHES = 0;
 
     /**
-     * The lookingAt method attempts to match the input sequence, starting at
-     * the beginning, against the pattern.
+     * The lookingAt method attempts to match the input sequence, starting at the beginning, against the
+     * pattern.
      */
     public static final int LOOKING_AT = 1;
 
     /**
-     * The find method scans the input sequence looking for the next subsequence
-     * that matches the pattern.
+     * The find method scans the input sequence looking for the next subsequence that matches the pattern.
      */
     public static final int FIND = 2;
 
     // Different types of matching
-    private static final String[] TYPES = new String[] { "matches",
-            "lookingAt", "find" };
+    private static final String[] TYPES = new String[] { "matches", "lookingAt", "find" };
 
     /** Compiled pattern. */
     private Pattern p = null;
@@ -116,8 +113,7 @@ public class RegExprFilter implements Filter {
     /**
      * Returns the type name of the matching.
      * 
-     * @return Type name ("matches", "lookingAt" or "find") or NULL
-     *         (="lookingAt")
+     * @return Type name ("matches", "lookingAt" or "find") or NULL (="lookingAt")
      */
     public final String getTypeName() {
         if (type == LOOKING_AT) {
@@ -131,8 +127,7 @@ public class RegExprFilter implements Filter {
      * Sets the type name of the matching.
      * 
      * @param typeName
-     *            Type name ("matches", "lookingAt" or "find") or NULL
-     *            (="lookingAt")
+     *            Type name ("matches", "lookingAt" or "find") or NULL (="lookingAt")
      */
     public final void setTypeName(final String typeName) {
         if (typeName == null) {

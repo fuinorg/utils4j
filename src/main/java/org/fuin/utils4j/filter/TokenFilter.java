@@ -75,11 +75,9 @@ public class TokenFilter implements Filter {
      * @param separators
      *            Separators
      * 
-     * @return If object property contains the value as one of the tokens TRUE
-     *         else FALSE.
+     * @return If object property contains the value as one of the tokens TRUE else FALSE.
      */
-    protected final boolean complies(final String value,
-            final String constValue, final String separators) {
+    protected final boolean complies(final String value, final String constValue, final String separators) {
         if (value == null) {
             return false;
         } else {

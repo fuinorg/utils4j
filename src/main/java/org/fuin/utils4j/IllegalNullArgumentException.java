@@ -18,11 +18,9 @@
 package org.fuin.utils4j;
 
 /**
- * Thrown to indicate that a method has been passed an illegal <code>null</code>
- * argument.
+ * Thrown to indicate that a method has been passed an illegal <code>null</code> argument.
  */
-public final class IllegalNullArgumentException extends
-        IllegalArgumentException {
+public final class IllegalNullArgumentException extends IllegalArgumentException {
 
     private static final long serialVersionUID = 1L;
 

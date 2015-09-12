@@ -18,6 +18,7 @@
 package org.fuin.utils4j;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,8 +42,7 @@ public class ChangeTrackingMapTest {
             final String entry = tok.nextToken();
             final int p = entry.indexOf('=');
             if (p == -1) {
-                throw new IllegalArgumentException("Format error: '" + entry
-                        + "'!");
+                throw new IllegalArgumentException("Format error: '" + entry + "'!");
             }
             final String key = entry.substring(0, p);
             final String value = entry.substring(p + 1);
@@ -499,8 +499,7 @@ public class ChangeTrackingMapTest {
         assertThat(initialFilledMap.getAdded()).isEmpty();
         assertThat(initialFilledMap.getChanged()).isEmpty();
         assertThat(initialFilledMap.getRemoved()).hasSize(3);
-        assertThat(initialFilledMap.getRemoved()).isEqualTo(
-                toMap("one=1,two=2,three=3"));
+        assertThat(initialFilledMap.getRemoved()).isEqualTo(toMap("one=1,two=2,three=3"));
 
     }
 

@@ -87,8 +87,7 @@ public class StringFilter implements Filter {
         } else if (operator == Operator.LTE) {
             return ((result == -1) || (result == 0));
         } else {
-            throw new IllegalStateException("Unknown operator '" + operator
-                    + "'!");
+            throw new IllegalStateException("Unknown operator '" + operator + "'!");
         }
     }
 
@@ -137,8 +136,7 @@ public class StringFilter implements Filter {
         public static final Operator EQ = new Operator("EQ", "=");
 
         /** Equal (relaxed) compare for Strings. */
-        public static final Operator EQ_RELAXED = new Operator("EQ_RELAXED",
-                "~");
+        public static final Operator EQ_RELAXED = new Operator("EQ_RELAXED", "~");
 
         /** Greater than. */
         public static final Operator GT = new Operator("GT", ">");
@@ -147,8 +145,7 @@ public class StringFilter implements Filter {
         public static final Operator GTE = new Operator("GTE", ">=");
 
         /** List of all known instances. */
-        public static final Operator[] INSTANCES = new Operator[] { LT, LTE,
-                EQ, EQ_RELAXED, GT, GTE };
+        public static final Operator[] INSTANCES = new Operator[] { LT, LTE, EQ, EQ_RELAXED, GT, GTE };
 
         private final String id;
 
@@ -193,8 +190,7 @@ public class StringFilter implements Filter {
          * @param id
          *            Name to check - Cannot be <code>null</code>.
          * 
-         * @return If the name is valid <code>true</code> else
-         *         <code>false</code>.
+         * @return If the name is valid <code>true</code> else <code>false</code>.
          */
         public static boolean isValid(final String id) {
             Utils4J.checkNotNull("id", id);
@@ -210,8 +206,7 @@ public class StringFilter implements Filter {
          * Returns an instance for a given id.
          * 
          * @param id
-         *            Name to return an instance for - Cannot be
-         *            <code>null</code> and must be a valid name.
+         *            Name to return an instance for - Cannot be <code>null</code> and must be a valid name.
          * 
          * @return Instance.
          */
@@ -222,8 +217,7 @@ public class StringFilter implements Filter {
                     return INSTANCES[i];
                 }
             }
-            throw new IllegalArgumentException("The id '" + id
-                    + "' is unknown!");
+            throw new IllegalArgumentException("The id '" + id + "' is unknown!");
         }
 
         @Override

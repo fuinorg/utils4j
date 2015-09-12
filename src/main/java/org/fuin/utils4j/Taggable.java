@@ -18,10 +18,9 @@
 package org.fuin.utils4j;
 
 /**
- * Something that can be tagged to memorize changes made after that point in
- * time. It's not defined what exactly is monitored and how. This depends on the
- * concrete implementation. This is like a kind of transaction but it has only a
- * "rollback" ({@link #revertToTag()}) but no "commit" mode. It's named
+ * Something that can be tagged to memorize changes made after that point in time. It's not defined what
+ * exactly is monitored and how. This depends on the concrete implementation. This is like a kind of
+ * transaction but it has only a "rollback" ({@link #revertToTag()}) but no "commit" mode. It's named
  * {@link Taggable} to avoid confusion with database or other real transactions.
  */
 public interface Taggable {
@@ -32,8 +31,8 @@ public interface Taggable {
     public void tag();
 
     /**
-     * Stop memorizing changes and clear internal state. It's <b>not</b>
-     * reverting any change! It's simply a "forget all changes".
+     * Stop memorizing changes and clear internal state. It's <b>not</b> reverting any change! It's simply a
+     * "forget all changes".
      */
     public void untag();
 
@@ -52,8 +51,7 @@ public interface Taggable {
     /**
      * Returns if the content of the object has changed since setting the tag.
      * 
-     * @return If something has changed <code>true</code> else
-     *         <code>false</code>.
+     * @return If something has changed <code>true</code> else <code>false</code>.
      */
     public boolean hasChangedSinceTagging();
 

@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
@@ -76,18 +76,12 @@ public class StringFilterTest {
 
     @Test
     public final void testToString() {
-        assertThat("" + new StringFilter(StringFilter.Operator.LT, "2"))
-                .isEqualTo(" < '2'");
-        assertThat("" + new StringFilter(StringFilter.Operator.LTE, "2"))
-                .isEqualTo(" <= '2'");
-        assertThat("" + new StringFilter(StringFilter.Operator.EQ, "2"))
-                .isEqualTo(" = '2'");
-        assertThat("" + new StringFilter(StringFilter.Operator.EQ_RELAXED, "2"))
-                .isEqualTo(" ~ '2'");
-        assertThat("" + new StringFilter(StringFilter.Operator.GT, "2"))
-                .isEqualTo(" > '2'");
-        assertThat("" + new StringFilter(StringFilter.Operator.GTE, "2"))
-                .isEqualTo(" >= '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.LT, "2")).isEqualTo(" < '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.LTE, "2")).isEqualTo(" <= '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.EQ, "2")).isEqualTo(" = '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.EQ_RELAXED, "2")).isEqualTo(" ~ '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.GT, "2")).isEqualTo(" > '2'");
+        assertThat("" + new StringFilter(StringFilter.Operator.GTE, "2")).isEqualTo(" >= '2'");
     }
 
 }

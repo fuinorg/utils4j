@@ -31,8 +31,7 @@ public final class PropertiesFilePreferencesFactoryExample {
      * Private constructor.
      */
     private PropertiesFilePreferencesFactoryExample() {
-        throw new UnsupportedOperationException(
-                "It's not allowed to create an instance of this class!");
+        throw new UnsupportedOperationException("It's not allowed to create an instance of this class!");
     }
 
     /**
@@ -59,10 +58,8 @@ public final class PropertiesFilePreferencesFactoryExample {
         }
 
         // Set both directories as system properties
-        System.setProperty(PropertiesFilePreferencesFactory.SYSTEM_PREF_DIR,
-                systemPrefDir.toString());
-        System.setProperty(PropertiesFilePreferencesFactory.USER_PREF_DIR,
-                userPrefDir.toString());
+        System.setProperty(PropertiesFilePreferencesFactory.SYSTEM_PREF_DIR, systemPrefDir.toString());
+        System.setProperty(PropertiesFilePreferencesFactory.USER_PREF_DIR, userPrefDir.toString());
 
         // Set the factory
         System.setProperty("java.util.prefs.PreferencesFactory",

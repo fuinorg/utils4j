@@ -18,12 +18,14 @@
 package org.fuin.utils4j.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class AndFilterTest extends ListFilterTest {
 
+    @Override
     protected final ListFilter createTestee(final String name) {
         final AndFilter filter = new AndFilter();
         filter.setAndStr(name);
@@ -47,18 +49,10 @@ public class AndFilterTest extends ListFilterTest {
         final Filter filterTRUE = new DummyFilter("true", true);
         final Filter filterFALSE = new DummyFilter("false", false);
 
-        assertThat(
-                (new AndFilter(filterTRUE, filterTRUE))
-                        .complies("Does not matter")).isTrue();
-        assertThat(
-                (new AndFilter(filterTRUE, filterFALSE))
-                        .complies("Does not matter")).isFalse();
-        assertThat(
-                (new AndFilter(filterFALSE, filterTRUE))
-                        .complies("Does not matter")).isFalse();
-        assertThat(
-                (new AndFilter(filterFALSE, filterFALSE))
-                        .complies("Does not matter")).isFalse();
+        assertThat((new AndFilter(filterTRUE, filterTRUE)).complies("Does not matter")).isTrue();
+        assertThat((new AndFilter(filterTRUE, filterFALSE)).complies("Does not matter")).isFalse();
+        assertThat((new AndFilter(filterFALSE, filterTRUE)).complies("Does not matter")).isFalse();
+        assertThat((new AndFilter(filterFALSE, filterFALSE)).complies("Does not matter")).isFalse();
 
     }
 

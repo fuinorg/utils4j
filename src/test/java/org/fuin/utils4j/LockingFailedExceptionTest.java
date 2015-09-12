@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
@@ -34,11 +34,9 @@ public class LockingFailedExceptionTest {
 
     @Test
     public final void testConstructionMessageCause() {
-        final IllegalArgumentException cause = new IllegalArgumentException(
-                "Test");
+        final IllegalArgumentException cause = new IllegalArgumentException("Test");
         final String message = "xyz123";
-        final LockingFailedException ex = new LockingFailedException(message,
-                cause);
+        final LockingFailedException ex = new LockingFailedException(message, cause);
         assertThat(ex.getMessage()).isEqualTo(message);
         assertThat(ex.getCause()).isEqualTo(cause);
     }

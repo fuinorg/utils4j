@@ -33,14 +33,13 @@ public final class ChangeTrackingMapExample {
      * Private constructor.
      */
     private ChangeTrackingMapExample() {
-        throw new UnsupportedOperationException(
-                "It's not allowed to create an instance of this class!");
+        throw new UnsupportedOperationException("It's not allowed to create an instance of this class!");
     }
 
-    private static void printMap(Map<String, Integer> added) {
-        Iterator<String> addIter = added.keySet().iterator();
+    private static void printMap(final Map<String, Integer> added) {
+        final Iterator<String> addIter = added.keySet().iterator();
         while (addIter.hasNext()) {
-            String key = addIter.next();
+            final String key = addIter.next();
             System.out.println(key + "=" + added.get(key));
         }
         System.out.println();
@@ -55,7 +54,7 @@ public final class ChangeTrackingMapExample {
     public static void main(final String[] args) {
 
         // Create a standard map
-        Map<String, Integer> map = new HashMap<>();
+        final Map<String, Integer> map = new HashMap<>();
 
         // Add some initial content
         map.put("one", Integer.valueOf(1));
@@ -63,7 +62,7 @@ public final class ChangeTrackingMapExample {
         map.put("three", Integer.valueOf(3));
 
         // Wrap the list to track changes
-        ChangeTrackingMap<String, Integer> trackingMap = new ChangeTrackingMap<>(map);
+        final ChangeTrackingMap<String, Integer> trackingMap = new ChangeTrackingMap<>(map);
 
         // Add/change/remove item
         trackingMap.put("four", Integer.valueOf(4));

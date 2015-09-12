@@ -17,13 +17,14 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class TokenPropertyFilterTest extends PropertyFilterTest {
 
+    @Override
     protected final PropertyFilter createTestee(final String propertyName) {
         return new TokenPropertyFilter(propertyName, "one", ";");
     }
@@ -49,24 +50,20 @@ public class TokenPropertyFilterTest extends PropertyFilterTest {
         assertThat(testee.complies((new TestObject("two;one")))).isTrue();
 
         testee = new TokenPropertyFilter(STRING_PROPERTY_NAME, "four", ";");
-        assertThat(testee.complies((new TestObject("one;two;three"))))
-                .isFalse();
+        assertThat(testee.complies((new TestObject("one;two;three")))).isFalse();
 
         testee = new TokenPropertyFilter(STRING_PROPERTY_NAME, "x", ";");
-        assertThat(testee.complies((new TestObject("one;two;three"))))
-                .isFalse();
+        assertThat(testee.complies((new TestObject("one;two;three")))).isFalse();
 
         testee = new TokenPropertyFilter(STRING_PROPERTY_NAME, " ", ";");
-        assertThat(testee.complies((new TestObject("one;two;three; ;five"))))
-                .isTrue();
+        assertThat(testee.complies((new TestObject("one;two;three; ;five")))).isTrue();
 
     }
 
     @Test
     public final void testToString() {
-        assertThat(
-                "" + new TokenPropertyFilter(STRING_PROPERTY_NAME, "one", ","))
-                .isEqualTo(STRING_PROPERTY_NAME + " contains 'one' [,]");
+        assertThat("" + new TokenPropertyFilter(STRING_PROPERTY_NAME, "one", ",")).isEqualTo(
+                STRING_PROPERTY_NAME + " contains 'one' [,]");
     }
 
 }

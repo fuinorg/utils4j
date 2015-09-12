@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
@@ -27,19 +27,16 @@ public class InvokeMethodFailedExceptionTest {
     @Test
     public final void testConstructionMessage() {
         final String message = "xyz123";
-        final InvokeMethodFailedException ex = new InvokeMethodFailedException(
-                message);
+        final InvokeMethodFailedException ex = new InvokeMethodFailedException(message);
         assertThat(ex.getMessage()).isEqualTo(message);
         assertThat(ex.getCause()).isNull();
     }
 
     @Test
     public final void testConstructionMessageCause() {
-        final IllegalArgumentException cause = new IllegalArgumentException(
-                "Test");
+        final IllegalArgumentException cause = new IllegalArgumentException("Test");
         final String message = "xyz123";
-        final InvokeMethodFailedException ex = new InvokeMethodFailedException(
-                message, cause);
+        final InvokeMethodFailedException ex = new InvokeMethodFailedException(message, cause);
         assertThat(ex.getMessage()).isEqualTo(message);
         assertThat(ex.getCause()).isEqualTo(cause);
     }

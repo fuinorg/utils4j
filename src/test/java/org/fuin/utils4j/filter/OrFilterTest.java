@@ -18,12 +18,14 @@
 package org.fuin.utils4j.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class OrFilterTest extends ListFilterTest {
 
+    @Override
     protected final ListFilter createTestee(final String name) {
         final OrFilter filter = new OrFilter();
         filter.setOrStr(name);
@@ -47,18 +49,10 @@ public class OrFilterTest extends ListFilterTest {
         final Filter filterTRUE = new DummyFilter("true", true);
         final Filter filterFALSE = new DummyFilter("false", false);
 
-        assertThat(
-                (new OrFilter(filterTRUE, filterTRUE))
-                        .complies("Does not matter")).isTrue();
-        assertThat(
-                (new OrFilter(filterTRUE, filterFALSE))
-                        .complies("Does not matter")).isTrue();
-        assertThat(
-                (new OrFilter(filterFALSE, filterTRUE))
-                        .complies("Does not matter")).isTrue();
-        assertThat(
-                (new OrFilter(filterFALSE, filterFALSE))
-                        .complies("Does not matter")).isFalse();
+        assertThat((new OrFilter(filterTRUE, filterTRUE)).complies("Does not matter")).isTrue();
+        assertThat((new OrFilter(filterTRUE, filterFALSE)).complies("Does not matter")).isTrue();
+        assertThat((new OrFilter(filterFALSE, filterTRUE)).complies("Does not matter")).isTrue();
+        assertThat((new OrFilter(filterFALSE, filterFALSE)).complies("Does not matter")).isFalse();
 
     }
 

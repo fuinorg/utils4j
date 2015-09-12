@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j.fileprocessor;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,10 +28,8 @@ import org.junit.Test;
 //CHECKSTYLE:OFF
 public class FileProcessorTest {
 
-    private static final File DIR = new File(
-            "src/test/java/org/fuin/utils4j/test");
-    private static final File FILE = new File(DIR,
-            "ClassWithPrivateConstructor.java");
+    private static final File DIR = new File("src/test/java/org/fuin/utils4j/test");
+    private static final File FILE = new File(DIR, "ClassWithPrivateConstructor.java");
     private static final File SUB = new File(DIR, "sub");
     private static final File SUB_FILE = new File(SUB, "OtherClass.java");
 
@@ -41,7 +39,8 @@ public class FileProcessorTest {
         // PREPARE
         final FileContainer processed = new FileContainer();
         final FileHandler handler = new FileHandler() {
-            public FileHandlerResult handleFile(File file) {
+            @Override
+            public FileHandlerResult handleFile(final File file) {
                 processed.file = file;
                 return null;
             }
@@ -62,7 +61,8 @@ public class FileProcessorTest {
         // PREPARE
         final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
-            public FileHandlerResult handleFile(File file) {
+            @Override
+            public FileHandlerResult handleFile(final File file) {
                 if (file.isFile()) {
                     processed.add(file);
                 }
@@ -91,7 +91,8 @@ public class FileProcessorTest {
         // PREPARE
         final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
-            public FileHandlerResult handleFile(File file) {
+            @Override
+            public FileHandlerResult handleFile(final File file) {
                 // STOP on first directory
                 return FileHandlerResult.STOP;
             }
@@ -112,7 +113,8 @@ public class FileProcessorTest {
         // PREPARE
         final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
-            public FileHandlerResult handleFile(File file) {
+            @Override
+            public FileHandlerResult handleFile(final File file) {
                 // SKIP_ALL on all directories
                 return FileHandlerResult.SKIP_ALL;
             }
@@ -133,7 +135,8 @@ public class FileProcessorTest {
         // PREPARE
         final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
-            public FileHandlerResult handleFile(File file) {
+            @Override
+            public FileHandlerResult handleFile(final File file) {
                 if (file.isFile()) {
                     processed.add(file);
                 }
@@ -157,7 +160,8 @@ public class FileProcessorTest {
         // PREPARE
         final List<File> processed = new ArrayList<>();
         final FileHandler handler = new FileHandler() {
-            public FileHandlerResult handleFile(File file) {
+            @Override
+            public FileHandlerResult handleFile(final File file) {
                 if (file.getName().equals("test")) {
                     return FileHandlerResult.SKIP_FILES;
                 }

@@ -79,8 +79,8 @@ public class AndFilter extends ListFilter {
     }
 
     /**
-     * Set the phrase representing this type of filter A NULL argument will set
-     * the default <code>DEFAULT_AND_STR</code>.
+     * Set the phrase representing this type of filter A NULL argument will set the default
+     * <code>DEFAULT_AND_STR</code>.
      * 
      * @param newAndStr
      *            Name of the filter (default "and")

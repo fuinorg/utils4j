@@ -31,32 +31,29 @@ import org.fuin.utils4j.Utils4J;
 // CHECKSTYLE:OFF
 public class LockFileExample {
 
-    public static void main(String[] args) throws IOException,
-            LockingFailedException {
+    public static void main(final String[] args) throws IOException, LockingFailedException {
 
         // Number of tries to lock before throwing an exception.
-        int tryLockMax = 1;
+        final int tryLockMax = 1;
 
         // Milliseconds to sleep between retries.
-        int tryWaitMillis = 500;
+        final int tryWaitMillis = 500;
 
         // Create temp file
-        File file = File.createTempFile("LockFileExample", ".bin");
-        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+        final File file = File.createTempFile("LockFileExample", ".bin");
+        final RandomAccessFile raf = new RandomAccessFile(file, "rw");
         try {
-            FileLock lock = Utils4J.lockRandomAccessFile(raf, tryLockMax,
-                    tryWaitMillis);
+            final FileLock lock = Utils4J.lockRandomAccessFile(raf, tryLockMax, tryWaitMillis);
             try {
                 System.out.println("LOCKED: " + file);
 
                 // Access the same file a second time
-                RandomAccessFile sameFile = new RandomAccessFile(file, "rw");
+                final RandomAccessFile sameFile = new RandomAccessFile(file, "rw");
                 try {
                     try {
                         // Try to lock again... Should fail
-                        Utils4J.lockRandomAccessFile(sameFile, tryLockMax,
-                                tryWaitMillis);
-                    } catch (LockingFailedException ex) {
+                        Utils4J.lockRandomAccessFile(sameFile, tryLockMax, tryWaitMillis);
+                    } catch (final LockingFailedException ex) {
                         System.err.println("CANNOT LOCK AGAIN: " + file);
                     }
                 } finally {

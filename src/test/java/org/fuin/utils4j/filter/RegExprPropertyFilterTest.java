@@ -17,21 +17,21 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public class RegExprPropertyFilterTest extends PropertyFilterTest {
 
+    @Override
     protected final PropertyFilter createTestee(final String propertyName) {
         return new RegExprPropertyFilter(propertyName, "a*b");
     }
 
     @Test
     public final void testSetGetType() {
-        final RegExprPropertyFilter filter = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, "a*b");
+        final RegExprPropertyFilter filter = new RegExprPropertyFilter(STRING_PROPERTY_NAME, "a*b");
 
         filter.setType(RegExprFilter.MATCHES);
         assertThat(filter.getType()).isEqualTo(RegExprFilter.MATCHES);
@@ -48,8 +48,7 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testSetGetTypeName() {
-        final RegExprPropertyFilter filter = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, "a*b");
+        final RegExprPropertyFilter filter = new RegExprPropertyFilter(STRING_PROPERTY_NAME, "a*b");
 
         filter.setTypeName("matches");
         assertThat(filter.getTypeName()).isEqualTo("matches");
@@ -68,8 +67,7 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
     @Test
     public final void testCompliesMatches() {
 
-        final RegExprPropertyFilter filter1 = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, "a*b");
+        final RegExprPropertyFilter filter1 = new RegExprPropertyFilter(STRING_PROPERTY_NAME, "a*b");
         filter1.setType(RegExprFilter.MATCHES);
         assertThat(filter1.complies(new TestObject("ab"))).isTrue();
         assertThat(filter1.complies(new TestObject("aab"))).isTrue();
@@ -79,28 +77,20 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
         assertThat(filter1.complies(new TestObject("bab"))).isFalse();
         assertThat(filter1.complies(new TestObject("xbab"))).isFalse();
 
-        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, ".*schlemmerinfo\\.de.*");
+        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME,
+                ".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.MATCHES);
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/eng/"))).isTrue();
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/deu"))).isTrue();
-        assertThat(filter2.complies(new TestObject("www.schlemmerinfo.de")))
-                .isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/"))).isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/deu"))).isTrue();
+        assertThat(filter2.complies(new TestObject("www.schlemmerinfo.de"))).isTrue();
 
     }
 
     @Test
     public final void testCompliesLookingAt() {
 
-        final RegExprPropertyFilter filter1 = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, "a*b");
+        final RegExprPropertyFilter filter1 = new RegExprPropertyFilter(STRING_PROPERTY_NAME, "a*b");
         filter1.setType(RegExprFilter.LOOKING_AT);
         assertThat(filter1.complies(new TestObject("ab"))).isTrue();
         assertThat(filter1.complies(new TestObject("aab"))).isTrue();
@@ -110,28 +100,20 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
         assertThat(filter1.complies(new TestObject("bab"))).isTrue();
         assertThat(filter1.complies(new TestObject("xbab"))).isFalse();
 
-        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, ".*schlemmerinfo\\.de.*");
+        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME,
+                ".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.LOOKING_AT);
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/eng/"))).isTrue();
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/deu"))).isTrue();
-        assertThat(filter2.complies(new TestObject("www.schlemmerinfo.de")))
-                .isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/"))).isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/deu"))).isTrue();
+        assertThat(filter2.complies(new TestObject("www.schlemmerinfo.de"))).isTrue();
 
     }
 
     @Test
     public final void testCompliesFind() {
 
-        final RegExprPropertyFilter filter1 = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, "a*b");
+        final RegExprPropertyFilter filter1 = new RegExprPropertyFilter(STRING_PROPERTY_NAME, "a*b");
         filter1.setType(RegExprFilter.FIND);
         assertThat(filter1.complies(new TestObject("ab"))).isTrue();
         assertThat(filter1.complies(new TestObject("aab"))).isTrue();
@@ -141,20 +123,13 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
         assertThat(filter1.complies(new TestObject("bab"))).isTrue();
         assertThat(filter1.complies(new TestObject("xbab"))).isTrue();
 
-        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(
-                STRING_PROPERTY_NAME, ".*schlemmerinfo\\.de.*");
+        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME,
+                ".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.FIND);
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/eng/"))).isTrue();
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
-        assertThat(
-                filter2.complies(new TestObject(
-                        "http://www.schlemmerinfo.de/deu"))).isTrue();
-        assertThat(filter2.complies(new TestObject("www.schlemmerinfo.de")))
-                .isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/"))).isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
+        assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/deu"))).isTrue();
+        assertThat(filter2.complies(new TestObject("www.schlemmerinfo.de"))).isTrue();
 
     }
 

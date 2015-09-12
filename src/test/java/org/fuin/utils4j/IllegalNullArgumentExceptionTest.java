@@ -17,26 +17,24 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
 /**
  * Tests for IllegalNullArgumentException.
  */
-//CHECKSTYLE:OFF
+// CHECKSTYLE:OFF
 public class IllegalNullArgumentExceptionTest {
 
     @Test
     public final void testConstruction() {
         final String argument = "xyz123";
-        final IllegalNullArgumentException ex = new IllegalNullArgumentException(
-                argument);
+        final IllegalNullArgumentException ex = new IllegalNullArgumentException(argument);
         assertThat(ex.getArgument()).isEqualTo(argument);
-        assertThat(ex.getMessage()).isEqualTo(
-                "The argument '" + argument + "' cannot be null");
+        assertThat(ex.getMessage()).isEqualTo("The argument '" + argument + "' cannot be null");
         assertThat(ex.getCause()).isNull();
     }
 
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

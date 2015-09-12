@@ -40,19 +40,15 @@ public class RandomAccessFileOutputStream extends OutputStream {
      * @param file
      *            File the stream operates on - Cannot be <code>null</code>.
      * @param mode
-     *            Access mode, as described in <code>RandomAccessFile</code> -
-     *            Cannot be <code>null</code>.
+     *            Access mode, as described in <code>RandomAccessFile</code> - Cannot be <code>null</code>.
      * 
      * @throws FileNotFoundException
-     *             If the mode is "r" but the given file object does not denote
-     *             an existing regular file, or if the mode begins with "rw" but
-     *             the given file object does not denote an existing, writable
-     *             regular file and a new regular file of that name cannot be
-     *             created, or if some other error occurs while opening or
-     *             creating the file.
+     *             If the mode is "r" but the given file object does not denote an existing regular file, or
+     *             if the mode begins with "rw" but the given file object does not denote an existing,
+     *             writable regular file and a new regular file of that name cannot be created, or if some
+     *             other error occurs while opening or creating the file.
      */
-    public RandomAccessFileOutputStream(final File file, final String mode)
-            throws FileNotFoundException {
+    public RandomAccessFileOutputStream(final File file, final String mode) throws FileNotFoundException {
         super();
         Utils4J.checkNotNull("file", file);
         Utils4J.checkNotNull("mode", mode);
@@ -60,13 +56,12 @@ public class RandomAccessFileOutputStream extends OutputStream {
     }
 
     /**
-     * Constructor with output stream. The new stream shares the
-     * <code>RandomAccessFile</code> with the argument. Be aware that closing
-     * this stream will also close the file used by the argument!
+     * Constructor with output stream. The new stream shares the <code>RandomAccessFile</code> with the
+     * argument. Be aware that closing this stream will also close the file used by the argument!
      * 
      * @param out
-     *            The <code>RandomAccessFile</code> instance from this argument
-     *            will be used - Cannot be <code>null</code>.
+     *            The <code>RandomAccessFile</code> instance from this argument will be used - Cannot be
+     *            <code>null</code>.
      */
     public RandomAccessFileOutputStream(final RandomAccessFileOutputStream out) {
         super();
@@ -75,13 +70,12 @@ public class RandomAccessFileOutputStream extends OutputStream {
     }
 
     /**
-     * Constructor with input stream. The new stream shares the
-     * <code>RandomAccessFile</code> with the argument. Be aware that closing
-     * this stream will also close the file used by the argument!
+     * Constructor with input stream. The new stream shares the <code>RandomAccessFile</code> with the
+     * argument. Be aware that closing this stream will also close the file used by the argument!
      * 
      * @param in
-     *            The <code>RandomAccessFile</code> instance from this argument
-     *            will be used - Cannot be <code>null</code>.
+     *            The <code>RandomAccessFile</code> instance from this argument will be used - Cannot be
+     *            <code>null</code>.
      */
     public RandomAccessFileOutputStream(final RandomAccessFileInputStream in) {
         super();
@@ -90,8 +84,7 @@ public class RandomAccessFileOutputStream extends OutputStream {
     }
 
     /**
-     * Writes the specified byte to this file. The write starts at the current
-     * file pointer.
+     * Writes the specified byte to this file. The write starts at the current file pointer.
      * 
      * @param b
      *            the <code>byte</code> to be written.
@@ -99,14 +92,15 @@ public class RandomAccessFileOutputStream extends OutputStream {
      * @exception IOException
      *                if an I/O error occurs.
      */
+    @Override
     public final void write(final int b) throws IOException {
         file.write(b);
         counter++;
     }
 
     /**
-     * Writes <code>b.length</code> bytes from the specified byte array to this
-     * file, starting at the current file pointer.
+     * Writes <code>b.length</code> bytes from the specified byte array to this file, starting at the current
+     * file pointer.
      * 
      * @param b
      *            the data.
@@ -114,14 +108,15 @@ public class RandomAccessFileOutputStream extends OutputStream {
      * @exception IOException
      *                if an I/O error occurs.
      */
+    @Override
     public final void write(final byte[] b) throws IOException {
         file.write(b);
         counter = counter + b.length;
     }
 
     /**
-     * Writes <code>len</code> bytes from the specified byte array starting at
-     * offset <code>off</code> to the file.
+     * Writes <code>len</code> bytes from the specified byte array starting at offset <code>off</code> to the
+     * file.
      * 
      * @param b
      *            the data.
@@ -133,8 +128,8 @@ public class RandomAccessFileOutputStream extends OutputStream {
      * @exception IOException
      *                If an I/O error occurs.
      */
-    public final void write(final byte[] b, final int off, final int len)
-            throws IOException {
+    @Override
+    public final void write(final byte[] b, final int off, final int len) throws IOException {
         file.write(b, off, len);
         counter = counter + len;
     }
@@ -145,6 +140,7 @@ public class RandomAccessFileOutputStream extends OutputStream {
      * @throws IOException
      *             If an I/O error occurs.
      */
+    @Override
     public final void flush() throws IOException {
         file.getChannel().force(true);
     }
@@ -155,6 +151,7 @@ public class RandomAccessFileOutputStream extends OutputStream {
      * @throws IOException
      *             If an I/O error occurs.
      */
+    @Override
     public final void close() throws IOException {
         file.close();
     }
@@ -178,19 +175,17 @@ public class RandomAccessFileOutputStream extends OutputStream {
     }
 
     /**
-     * Sets the file-pointer offset, measured from the beginning of this file,
-     * at which the next read or write occurs. The offset may be set beyond the
-     * end of the file. Setting the offset beyond the end of the file does not
-     * change the file length. The file length will change only by writing after
-     * the offset has been set beyond the end of the file.
+     * Sets the file-pointer offset, measured from the beginning of this file, at which the next read or write
+     * occurs. The offset may be set beyond the end of the file. Setting the offset beyond the end of the file
+     * does not change the file length. The file length will change only by writing after the offset has been
+     * set beyond the end of the file.
      * 
      * @param pos
-     *            the offset position, measured in bytes from the beginning of
-     *            the file, at which to set the file pointer.
+     *            the offset position, measured in bytes from the beginning of the file, at which to set the
+     *            file pointer.
      * 
      * @exception IOException
-     *                if <code>pos</code> is less than <code>0</code> or if an
-     *                I/O error occurs.
+     *                if <code>pos</code> is less than <code>0</code> or if an I/O error occurs.
      */
     public final void seek(final long pos) throws IOException {
         file.seek(pos);
@@ -217,8 +212,7 @@ public class RandomAccessFileOutputStream extends OutputStream {
     }
 
     /**
-     * Returns the number of bytes written since start or since last call to
-     * <code>resetCounter()</code>.
+     * Returns the number of bytes written since start or since last call to <code>resetCounter()</code>.
      * 
      * @return Number of bytes written.
      */
@@ -227,8 +221,8 @@ public class RandomAccessFileOutputStream extends OutputStream {
     }
 
     /**
-     * Sets the length of the file to the number of written bytes. This is the
-     * same as calling <code>setLength(getCounter())</code>.
+     * Sets the length of the file to the number of written bytes. This is the same as calling
+     * <code>setLength(getCounter())</code>.
      * 
      * @throws IOException
      *             Error setting the file length.
@@ -250,8 +244,7 @@ public class RandomAccessFileOutputStream extends OutputStream {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final FileLock lock(final int tryLockMax, final long tryWaitMillis)
-            throws LockingFailedException {
+    public final FileLock lock(final int tryLockMax, final long tryWaitMillis) throws LockingFailedException {
 
         return Utils4J.lockRandomAccessFile(file, tryLockMax, tryWaitMillis);
 

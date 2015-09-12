@@ -27,8 +27,7 @@ import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 
 /**
- * A directory and <code>PropertiesFile</code> based <code>Preferences</code>
- * API implementation.
+ * A directory and <code>PropertiesFile</code> based <code>Preferences</code> API implementation.
  */
 public final class PropertiesFilePreferences extends AbstractPreferences {
 
@@ -59,8 +58,7 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
      * @param dir
      *            Directory where the preferences are stored.
      */
-    public PropertiesFilePreferences(final PropertiesFilePreferences parent,
-            final File dir) {
+    public PropertiesFilePreferences(final PropertiesFilePreferences parent, final File dir) {
         this(parent, dir, dir.getName());
     }
 
@@ -74,8 +72,8 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
      * @param name
      *            Name of the node.
      */
-    private PropertiesFilePreferences(final PropertiesFilePreferences parent,
-            final File dir, final String name) {
+    private PropertiesFilePreferences(final PropertiesFilePreferences parent, final File dir,
+            final String name) {
         super(parent, name);
         this.dir = dir;
         this.file = new PropertiesFile(new File(dir, FILENAME));
@@ -100,7 +98,7 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
                     }
                 }
             }
-            return (String[]) childs.toArray(new String[0]);
+            return childs.toArray(new String[0]);
         } catch (final RuntimeException ex) {
             throw new BackingStoreException(ex);
         }
@@ -113,11 +111,9 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
                 file.delete();
                 dir.delete();
             } else {
-                final SimpleDateFormat sdf = new SimpleDateFormat(
-                        "yyyy-MM-dd HH:mm:ss");
+                final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 final String[] comments = new String[] { "DO NOT EDIT!",
-                        "Created by " + this.getClass().getName(),
-                        sdf.format(new Date()) };
+                        "Created by " + this.getClass().getName(), sdf.format(new Date()) };
                 mkdirIfNecessary();
                 file.save(comments, true);
             }
@@ -128,8 +124,7 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
 
     private void mkdirIfNecessary() throws BackingStoreException {
         if (!dir.exists() && !dir.mkdirs()) {
-            throw new BackingStoreException("Failed to create directory '"
-                    + dir + "'!");
+            throw new BackingStoreException("Failed to create directory '" + dir + "'!");
         }
     }
 

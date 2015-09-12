@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
@@ -72,15 +72,11 @@ public class RegExprFilterTest {
         assertThat(filter1.complies("bab")).isFalse();
         assertThat(filter1.complies("xbab")).isFalse();
 
-        final RegExprFilter filter2 = new RegExprFilter(
-                ".*schlemmerinfo\\.de.*");
+        final RegExprFilter filter2 = new RegExprFilter(".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.MATCHES);
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/"))
-                .isTrue();
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"))
-                .isTrue();
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu"))
-                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/")).isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/")).isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu")).isTrue();
         assertThat(filter2.complies("www.schlemmerinfo.de")).isTrue();
 
     }
@@ -98,15 +94,11 @@ public class RegExprFilterTest {
         assertThat(filter1.complies("bab")).isTrue();
         assertThat(filter1.complies("xbab")).isFalse();
 
-        final RegExprFilter filter2 = new RegExprFilter(
-                ".*schlemmerinfo\\.de.*");
+        final RegExprFilter filter2 = new RegExprFilter(".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.LOOKING_AT);
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/"))
-                .isTrue();
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"))
-                .isTrue();
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu"))
-                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/")).isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/")).isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu")).isTrue();
         assertThat(filter2.complies("www.schlemmerinfo.de")).isTrue();
 
     }
@@ -124,15 +116,11 @@ public class RegExprFilterTest {
         assertThat(filter1.complies("bab")).isTrue();
         assertThat(filter1.complies("xbab")).isTrue();
 
-        final RegExprFilter filter2 = new RegExprFilter(
-                ".*schlemmerinfo\\.de.*");
+        final RegExprFilter filter2 = new RegExprFilter(".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.FIND);
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/"))
-                .isTrue();
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/"))
-                .isTrue();
-        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu"))
-                .isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/")).isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/eng/hamburg/")).isTrue();
+        assertThat(filter2.complies("http://www.schlemmerinfo.de/deu")).isTrue();
         assertThat(filter2.complies("www.schlemmerinfo.de")).isTrue();
 
     }

@@ -32,11 +32,11 @@ public final class StringVariableResolver {
 
     private List<Variable> vars;
 
-    private Map<String, String> unresolved;
+    private final Map<String, String> unresolved;
 
-    private Map<String, Integer> depth;
+    private final Map<String, Integer> depth;
 
-    private Map<String, String> resolved;
+    private final Map<String, String> resolved;
 
     /**
      * Constructor with variable list.
@@ -62,8 +62,7 @@ public final class StringVariableResolver {
     private void resolve() {
         int max = 0;
         for (final Variable var : vars) {
-            final int d = resolve(var.getName(), var.getValue(),
-                    new ArrayList<String>());
+            final int d = resolve(var.getName(), var.getValue(), new ArrayList<String>());
             if (d > max) {
                 max = d;
             }
@@ -72,16 +71,14 @@ public final class StringVariableResolver {
         for (int d = 0; d <= max; d++) {
             for (final Variable var : vars) {
                 if (depth.get(var.getName()).intValue() == d) {
-                    resolved.put(var.getName(),
-                            replaceVars(var.getValue(), resolved));
+                    resolved.put(var.getName(), replaceVars(var.getValue(), resolved));
                 }
             }
         }
 
     }
 
-    private Integer resolve(final String name, final String value,
-            final List<String> path) {
+    private Integer resolve(final String name, final String value, final List<String> path) {
 
         // Check for cycles
         if (path.contains(name)) {
@@ -120,11 +117,10 @@ public final class StringVariableResolver {
     }
 
     /**
-     * Returns the variable names and how many steps are necessary to resolve
-     * all references to other variables.
+     * Returns the variable names and how many steps are necessary to resolve all references to other
+     * variables.
      * 
-     * @return Names and state of all known variables - Never <code>null</code>,
-     *         but may be empty.
+     * @return Names and state of all known variables - Never <code>null</code>, but may be empty.
      */
     public final Map<String, Integer> getDepth() {
         return depth;
@@ -154,8 +150,7 @@ public final class StringVariableResolver {
      * @param value
      *            Value to parse - May be <code>null</code>.
      * 
-     * @return Referenced variable names - Never <code>null</code>, but may be
-     *         empty.
+     * @return Referenced variable names - Never <code>null</code>, but may be empty.
      */
     public static Set<String> references(final String value) {
 
@@ -186,20 +181,16 @@ public final class StringVariableResolver {
      * Replaces all variables inside a string with values from a map.
      * 
      * @param str
-     *            Text with variables (Format: ${key} ) - May be
-     *            <code>null</code> or empty.
+     *            Text with variables (Format: ${key} ) - May be <code>null</code> or empty.
      * @param vars
-     *            Map with key/values (both of type <code>String</code> - May be
-     *            <code>null</code>.
+     *            Map with key/values (both of type <code>String</code> - May be <code>null</code>.
      * 
-     * @return String with replaced variables. Unknown variables will remain
-     *         unchanged - May be <code>null</code>.
+     * @return String with replaced variables. Unknown variables will remain unchanged - May be
+     *         <code>null</code>.
      */
-    public static String replaceVars(final String str,
-            final Map<String, String> vars) {
+    public static String replaceVars(final String str, final Map<String, String> vars) {
 
-        if ((str == null) || (str.length() == 0) || (vars == null)
-                || (vars.size() == 0)) {
+        if ((str == null) || (str.length() == 0) || (vars == null) || (vars.size() == 0)) {
             return str;
         }
 
@@ -217,7 +208,7 @@ public final class StringVariableResolver {
                 from = str.length();
             } else {
                 final String key = str.substring(start + 2, end);
-                final String value = (String) vars.get(key);
+                final String value = vars.get(key);
                 if (value == null) {
                     sb.append("${");
                     sb.append(key);

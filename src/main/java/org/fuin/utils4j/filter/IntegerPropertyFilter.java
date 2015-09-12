@@ -34,8 +34,8 @@ public class IntegerPropertyFilter extends ComparablePropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public IntegerPropertyFilter(final String newPropertyName,
-            final String newOperator, final Integer constValue) {
+    public IntegerPropertyFilter(final String newPropertyName, final String newOperator,
+            final Integer constValue) {
         super(newPropertyName, new IntegerFilter(newOperator, constValue));
     }
 
@@ -49,15 +49,14 @@ public class IntegerPropertyFilter extends ComparablePropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public IntegerPropertyFilter(final String newPropertyName,
-            final Operator newOperator, final Integer constValue) {
+    public IntegerPropertyFilter(final String newPropertyName, final Operator newOperator,
+            final Integer constValue) {
         super(newPropertyName, new IntegerFilter(newOperator, constValue));
     }
 
     @Override
     protected final String[] createGetterNames(final String property) {
-        return new String[] { "get" + Character.toUpperCase(property.charAt(0))
-                + property.substring(1) };
+        return new String[] { "get" + Character.toUpperCase(property.charAt(0)) + property.substring(1) };
     }
 
     /**

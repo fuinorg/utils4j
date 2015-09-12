@@ -20,3 +20,4 @@
  * Basic Java utilities.
  */
 package org.fuin.utils4j;
+

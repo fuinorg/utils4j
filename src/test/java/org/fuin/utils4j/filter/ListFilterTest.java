@@ -18,6 +18,7 @@
 package org.fuin.utils4j.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,10 +119,12 @@ public abstract class ListFilterTest {
             this.value = value;
         }
 
+        @Override
         public final boolean complies(final Object obj) {
             return value;
         }
 
+        @Override
         public final String toString() {
             return name;
         }

@@ -18,8 +18,7 @@
 package org.fuin.utils4j;
 
 /**
- * Calling a method with reflection failed. Used to wrap all the different
- * exceptions when using reflection.
+ * Calling a method with reflection failed. Used to wrap all the different exceptions when using reflection.
  */
 public final class InvokeMethodFailedException extends Exception {
 
@@ -43,8 +42,7 @@ public final class InvokeMethodFailedException extends Exception {
      * @param cause
      *            Exception that caused the failure.
      */
-    public InvokeMethodFailedException(final String message,
-            final Throwable cause) {
+    public InvokeMethodFailedException(final String message, final Throwable cause) {
         super(message, cause);
     }
 

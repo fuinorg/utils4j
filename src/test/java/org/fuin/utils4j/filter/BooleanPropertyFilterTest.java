@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
@@ -26,29 +26,26 @@ public class BooleanPropertyFilterTest extends PropertyFilterTest {
 
     private static final String PROPERTY_NAME = "flag";
 
+    @Override
     protected final PropertyFilter createTestee(final String propertyName) {
         return new BooleanPropertyFilter(propertyName, Boolean.TRUE);
     }
 
     @Test
     public final void testCreateAndGet() {
-        final BooleanPropertyFilter filterTRUE = new BooleanPropertyFilter(
-                PROPERTY_NAME, Boolean.TRUE);
+        final BooleanPropertyFilter filterTRUE = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.TRUE);
         assertThat(filterTRUE.getConstValue()).isEqualTo(Boolean.TRUE);
         assertThat(filterTRUE.getPropertyName()).isEqualTo(PROPERTY_NAME);
 
-        final BooleanPropertyFilter filterFALSE = new BooleanPropertyFilter(
-                PROPERTY_NAME, Boolean.FALSE);
+        final BooleanPropertyFilter filterFALSE = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.FALSE);
         assertThat(filterFALSE.getConstValue()).isEqualTo(Boolean.FALSE);
         assertThat(filterFALSE.getPropertyName()).isEqualTo(PROPERTY_NAME);
     }
 
     @Test
     public final void testComplies() {
-        final Filter trueFilter = new BooleanPropertyFilter(PROPERTY_NAME,
-                Boolean.TRUE);
-        final Filter falseFilter = new BooleanPropertyFilter(PROPERTY_NAME,
-                Boolean.FALSE);
+        final Filter trueFilter = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.TRUE);
+        final Filter falseFilter = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.FALSE);
         final TestObject trueObj = new TestObject(Boolean.TRUE);
         final TestObject falseObj = new TestObject(Boolean.FALSE);
         assertThat(trueFilter.complies(trueObj)).isTrue();
@@ -59,14 +56,11 @@ public class BooleanPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testToString() {
-        final Filter trueFilter = new BooleanPropertyFilter(PROPERTY_NAME,
-                Boolean.TRUE);
-        final Filter falseFilter = new BooleanPropertyFilter(PROPERTY_NAME,
-                Boolean.FALSE);
+        final Filter trueFilter = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.TRUE);
+        final Filter falseFilter = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.FALSE);
 
         assertThat(trueFilter.toString()).isEqualTo(PROPERTY_NAME + " = true");
-        assertThat(falseFilter.toString())
-                .isEqualTo(PROPERTY_NAME + " = false");
+        assertThat(falseFilter.toString()).isEqualTo(PROPERTY_NAME + " = false");
 
     }
 

@@ -33,8 +33,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * A properties file that is capable of merging concurrent changes made by
- * another JVM or another process.
+ * A properties file that is capable of merging concurrent changes made by another JVM or another process.
  */
 public class PropertiesFile {
 
@@ -106,24 +105,20 @@ public class PropertiesFile {
     }
 
     /**
-     * Loads or reloads the content of the underlying file. Current properties
-     * in memory will NOT be discarded! If you want to discard the current
-     * values you must call <code>clear()</code> before!
+     * Loads or reloads the content of the underlying file. Current properties in memory will NOT be
+     * discarded! If you want to discard the current values you must call <code>clear()</code> before!
      * 
      * @throws IOException
      *             Error reading the file.
      * @throws LockingFailedException
      *             Locking the file failed.
      * @throws MergeException
-     *             A problem occurred when merging the properties in memory and
-     *             from disk.
+     *             A problem occurred when merging the properties in memory and from disk.
      */
-    public final void load() throws IOException, LockingFailedException,
-            MergeException {
+    public final void load() throws IOException, LockingFailedException, MergeException {
 
         // Load new data from file
-        final RandomAccessFileInputStream in = new RandomAccessFileInputStream(
-                file, "rw");
+        final RandomAccessFileInputStream in = new RandomAccessFileInputStream(file, "rw");
         try {
             final FileLock lock = in.lock(tryLockMax, tryWaitMillis);
             try {
@@ -141,12 +136,11 @@ public class PropertiesFile {
 
     }
 
-    private void load(final RandomAccessFileInputStream in, final File file,
-            final List<Property> props, final String encoding)
-            throws IOException {
+    private void load(final RandomAccessFileInputStream in, final File file, final List<Property> props,
+            final String encoding) throws IOException {
 
-        final LineNumberReader reader = new LineNumberReader(
-                new InputStreamReader(new BufferedInputStream(in), encoding));
+        final LineNumberReader reader = new LineNumberReader(new InputStreamReader(
+                new BufferedInputStream(in), encoding));
         String line;
         while ((line = reader.readLine()) != null) {
             final int p = line.indexOf('=');
@@ -161,8 +155,7 @@ public class PropertiesFile {
         loaded = true;
     }
 
-    private void merge(final RandomAccessFileInputStream in)
-            throws MergeException, IOException {
+    private void merge(final RandomAccessFileInputStream in) throws MergeException, IOException {
 
         final List<MergeException.Problem> problems = new ArrayList<>();
 
@@ -170,37 +163,33 @@ public class PropertiesFile {
         load(in, file, currentProps, encoding);
 
         for (int i = 0; i < currentProps.size(); i++) {
-            final Property currentProp = (Property) currentProps.get(i);
+            final Property currentProp = currentProps.get(i);
             final int idx = props.indexOf(currentProp);
             if (idx == -1) {
                 // New property from file
                 props.add(currentProp);
             } else {
-                final Property prop = (Property) props.get(idx);
+                final Property prop = props.get(idx);
                 if (prop.hasChanged()) {
                     if (prop.isNew()) {
                         // New property
                         if (!prop.getValue().equals(currentProp.getValue())) {
                             problems.add(new MergeException.Problem(
-                                    "Same new property in file with a different value!",
-                                    prop, currentProp));
+                                    "Same new property in file with a different value!", prop, currentProp));
                         }
                     } else {
                         if (prop.isDeleted()) {
                             // Deleted property
-                            if (!prop.getInitialValue().equals(
-                                    currentProp.getValue())) {
+                            if (!prop.getInitialValue().equals(currentProp.getValue())) {
                                 problems.add(new MergeException.Problem(
-                                        "Modified property in file we want to delete!",
-                                        prop, currentProp));
+                                        "Modified property in file we want to delete!", prop, currentProp));
                             }
                         } else {
                             // Changed property
-                            if (!prop.getInitialValue().equals(
-                                    currentProp.getValue())) {
+                            if (!prop.getInitialValue().equals(currentProp.getValue())) {
                                 problems.add(new MergeException.Problem(
-                                        "Same property modified in file but different value!",
-                                        prop, currentProp));
+                                        "Same property modified in file but different value!", prop,
+                                        currentProp));
                             }
                         }
                     }
@@ -213,8 +202,7 @@ public class PropertiesFile {
 
         if (problems.size() > 0) {
             throw new MergeException(file,
-                    (MergeException.Problem[]) problems
-                            .toArray(new MergeException.Problem[0]));
+                    problems.toArray(new MergeException.Problem[0]));
         }
 
     }
@@ -232,8 +220,8 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final boolean sortByKey) throws IOException,
-            MergeException, LockingFailedException {
+    public final void save(final boolean sortByKey) throws IOException, MergeException,
+            LockingFailedException {
         save(new String[] {}, sortByKey);
     }
 
@@ -241,8 +229,8 @@ public class PropertiesFile {
      * Save the content from memory to disk.
      * 
      * @param comment
-     *            Comment to prepend (Should not include the "#" comment sign -
-     *            It will be prepended automatically).
+     *            Comment to prepend (Should not include the "#" comment sign - It will be prepended
+     *            automatically).
      * @param sortByKey
      *            Sort the properties by key before saving?
      * 
@@ -253,8 +241,8 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final String comment, final boolean sortByKey)
-            throws IOException, MergeException, LockingFailedException {
+    public final void save(final String comment, final boolean sortByKey) throws IOException, MergeException,
+            LockingFailedException {
         save(new String[] { comment }, sortByKey);
     }
 
@@ -262,8 +250,8 @@ public class PropertiesFile {
      * Save the content from memory to disk.
      * 
      * @param comments
-     *            Comments to prepend (Should not include the "#" comment sign -
-     *            It will be prepended automatically).
+     *            Comments to prepend (Should not include the "#" comment sign - It will be prepended
+     *            automatically).
      * @param sortByKey
      *            Sort the properties by key before saving?
      * 
@@ -274,11 +262,10 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final String[] comments, final boolean sortByKey)
-            throws IOException, MergeException, LockingFailedException {
+    public final void save(final String[] comments, final boolean sortByKey) throws IOException,
+            MergeException, LockingFailedException {
 
-        final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(
-                file, "rw");
+        final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(file, "rw");
         try {
             final FileLock lock = out.lock(tryLockMax, tryWaitMillis);
             try {
@@ -310,14 +297,12 @@ public class PropertiesFile {
 
                 // Save all values
                 for (int i = 0; i < props.size(); i++) {
-                    final Property prop = (Property) props.get(i);
+                    final Property prop = props.get(i);
                     if (!prop.isDeleted()) {
                         writer.write(prop.toKeyValue());
                         writer.write(lf);
                         // Replace the property with the new status
-                        props.set(i,
-                                new Property(prop.getKey(), prop.getValue(),
-                                        prop.getValue()));
+                        props.set(i, new Property(prop.getKey(), prop.getValue(), prop.getValue()));
                     }
                 }
                 writer.flush();
@@ -333,7 +318,7 @@ public class PropertiesFile {
 
         // Remove all deleted entries
         for (int i = props.size() - 1; i >= 0; i--) {
-            final Property prop = (Property) props.get(i);
+            final Property prop = props.get(i);
             if (prop.isDeleted()) {
                 props.remove(i);
             }
@@ -343,7 +328,7 @@ public class PropertiesFile {
 
     private Property find(final String key) {
         for (int i = 0; i < props.size(); i++) {
-            final Property prop = (Property) props.get(i);
+            final Property prop = props.get(i);
             if (prop.getKey().equals(key)) {
                 return prop;
             }
@@ -384,8 +369,8 @@ public class PropertiesFile {
     }
 
     /**
-     * Set a value for a property. If a property with the key is already known
-     * the value will be changed. Otherwise a new property will be created.
+     * Set a value for a property. If a property with the key is already known the value will be changed.
+     * Otherwise a new property will be created.
      * 
      * @param key
      *            Key to set.
@@ -402,9 +387,9 @@ public class PropertiesFile {
     }
 
     /**
-     * Remove the property with the given key. The internal property object is
-     * not deleted itself but it's value is set to <code>null</code> and the
-     * method <code>isDeleted()</code> will return <code>true</code>.
+     * Remove the property with the given key. The internal property object is not deleted itself but it's
+     * value is set to <code>null</code> and the method <code>isDeleted()</code> will return <code>true</code>
+     * .
      * 
      * @param key
      *            Key for the property to remove.
@@ -422,8 +407,7 @@ public class PropertiesFile {
      * @param key
      *            Key for the property to check.
      * 
-     * @return If the property is unknown or has been deleted <code>true</code>
-     *         else <code>false</code>.
+     * @return If the property is unknown or has been deleted <code>true</code> else <code>false</code>.
      */
     public final boolean isRemoved(final String key) {
         final Property prop = find(key);
@@ -483,15 +467,18 @@ public class PropertiesFile {
         return new Iterator<String>() {
             private final Iterator<Property> it = props.iterator();
 
+            @Override
             public boolean hasNext() {
                 return it.hasNext();
             }
 
+            @Override
             public String next() {
                 final Property prop = it.next();
                 return prop.getKey();
             }
 
+            @Override
             public void remove() {
                 it.remove();
             }
@@ -506,7 +493,7 @@ public class PropertiesFile {
     public final Properties toProperties() {
         final Properties retVal = new Properties();
         for (int i = 0; i < props.size(); i++) {
-            final Property prop = (Property) props.get(i);
+            final Property prop = props.get(i);
             if (!prop.isDeleted()) {
                 retVal.put(prop.getKey(), prop.getValue());
             }
@@ -562,12 +549,10 @@ public class PropertiesFile {
     }
 
     /**
-     * Tries to delete the underlying file. The properties in memory remain
-     * unchanged. If you want also to remove the properties in memory call
-     * <code>clear()</code>.
+     * Tries to delete the underlying file. The properties in memory remain unchanged. If you want also to
+     * remove the properties in memory call <code>clear()</code>.
      * 
-     * @return If the files was deleted <code>true</code> else
-     *         <code>false</code>
+     * @return If the files was deleted <code>true</code> else <code>false</code>
      */
     public final boolean delete() {
         return file.delete();

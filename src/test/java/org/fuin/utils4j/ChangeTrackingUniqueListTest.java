@@ -18,6 +18,7 @@
 package org.fuin.utils4j;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +37,7 @@ public class ChangeTrackingUniqueListTest {
     @Before
     public final void beforeMethod() {
         initialEmptyList = new ChangeTrackingUniqueList<String>(new ArrayList<String>());
-        initialFilledList = new ChangeTrackingUniqueList<String>(toList("one", "two",
-                "three"));
+        initialFilledList = new ChangeTrackingUniqueList<String>(toList("one", "two", "three"));
 
     }
 
@@ -80,8 +80,7 @@ public class ChangeTrackingUniqueListTest {
         initialFilledList.add("five");
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
-        assertThat(initialFilledList.getAdded())
-                .containsExactly("four", "five");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
     }
@@ -121,8 +120,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(5);
-        assertThat(initialFilledList.getAdded())
-                .containsExactly("four", "five");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
     }
@@ -138,8 +136,7 @@ public class ChangeTrackingUniqueListTest {
         initialEmptyList.addAll(toAdd);
         assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
-        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two",
-                "three");
+        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two", "three");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
     }
@@ -156,8 +153,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(6);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
     }
@@ -197,8 +193,7 @@ public class ChangeTrackingUniqueListTest {
         initialEmptyList.addAll(0, toAdd2);
         assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
-        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two",
-                "three", "four", "five", "six");
+        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two", "three", "four", "five", "six");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
     }
@@ -215,8 +210,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(6);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
     }
@@ -224,8 +218,8 @@ public class ChangeTrackingUniqueListTest {
     @Test
     public void testAddAllIntCollectionWithRemoved() {
 
-        final ChangeTrackingUniqueList<String> filledList = new ChangeTrackingUniqueList<>(
-                toList("one", "two", "three", "four"));
+        final ChangeTrackingUniqueList<String> filledList = new ChangeTrackingUniqueList<>(toList("one",
+                "two", "three", "four"));
         filledList.remove("two");
         filledList.remove("three");
 
@@ -237,8 +231,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(filledList.isChanged()).isFalse();
         assertThat(filledList.hasChangedSinceTagging()).isFalse();
         assertThat(filledList).hasSize(4);
-        assertThat(new ArrayList<String>(filledList)).containsExactly("one",
-                "two", "three", "four");
+        assertThat(new ArrayList<String>(filledList)).containsExactly("one", "two", "three", "four");
         assertThat(filledList.getAdded()).isEmpty();
         assertThat(filledList.getDeleted()).isEmpty();
 
@@ -255,8 +248,7 @@ public class ChangeTrackingUniqueListTest {
         // Check the result
         assertThat(initialEmptyList.isChanged());
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
-        assertThat(initialEmptyList.getAdded()).containsExactly("four", "five",
-                "six");
+        assertThat(initialEmptyList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
         // Clear the list and check the result
@@ -280,8 +272,7 @@ public class ChangeTrackingUniqueListTest {
         // Check the result
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
         // Clear the list and check the result
@@ -290,8 +281,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).isEmpty();
         assertThat(initialFilledList.getAdded()).isEmpty();
-        assertThat(initialFilledList.getDeleted()).containsExactly("one",
-                "two", "three");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "two", "three");
 
     }
 
@@ -307,8 +297,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
         assertThat(initialEmptyList).hasSize(3);
-        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two",
-                "three");
+        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two", "three");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
         // Remove the entries one by one and check the result
@@ -430,8 +419,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(6);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
         // Remove the entries one by one and check the result
@@ -439,27 +427,22 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(5);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialFilledList.getDeleted()).containsExactly("one");
 
         initialFilledList.remove(0);
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(4);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
-        assertThat(initialFilledList.getDeleted())
-                .containsExactly("one", "two");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "two");
 
         initialFilledList.remove(0);
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(3);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
-        assertThat(initialFilledList.getDeleted()).containsExactly("one",
-                "two", "three");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "two", "three");
 
         initialFilledList.remove(0);
         assertThat(initialFilledList.isChanged()).isTrue();
@@ -467,8 +450,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(2);
         assertThat(initialFilledList.getAdded()).containsExactly("five", "six");
-        assertThat(initialFilledList.getDeleted()).containsExactly("one",
-                "two", "three");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "two", "three");
 
         initialFilledList.remove(0);
         assertThat(initialFilledList.isChanged()).isTrue();
@@ -476,16 +458,14 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(1);
         assertThat(initialFilledList.getAdded()).containsExactly("six");
-        assertThat(initialFilledList.getDeleted()).containsExactly("one",
-                "two", "three");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "two", "three");
 
         initialFilledList.remove(0);
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).isEmpty();
         assertThat(initialFilledList.getAdded()).isEmpty();
-        assertThat(initialFilledList.getDeleted()).containsExactly("one",
-                "two", "three");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "two", "three");
 
     }
 
@@ -500,8 +480,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
         assertThat(initialEmptyList).hasSize(3);
-        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two",
-                "three");
+        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two", "three");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
         // Remove two elements of the collection
@@ -556,8 +535,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(1);
         assertThat(initialFilledList.getAdded()).isEmpty();
-        assertThat(initialFilledList.getDeleted())
-                .containsExactly("one", "two");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "two");
 
     }
 
@@ -573,8 +551,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
         assertThat(initialEmptyList).hasSize(3);
-        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two",
-                "three");
+        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two", "three");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
         // Run method
@@ -601,8 +578,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(6);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
         // Run method
@@ -627,8 +603,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
         assertThat(initialEmptyList).hasSize(3);
-        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two",
-                "three");
+        assertThat(initialEmptyList.getAdded()).containsExactly("one", "two", "three");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
         // Replace element
@@ -636,8 +611,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
         assertThat(initialEmptyList).hasSize(3);
-        assertThat(initialEmptyList.getAdded()).containsExactly("two", "three",
-                "zero");
+        assertThat(initialEmptyList.getAdded()).containsExactly("two", "three", "zero");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
 
     }
@@ -653,8 +627,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(6);
-        assertThat(initialFilledList.getAdded()).containsExactly("four",
-                "five", "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
         // Replace some elements
@@ -666,12 +639,10 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(6);
-        assertThat(new ArrayList<String>(initialFilledList)).containsExactly(
-                "1", "two", "3", "four", "5", "six");
-        assertThat(initialFilledList.getAdded()).containsExactly("four", "six",
-                "1", "3", "5");
-        assertThat(initialFilledList.getDeleted()).containsExactly("one",
-                "three");
+        assertThat(new ArrayList<String>(initialFilledList)).containsExactly("1", "two", "3", "four", "5",
+                "six");
+        assertThat(initialFilledList.getAdded()).containsExactly("four", "six", "1", "3", "5");
+        assertThat(initialFilledList.getDeleted()).containsExactly("one", "three");
 
     }
 
@@ -696,8 +667,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isFalse();
         assertThat(initialFilledList.hasChangedSinceTagging()).isFalse();
         assertThat(initialFilledList).hasSize(3);
-        assertThat(new ArrayList<String>(initialFilledList)).containsExactly(
-                "one", "three", "two");
+        assertThat(new ArrayList<String>(initialFilledList)).containsExactly("one", "three", "two");
         assertThat(initialFilledList.getAdded()).isEmpty();
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
@@ -755,8 +725,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isFalse();
         assertThat(initialFilledList.hasChangedSinceTagging()).isFalse();
         assertThat(initialFilledList).hasSize(3);
-        assertThat(new ArrayList<String>(initialFilledList)).containsExactly(
-                "one", "three", "four");
+        assertThat(new ArrayList<String>(initialFilledList)).containsExactly("one", "three", "four");
         assertThat(initialFilledList.getAdded()).isEmpty();
         assertThat(initialFilledList.getDeleted()).isEmpty();
 
@@ -795,8 +764,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isFalse();
         assertThat(initialFilledList.hasChangedSinceTagging()).isFalse();
         assertThat(initialFilledList).hasSize(3);
-        assertThat(new ArrayList<String>(initialFilledList)).containsExactly(
-                "one", "three", "two");
+        assertThat(new ArrayList<String>(initialFilledList)).containsExactly("one", "three", "two");
         assertThat(initialFilledList.getAdded()).isEmpty();
         assertThat(initialFilledList.getDeleted()).isEmpty();
 

@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.io.File;
 import java.util.Iterator;
@@ -57,8 +57,7 @@ public final class TestHelper {
      * @param propsB
      *            First properties.
      */
-    public static void assertPropertiesEqual(final File fileA,
-            final Properties propsB) {
+    public static void assertPropertiesEqual(final File fileA, final Properties propsB) {
         final Properties propsA = Utils4J.loadProperties(fileA);
         assertEqual(propsA, propsB);
     }
@@ -71,8 +70,7 @@ public final class TestHelper {
      * @param propsB
      *            First properties.
      */
-    public static void assertEqual(final Properties propsA,
-            final Properties propsB) {
+    public static void assertEqual(final Properties propsA, final Properties propsB) {
         assertThat(propsA.size()).isEqualTo(propsB.size());
         final Iterator<Object> it = propsA.keySet().iterator();
         while (it.hasNext()) {

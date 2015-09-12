@@ -18,11 +18,10 @@
 package org.fuin.utils4j;
 
 /**
- * A key value pair that maintains an additional change state. The state
- * contains the information if the value has been changed since construction of
- * the instance. The methods <code>hashCode()</code> and
- * <code>equals(Object)</code> are based on the <code>key</code> attribute. The
- * attributes <code>key</code> and <code>initialValue</code> are immutable.
+ * A key value pair that maintains an additional change state. The state contains the information if the value
+ * has been changed since construction of the instance. The methods <code>hashCode()</code> and
+ * <code>equals(Object)</code> are based on the <code>key</code> attribute. The attributes <code>key</code>
+ * and <code>initialValue</code> are immutable.
  */
 public final class Property implements Comparable<Property> {
 
@@ -42,8 +41,7 @@ public final class Property implements Comparable<Property> {
      * @param value
      *            Value.
      */
-    public Property(final String key, final String initialValue,
-            final String value) {
+    public Property(final String key, final String initialValue, final String value) {
         super();
         Utils4J.checkNotNull("key", key);
         this.key = key;
@@ -91,8 +89,7 @@ public final class Property implements Comparable<Property> {
     /**
      * Returns if the value has changed since construction.
      * 
-     * @return If the value has changed <code>true</code> else
-     *         <code>false</code>.
+     * @return If the value has changed <code>true</code> else <code>false</code>.
      */
     public final boolean hasChanged() {
         if (initialValue == null) {
@@ -105,8 +102,7 @@ public final class Property implements Comparable<Property> {
     /**
      * Returns if the value has been deleted since construction.
      * 
-     * @return If the value has been set to <code>null</code> <code>true</code>
-     *         else <code>false</code>.
+     * @return If the value has been set to <code>null</code> <code>true</code> else <code>false</code>.
      */
     public final boolean isDeleted() {
         if (initialValue == null) {
@@ -118,8 +114,8 @@ public final class Property implements Comparable<Property> {
     /**
      * Returns if the value has been created since construction.
      * 
-     * @return If the property has been set to a non-<code>null</code> value
-     *         <code>true</code> else <code>false</code>.
+     * @return If the property has been set to a non-<code>null</code> value <code>true</code> else
+     *         <code>false</code>.
      */
     public final boolean isNew() {
         if (initialValue != null) {
@@ -172,8 +168,7 @@ public final class Property implements Comparable<Property> {
     /**
      * Returns a 3-code status text.
      * 
-     * @return "NEW" (new), "DEL" (deleted), "CHG" (changed) or "---"
-     *         (unchanged).
+     * @return "NEW" (new), "DEL" (deleted), "CHG" (changed) or "---" (unchanged).
      */
     public final String getStatus() {
         if (isNew()) {

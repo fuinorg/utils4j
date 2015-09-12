@@ -38,50 +38,44 @@ public final class JaxbUtils {
             + "encoding=\"UTF-8\" standalone=\"yes\"?>";
 
     private JaxbUtils() {
-        throw new UnsupportedOperationException(
-                "It's not allowed to create an instance of a utility class");
+        throw new UnsupportedOperationException("It's not allowed to create an instance of a utility class");
     }
 
     /**
-     * Marshals the given data. A <code>null</code> data argument returns
-     * <code>null</code>.
+     * Marshals the given data. A <code>null</code> data argument returns <code>null</code>.
      * 
      * @param data
      *            Data to serialize or <code>null</code>.
      * @param classesToBeBound
-     *            List of java classes to be recognized by the
-     *            {@link JAXBContext} - Cannot be <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
+     *            <code>null</code>.
      * 
      * @return XML data or <code>null</code>.
      * 
      * @param <T>
      *            Type of the data.
      */
-    public static <T> String marshal(final T data,
-            final Class<?>... classesToBeBound) {
+    public static <T> String marshal(final T data, final Class<?>... classesToBeBound) {
         return marshal(data, null, classesToBeBound);
     }
 
     /**
-     * Marshals the given data. A <code>null</code> data argument returns
-     * <code>null</code>.
+     * Marshals the given data. A <code>null</code> data argument returns <code>null</code>.
      * 
      * @param data
      *            Data to serialize or <code>null</code>.
      * @param adapters
-     *            Adapters to associate with the marshaller or <code>null</code>
-     *            .
+     *            Adapters to associate with the marshaller or <code>null</code> .
      * @param classesToBeBound
-     *            List of java classes to be recognized by the
-     *            {@link JAXBContext} - Cannot be <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
+     *            <code>null</code>.
      * 
      * @return XML data or <code>null</code>.
      * 
      * @param <T>
      *            Type of the data.
      */
-    public static <T> String marshal(final T data,
-            final XmlAdapter<?, ?>[] adapters,
+    public static <T> String marshal(final T data, final XmlAdapter<?, ?>[] adapters,
             final Class<?>... classesToBeBound) {
         if (data == null) {
             return null;
@@ -95,8 +89,8 @@ public final class JaxbUtils {
     }
 
     /**
-     * Marshals the given data using a given context. A <code>null</code> data
-     * argument returns <code>null</code>.
+     * Marshals the given data using a given context. A <code>null</code> data argument returns
+     * <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
@@ -113,31 +107,29 @@ public final class JaxbUtils {
     }
 
     /**
-     * Marshals the given data using a given context. A <code>null</code> data
-     * argument returns <code>null</code>.
+     * Marshals the given data using a given context. A <code>null</code> data argument returns
+     * <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
      * @param data
      *            Data to serialize or <code>null</code>.
      * @param adapters
-     *            Adapters to associate with the marshaller or <code>null</code>
-     *            .
+     *            Adapters to associate with the marshaller or <code>null</code> .
      * 
      * @return XML data or <code>null</code>.
      * 
      * @param <T>
      *            Type of the data.
      */
-    public static <T> String marshal(final JAXBContext ctx, final T data,
-            final XmlAdapter<?, ?>[] adapters) {
+    public static <T> String marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters) {
         if (data == null) {
             return null;
         }
         try {
             final Marshaller marshaller = ctx.createMarshaller();
             if (adapters != null) {
-                for (XmlAdapter<?, ?> adapter : adapters) {
+                for (final XmlAdapter<?, ?> adapter : adapters) {
                     marshaller.setAdapter(adapter);
                 }
             }
@@ -150,45 +142,40 @@ public final class JaxbUtils {
     }
 
     /**
-     * Unmarshals the given data. A <code>null</code> XML data argument returns
-     * <code>null</code>.
+     * Unmarshals the given data. A <code>null</code> XML data argument returns <code>null</code>.
      * 
      * @param xmlData
      *            XML data or <code>null</code>.
      * @param classesToBeBound
-     *            List of java classes to be recognized by the
-     *            {@link JAXBContext} - Cannot be <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
+     *            <code>null</code>.
      * 
      * @return Data or <code>null</code>.
      * 
      * @param <T>
      *            Type of the expected data.
      */
-    public static <T> T unmarshal(final String xmlData,
-            final Class<?>... classesToBeBound) {
+    public static <T> T unmarshal(final String xmlData, final Class<?>... classesToBeBound) {
         return unmarshal(xmlData, null, classesToBeBound);
     }
 
     /**
-     * Unmarshals the given data. A <code>null</code> XML data argument returns
-     * <code>null</code>.
+     * Unmarshals the given data. A <code>null</code> XML data argument returns <code>null</code>.
      * 
      * @param xmlData
      *            XML data or <code>null</code>.
      * @param adapters
-     *            Adapters to associate with the unmarshaller or
-     *            <code>null</code>.
+     *            Adapters to associate with the unmarshaller or <code>null</code>.
      * @param classesToBeBound
-     *            List of java classes to be recognized by the
-     *            {@link JAXBContext} - Cannot be <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
+     *            <code>null</code>.
      * 
      * @return Data or <code>null</code>.
      * 
      * @param <T>
      *            Type of the expected data.
      */
-    public static <T> T unmarshal(final String xmlData,
-            final XmlAdapter<?, ?>[] adapters,
+    public static <T> T unmarshal(final String xmlData, final XmlAdapter<?, ?>[] adapters,
             final Class<?>... classesToBeBound) {
         if (xmlData == null) {
             return null;
@@ -202,16 +189,15 @@ public final class JaxbUtils {
     }
 
     /**
-     * Unmarshals the given data using a given context. A <code>null</code> XML
-     * data argument returns <code>null</code>.
+     * Unmarshals the given data using a given context. A <code>null</code> XML data argument returns
+     * <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
      * @param xmlData
      *            XML data or <code>null</code>.
      * @param adapters
-     *            Adapters to associate with the unmarshaller or
-     *            <code>null</code>.
+     *            Adapters to associate with the unmarshaller or <code>null</code>.
      * 
      * @return Data or <code>null</code>.
      * 
@@ -227,7 +213,7 @@ public final class JaxbUtils {
         try {
             final Unmarshaller unmarshaller = ctx.createUnmarshaller();
             if (adapters != null) {
-                for (XmlAdapter<?, ?> adapter : adapters) {
+                for (final XmlAdapter<?, ?> adapter : adapters) {
                     unmarshaller.setAdapter(adapter);
                 }
             }
@@ -235,14 +221,11 @@ public final class JaxbUtils {
                 @Override
                 public boolean handleEvent(final ValidationEvent event) {
                     if (event.getSeverity() > 0) {
-                        if (event.getLinkedException() == null) {
-                            throw new RuntimeException(
-                                    "Error unmarshalling the data: "
-                                            + event.getMessage());
+                        final Throwable ex = event.getLinkedException();
+                        if (ex == null) {
+                            throw new RuntimeException("Error unmarshalling the data: " + event.getMessage());
                         }
-                        throw new RuntimeException(
-                                "Error unmarshalling the data", event
-                                        .getLinkedException());
+                        throw new RuntimeException("Error unmarshalling the data", ex);
                     }
                     return true;
                 }

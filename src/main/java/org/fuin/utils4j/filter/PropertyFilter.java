@@ -69,8 +69,7 @@ public abstract class PropertyFilter implements Filter {
      * @return Value returned via the getter of the property.
      */
     protected final Object getProperty(final Object obj, final String property) {
-        if ((obj == null) || (property == null)
-                || (property.trim().length() == 0)) {
+        if ((obj == null) || (property == null) || (property.trim().length() == 0)) {
             return null;
         }
         final String[] getterNames = createGetterNames(property);
@@ -80,25 +79,20 @@ public abstract class PropertyFilter implements Filter {
                 final Class cl = obj.getClass();
                 final Method m = cl.getMethod(getter, new Class[] {});
                 return m.invoke(obj, new Object[] {});
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException("Accessing " + getter
-                        + " method of property '" + property
-                        + "' failed (private? protected?)! [" + obj.getClass()
-                        + "]", e);
-            } catch (InvocationTargetException e) {
-                throw new RuntimeException("Exception within " + getter
-                        + " method of property '" + property + "'! ["
-                        + obj.getClass() + "]", e.getCause());
-            } catch (NoSuchMethodException e) {
+            } catch (final IllegalAccessException e) {
+                throw new RuntimeException("Accessing " + getter + " method of property '" + property
+                        + "' failed (private? protected?)! [" + obj.getClass() + "]", e);
+            } catch (final InvocationTargetException e) {
+                throw new RuntimeException("Exception within " + getter + " method of property '" + property
+                        + "'! [" + obj.getClass() + "]", e.getCause());
+            } catch (final NoSuchMethodException e) {
                 if (i == getter.length() - 1) {
-                    throw new RuntimeException("No " + getter
-                            + " method found for property! '" + property
+                    throw new RuntimeException("No " + getter + " method found for property! '" + property
                             + "'! [" + obj.getClass() + "]", e);
                 }
             }
         }
-        throw new IllegalStateException(
-                "No getters defined in 'createGetterNames()'!");
+        throw new IllegalStateException("No getters defined in 'createGetterNames()'!");
     }
 
 }

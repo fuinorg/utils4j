@@ -24,24 +24,24 @@ import org.fuin.utils4j.Utils4J;
 /**
  * Short example for creating a "classpath:" scheme URL.
  */
-//CHECKSTYLE:OFF
+// CHECKSTYLE:OFF
 public class ClasspathURLExample {
 
-    public static void main(String[] args) {
-        
+    public static void main(final String[] args) {
+
         // Create URL using a utility method
-        URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
-        
+        final URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
+
         // Read content of URL into to a string
-        String text = Utils4J.readAsString(url, "utf-8", 1024);
-        
+        final String text = Utils4J.readAsString(url, "utf-8", 1024);
+
         // Output:
         System.out.println(text);
         // one=1
         // two=2
         // three=3
-        
+
     }
-    
+
 }
 // CHECKSTYLE:ON

@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,12 +42,10 @@ public class RandomAccessFileOutputStreamTest {
     public static void beforeClass() throws IOException {
         final File dir = new File("src/test/resources/"
                 + Utils4J.getPackagePath(RandomAccessFileOutputStream.class));
-        file = new File(Utils4J.getTempDir(),
-                "RandomAccessFileOutputStreamData.bin");
+        file = new File(Utils4J.getTempDir(), "RandomAccessFileOutputStreamData.bin");
         inputFile = new File(dir, "RandomAccessFileInputStreamData.bin");
         if (!inputFile.exists()) {
-            throw new IllegalStateException("File '" + inputFile
-                    + "' not found!");
+            throw new IllegalStateException("File '" + inputFile + "' not found!");
         }
     }
 
@@ -62,8 +60,7 @@ public class RandomAccessFileOutputStreamTest {
         outputStream = null;
     }
 
-    private final RandomAccessFileOutputStream createOutputStream()
-            throws IOException {
+    private final RandomAccessFileOutputStream createOutputStream() throws IOException {
         return new RandomAccessFileOutputStream(file, "rw");
     }
 
@@ -113,8 +110,7 @@ public class RandomAccessFileOutputStreamTest {
         // Open the file
         outputStream = createOutputStream();
         // Use only the bytes 1+2 from the array
-        final byte[] buf = new byte[] { (byte) 254, (byte) 255, (byte) 255,
-                (byte) 255 };
+        final byte[] buf = new byte[] { (byte) 254, (byte) 255, (byte) 255, (byte) 255 };
         outputStream.write(buf, 0, 2);
         for (int i = 2; i < 256; i++) {
             outputStream.write(i);

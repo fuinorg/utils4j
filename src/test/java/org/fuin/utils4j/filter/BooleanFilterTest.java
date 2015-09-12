@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
@@ -26,10 +26,8 @@ public class BooleanFilterTest {
 
     @Test
     public final void testCreateAndGet() {
-        assertThat((new BooleanFilter(Boolean.TRUE)).getConstValue())
-                .isEqualTo(Boolean.TRUE);
-        assertThat((new BooleanFilter(Boolean.FALSE)).getConstValue())
-                .isEqualTo(Boolean.FALSE);
+        assertThat((new BooleanFilter(Boolean.TRUE)).getConstValue()).isEqualTo(Boolean.TRUE);
+        assertThat((new BooleanFilter(Boolean.FALSE)).getConstValue()).isEqualTo(Boolean.FALSE);
     }
 
     @Test

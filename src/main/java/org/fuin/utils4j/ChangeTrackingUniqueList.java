@@ -25,10 +25,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A wrapper for lists that keeps track of all changes made to the list since
- * construction. Only adding, replacing or deleting elements is tracked (not
- * changes inside the objects). Duplicates elements are not allowed for the list
- * - This is like a {@link java.util.Set} but at the same time ordered like a
+ * A wrapper for lists that keeps track of all changes made to the list since construction. Only adding,
+ * replacing or deleting elements is tracked (not changes inside the objects). Duplicates elements are not
+ * allowed for the list - This is like a {@link java.util.Set} but at the same time ordered like a
  * {@link List} . It's also possible to revert all changes.
  * 
  * @param <T>
@@ -45,15 +44,13 @@ public class ChangeTrackingUniqueList<T> implements List<T>, Taggable {
     private boolean tagged;
 
     /**
-     * Constructor with covered list. The list is tagged at construction time -
-     * This means {@link #isTagged()} will return <code>true</code> without
-     * calling {@link #tag()} first. If this behavior is not wanted you can call
-     * {@link #untag()} after constructing the list.
+     * Constructor with covered list. The list is tagged at construction time - This means {@link #isTagged()}
+     * will return <code>true</code> without calling {@link #tag()} first. If this behavior is not wanted you
+     * can call {@link #untag()} after constructing the list.
      * 
      * @param list
-     *            Wrapped list - Be aware that this list will be changed by this
-     *            class. There is no internal copy of the list - The reference
-     *            itself is used.
+     *            Wrapped list - Be aware that this list will be changed by this class. There is no internal
+     *            copy of the list - The reference itself is used.
      */
     public ChangeTrackingUniqueList(final List<T> list) {
         super();
@@ -65,47 +62,40 @@ public class ChangeTrackingUniqueList<T> implements List<T>, Taggable {
     }
 
     /**
-     * Returns if the list has changed. If the list is not in tag mode (this
-     * means {@link #isTagged()} returns <code>true</code>) this method will
-     * always return <code>false</code>.
+     * Returns if the list has changed. If the list is not in tag mode (this means {@link #isTagged()} returns
+     * <code>true</code>) this method will always return <code>false</code>.
      * 
-     * @return If elements have been added or deleted <code>true</code> else
-     *         <code>false</code>.
+     * @return If elements have been added or deleted <code>true</code> else <code>false</code>.
      */
     public final boolean isChanged() {
         return (added.size() > 0) || (deleted.size() > 0);
     }
 
     /**
-     * Returns deleted elements. If the list is not in tag mode (this means
-     * {@link #isTagged()} returns <code>true</code>) this method will always
-     * return an empty list.
+     * Returns deleted elements. If the list is not in tag mode (this means {@link #isTagged()} returns
+     * <code>true</code>) this method will always return an empty list.
      * 
-     * @return Elements that have been deleted since construction of this
-     *         instance - Unmodifiable list!
+     * @return Elements that have been deleted since construction of this instance - Unmodifiable list!
      */
     public final List<T> getDeleted() {
         return Collections.unmodifiableList(deleted);
     }
 
     /**
-     * Returns added elements. If the list is not in tag mode (this means
-     * {@link #isTagged()} returns <code>true</code>) this method will always
-     * return an empty list.
+     * Returns added elements. If the list is not in tag mode (this means {@link #isTagged()} returns
+     * <code>true</code>) this method will always return an empty list.
      * 
-     * @return Elements that have been added since construction of this instance
-     *         - Unmodifiable list!
+     * @return Elements that have been added since construction of this instance - Unmodifiable list!
      */
     public final List<T> getAdded() {
         return Collections.unmodifiableList(added);
     }
 
     /**
-     * Roll back all changes made since construction. WARNING: The position of
-     * the elements is <b>not</b> guaranteed to be the same again! This is the
-     * same function ad {@link #revertToTag()}. If the list is not in tag mode (
-     * this means {@link #isTagged()} returns <code>true</code>) this method
-     * will do nothing.
+     * Roll back all changes made since construction. WARNING: The position of the elements is <b>not</b>
+     * guaranteed to be the same again! This is the same function ad {@link #revertToTag()}. If the list is
+     * not in tag mode ( this means {@link #isTagged()} returns <code>true</code>) this method will do
+     * nothing.
      */
     public final void revert() {
 
@@ -145,8 +135,7 @@ public class ChangeTrackingUniqueList<T> implements List<T>, Taggable {
     @Override
     public final boolean add(final T o) {
         if (list.contains(o)) {
-            throw new IllegalArgumentException(
-                    "The argument is already in the list: " + o);
+            throw new IllegalArgumentException("The argument is already in the list: " + o);
         }
         final boolean b = list.add(o);
         if (b) {
@@ -158,8 +147,7 @@ public class ChangeTrackingUniqueList<T> implements List<T>, Taggable {
     @Override
     public final void add(final int index, final T o) {
         if (list.contains(o)) {
-            throw new IllegalArgumentException(
-                    "The argument is already in the list: " + o);
+            throw new IllegalArgumentException("The argument is already in the list: " + o);
         }
         list.add(index, o);
         addIntern(o);
@@ -270,7 +258,7 @@ public class ChangeTrackingUniqueList<T> implements List<T>, Taggable {
 
     @Override
     public final T remove(final int index) {
-        final T o = (T) list.remove(index);
+        final T o = list.remove(index);
         if (o != null) {
             removeIntern(o);
         }

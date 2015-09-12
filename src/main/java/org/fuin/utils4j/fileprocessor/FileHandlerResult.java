@@ -23,27 +23,23 @@ package org.fuin.utils4j.fileprocessor;
 public final class FileHandlerResult {
 
     /** Continue processing. */
-    public static final FileHandlerResult CONTINUE = new FileHandlerResult(
-            "CONTINUE");
+    public static final FileHandlerResult CONTINUE = new FileHandlerResult("CONTINUE");
 
     /** Skips all files and sub directories in the current one. */
-    public static final FileHandlerResult SKIP_ALL = new FileHandlerResult(
-            "SKIP_ALL");
+    public static final FileHandlerResult SKIP_ALL = new FileHandlerResult("SKIP_ALL");
 
     /** Skip all other files in the current directory. */
-    public static final FileHandlerResult SKIP_FILES = new FileHandlerResult(
-            "SKIP_FILES");
+    public static final FileHandlerResult SKIP_FILES = new FileHandlerResult("SKIP_FILES");
 
     /** Skip all other sub directories of the current one. */
-    public static final FileHandlerResult SKIP_SUBDIRS = new FileHandlerResult(
-            "SKIP_SUBDIRS");
+    public static final FileHandlerResult SKIP_SUBDIRS = new FileHandlerResult("SKIP_SUBDIRS");
 
     /** Stop searching. */
     public static final FileHandlerResult STOP = new FileHandlerResult("STOP");
 
     /** All enumeration instances. */
-    public static final FileHandlerResult[] INSTANCES = new FileHandlerResult[] {
-            CONTINUE, SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP };
+    public static final FileHandlerResult[] INSTANCES = new FileHandlerResult[] { CONTINUE, SKIP_ALL,
+            SKIP_FILES, SKIP_SUBDIRS, STOP };
 
     private final String name;
 
@@ -59,6 +55,7 @@ public final class FileHandlerResult {
     }
 
     // CHECKSTYLE:OFF Generated code
+    @Override
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -66,19 +63,25 @@ public final class FileHandlerResult {
         return result;
     }
 
+    @Override
     public final boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        FileHandlerResult other = (FileHandlerResult) obj;
+        }
+        final FileHandlerResult other = (FileHandlerResult) obj;
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
         return true;
     }
 

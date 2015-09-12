@@ -32,16 +32,14 @@ public class BooleanPropertyFilter extends PropertyFilter {
      * @param constValue
      *            Value the property is compared with.
      */
-    public BooleanPropertyFilter(final String newPropertyName,
-            final Boolean constValue) {
+    public BooleanPropertyFilter(final String newPropertyName, final Boolean constValue) {
         super(newPropertyName);
         this.filter = new BooleanFilter(constValue);
     }
 
     @Override
     protected final String[] createGetterNames(final String property) {
-        final String name = Character.toUpperCase(property.charAt(0))
-                + property.substring(1);
+        final String name = Character.toUpperCase(property.charAt(0)) + property.substring(1);
         return new String[] { "is" + name, "get" + name };
     }
 

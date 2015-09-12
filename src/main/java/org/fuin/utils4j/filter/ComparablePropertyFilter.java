@@ -34,16 +34,14 @@ public abstract class ComparablePropertyFilter extends PropertyFilter {
      * @param filter
      *            Filter to use.
      */
-    public ComparablePropertyFilter(final String newPropertyName,
-            final ComparableFilter filter) {
+    public ComparablePropertyFilter(final String newPropertyName, final ComparableFilter filter) {
         super(newPropertyName);
         this.filter = filter;
     }
 
     @Override
     public final boolean complies(final Object obj) {
-        final Comparable value = (Comparable) this.getProperty(obj,
-                this.getPropertyName());
+        final Comparable value = (Comparable) this.getProperty(obj, this.getPropertyName());
         return filter.complies(value);
     }
 

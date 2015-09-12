@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import org.junit.Test;
 
@@ -57,8 +57,7 @@ public class TokenFilterTest {
 
     @Test
     public final void testToString() {
-        assertThat("" + new TokenFilter("one", ",")).isEqualTo(
-                " contains 'one' [,]");
+        assertThat("" + new TokenFilter("one", ",")).isEqualTo(" contains 'one' [,]");
     }
 
 }

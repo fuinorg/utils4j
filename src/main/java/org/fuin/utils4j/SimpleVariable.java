@@ -78,8 +78,7 @@ public final class SimpleVariable implements Variable {
      * @param name
      *            Unique name - May not be <code>null</code> or empty.
      * @param url
-     *            URL that references a text resource - May not be
-     *            <code>null</code>.
+     *            URL that references a text resource - May not be <code>null</code>.
      */
     public SimpleVariable(final String name, final URL url) {
         this(name, url, null);
@@ -91,14 +90,11 @@ public final class SimpleVariable implements Variable {
      * @param name
      *            Unique name - May not be <code>null</code> or empty.
      * @param url
-     *            URL that references a text resource - May not be
-     *            <code>null</code>.
+     *            URL that references a text resource - May not be <code>null</code>.
      * @param encoding
-     *            Encoding of the text resource the URL points to - May be
-     *            <code>null</code> but not empty.
+     *            Encoding of the text resource the URL points to - May be <code>null</code> but not empty.
      */
-    public SimpleVariable(final String name, final URL url,
-            final String encoding) {
+    public SimpleVariable(final String name, final URL url, final String encoding) {
         super();
         Utils4J.checkNotNull("name", name);
         Utils4J.checkNotEmpty("name", name);
@@ -133,8 +129,7 @@ public final class SimpleVariable implements Variable {
             try {
                 url = url(urlStr);
             } catch (final IllegalArgumentException ex) {
-                throw new RuntimeException("Variable '" + name
-                        + "' has a wrong URL", ex);
+                throw new RuntimeException("Variable '" + name + "' has a wrong URL", ex);
             }
         }
         return url;

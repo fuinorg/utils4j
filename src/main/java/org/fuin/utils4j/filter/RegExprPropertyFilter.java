@@ -32,22 +32,19 @@ public class RegExprPropertyFilter extends PropertyFilter {
      * @param pattern
      *            Pattern to use (Cannot be NULL!)
      */
-    public RegExprPropertyFilter(final String newPropertyName,
-            final String pattern) {
+    public RegExprPropertyFilter(final String newPropertyName, final String pattern) {
         super(newPropertyName);
         this.filter = new RegExprFilter(pattern);
     }
 
     @Override
     protected final String[] createGetterNames(final String property) {
-        return new String[] { "get" + Character.toUpperCase(property.charAt(0))
-                + property.substring(1) };
+        return new String[] { "get" + Character.toUpperCase(property.charAt(0)) + property.substring(1) };
     }
 
     @Override
     public final boolean complies(final Object obj) {
-        final String value = (String) this.getProperty(obj,
-                this.getPropertyName());
+        final String value = (String) this.getProperty(obj, this.getPropertyName());
         return filter.complies(value);
     }
 

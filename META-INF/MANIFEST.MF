@@ -6,12 +6,12 @@ Bundle-License: http://www.fsf.org/licensing/licenses/lgpl.html
 Bundle-ManifestVersion: 2
 Bundle-Name: Utils4J
 Bundle-SymbolicName: org.fuin.utils4j
-Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
- ny)
+Bundle-Vendor: fuin.org (Germany)
 Bundle-Version: 0.9.1.SNAPSHOT
-Export-Package: org.fuin.utils4j;version="0.9.1.SNAPSHOT";uses:="javax.x
- ml.bind,javax.xml.bind.annotation,javax.xml.bind.annotation.adapters",o
- rg.fuin.utils4j.filter;version="0.9.1.SNAPSHOT",org.fuin.utils4j.filepr
- ocessor;version="0.9.1.SNAPSHOT"
+Export-Package: org.fuin.utils4j;version="0.9.1";uses:="javax.xml.bind,j
+ avax.xml.bind.annotation,javax.xml.bind.annotation.adapters",org.fuin.u
+ tils4j.filter;version="0.9.1",org.fuin.utils4j.fileprocessor;version="0
+ .9.1"
 Import-Package: javax.crypto,javax.crypto.spec,javax.xml.bind,javax.xml.
  bind.annotation,javax.xml.bind.annotation.adapters
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"

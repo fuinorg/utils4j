@@ -45,12 +45,11 @@ public final class SimpleFilterExample {
         persons.add(new Person(5, "Jane", "Doe", true));
 
         // Define a filter with several conditions
-        final BooleanPropertyFilter unknownFilter = new BooleanPropertyFilter(
-                "unknown", true);
-        final IntegerPropertyFilter minIdFilter = new IntegerPropertyFilter(
-                "id", IntegerFilter.Operator.GTE, 1);
-        final IntegerPropertyFilter maxIdFilter = new IntegerPropertyFilter(
-                "id", IntegerFilter.Operator.LTE, 2);
+        final BooleanPropertyFilter unknownFilter = new BooleanPropertyFilter("unknown", true);
+        final IntegerPropertyFilter minIdFilter = new IntegerPropertyFilter("id", IntegerFilter.Operator.GTE,
+                1);
+        final IntegerPropertyFilter maxIdFilter = new IntegerPropertyFilter("id", IntegerFilter.Operator.LTE,
+                2);
         final AndFilter minMaxFilter = new AndFilter(minIdFilter, maxIdFilter);
         final OrFilter orFilter = new OrFilter(minMaxFilter, unknownFilter);
 

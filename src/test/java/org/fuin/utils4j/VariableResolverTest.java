@@ -51,8 +51,7 @@ public class VariableResolverTest {
     public void testEmptyConstruction() {
 
         // PREPARE & TEST
-        final StringVariableResolver testee = new StringVariableResolver(
-                new ArrayList<Variable>());
+        final StringVariableResolver testee = new StringVariableResolver(new ArrayList<Variable>());
 
         // VERIFY
         assertThat(testee.getDepth()).isEmpty();
@@ -74,12 +73,9 @@ public class VariableResolverTest {
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).contains(entry("a", 0), entry("b", 0),
-                entry("c", 0));
-        assertThat(testee.getResolved()).contains(entry("a", "1"),
-                entry("b", "2"), entry("c", "3"));
-        assertThat(testee.getUnresolved()).contains(entry("a", "1"),
-                entry("b", "2"), entry("c", "3"));
+        assertThat(testee.getDepth()).contains(entry("a", 0), entry("b", 0), entry("c", 0));
+        assertThat(testee.getResolved()).contains(entry("a", "1"), entry("b", "2"), entry("c", "3"));
+        assertThat(testee.getUnresolved()).contains(entry("a", "1"), entry("b", "2"), entry("c", "3"));
 
     }
 
@@ -96,10 +92,8 @@ public class VariableResolverTest {
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 1), entry("b", 0));
-        assertThat(testee.getResolved()).contains(entry("a", "a2"),
-                entry("b", "2"));
-        assertThat(testee.getUnresolved()).contains(entry("a", "a${b}"),
-                entry("b", "2"));
+        assertThat(testee.getResolved()).contains(entry("a", "a2"), entry("b", "2"));
+        assertThat(testee.getUnresolved()).contains(entry("a", "a${b}"), entry("b", "2"));
 
     }
 
@@ -116,12 +110,10 @@ public class VariableResolverTest {
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1),
-                entry("c", 0));
-        assertThat(testee.getResolved()).contains(entry("a", "123"),
-                entry("b", "23"), entry("c", "3"));
-        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"),
-                entry("b", "2${c}"), entry("c", "3"));
+        assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1), entry("c", 0));
+        assertThat(testee.getResolved()).contains(entry("a", "123"), entry("b", "23"), entry("c", "3"));
+        assertThat(testee.getUnresolved())
+                .contains(entry("a", "1${b}"), entry("b", "2${c}"), entry("c", "3"));
 
     }
 
@@ -139,12 +131,11 @@ public class VariableResolverTest {
         final StringVariableResolver testee = new StringVariableResolver(vars);
 
         // VERIFY
-        assertThat(testee.getDepth()).contains(entry("a", 3), entry("b", 2),
-                entry("c", 1), entry("d", 0));
-        assertThat(testee.getResolved()).contains(entry("a", "1234"),
-                entry("b", "234"), entry("c", "34"), entry("d", "4"));
-        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"),
-                entry("b", "2${c}"), entry("c", "3${d}"), entry("d", "4"));
+        assertThat(testee.getDepth()).contains(entry("a", 3), entry("b", 2), entry("c", 1), entry("d", 0));
+        assertThat(testee.getResolved()).contains(entry("a", "1234"), entry("b", "234"), entry("c", "34"),
+                entry("d", "4"));
+        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"), entry("b", "2${c}"),
+                entry("c", "3${d}"), entry("d", "4"));
 
     }
 
@@ -196,10 +187,8 @@ public class VariableResolverTest {
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1));
-        assertThat(testee.getResolved()).contains(entry("a", "1${c}"),
-                entry("b", "${c}"));
-        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"),
-                entry("b", "${c}"));
+        assertThat(testee.getResolved()).contains(entry("a", "1${c}"), entry("b", "${c}"));
+        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"), entry("b", "${c}"));
 
     }
 

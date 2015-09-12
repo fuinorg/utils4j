@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,8 +48,7 @@ public final class PropertiesFilePreferencesTest {
     @Test
     public final void testConstruction() throws BackingStoreException {
         final File dir = new File(baseDir, "user");
-        final PropertiesFilePreferences pref = new PropertiesFilePreferences(
-                dir);
+        final PropertiesFilePreferences pref = new PropertiesFilePreferences(dir);
         pref.put("one", "1");
         pref.put("two", "2");
         pref.put("three", "3");
@@ -67,8 +66,7 @@ public final class PropertiesFilePreferencesTest {
         final File file = new File(subDir, PropertiesFilePreferences.FILENAME);
         final File file2 = new File(subDir2, PropertiesFilePreferences.FILENAME);
 
-        final PropertiesFilePreferences root = new PropertiesFilePreferences(
-                dir);
+        final PropertiesFilePreferences root = new PropertiesFilePreferences(dir);
 
         // Create child node
         final Preferences pref = root.node("abc");
@@ -84,10 +82,8 @@ public final class PropertiesFilePreferencesTest {
 
         assertThat(file.exists()).isTrue();
         assertThat(file2.exists()).isTrue();
-        TestHelper.assertPropertiesEqual(file,
-                ((PropertiesFilePreferences) pref).toProperties());
-        TestHelper.assertPropertiesEqual(file2,
-                ((PropertiesFilePreferences) pref2).toProperties());
+        TestHelper.assertPropertiesEqual(file, ((PropertiesFilePreferences) pref).toProperties());
+        TestHelper.assertPropertiesEqual(file2, ((PropertiesFilePreferences) pref2).toProperties());
     }
 
     @Test
@@ -96,8 +92,7 @@ public final class PropertiesFilePreferencesTest {
         final File dir = new File(baseDir, "user");
         final File subDir = new File(dir, "abc");
         final File file = new File(subDir, PropertiesFilePreferences.FILENAME);
-        final PropertiesFilePreferences root = new PropertiesFilePreferences(
-                dir);
+        final PropertiesFilePreferences root = new PropertiesFilePreferences(dir);
 
         final Preferences pref = root.node("abc");
         pref.flush();

@@ -32,8 +32,7 @@ public final class FileOrder {
     public static final FileOrder DIR_FIRST = new FileOrder("DIR_FIRST");
 
     /** All enumeration instances. */
-    public static final FileOrder[] INSTANCES = new FileOrder[] { DEFAULT,
-            FILES_FIRST, DIR_FIRST };
+    public static final FileOrder[] INSTANCES = new FileOrder[] { DEFAULT, FILES_FIRST, DIR_FIRST };
 
     private final String name;
 
@@ -49,6 +48,7 @@ public final class FileOrder {
     }
 
     // CHECKSTYLE:OFF Generated code
+    @Override
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -56,19 +56,25 @@ public final class FileOrder {
         return result;
     }
 
+    @Override
     public final boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        FileOrder other = (FileOrder) obj;
+        }
+        final FileOrder other = (FileOrder) obj;
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
         return true;
     }
 
