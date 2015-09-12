@@ -58,6 +58,17 @@ trackingList.revert();
 ```
 A full example can be found here: [ChangeTrackingUniqueListExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingUniqueListExample.java)
 
+###Easy file locking
+```Java
+FileLock lock = Utils4J.lockRandomAccessFile(randomAccessFile, tryLockMax, tryWaitMillis);
+try {
+   // Do something...
+} finally {
+    lock.release();
+}
+```
+A full example can be found here: [LockFileExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/LockFileExample.java)
+
 ###Properties file preferences
 Shows the use of a directory and properties file based [Preferences API](http://docs.oracle.com/javase/7/docs/technotes/guides/preferences/) implementation. It's basically a replacement for the registry based implementation on Windows.
 ```Java
