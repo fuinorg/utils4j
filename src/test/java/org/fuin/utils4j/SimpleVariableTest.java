@@ -23,6 +23,7 @@ import static org.fuin.utils4j.JaxbUtils.marshal;
 import static org.fuin.utils4j.JaxbUtils.unmarshal;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -177,6 +178,25 @@ public class SimpleVariableTest {
         // VERIFY
         assertThat(copy).isEqualTo(original);
     }
+    
+    @Test
+    public final void testFile() throws MalformedURLException {
+        
+        // PREPARE
+        final URL url = new File("src/test/resources/org/fuin/utils4j/test.properties").toURI().toURL();        
+
+        // TEST
+        final SimpleVariable testee = new SimpleVariable(NAME, url);
+
+        // VERIFY
+        assertThat(testee.getName()).isEqualTo(NAME);
+        assertThat(testee.getValue()).isEqualTo("one=1\r\ntwo=2\r\nthree=3\r\n");
+        assertThat(testee.getURL()).isEqualTo(url);
+        assertThat(testee.getEncoding()).isNull();
+        assertThat(testee.getEncodingOrDefault()).isEqualTo("utf-8");
+        
+    }
+    
 
     private XmlAdapter<?, ?>[] createXmlAdapter() {
         // Not necessary now - Add XML adapter if needed later on...
