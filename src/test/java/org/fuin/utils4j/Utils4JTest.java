@@ -28,9 +28,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.channels.FileLock;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import org.apache.commons.io.FileUtils;
 import org.fuin.utils4j.test.ClassWithPrivateConstructor;
@@ -736,6 +738,57 @@ public class Utils4JTest {
 
     }
 
+    @Test
+    public void testReplaceCrLfTab() {
+        
+        assertThat(Utils4J.replaceCrLfTab(null)).isNull();
+        assertThat(Utils4J.replaceCrLfTab("")).isEqualTo("");
+        assertThat(Utils4J.replaceCrLfTab("\r")).isEqualTo("\r");
+        assertThat(Utils4J.replaceCrLfTab("\\r")).isEqualTo("\r");
+        assertThat(Utils4J.replaceCrLfTab("\n")).isEqualTo("\n");
+        assertThat(Utils4J.replaceCrLfTab("\\n")).isEqualTo("\n");
+        assertThat(Utils4J.replaceCrLfTab("\t")).isEqualTo("\t");
+        assertThat(Utils4J.replaceCrLfTab("\\t")).isEqualTo("\t");
+        assertThat(Utils4J.replaceCrLfTab("a\\nb\\nc\\n")).isEqualTo("a\nb\nc\n");
+        
+    }
+    
+    @Test
+    public void testDateToFileTime() {
+        
+        // PREPARE
+        final Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1601);
+        cal.set(Calendar.MONTH, 0);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+        
+        // TEST & VERIFY
+        assertThat(Utils4J.dateToFileTime(cal.getTime())).isEqualTo(0);
+        
+    }
+    
+    @Test
+    public void testSerializeDeserialize() {
+        
+        // PREPARE
+        final SimpleVariable var = new SimpleVariable("a", "1");
+        
+        // TEST
+        final byte[] data = Utils4J.serialize(var);
+        final SimpleVariable copy = Utils4J.deserialize(data);
+        
+        // VERIFY
+        assertThat(copy).isEqualTo(var);
+        assertThat(copy.getName()).isEqualTo(var.getName());
+        assertThat(copy.getValue()).isEqualTo(var.getValue());
+        
+    }    
+    
     private static String getRoot() {
         try {
             return new File("/").getCanonicalPath();

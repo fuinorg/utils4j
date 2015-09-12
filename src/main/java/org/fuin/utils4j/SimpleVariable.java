@@ -20,6 +20,7 @@ package org.fuin.utils4j;
 import static org.fuin.utils4j.Utils4J.readAsString;
 import static org.fuin.utils4j.Utils4J.url;
 
+import java.io.Serializable;
 import java.net.URL;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,7 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "variable")
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class SimpleVariable implements Variable {
+public final class SimpleVariable implements Variable, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @XmlAttribute(name = "name")
     private String name;

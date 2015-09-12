@@ -49,6 +49,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
@@ -69,6 +70,15 @@ public final class Utils4J {
     private static final String USER_HOME_KEY = "user.home";
 
     private static final String TEMP_DIR_KEY = "java.io.tmpdir";
+
+    private static final Map<Character, Character> SPECIAL_CHAR_REPLACEMENT_MAP;
+
+    static {
+        SPECIAL_CHAR_REPLACEMENT_MAP = new HashMap<>();
+        SPECIAL_CHAR_REPLACEMENT_MAP.put('n', '\n');
+        SPECIAL_CHAR_REPLACEMENT_MAP.put('r', '\r');
+        SPECIAL_CHAR_REPLACEMENT_MAP.put('t', '\t');
+    }
 
     /**
      * The difference between the Windows epoch (1601-01-01 00:00:00) and the Unix epoch (1970-01-01 00:00:00)
@@ -1728,6 +1738,43 @@ public final class Utils4J {
         } catch (final MalformedURLException ex) {
             throw new IllegalArgumentException("Invalid URL: " + url, ex);
         }
+    }
+
+    /**
+     * Replaces the strings "\r", "\n" and "\t" with "carriage return", "new line" and "tab" character.
+     * 
+     * @param str
+     *            String to replace or <code>null</code>.
+     * 
+     * @return Replaced string or <code>null</code>.
+     */
+    public static String replaceCrLfTab(final String str) {
+        if (str == null) {
+            return null;
+        }
+        final int len = str.length();
+        final StringBuffer sb = new StringBuffer();
+        int i = 0;
+        while (i < len) {
+            final char ch = str.charAt(i++);
+            if (ch == '\\') {
+                if (i < len) {
+                    final char next = str.charAt(i);
+                    final Character replacement = SPECIAL_CHAR_REPLACEMENT_MAP.get(next);
+                    if (replacement != null) {
+                        sb.append(replacement);
+                        i++;
+                    } else {
+                        sb.append(ch);
+                    }
+                } else {
+                    sb.append(ch);
+                }
+            } else {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
 
     /**

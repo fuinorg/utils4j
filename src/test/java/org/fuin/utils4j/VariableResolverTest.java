@@ -20,7 +20,7 @@ package org.fuin.utils4j;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
-import static org.fuin.utils4j.StringVariableResolver.references;
+import static org.fuin.utils4j.VariableResolver.references;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * Test for {@link StringVariableResolver}.
+ * Test for {@link VariableResolver}.
  */
 public class VariableResolverTest {
 
@@ -38,7 +38,7 @@ public class VariableResolverTest {
     public void testNullConstruction() {
 
         // PREPARE & TEST
-        final StringVariableResolver testee = new StringVariableResolver(null);
+        final VariableResolver testee = new VariableResolver(null);
 
         // VERIFY
         assertThat(testee.getDepth()).isEmpty();
@@ -51,7 +51,7 @@ public class VariableResolverTest {
     public void testEmptyConstruction() {
 
         // PREPARE & TEST
-        final StringVariableResolver testee = new StringVariableResolver(new ArrayList<Variable>());
+        final VariableResolver testee = new VariableResolver(new ArrayList<Variable>());
 
         // VERIFY
         assertThat(testee.getDepth()).isEmpty();
@@ -70,7 +70,7 @@ public class VariableResolverTest {
         vars.add(new SimpleVariable("c", "3"));
 
         // TEST
-        final StringVariableResolver testee = new StringVariableResolver(vars);
+        final VariableResolver testee = new VariableResolver(vars);
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 0), entry("b", 0), entry("c", 0));
@@ -88,7 +88,7 @@ public class VariableResolverTest {
         vars.add(new SimpleVariable("b", "2"));
 
         // TEST
-        final StringVariableResolver testee = new StringVariableResolver(vars);
+        final VariableResolver testee = new VariableResolver(vars);
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 1), entry("b", 0));
@@ -107,7 +107,7 @@ public class VariableResolverTest {
         vars.add(new SimpleVariable("c", "3"));
 
         // TEST
-        final StringVariableResolver testee = new StringVariableResolver(vars);
+        final VariableResolver testee = new VariableResolver(vars);
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1), entry("c", 0));
@@ -128,7 +128,7 @@ public class VariableResolverTest {
         vars.add(new SimpleVariable("d", "4"));
 
         // TEST
-        final StringVariableResolver testee = new StringVariableResolver(vars);
+        final VariableResolver testee = new VariableResolver(vars);
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 3), entry("b", 2), entry("c", 1), entry("d", 0));
@@ -149,7 +149,7 @@ public class VariableResolverTest {
 
         // TEST
         try {
-            new StringVariableResolver(vars);
+            new VariableResolver(vars);
         } catch (final IllegalStateException ex) {
             assertThat(ex.getMessage()).isEqualTo("Cycle: a > b > a");
         }
@@ -167,7 +167,7 @@ public class VariableResolverTest {
 
         // TEST
         try {
-            new StringVariableResolver(vars);
+            new VariableResolver(vars);
         } catch (final IllegalStateException ex) {
             assertThat(ex.getMessage()).isEqualTo("Cycle: a > b > c > a");
         }
@@ -183,7 +183,7 @@ public class VariableResolverTest {
         vars.add(new SimpleVariable("b", "${c}"));
 
         // TEST
-        final StringVariableResolver testee = new StringVariableResolver(vars);
+        final VariableResolver testee = new VariableResolver(vars);
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1));

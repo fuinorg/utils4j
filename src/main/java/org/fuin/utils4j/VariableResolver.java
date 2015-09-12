@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * Resolves the references from variable values to other variable names.
  */
-public final class StringVariableResolver {
+public final class VariableResolver {
 
     private List<Variable> vars;
 
@@ -44,7 +44,7 @@ public final class StringVariableResolver {
      * @param vars
      *            List to use - May be <code>null</code>.
      */
-    public StringVariableResolver(final List<Variable> vars) {
+    public VariableResolver(final List<Variable> vars) {
         if (vars == null) {
             this.vars = new ArrayList<Variable>();
         } else {
@@ -222,7 +222,7 @@ public final class StringVariableResolver {
 
         sb.append(str.substring(from));
 
-        return sb.toString();
+        return Utils4J.replaceCrLfTab(sb.toString());
 
     }
 
