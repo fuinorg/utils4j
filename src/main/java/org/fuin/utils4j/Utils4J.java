@@ -1117,20 +1117,15 @@ public final class Utils4J {
      * @param str
      *            Text with variables (Format: ${key} ) - May be <code>null</code> or empty.
      * @param vars
-     *            Map with key/values (both of type <code>String</code> - Cannot be <code>null</code>.
+     *            Map with key/values (both of type <code>String</code> - May be <code>null</code>.
      * 
      * @return String with replaced variables. Unknown variables will remain unchanged.
      */
-    public static String replaceVars(final String str, final Map vars) {
+    public static String replaceVars(final String str, final Map<String, String> vars) {
 
-        if (str == null) {
-            return null;
-        }
-        if (str.length() == 0) {
+        if ((str == null) || (str.length() == 0) || (vars == null) || (vars.size() == 0)) {
             return str;
         }
-
-        checkNotNull("vars", vars);
 
         final StringBuffer sb = new StringBuffer();
 

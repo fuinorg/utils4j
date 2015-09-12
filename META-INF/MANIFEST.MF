@@ -7,9 +7,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Utils4J
 Bundle-SymbolicName: org.fuin.utils4j
 Bundle-Vendor: fuin.org (Germany)
-Bundle-Version: 0.9.1.SNAPSHOT
-Export-Package: org.fuin.utils4j;uses:="javax.xml.bind,javax.xml.bind.an
- notation.adapters";version="0.9.1",org.fuin.utils4j.filter;version="0.9
+Bundle-Version: 0.9.1
+Export-Package: org.fuin.utils4j;version="0.9.1";uses:="javax.xml.bind,j
+ avax.xml.bind.annotation.adapters",org.fuin.utils4j.filter;version="0.9
  .1",org.fuin.utils4j.fileprocessor;version="0.9.1"
 Import-Package: javax.crypto,javax.crypto.spec,javax.xml.bind,javax.xml.
  bind.annotation.adapters

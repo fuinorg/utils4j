@@ -71,7 +71,7 @@ public final class VariableResolver {
                 final String name = it.next();
                 final String value = unresolved.get(name);
                 if (depth.get(name).intValue() == d) {
-                    resolved.put(name, replaceVars(value, resolved));
+                    resolved.put(name, Utils4J.replaceCrLfTab(Utils4J.replaceVars(value, resolved)));
                 }
             }
         }
@@ -174,55 +174,6 @@ public final class VariableResolver {
         }
 
         return names;
-
-    }
-
-    /**
-     * Replaces all variables inside a string with values from a map.
-     * 
-     * @param str
-     *            Text with variables (Format: ${key} ) - May be <code>null</code> or empty.
-     * @param vars
-     *            Map with key/values (both of type <code>String</code> - May be <code>null</code>.
-     * 
-     * @return String with replaced variables. Unknown variables will remain unchanged - May be
-     *         <code>null</code>.
-     */
-    public static String replaceVars(final String str, final Map<String, String> vars) {
-
-        if ((str == null) || (str.length() == 0) || (vars == null) || (vars.size() == 0)) {
-            return str;
-        }
-
-        final StringBuffer sb = new StringBuffer();
-
-        int end = -1;
-        int from = 0;
-        int start = -1;
-        while ((start = str.indexOf("${", from)) > -1) {
-            sb.append(str.substring(end + 1, start));
-            end = str.indexOf('}', start + 1);
-            if (end == -1) {
-                // No closing bracket found...
-                sb.append(str.substring(start));
-                from = str.length();
-            } else {
-                final String key = str.substring(start + 2, end);
-                final String value = vars.get(key);
-                if (value == null) {
-                    sb.append("${");
-                    sb.append(key);
-                    sb.append("}");
-                } else {
-                    sb.append(value);
-                }
-                from = end + 1;
-            }
-        }
-
-        sb.append(str.substring(from));
-
-        return Utils4J.replaceCrLfTab(sb.toString());
 
     }
 
