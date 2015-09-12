@@ -24,7 +24,7 @@ URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 A full example can be found here: [ClasspathURLExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ClasspathURLExample.java)
 
 ###ZIP and UNZIP
-Compress and descompress a complete directory and it's subdirectories with a single line of code using Utils4J
+Compress and descompress a complete directory and it's subdirectories with a single line of code
 ```Java
 final File zipDir = new File(Utils4J.getTempDir(), "mydir");
 final File zipFile = new File(Utils4J.getTempDir(), "myfile1.zip");
