@@ -1,6 +1,6 @@
 .*
 !.gitignore
-!.checkstyle
+!.gitkeep
 target
 META-INF
 *.log
