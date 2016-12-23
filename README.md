@@ -6,6 +6,7 @@ A small Java library that contains several helpful utility classes.
 [![Build Status](https://fuin-org.ci.cloudbees.com/job/utils4j/badge/icon)](https://fuin-org.ci.cloudbees.com/job/utils4j/)
 [![Coverage Status](https://coveralls.io/repos/fuinorg/utils4j/badge.svg?branch=master)](https://coveralls.io/r/fuinorg/utils4j?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/)
+[![Javadocs](https://www.javadoc.io/badge/org.fuin/utils4j.svg)](https://www.javadoc.io/doc/org.fuin/utils4j)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
 [![Java Development Kit 1.8](https://img.shields.io/badge/JDK-1.8-green.svg)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
