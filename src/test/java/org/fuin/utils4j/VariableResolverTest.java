@@ -18,7 +18,7 @@
 package org.fuin.utils4j;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
 import static org.fuin.utils4j.VariableResolver.references;
 

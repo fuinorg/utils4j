@@ -17,13 +17,14 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -89,7 +90,10 @@ public class RandomAccessFileOutputStreamTest {
         }
         outputStream.truncate();
         outputStream.close();
-        assertThat(file).hasSameContentAs(inputFile);
+        // TODO Remove workaround when issue is fixed
+        // https://github.com/joel-costigliola/assertj-core/issues/1059
+        // assertThat(file).hasSameContentAs(inputFile);
+        assertThat(FileUtils.contentEquals(file, inputFile)).isTrue();
     }
 
     @Test
@@ -98,7 +102,10 @@ public class RandomAccessFileOutputStreamTest {
         outputStream.write(create256bytes());
         outputStream.truncate();
         outputStream.close();
-        assertThat(file).hasSameContentAs(inputFile);
+        // TODO Remove workaround when issue is fixed
+        // https://github.com/joel-costigliola/assertj-core/issues/1059
+        // assertThat(file).hasSameContentAs(inputFile);
+        assertThat(FileUtils.contentEquals(file, inputFile)).isTrue();
     }
 
     @Test

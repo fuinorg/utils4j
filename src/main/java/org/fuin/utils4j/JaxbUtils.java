@@ -17,8 +17,10 @@
  */
 package org.fuin.utils4j;
 
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -27,6 +29,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.stream.XMLStreamWriter;
 
 /**
  * JAXB releated functions.
@@ -126,6 +129,32 @@ public final class JaxbUtils {
         if (data == null) {
             return null;
         }
+        final StringWriter writer = new StringWriter();
+        marshal(ctx, data, adapters, writer);
+        return writer.toString();
+    }
+
+    /**
+     * Marshals the given data using a given context. A <code>null</code> data argument returns
+     * <code>null</code>.
+     * 
+     * @param ctx
+     *            Context to use - Cannot be <code>null</code>.
+     * @param data
+     *            Data to serialize or <code>null</code>.
+     * @param adapters
+     *            Adapters to associate with the marshaller or <code>null</code> .
+     * @param writer
+     *            Writer to use.
+     * 
+     * @param <T>
+     *            Type of the data to write.
+     */
+    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters,
+            final Writer writer) {
+        if (data == null) {
+            return;
+        }
         try {
             final Marshaller marshaller = ctx.createMarshaller();
             if (adapters != null) {
@@ -133,9 +162,41 @@ public final class JaxbUtils {
                     marshaller.setAdapter(adapter);
                 }
             }
-            final StringWriter writer = new StringWriter();
             marshaller.marshal(data, writer);
-            return writer.toString();
+        } catch (final JAXBException ex) {
+            throw new RuntimeException("Error marshalling test data", ex);
+        }
+    }
+
+    /**
+     * Marshals the given data using a given context. A <code>null</code> data argument returns
+     * <code>null</code>.
+     * 
+     * @param ctx
+     *            Context to use - Cannot be <code>null</code>.
+     * @param data
+     *            Data to serialize or <code>null</code>.
+     * @param adapters
+     *            Adapters to associate with the marshaller or <code>null</code> .
+     * @param writer
+     *            Writer to use.
+     * 
+     * @param <T>
+     *            Type of the data to write.
+     */
+    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters,
+            final XMLStreamWriter writer) {
+        if (data == null) {
+            return;
+        }
+        try {
+            final Marshaller marshaller = ctx.createMarshaller();
+            if (adapters != null) {
+                for (final XmlAdapter<?, ?> adapter : adapters) {
+                    marshaller.setAdapter(adapter);
+                }
+            }
+            marshaller.marshal(data, writer);
         } catch (final JAXBException ex) {
             throw new RuntimeException("Error marshalling test data", ex);
         }
@@ -204,12 +265,34 @@ public final class JaxbUtils {
      * @param <T>
      *            Type of the expected data.
      */
-    @SuppressWarnings("unchecked")
     public static <T> T unmarshal(final JAXBContext ctx, final String xmlData,
             final XmlAdapter<?, ?>[] adapters) {
         if (xmlData == null) {
             return null;
         }
+        return unmarshal(ctx, new StringReader(xmlData), adapters);
+    }
+
+    /**
+     * Unmarshals the given data using a given context. A <code>null</code> XML data argument returns
+     * <code>null</code>.
+     * 
+     * @param ctx
+     *            Context to use - Cannot be <code>null</code>.
+     * @param reader
+     *            Reader with XML data.
+     * @param adapters
+     *            Adapters to associate with the unmarshaller or <code>null</code>.
+     * 
+     * @return Data or <code>null</code>.
+     * 
+     * @param <T>
+     *            Type of the expected data.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T unmarshal(final JAXBContext ctx, final Reader reader,
+            final XmlAdapter<?, ?>[] adapters) {
+
         try {
             final Unmarshaller unmarshaller = ctx.createUnmarshaller();
             if (adapters != null) {
@@ -230,10 +313,11 @@ public final class JaxbUtils {
                     return true;
                 }
             });
-            return (T) unmarshaller.unmarshal(new StringReader(xmlData));
+            return (T) unmarshaller.unmarshal(reader);
         } catch (final JAXBException ex) {
             throw new RuntimeException("Error unmarshalling test data", ex);
         }
+
     }
 
 }

@@ -17,11 +17,11 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
 
 //CHECKSTYLE:OFF
 public final class PropertyTest {
@@ -123,11 +123,7 @@ public final class PropertyTest {
 
     @Test
     public final void testEqualsHashCode() {
-
-        final Property property1 = new Property("anotherKey", "1", "1");
-        final Property property2 = new Property("key", "1", "1");
-        EqualsVerifier.forExamples(property1, property2).suppress(Warning.NULL_FIELDS).verify();
-
+        EqualsVerifier.forClass(Property.class);
     }
 
 }

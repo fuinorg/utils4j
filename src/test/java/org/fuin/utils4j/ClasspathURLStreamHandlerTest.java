@@ -17,7 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;

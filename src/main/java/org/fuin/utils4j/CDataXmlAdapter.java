@@ -17,24 +17,28 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * Tests for IllegalNullArgumentException.
+ * Converts a string into a CDATA XML and back. CAUTION: Only works together with {@link CDataXMLStreamWriter}
+ * because otherwise the CDATA XML value will be escaped.
  */
-// CHECKSTYLE:OFF
-public class IllegalNullArgumentExceptionTest {
+public final class CDataXmlAdapter extends XmlAdapter<String, String> {
 
-    @Test
-    public final void testConstruction() {
-        final String argument = "xyz123";
-        final IllegalNullArgumentException ex = new IllegalNullArgumentException(argument);
-        assertThat(ex.getArgument()).isEqualTo(argument);
-        assertThat(ex.getMessage()).isEqualTo("The argument '" + argument + "' cannot be null");
-        assertThat(ex.getCause()).isNull();
+    @Override
+    public final String marshal(final String value) throws Exception {
+        if (value == null) {
+            return null;
+        }
+        return "<![CDATA[" + value + "]]>";
+    }
+
+    @Override
+    public final String unmarshal(final String value) throws Exception {
+        if (value == null) {
+            return null;
+        }
+        return value;
     }
 
 }
-// CHECKSTYLE:ON
