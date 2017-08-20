@@ -20,7 +20,7 @@ package org.fuin.utils4j;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * Converts a string into a CDATA XML and back. CAUTION: Only works together with {@link CDataXMLStreamWriter}
+ * Converts a string into a CDATA XML and back. CAUTION: Only works together with {@link CDataXmlStreamWriter}
  * because otherwise the CDATA XML value will be escaped.
  */
 public final class CDataXmlAdapter extends XmlAdapter<String, String> {
