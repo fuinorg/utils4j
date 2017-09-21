@@ -16,15 +16,15 @@ A small Java library that contains several helpful utility classes.
 
 * * *
 
-##Features
+## Features
 
-###URL support for "classpath:" scheme
+### URL support for "classpath:" scheme
 ```Java
 URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 ```
 A full example can be found here: [ClasspathURLExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ClasspathURLExample.java)
 
-###Variable resolver
+### Variable resolver
 Resolves variable references in a map and prevents on cycles.
 ```
 a=1
@@ -39,7 +39,7 @@ c=1/2/3
 ```
 A full example can be found here: [VariableResolverExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/VariableResolverExample.java)
 
-###ZIP and UNZIP
+### ZIP and UNZIP
 Compress and descompress a complete directory and it's subdirectories with a single line of code
 ```Java
 final File zipDir = new File(Utils4J.getTempDir(), "mydir");
@@ -49,7 +49,7 @@ Utils4J.unzip(zipFile, Utils4J.getTempDir());
 ```
 A full example can be found here: [ZipDirExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ZipDirExample.java)
 
-###Tracking changes of a list / map
+### Tracking changes of a list / map
 This is a wrapper for lists that keeps track of all changes made to the list. This means adding, replacing or deleting elements is tracked - not the changes to the objects itself. It's also possible to revert (undo) all changes made to the list. A restriction is that no duplicate elements are allowed in the list.
 ```Java
 List<String> list = new ArrayList<>();
@@ -62,7 +62,7 @@ trackingList.revert();
 A list example can be found here: [ChangeTrackingUniqueListExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingUniqueListExample.java)
 A map example can be found here: [ChangeTrackingMapExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingMapExample.java)
 
-###Easy file locking
+### Easy file locking
 ```Java
 FileLock lock = Utils4J.lockRandomAccessFile(randomAccessFile, tryLockMax, tryWaitMillis);
 try {
@@ -73,7 +73,7 @@ try {
 ```
 A full example can be found here: [LockFileExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/LockFileExample.java)
 
-###Properties file preferences
+### Properties file preferences
 Shows the use of a directory and properties file based [Preferences API](http://docs.oracle.com/javase/7/docs/technotes/guides/preferences/) implementation. It's basically a replacement for the registry based implementation on Windows.
 ```Java
 System.setProperty("java.util.prefs.PreferencesFactory",  PropertiesFilePreferencesFactory.class.getName());
@@ -83,7 +83,7 @@ A full example can be found here: [PropertiesFilePreferencesFactoryExample.java]
 
 * * *
 
-##Snapshots
+## Snapshots
 
 Snapshots can be found on the [OSS Sonatype Snapshots Repository](http://oss.sonatype.org/content/repositories/snapshots/org/fuin "Snapshot Repository"). 
 
