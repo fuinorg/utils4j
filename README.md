@@ -16,7 +16,7 @@ A small Java library that contains several helpful utility classes.
 
 * * *
 
-## Features
+# Features
 
 * [URL support for "classpath:" scheme](#url-support-for-classpath-scheme)
 * [Variable resolver](#variable-resolver)
@@ -26,6 +26,8 @@ A small Java library that contains several helpful utility classes.
 * [Properties file preferences](#properties-file-preferences)
 
 * * *
+
+# Description
 
 ### URL support for "classpath:" scheme
 ```Java
