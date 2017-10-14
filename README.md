@@ -18,12 +18,12 @@ A small Java library that contains several helpful utility classes.
 
 ## Features
 
-[URL support for "classpath:" scheme](#URL)
-[Variable resolver](#Variable)
-[ZIP and UNZIP](#ZIP)
-[Tracking changes of a list / map](#Tracking)
-[Easy file locking](#Easy)
-[Properties file preferences](#Properties)
+* [URL support for "classpath:" scheme](#url-support-for-classpath-scheme)
+* [Variable resolver](#variable-resolver)
+* [ZIP and UNZIP](#zip-and-unzip)
+* [Tracking changes of a list / map](##tracking-changes-of-a-list--map)
+* [Easy file locking](#easy-file-locking)
+* [Properties file preferences](#properties-file-preferences)
 
 * * *
 
