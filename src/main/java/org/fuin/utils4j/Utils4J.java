@@ -47,6 +47,7 @@ import java.nio.channels.OverlappingFileLockException;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -607,8 +608,8 @@ public final class Utils4J {
         final String base = getCanonicalPath(baseDir);
         final String path = getCanonicalPath(dir);
         if (!path.startsWith(base)) {
-            throw new IllegalArgumentException("The path '" + path + "' is not inside the base directory '"
-                    + base + "'!");
+            throw new IllegalArgumentException(
+                    "The path '" + path + "' is not inside the base directory '" + base + "'!");
         }
         if (base.equals(path)) {
             return "";
@@ -795,8 +796,8 @@ public final class Utils4J {
         checkNotNull("url", url);
         checkNotNull("classLoader", classLoader);
         if (!(classLoader instanceof URLClassLoader)) {
-            throw new IllegalArgumentException("Cannot add '" + url
-                    + "' to classloader because it's not an URL classloader");
+            throw new IllegalArgumentException(
+                    "Cannot add '" + url + "' to classloader because it's not an URL classloader");
         }
         final URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
         if (!containsURL(urlClassLoader.getURLs(), url)) {
@@ -911,15 +912,15 @@ public final class Utils4J {
         if (argTypes == null) {
             argTypesIntern = new Class[] {};
             if (args != null) {
-                throw new IllegalArgumentException("The argument 'argTypes' is null but "
-                        + "'args' containes values!");
+                throw new IllegalArgumentException(
+                        "The argument 'argTypes' is null but " + "'args' containes values!");
             }
             argsIntern = new Object[] {};
         } else {
             argTypesIntern = argTypes;
             if (args == null) {
-                throw new IllegalArgumentException("The argument 'argTypes' contains classes "
-                        + "but 'args' is null!");
+                throw new IllegalArgumentException(
+                        "The argument 'argTypes' contains classes " + "but 'args' is null!");
             }
             argsIntern = args;
         }
@@ -935,21 +936,25 @@ public final class Utils4J {
             }
             return method.invoke(obj, argsIntern);
         } catch (final SecurityException ex) {
-            throw new InvokeMethodFailedException("Security problem with '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Security problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
+                            + "'! [" + obj.getClass().getName() + "]",
+                    ex);
         } catch (final NoSuchMethodException ex) {
-            throw new InvokeMethodFailedException("Method '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "' not found! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Method '" + getMethodSignature(returnType, methodName, argTypesIntern) + "' not found! ["
+                            + obj.getClass().getName() + "]",
+                    ex);
         } catch (final IllegalArgumentException ex) {
-            throw new InvokeMethodFailedException("Argument problem with '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Argument problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
+                            + "'! [" + obj.getClass().getName() + "]",
+                    ex);
         } catch (final IllegalAccessException ex) {
-            throw new InvokeMethodFailedException("Access problem with '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+            throw new InvokeMethodFailedException(
+                    "Access problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
+                            + "'! [" + obj.getClass().getName() + "]",
+                    ex);
         } catch (final InvocationTargetException ex) {
             throw new InvokeMethodFailedException("Got an exception when calling '"
                     + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
@@ -1015,8 +1020,8 @@ public final class Utils4J {
                 final ZipEntry entry = enu.nextElement();
                 final File file = new File(entry.getName());
                 if (file.isAbsolute()) {
-                    throw new IllegalArgumentException("Only relative path entries are allowed! ["
-                            + entry.getName() + "]");
+                    throw new IllegalArgumentException(
+                            "Only relative path entries are allowed! [" + entry.getName() + "]");
                 }
                 if (entry.isDirectory()) {
                     final File dir = new File(destDir, entry.getName());
@@ -1028,8 +1033,8 @@ public final class Utils4J {
                     if (wrapper == null) {
                         in = new BufferedInputStream(zip.getInputStream(entry));
                     } else {
-                        in = new BufferedInputStream(wrapper.wrapInputStream(zip.getInputStream(entry),
-                                entry, outFile));
+                        in = new BufferedInputStream(
+                                wrapper.wrapInputStream(zip.getInputStream(entry), entry, outFile));
                     }
                     try {
                         final OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile));
@@ -1080,8 +1085,8 @@ public final class Utils4J {
         try {
             checkValidDir(dir);
         } catch (final IllegalArgumentException ex) {
-            throw new IllegalStateException("System property '" + USER_HOME_KEY + "' is not valid! ["
-                    + ex.getMessage() + "]");
+            throw new IllegalStateException(
+                    "System property '" + USER_HOME_KEY + "' is not valid! [" + ex.getMessage() + "]");
         }
         return dir;
     }
@@ -1105,8 +1110,8 @@ public final class Utils4J {
         try {
             checkValidDir(dir);
         } catch (final IllegalArgumentException ex) {
-            throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' is not valid! ["
-                    + ex.getMessage() + "]");
+            throw new IllegalStateException(
+                    "System property '" + TEMP_DIR_KEY + "' is not valid! [" + ex.getMessage() + "]");
         }
         return dir;
     }
@@ -1234,8 +1239,8 @@ public final class Utils4J {
         }
         final String content = createWindowsDesktopUrlLinkContent(baseUrl, url, workingDir, showCommand,
                 iconIndex, iconFile, hotKey, modified);
-        final Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(linkFile),
-                "Cp1252"));
+        final Writer writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(linkFile), "Cp1252"));
         try {
             writer.write(content);
         } finally {
@@ -1505,8 +1510,8 @@ public final class Utils4J {
         final byte[] buf = new byte[1024];
         final InputStream in = new BufferedInputStream(new FileInputStream(srcFile));
         try {
-            final ZipEntry zipEntry = new ZipEntry(concatPathAndFilename(destPath, srcFile.getName(),
-                    File.separator));
+            final ZipEntry zipEntry = new ZipEntry(
+                    concatPathAndFilename(destPath, srcFile.getName(), File.separator));
             zipEntry.setTime(srcFile.lastModified());
             out.putNextEntry(zipEntry);
             int len;
@@ -1594,8 +1599,8 @@ public final class Utils4J {
         Utils4J.checkValidDir(srcDir);
         Utils4J.checkNotNull("destFile", destFile);
 
-        final ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(
-                destFile)));
+        final ZipOutputStream out = new ZipOutputStream(
+                new BufferedOutputStream(new FileOutputStream(destFile)));
         try {
             zipDir(srcDir, filter, destPath, out);
         } finally {
@@ -1770,6 +1775,83 @@ public final class Utils4J {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * Causes the currently executing thread to sleep (temporarily cease execution) for the specified number
+     * of milliseconds, subject to the precision and accuracy of system timers and schedulers. The thread does
+     * not lose ownership of any monitors. The {@link InterruptedException} is wrapped into a
+     * {@link RuntimeException}.
+     * 
+     * @param millis
+     *            The length of time to sleep in milliseconds.
+     */
+    public static void sleep(final long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (final InterruptedException ex) {
+            throw new RuntimeException("Sleep interrupted", ex);
+        }
+    }
+
+    /**
+     * Verifies if the cause of an exception is of a given type.
+     * 
+     * @param actualException
+     *            Actual exception that was caused by something else - Cannot be <code>null</code>.
+     * @param expectedExceptions
+     *            Expected exceptions - May be <code>null</code> if any cause is expected.
+     * 
+     * @return TRUE if the actual exception is one of the expected exceptions.
+     */
+    public static boolean expectedCause(final Exception actualException,
+            final Collection<Class<? extends Exception>> expectedExceptions) {
+
+        checkNotNull("actualException", actualException);
+        
+        if (expectedExceptions == null || expectedExceptions.size() == 0) {
+            // All exceptions are expected
+            return true;
+        }
+
+        final Throwable cause = actualException.getCause();
+        if (!(cause instanceof Exception)) {
+            // We're only interested in exceptions
+            return false;
+        }
+
+        return expectedException((Exception) cause, expectedExceptions);
+
+    }
+
+    /**
+     * Verifies if an exception is of a given type.
+     * 
+     * @param actualException
+     *            Actual exception - Cannot be <code>null</code>.
+     * @param expectedExceptions
+     *            Expected exceptions - May be <code>null</code> if any exception is expected.
+     * 
+     * @return TRUE if the actual exception is one of the expected exceptions.
+     */
+    public static boolean expectedException(final Exception actualException,
+            final Collection<Class<? extends Exception>> expectedExceptions) {
+
+        checkNotNull("actualException", actualException);
+        
+        if (expectedExceptions == null || expectedExceptions.size() == 0) {
+            // All exceptions are expected
+            return true;
+        }
+
+        for (final Class<? extends Exception> expectedException : expectedExceptions) {
+            if (expectedException.isAssignableFrom(actualException.getClass())) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
     /**

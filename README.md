@@ -25,6 +25,7 @@ A small Java library that contains several helpful utility classes.
 * [Easy file locking](#easy-file-locking)
 * [Properties file preferences](#properties-file-preferences)
 * [JAXB CDATA Stream Writer](#jaxb-cdata-stream-writer)
+* [Wait for code to finish](#wait-for-code-to-finish)
 
 * * *
 
@@ -149,8 +150,41 @@ System.out.println(copy.getContent());
 // <whatever this="is"/>
 ```
 
-
 A full example can be found here: [CDataJaxbExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/CDataJaxbExample.java)
+
+
+### Wait for code to finish
+
+The [WaitHelper](https://github.com/fuinorg/utils4j/blob/master/src/main/java/org/fuin/utils4j/WaitHelper.java) class supports waiting for some condition.
+
+Example of waiting for a function to finish without an exception: 
+```Java
+// Try 5 times and wait 100 millis between tries (wait at max 10 seconds)
+final WaitHelper waitHelper = new WaitHelper(1000, 5);
+
+// Example of waiting for a customer to be found
+waitHelper.waitUntilNoMoreException(() -> {
+
+    // We want to wait some time to see if the CustomerNotFoundException 
+    // disappears and a customer name is finally loaded
+    loadCustomerName(customerId);
+
+}, Arrays.asList(CustomerNotFoundException.class));
+```
+
+Example of waiting for an expected customer name:
+```Java
+waitHelper.waitUntilResult(() -> {
+
+    // We want to wait some time to see if the CustomerNotFoundException
+    // disappears and a customer name is finally loaded
+    return loadCustomerName2(customerId);
+
+}, Arrays.asList("Peter Parker, Inc"));
+```
+
+A full example can be found here: [WaitHelperExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/WaitHelperExample.java)
+
 
 * * *
 

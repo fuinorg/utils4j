@@ -18,18 +18,21 @@
 package org.fuin.utils4j;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.channels.FileLock;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
@@ -190,8 +193,9 @@ public class Utils4JTest {
 
     @Test
     public final void testLoadPropertiesStringString() throws MalformedURLException {
-        final Properties props = Utils4J.loadProperties(TEST_PROPERTIES_FILE.getParentFile().toURI().toURL()
-                .toExternalForm(), TEST_PROPERTIES_FILE.getName());
+        final Properties props = Utils4J.loadProperties(
+                TEST_PROPERTIES_FILE.getParentFile().toURI().toURL().toExternalForm(),
+                TEST_PROPERTIES_FILE.getName());
         assertThat(props).hasSize(3);
         assertThat(props.get("one")).isEqualTo("1");
         assertThat(props.get("two")).isEqualTo("2");
@@ -323,34 +327,34 @@ public class Utils4JTest {
 
     @Test
     public final void testCreateUrlDirFile() throws IOException {
-        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org"), "test", "index.html")).isEqualTo(
-                new URL("http://www.fuin.org/test/index.html"));
-        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org/"), "test", "index.html")).isEqualTo(
-                new URL("http://www.fuin.org/test/index.html"));
+        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org"), "test", "index.html"))
+                .isEqualTo(new URL("http://www.fuin.org/test/index.html"));
+        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org/"), "test", "index.html"))
+                .isEqualTo(new URL("http://www.fuin.org/test/index.html"));
     }
 
     @Test
     public final void testCreateUrlNullDirFile() throws IOException {
-        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org"), null, "index.html")).isEqualTo(
-                new URL("http://www.fuin.org/index.html"));
-        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org/"), null, "index.html")).isEqualTo(
-                new URL("http://www.fuin.org/index.html"));
+        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org"), null, "index.html"))
+                .isEqualTo(new URL("http://www.fuin.org/index.html"));
+        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org/"), null, "index.html"))
+                .isEqualTo(new URL("http://www.fuin.org/index.html"));
     }
 
     @Test
     public final void testCreateUrlEmptyDirFile() throws IOException {
-        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org"), "", "index.html")).isEqualTo(
-                new URL("http://www.fuin.org/index.html"));
-        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org/"), "", "index.html")).isEqualTo(
-                new URL("http://www.fuin.org/index.html"));
+        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org"), "", "index.html"))
+                .isEqualTo(new URL("http://www.fuin.org/index.html"));
+        assertThat(Utils4J.createUrl(new URL("http://www.fuin.org/"), "", "index.html"))
+                .isEqualTo(new URL("http://www.fuin.org/index.html"));
     }
 
     @Test
     public final void testGetRelativePathOK() {
-        assertThat(
-                Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile().getParentFile().getParentFile()
-                        .getParentFile(), TEST_PROPERTIES_FILE.getParentFile())).isEqualTo(
-                "org" + File.separator + "fuin" + File.separator + "utils4j");
+        assertThat(Utils4J.getRelativePath(
+                TEST_PROPERTIES_FILE.getParentFile().getParentFile().getParentFile().getParentFile(),
+                TEST_PROPERTIES_FILE.getParentFile()))
+                        .isEqualTo("org" + File.separator + "fuin" + File.separator + "utils4j");
     }
 
     @Test
@@ -363,16 +367,15 @@ public class Utils4JTest {
 
     @Test
     public final void testGetRelativePathSame() {
-        assertThat(
-                Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile(),
-                        TEST_PROPERTIES_FILE.getParentFile())).isEqualTo("");
+        assertThat(Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile(),
+                TEST_PROPERTIES_FILE.getParentFile())).isEqualTo("");
     }
 
     @Test
     public final void testGetRelativePathNotInsideBaseDir() {
         try {
-            Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile(), TEST_PROPERTIES_FILE
-                    .getParentFile().getParentFile());
+            Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile(),
+                    TEST_PROPERTIES_FILE.getParentFile().getParentFile());
             fail();
         } catch (final IllegalArgumentException ex) {
             // OK
@@ -383,8 +386,8 @@ public class Utils4JTest {
     public final void testAddToClasspathString() throws MalformedURLException {
         final ClassLoader classLoader = Utils4J.class.getClassLoader();
         if (!(classLoader instanceof URLClassLoader)) {
-            throw new IllegalStateException("Classloader is not an URL classloader! ["
-                    + classLoader.getClass().getName() + "]");
+            throw new IllegalStateException(
+                    "Classloader is not an URL classloader! [" + classLoader.getClass().getName() + "]");
         }
         final URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
         final URL url = new URL("file:/test1.jar");
@@ -397,8 +400,8 @@ public class Utils4JTest {
     public final void testAddToClasspathURL() throws MalformedURLException {
         final ClassLoader classLoader = Utils4J.class.getClassLoader();
         if (!(classLoader instanceof URLClassLoader)) {
-            throw new IllegalStateException("Classloader is not an URL classloader! ["
-                    + classLoader.getClass().getName() + "]");
+            throw new IllegalStateException(
+                    "Classloader is not an URL classloader! [" + classLoader.getClass().getName() + "]");
         }
         final URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
         final URL url = new URL("file:/test2.jar");
@@ -439,9 +442,8 @@ public class Utils4JTest {
 
     @Test
     public final void testInvokeOK() throws InvokeMethodFailedException {
-        assertThat(
-                Utils4J.invoke(new IllegalNullArgumentException("abc"), "getArgument", new Class[] {},
-                        new Object[] {})).isEqualTo("abc");
+        assertThat(Utils4J.invoke(new IllegalNullArgumentException("abc"), "getArgument", new Class[] {},
+                new Object[] {})).isEqualTo("abc");
     }
 
     @Test
@@ -585,10 +587,10 @@ public class Utils4JTest {
     public final void testConcatPathAndFilename() {
         assertThat(Utils4J.concatPathAndFilename(null, "xyz.jar", File.separator)).isEqualTo("xyz.jar");
         assertThat(Utils4J.concatPathAndFilename("", "xyz.jar", File.separator)).isEqualTo("xyz.jar");
-        assertThat(Utils4J.concatPathAndFilename("one", "xyz.jar", File.separator)).isEqualTo(
-                "one" + File.separator + "xyz.jar");
-        assertThat(Utils4J.concatPathAndFilename("one", "xyz.jar", File.separator)).isEqualTo(
-                "one" + File.separator + "xyz.jar");
+        assertThat(Utils4J.concatPathAndFilename("one", "xyz.jar", File.separator))
+                .isEqualTo("one" + File.separator + "xyz.jar");
+        assertThat(Utils4J.concatPathAndFilename("one", "xyz.jar", File.separator))
+                .isEqualTo("one" + File.separator + "xyz.jar");
     }
 
     @Test
@@ -656,8 +658,8 @@ public class Utils4JTest {
         final String str1 = "This is an example! 123456789-!\"?()[]&";
         final byte[] data1 = str1.getBytes();
         final String hex1 = Utils4J.encodeHex(data1);
-        assertThat(hex1).isEqualTo(
-                "5468697320697320616e206578616d706c6521203132333435363738392d21223f28295b5d26");
+        assertThat(hex1)
+                .isEqualTo("5468697320697320616e206578616d706c6521203132333435363738392d21223f28295b5d26");
         final byte[] data2 = Utils4J.decodeHex(hex1);
         final String str2 = new String(data2);
         assertThat(str2).isEqualTo(str1);
@@ -702,8 +704,8 @@ public class Utils4JTest {
     public void testGetCanonicalPath() {
 
         assertThat(Utils4J.getCanonicalPath(null)).isNull();
-        assertThat(Utils4J.getCanonicalPath(new File("/a/b/c/fileX.txt"))).isEqualTo(
-                getRoot() + "a/b/c/fileX.txt".replace('/', File.separatorChar));
+        assertThat(Utils4J.getCanonicalPath(new File("/a/b/c/fileX.txt")))
+                .isEqualTo(getRoot() + "a/b/c/fileX.txt".replace('/', File.separatorChar));
 
     }
 
@@ -711,8 +713,8 @@ public class Utils4JTest {
     public void testGetCanonicalFile() {
 
         assertThat(Utils4J.getCanonicalFile(null)).isNull();
-        assertThat(Utils4J.getCanonicalFile(new File("/a/b/c/fileX.txt"))).isEqualTo(
-                new File(getRoot() + "a/b/c/fileX.txt".replace('/', File.separatorChar)));
+        assertThat(Utils4J.getCanonicalFile(new File("/a/b/c/fileX.txt")))
+                .isEqualTo(new File(getRoot() + "a/b/c/fileX.txt".replace('/', File.separatorChar)));
 
     }
 
@@ -770,6 +772,34 @@ public class Utils4JTest {
         // TEST & VERIFY
         assertThat(Utils4J.dateToFileTime(cal.getTime())).isEqualTo(0);
 
+    }
+
+    @Test
+    public void testExpectedException() {
+
+        assertThat(Utils4J.expectedException(new IOException(), null)).isTrue();
+        assertThat(Utils4J.expectedException(new IOException(), new ArrayList<>())).isTrue();
+        assertThat(Utils4J.expectedException(new IOException(), list(IOException.class))).isTrue();
+        assertThat(Utils4J.expectedException(new FileNotFoundException(), list(IOException.class))).isTrue();
+        assertThat(Utils4J.expectedException(new IOException(), list(FileNotFoundException.class))).isFalse();
+
+    }
+
+    @Test
+    public void testExpectedCause() {
+
+        assertThat(Utils4J.expectedCause(new RuntimeException(), list(IOException.class))).isFalse();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), null)).isTrue();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), new ArrayList<>())).isTrue();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), list(IOException.class))).isTrue();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new FileNotFoundException()), list(IOException.class))).isTrue();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), list(FileNotFoundException.class))).isFalse();
+        
+    }
+
+    @SafeVarargs
+    private static List<Class<? extends Exception>> list(Class<? extends Exception>... classes) {
+        return Arrays.asList(classes);
     }
 
     private static String getRoot() {
