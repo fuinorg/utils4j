@@ -18,6 +18,15 @@ A small Java library that contains several helpful utility classes.
 
 ## Features
 
+[URL support for "classpath:" scheme](#URL)
+[Variable resolver](#Variable)
+[ZIP and UNZIP](#ZIP)
+[Tracking changes of a list / map](#Tracking)
+[Easy file locking](#Easy)
+[Properties file preferences](#Properties)
+
+* * *
+
 ### URL support for "classpath:" scheme
 ```Java
 URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
