@@ -120,8 +120,9 @@ public final class MyClassWithCData {
     
 }
 ```
+If you just need to unmarshal a CDATA section, using the above annotation is all you need to do.
 
-Example of serializing the above class:
+If you need to marshal a class with CDATA content you need to use the CDataXmlStreamWriter:
 ```Java
 // Create writers
 final StringWriter writer = new StringWriter();
@@ -132,19 +133,20 @@ final CDataXmlStreamWriter cdataWriter = new CDataXmlStreamWriter(xmlWriter);
 final JAXBContext ctx = JAXBContext.newInstance(MyClassWithCData.class);
 final MyClassWithCData testee = new MyClassWithCData("<whatever this=\"is\"/>");
 
-// Marshal the instance to XML
+// Convert instance to XML
 marshal(ctx, testee, null, cdataWriter);
+final String xml = writer.toString();
 
 // Prints out the result
-System.out.println(writer.toString());
-```
+System.out.println(xml);
+// <?xml version="1.0" ?><my-class-with-cdata><![CDATA[<whatever this="is"/>]]></my-class-with-cdata>
 
-XML output (formatted):
-```xml
-<?xml version="1.0" ?>
-<my-class-with-cdata>
-<![CDATA[<whatever this="is"/>]]>
-</my-class-with-cdata>
+// Convert it back to object
+final MyClassWithCData copy = unmarshal(xml, MyClassWithCData.class);
+
+// Print out cdata content
+System.out.println(copy.getContent());
+// <whatever this="is"/>
 ```
 
 
