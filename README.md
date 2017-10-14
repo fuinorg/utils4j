@@ -24,6 +24,7 @@ A small Java library that contains several helpful utility classes.
 * [Tracking changes of a list / map](##tracking-changes-of-a-list--map)
 * [Easy file locking](#easy-file-locking)
 * [Properties file preferences](#properties-file-preferences)
+* [JAXB CDATA Stream Writer](#jaxb-cdata-stream-writer)
 
 * * *
 
@@ -34,6 +35,7 @@ A small Java library that contains several helpful utility classes.
 URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 ```
 A full example can be found here: [ClasspathURLExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ClasspathURLExample.java)
+
 
 ### Variable resolver
 Resolves variable references in a map and prevents on cycles.
@@ -50,6 +52,7 @@ c=1/2/3
 ```
 A full example can be found here: [VariableResolverExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/VariableResolverExample.java)
 
+
 ### ZIP and UNZIP
 Compress and descompress a complete directory and it's subdirectories with a single line of code
 ```Java
@@ -59,6 +62,7 @@ Utils4J.zipDir(zipDir, "abc/def", zipFile);
 Utils4J.unzip(zipFile, Utils4J.getTempDir());
 ```
 A full example can be found here: [ZipDirExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ZipDirExample.java)
+
 
 ### Tracking changes of a list / map
 This is a wrapper for lists that keeps track of all changes made to the list. This means adding, replacing or deleting elements is tracked - not the changes to the objects itself. It's also possible to revert (undo) all changes made to the list. A restriction is that no duplicate elements are allowed in the list.
@@ -73,6 +77,7 @@ trackingList.revert();
 A list example can be found here: [ChangeTrackingUniqueListExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingUniqueListExample.java)
 A map example can be found here: [ChangeTrackingMapExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingMapExample.java)
 
+
 ### Easy file locking
 ```Java
 FileLock lock = Utils4J.lockRandomAccessFile(randomAccessFile, tryLockMax, tryWaitMillis);
@@ -84,6 +89,7 @@ try {
 ```
 A full example can be found here: [LockFileExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/LockFileExample.java)
 
+
 ### Properties file preferences
 Shows the use of a directory and properties file based [Preferences API](http://docs.oracle.com/javase/7/docs/technotes/guides/preferences/) implementation. It's basically a replacement for the registry based implementation on Windows.
 ```Java
@@ -91,6 +97,57 @@ System.setProperty("java.util.prefs.PreferencesFactory",  PropertiesFilePreferen
 Preferences userPrefs = Preferences.userRoot();
 ```
 A full example can be found here: [PropertiesFilePreferencesFactoryExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/PropertiesFilePreferencesFactoryExample.java)
+
+
+### JAXB CDATA Stream Writer
+
+XML stream writer that does **not** escape the content of a CDATA section. 
+This is meant to be used with JAXB to serialize a string field to a CDATA section. 
+The field to write as CDATA section is annotated with @CDataXmlAdapter.
+
+Example of class using the adapter:
+```Java
+/**
+ * Example class with CDATA field.
+ */
+@XmlRootElement(name = "my-class-with-cdata")
+public final class MyClassWithCData {
+
+    // Field has the CDataXmlAdapter
+    @XmlValue
+    @XmlJavaTypeAdapter(CDataXmlAdapter.class)
+    private String content;
+    
+}
+```
+
+```Java
+// Create writers
+final StringWriter writer = new StringWriter();
+final XMLStreamWriter xmlWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(writer);
+final CDataXmlStreamWriter cdataWriter = new CDataXmlStreamWriter(xmlWriter);
+
+// Create JAXB context with example class
+final JAXBContext ctx = JAXBContext.newInstance(MyClassWithCData.class);
+final MyClassWithCData testee = new MyClassWithCData("<whatever this=\"is\"/>");
+
+// Marshal the instance to XML
+marshal(ctx, testee, null, cdataWriter);
+
+// Prints out the result
+System.out.println(writer.toString());
+```
+
+XML output (formatted):
+```xml
+<?xml version="1.0" ?>
+<my-class-with-cdata>
+<![CDATA[<whatever this="is"/>]]>
+</my-class-with-cdata>
+```
+
+
+A full example can be found here: [CDataJaxbExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/CDataJaxbExample.java)
 
 * * *
 
