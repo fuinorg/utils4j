@@ -103,7 +103,7 @@ A full example can be found here: [PropertiesFilePreferencesFactoryExample.java]
 
 XML stream writer that does **not** escape the content of a CDATA section. 
 This is meant to be used with JAXB to serialize a string field to a CDATA section. 
-The field to write as CDATA section is annotated with @CDataXmlAdapter.
+The field to write as CDATA section is annotated with a CDataXmlAdapter.
 
 Example of class using the adapter:
 ```Java
@@ -121,6 +121,7 @@ public final class MyClassWithCData {
 }
 ```
 
+Example of serializing the above class:
 ```Java
 // Create writers
 final StringWriter writer = new StringWriter();
