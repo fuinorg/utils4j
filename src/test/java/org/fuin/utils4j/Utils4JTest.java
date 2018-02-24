@@ -1002,11 +1002,6 @@ public class Utils4JTest {
                 .getCanonicalFile();
         assertThat(nonJreClassFiles).contains(thisClass);
 
-        final List<File> jreJarFiles = Utils4J.classpathFiles(Utils4J::jreJarFile);
-        final File javaHomeDir = new File(System.getProperty("java.home"));
-        final File rtJar = new File(javaHomeDir, "lib/rt.jar");
-        assertThat(jreJarFiles).contains(rtJar);
-
     }
 
     @Test
