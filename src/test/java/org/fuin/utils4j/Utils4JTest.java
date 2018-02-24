@@ -1021,5 +1021,13 @@ public class Utils4JTest {
 
     }
 
+    @Test
+    public void testLocalFilesFromUrlClassLoader() throws IOException {
+        
+        final List<File> files = Utils4J.localFilesFromUrlClassLoader((URLClassLoader) this.getClass().getClassLoader());
+        assertThat(files).contains(new File("/test1.jar"));
+        
+    }
+    
 }
 // CHECKSTYLE:ON

@@ -39,6 +39,7 @@ import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.channels.FileChannel;
@@ -1814,7 +1815,7 @@ public final class Utils4J {
             final Collection<Class<? extends Exception>> expectedExceptions) {
 
         checkNotNull("actualException", actualException);
-        
+
         if (expectedExceptions == null || expectedExceptions.size() == 0) {
             // All exceptions are expected
             return true;
@@ -1844,7 +1845,7 @@ public final class Utils4J {
             final Collection<Class<? extends Exception>> expectedExceptions) {
 
         checkNotNull("actualException", actualException);
-        
+
         if (expectedExceptions == null || expectedExceptions.size() == 0) {
             // All exceptions are expected
             return true;
@@ -1873,8 +1874,7 @@ public final class Utils4J {
         try {
             return file.getCanonicalPath().startsWith(javaHome) && file.isFile();
         } catch (final IOException ex) {
-            throw new RuntimeException(
-                    "Error reading canonical path for: " + file, ex);
+            throw new RuntimeException("Error reading canonical path for: " + file, ex);
         }
     }
 
@@ -1908,8 +1908,7 @@ public final class Utils4J {
      * @param file
      *            File to test.
      * 
-     * @return TRUE if the file ends with '.jar' and is not located in the
-     *         'java.home' directory.
+     * @return TRUE if the file ends with '.jar' and is not located in the 'java.home' directory.
      */
     public static boolean nonJreJarFile(final File file) {
         return !jreFile(file) && jarFile(file);
@@ -1921,8 +1920,7 @@ public final class Utils4J {
      * @param file
      *            File to test.
      * 
-     * @return TRUE if the file ends with '.jar' and is located in the
-     *         'java.home' directory.
+     * @return TRUE if the file ends with '.jar' and is located in the 'java.home' directory.
      */
     public static boolean jreJarFile(final File file) {
         return jreFile(file) && jarFile(file);
@@ -1945,26 +1943,21 @@ public final class Utils4J {
      * Returns a list of files from all given paths.
      *
      * @param paths
-     *            Paths to search (Paths separated by
-     *            {@link File#pathSeparator}.
+     *            Paths to search (Paths separated by {@link File#pathSeparator}.
      * @param predicate
      *            Condition for files to return.
      * 
      * @return List of files in the given paths.
      */
-    public static List<File> pathsFiles(final String paths,
-            final Predicate<File> predicate) {
+    public static List<File> pathsFiles(final String paths, final Predicate<File> predicate) {
         final List<File> files = new ArrayList<File>();
         for (final String filePathAndName : paths.split(File.pathSeparator)) {
             final File file = new File(filePathAndName);
             if (file.isDirectory()) {
-                try (final Stream<Path> stream = Files.walk(file.toPath(),
-                        Integer.MAX_VALUE)) {
-                    stream.map(f -> f.toFile()).filter(predicate)
-                            .forEach(files::add);
+                try (final Stream<Path> stream = Files.walk(file.toPath(), Integer.MAX_VALUE)) {
+                    stream.map(f -> f.toFile()).filter(predicate).forEach(files::add);
                 } catch (final IOException ex) {
-                    throw new RuntimeException("Error walking path: " + file,
-                            ex);
+                    throw new RuntimeException("Error walking path: " + file, ex);
                 }
             } else {
                 if (predicate.test(file)) {
@@ -1974,8 +1967,39 @@ public final class Utils4J {
         }
         return files;
     }
-    
-    
+
+    private static File asFile(final URL url) {
+        try {
+            return new File(url.toURI());
+        } catch (final URISyntaxException ex) {
+            return new File(url.getPath());
+        }
+    }
+
+    /**
+     * Returns all "file://" entries in the URL class loader as files.
+     * 
+     * @param urlClassLoader
+     *            URL class loader to use.
+     * 
+     * @return List of files.
+     */
+    public static List<File> localFilesFromUrlClassLoader(final URLClassLoader urlClassLoader) {
+        checkNotNull("urlClassLoader", urlClassLoader);
+
+        final List<File> files = new ArrayList<>();
+
+        final URL[] urls = urlClassLoader.getURLs();
+        for (final URL url : urls) {
+            if ("file".equals(url.getProtocol())) {
+                files.add(asFile(url));
+            }
+        }
+
+        return files;
+
+    }
+
     /**
      * Wraps a given input stream into another one an returns it.
      */
