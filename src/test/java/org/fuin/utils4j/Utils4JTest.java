@@ -790,11 +790,15 @@ public class Utils4JTest {
 
         assertThat(Utils4J.expectedCause(new RuntimeException(), list(IOException.class))).isFalse();
         assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), null)).isTrue();
-        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), new ArrayList<>())).isTrue();
-        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), list(IOException.class))).isTrue();
-        assertThat(Utils4J.expectedCause(new RuntimeException(new FileNotFoundException()), list(IOException.class))).isTrue();
-        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), list(FileNotFoundException.class))).isFalse();
-        
+        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), new ArrayList<>()))
+                .isTrue();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()), list(IOException.class)))
+                .isTrue();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new FileNotFoundException()),
+                list(IOException.class))).isTrue();
+        assertThat(Utils4J.expectedCause(new RuntimeException(new IOException()),
+                list(FileNotFoundException.class))).isFalse();
+
     }
 
     @SafeVarargs
@@ -881,6 +885,144 @@ public class Utils4JTest {
         } catch (final InterruptedException ex) {
             throw new RuntimeException(ex);
         }
+
+    }
+
+    @Test
+    public void testJreFile() throws IOException {
+
+        final File javaHomeDir = new File(System.getProperty("java.home"));
+        final File javaExtDir = new File(javaHomeDir, "lib/ext");
+
+        // Existing JRE files
+        assertThat(Utils4J.jreFile(new File(javaHomeDir, "README"))).isTrue();
+        assertThat(Utils4J.jreFile(new File(javaHomeDir, "lib/rt.jar"))).isTrue();
+        assertThat(Utils4J.jreFile(new File(javaExtDir, "localedata.jar"))).isTrue();
+
+        // Non existing and not in JRE
+        assertThat(Utils4J.jreFile(new File(Utils4J.getTempDir(), "whatever.jar"))).isFalse();
+
+        // Non existing in JRE
+        assertThat(Utils4J.jreFile(new File(javaHomeDir, "whatever.jar"))).isFalse();
+
+        // Existing JAR, but not in JRE
+        final File aJar = new File(Utils4J.getTempDir(), "a.jar");
+        aJar.createNewFile();
+        try {
+            assertThat(Utils4J.jreJarFile(aJar)).isFalse();
+        } finally {
+            aJar.delete();
+        }
+
+    }
+
+    @Test
+    public void testClassFile() throws IOException {
+
+        final File aClass = new File(Utils4J.getTempDir(), "a.class");
+        aClass.createNewFile();
+        final File aJar = new File(Utils4J.getTempDir(), "a.jar");
+        aJar.createNewFile();
+        try {
+            assertThat(Utils4J.classFile(aClass)).isTrue();
+            assertThat(Utils4J.classFile(aJar)).isFalse();
+            assertThat(Utils4J.classFile(new File(Utils4J.getTempDir(), "b.jar"))).isFalse();
+        } finally {
+            aClass.delete();
+            aJar.delete();
+        }
+
+    }
+    @Test
+    public void testJarFile() throws IOException {
+
+        final File aClass = new File(Utils4J.getTempDir(), "a.class");
+        aClass.createNewFile();
+        final File aJar = new File(Utils4J.getTempDir(), "a.jar");
+        aJar.createNewFile();
+        try {
+            assertThat(Utils4J.jarFile(aJar)).isTrue();
+            assertThat(Utils4J.jarFile(aClass)).isFalse();
+        } finally {
+            aClass.delete();
+            aJar.delete();
+        }
+
+    }
+
+    @Test
+    public void testNonJreJarFile() throws IOException {
+
+        final File aClass = new File(Utils4J.getTempDir(), "a.class");
+        aClass.createNewFile();
+        final File aJar = new File(Utils4J.getTempDir(), "a.jar");
+        aJar.createNewFile();
+        try {
+            assertThat(Utils4J.nonJreJarFile(aJar)).isTrue();
+            assertThat(Utils4J.nonJreJarFile(aClass)).isFalse();
+        } finally {
+            aClass.delete();
+            aJar.delete();
+        }
+
+    }
+
+    @Test
+    public void testJreJarFile() throws IOException {
+
+        final File javaHomeDir = new File(System.getProperty("java.home"));
+        final File javaExtDir = new File(javaHomeDir, "lib/ext");
+
+        // Valid JRE JARs
+        assertThat(Utils4J.jreJarFile(new File(javaHomeDir, "lib/rt.jar"))).isTrue();
+        assertThat(Utils4J.jreJarFile(new File(javaExtDir, "localedata.jar"))).isTrue();
+
+        // No jar
+        assertThat(Utils4J.jreJarFile(new File(javaHomeDir, "README"))).isFalse();
+
+        // Not existing
+        assertThat(Utils4J.jreJarFile(new File(Utils4J.getTempDir(), "whatever.jar"))).isFalse();
+
+        // Existing JAR, but not in JRE
+        final File aJar = new File(Utils4J.getTempDir(), "a.jar");
+        aJar.createNewFile();
+        try {
+            assertThat(Utils4J.jreJarFile(aJar)).isFalse();
+        } finally {
+            aJar.delete();
+        }
+
+    }
+
+    @Test
+    public void testClasspathFiles() throws IOException {
+
+        final List<File> nonJreClassFiles = Utils4J.classpathFiles(Utils4J::classFile);
+        final File thisClass = new File("./target/test-classes/org/fuin/utils4j/Utils4JTest.class")
+                .getCanonicalFile();
+        assertThat(nonJreClassFiles).contains(thisClass);
+
+        final List<File> jreJarFiles = Utils4J.classpathFiles(Utils4J::jreJarFile);
+        final File javaHomeDir = new File(System.getProperty("java.home"));
+        final File rtJar = new File(javaHomeDir, "lib/rt.jar");
+        assertThat(jreJarFiles).contains(rtJar);
+
+    }
+
+    @Test
+    public void testPathsFiles() {
+
+        final File javaHomeDir = new File(System.getProperty("java.home"));
+
+        final List<File> bootJarFiles = Utils4J.pathsFiles(System.getProperty("sun.boot.class.path"),
+                Utils4J::jreJarFile);
+        final File rtJar = new File(javaHomeDir, "lib/rt.jar");
+        assertThat(bootJarFiles).contains(rtJar);
+
+        final List<File> extJarFiles = Utils4J.pathsFiles(System.getProperty("java.ext.dirs"),
+                Utils4J::jreJarFile);
+        final File localedataJar = new File(javaHomeDir, "lib/ext/localedata.jar");
+        assertThat(extJarFiles).contains(localedataJar);
 
     }
 

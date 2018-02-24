@@ -44,15 +44,21 @@ import java.net.URLClassLoader;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -1854,6 +1860,122 @@ public final class Utils4J {
 
     }
 
+    /**
+     * Determines if the file is a file from the Java runtime and exists.
+     * 
+     * @param file
+     *            File to test.
+     * 
+     * @return TRUE if the file is in the 'java.home' directory.
+     */
+    public static boolean jreFile(final File file) {
+        final String javaHome = System.getProperty("java.home");
+        try {
+            return file.getCanonicalPath().startsWith(javaHome) && file.isFile();
+        } catch (final IOException ex) {
+            throw new RuntimeException(
+                    "Error reading canonical path for: " + file, ex);
+        }
+    }
+
+    /**
+     * Determines if the file is a class file.
+     * 
+     * @param file
+     *            File to test.
+     * 
+     * @return TRUE if the file ends with '.class'.
+     */
+    public static boolean classFile(final File file) {
+        return file.getName().endsWith(".class") && file.isFile();
+    }
+
+    /**
+     * Determines if the file is a JAR file.
+     * 
+     * @param file
+     *            File to test.
+     * 
+     * @return TRUE if the file ends with '.jar'.
+     */
+    public static boolean jarFile(final File file) {
+        return file.getName().endsWith(".jar") && file.isFile();
+    }
+
+    /**
+     * Determines if the file is a JAR file not located in the JRE directory.
+     * 
+     * @param file
+     *            File to test.
+     * 
+     * @return TRUE if the file ends with '.jar' and is not located in the
+     *         'java.home' directory.
+     */
+    public static boolean nonJreJarFile(final File file) {
+        return !jreFile(file) && jarFile(file);
+    }
+
+    /**
+     * Determines if the file is a JAR file located in the JRE directory.
+     * 
+     * @param file
+     *            File to test.
+     * 
+     * @return TRUE if the file ends with '.jar' and is located in the
+     *         'java.home' directory.
+     */
+    public static boolean jreJarFile(final File file) {
+        return jreFile(file) && jarFile(file);
+    }
+
+    /**
+     * Returns a list of files from the classpath.
+     * 
+     * @param predicate
+     *            Condition that returns files from the classpath.
+     * 
+     * @return List of files in the classpath (from property "java.class.path").
+     */
+    public static List<File> classpathFiles(final Predicate<File> predicate) {
+        return pathsFiles(System.getProperty("java.class.path"), predicate);
+
+    }
+
+    /**
+     * Returns a list of files from all given paths.
+     *
+     * @param paths
+     *            Paths to search (Paths separated by
+     *            {@link File#pathSeparator}.
+     * @param predicate
+     *            Condition for files to return.
+     * 
+     * @return List of files in the given paths.
+     */
+    public static List<File> pathsFiles(final String paths,
+            final Predicate<File> predicate) {
+        final List<File> files = new ArrayList<File>();
+        for (final String filePathAndName : paths.split(File.pathSeparator)) {
+            final File file = new File(filePathAndName);
+            if (file.isDirectory()) {
+                try (final Stream<Path> stream = Files.walk(file.toPath(),
+                        Integer.MAX_VALUE)) {
+                    stream.map(f -> f.toFile()).filter(predicate)
+                            .forEach(files::add);
+                } catch (final IOException ex) {
+                    throw new RuntimeException("Error walking path: " + file,
+                            ex);
+                }
+            } else {
+                if (predicate.test(file)) {
+                    files.add(file);
+                }
+            }
+        }
+        return files;
+    }
+    
+    
     /**
      * Wraps a given input stream into another one an returns it.
      */

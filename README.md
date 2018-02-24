@@ -26,6 +26,7 @@ A small Java library that contains several helpful utility classes.
 * [Properties file preferences](#properties-file-preferences)
 * [JAXB CDATA Stream Writer](#jaxb-cdata-stream-writer)
 * [Wait for code to finish](#wait-for-code-to-finish)
+* [Find all JARs and classes in the classpath](#find-all-jars-and-classes-in-the-classpath)
 
 * * *
 
@@ -184,6 +185,32 @@ waitHelper.waitUntilResult(() -> {
 ```
 
 A full example can be found here: [WaitHelperExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/WaitHelperExample.java)
+
+
+### Find all JARs and classes in the classpath
+Easily return a list of all classes or JAR files in the classpath.
+```Java
+// List CLASS files
+for (final File file : Utils4J.classpathFiles(Utils4J::classFile)) {
+    System.out.println(file);
+}
+
+// List JAR files that are not located in the JRE directory
+for (final File file : Utils4J.classpathFiles(Utils4J::nonJreJarFile)) {
+    System.out.println(file);
+}
+
+// List JAR files that are located in the JRE directory
+for (final File file : Utils4J.classpathFiles(Utils4J::jreJarFile)) {
+    System.out.println(file);
+}
+
+// List JAR files that are located in the boot path of the JRE
+for (final File file : Utils4J.pathsFiles(System.getProperty("sun.boot.class.path"), Utils4J::jreJarFile)) {
+    System.out.println(file);
+}
+```
+A full example can be found here: [FindJarsAndClassesInClasspath.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/FindJarsAndClassesInClasspath.java)
 
 
 * * *
