@@ -234,5 +234,3 @@ Add the following to your .m2/settings.xml to enable snapshots in your Maven bui
     </snapshots>
 </repository>
 ```
-
- 
