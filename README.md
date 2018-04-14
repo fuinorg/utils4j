@@ -81,6 +81,7 @@ A map example can be found here: [ChangeTrackingMapExample.java](https://github.
 
 
 ### Easy file locking
+Allows to synchronize local processes by using a file based lock.
 ```Java
 FileLock lock = Utils4J.lockRandomAccessFile(randomAccessFile, tryLockMax, tryWaitMillis);
 try {
