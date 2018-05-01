@@ -1,138 +1,119 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.fuin</groupId>
-		<artifactId>pom-osgi</artifactId>
-		<version>1.4.0</version>
-	</parent>
+    <parent>
+        <groupId>org.fuin</groupId>
+        <artifactId>pom-osgi</artifactId>
+        <version>1.5.0</version>
+    </parent>
 
-	<artifactId>utils4j</artifactId>
-	<packaging>jar</packaging>
-	<version>0.9.3-SNAPSHOT</version>
-	<name>Utils4J</name>
-	<description>A small Java library that contains several helpful utility classes.</description>
-	<url>http://www.fuin.org/utils4j/</url>
+    <artifactId>utils4j</artifactId>
+    <packaging>jar</packaging>
+    <version>0.10.0-SNAPSHOT</version>
+    <name>Utils4J</name>
+    <description>A small Java library that contains several helpful utility classes.</description>
+    <url>http://www.fuin.org/utils4j/</url>
 
-	<prerequisites>
-		<maven>3.2.0</maven>
-	</prerequisites>
+    <prerequisites>
+        <maven>3.2.0</maven>
+    </prerequisites>
 
-	<scm>
-		<url>https://github.com/fuinorg/utils4j/</url>
-		<connection>scm:git:git://github.com/fuinorg/utils4j.git</connection>
-		<developerConnection>scm:git:git@github.com:fuinorg/utils4j.git</developerConnection>
-	</scm>
+    <scm>
+        <url>https://github.com/fuinorg/utils4j/</url>
+        <connection>scm:git:git://github.com/fuinorg/utils4j.git</connection>
+        <developerConnection>scm:git:git@github.com:fuinorg/utils4j.git</developerConnection>
+    </scm>
 
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/fuinorg/utils4j/issues</url>
-	</issueManagement>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/fuinorg/utils4j/issues</url>
+    </issueManagement>
 
-	<dependencies>
+    <dependencies>
 
-		<!-- Compile -->
+        <!-- Compile -->
 
-		<!-- Test -->
+        <!-- Test -->
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>3.8.0</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.9.1</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>nl.jqno.equalsverifier</groupId>
-			<artifactId>equalsverifier</artifactId>
-			<version>2.3.2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>nl.jqno.equalsverifier</groupId>
+            <artifactId>equalsverifier</artifactId>
+            <version>2.4.6</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>xmlunit</groupId>
-			<artifactId>xmlunit</artifactId>
-			<version>1.6</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.6</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+            <scope>test</scope>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
-	<build>
+    <build>
 
-		<plugins>
+        <plugins>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.2</version>
-			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.5</version>
+            </plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<format>xml</format>
-					<maxmem>256m</maxmem>
-					<aggregate>true</aggregate>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>cobertura</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <format>xml</format>
+                    <maxmem>256m</maxmem>
+                    <aggregate>true</aggregate>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>cobertura</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.eluder.coveralls</groupId>
-				<artifactId>coveralls-maven-plugin</artifactId>
-				<version>3.0.1</version>
-				<configuration>
-					<repoToken>${coveralls.utils4j}</repoToken>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <configuration>
+                    <repoToken>${coveralls.utils4j}</repoToken>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.netbeans.tools</groupId>
-				<artifactId>sigtest-maven-plugin</artifactId>
-				<version>1.0</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>generate</goal>
-							<!-- goal>check</goal-->
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<packages>org.fuin.utils4j</packages>
-					<!-- releaseVersion>0.9.3</releaseVersion -->
-				</configuration>
-			</plugin>
+        </plugins>
 
-		</plugins>
-
-	</build>
+    </build>
 
 </project>
