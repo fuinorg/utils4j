@@ -34,7 +34,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TimeZone;
 
 import org.apache.commons.io.FileUtils;
@@ -155,54 +154,6 @@ public class Utils4JTest {
     }
 
     @Test
-    public final void testLoadPropertiesClassString() {
-        final Properties props = Utils4J.loadProperties(Utils4JTest.class, "test.properties");
-        assertThat(props.size()).isEqualTo(3);
-        assertThat(props.get("one")).isEqualTo("1");
-        assertThat(props.get("two")).isEqualTo("2");
-        assertThat(props.get("three")).isEqualTo("3");
-    }
-
-    @Test
-    public final void testLoadPropertiesFile() throws IOException {
-        final Properties props = Utils4J.loadProperties(TEST_PROPERTIES_FILE);
-        assertThat(props.size()).isEqualTo(3);
-        assertThat(props.get("one")).isEqualTo("1");
-        assertThat(props.get("two")).isEqualTo("2");
-        assertThat(props.get("three")).isEqualTo("3");
-    }
-
-    @Test
-    public final void testLoadPropertiesURLString() throws MalformedURLException {
-        final Properties props = Utils4J.loadProperties(TEST_PROPERTIES_FILE.getParentFile().toURI().toURL(),
-                TEST_PROPERTIES_FILE.getName());
-        assertThat(props.size()).isEqualTo(3);
-        assertThat(props.get("one")).isEqualTo("1");
-        assertThat(props.get("two")).isEqualTo("2");
-        assertThat(props.get("three")).isEqualTo("3");
-    }
-
-    @Test
-    public final void testLoadPropertiesURL() throws MalformedURLException {
-        final Properties props = Utils4J.loadProperties(TEST_PROPERTIES_FILE.toURI().toURL());
-        assertThat(props.size()).isEqualTo(3);
-        assertThat(props.get("one")).isEqualTo("1");
-        assertThat(props.get("two")).isEqualTo("2");
-        assertThat(props.get("three")).isEqualTo("3");
-    }
-
-    @Test
-    public final void testLoadPropertiesStringString() throws MalformedURLException {
-        final Properties props = Utils4J.loadProperties(
-                TEST_PROPERTIES_FILE.getParentFile().toURI().toURL().toExternalForm(),
-                TEST_PROPERTIES_FILE.getName());
-        assertThat(props).hasSize(3);
-        assertThat(props.get("one")).isEqualTo("1");
-        assertThat(props.get("two")).isEqualTo("2");
-        assertThat(props.get("three")).isEqualTo("3");
-    }
-
-    @Test
     public final void testCheckValidFileOK() {
         Utils4J.checkValidFile(TEST_PROPERTIES_FILE);
     }
@@ -249,29 +200,6 @@ public class Utils4JTest {
             fail();
         } catch (final IllegalArgumentException ex) {
             // OK
-        }
-    }
-
-    @Test
-    public final void testSaveProperties() throws IOException {
-        final File testFile = File.createTempFile("Utils4JTest-", ".properties");
-        try {
-            // Write to file
-            Properties props = new Properties();
-            props.put("eins", "1");
-            props.put("zwei", "2");
-            props.put("drei", "3");
-            Utils4J.saveProperties(testFile, props, "COMMENT");
-
-            // Read it
-            props = Utils4J.loadProperties(testFile);
-            assertThat(props).hasSize(3);
-            assertThat(props.get("eins")).isEqualTo("1");
-            assertThat(props.get("zwei")).isEqualTo("2");
-            assertThat(props.get("drei")).isEqualTo("3");
-
-        } finally {
-            testFile.delete();
         }
     }
 
@@ -383,6 +311,7 @@ public class Utils4JTest {
     }
 
     @Test
+    @SuppressWarnings("resource")
     public final void testAddToClasspathString() throws MalformedURLException {
         final ClassLoader classLoader = Utils4J.class.getClassLoader();
         if (!(classLoader instanceof URLClassLoader)) {
@@ -397,6 +326,7 @@ public class Utils4JTest {
     }
 
     @Test
+    @SuppressWarnings("resource")
     public final void testAddToClasspathURL() throws MalformedURLException {
         final ClassLoader classLoader = Utils4J.class.getClassLoader();
         if (!(classLoader instanceof URLClassLoader)) {
@@ -933,6 +863,7 @@ public class Utils4JTest {
         }
 
     }
+
     @Test
     public void testJarFile() throws IOException {
 
@@ -1023,11 +954,12 @@ public class Utils4JTest {
 
     @Test
     public void testLocalFilesFromUrlClassLoader() throws IOException {
-        
-        final List<File> files = Utils4J.localFilesFromUrlClassLoader((URLClassLoader) this.getClass().getClassLoader());
+
+        final List<File> files = Utils4J
+                .localFilesFromUrlClassLoader((URLClassLoader) this.getClass().getClassLoader());
         assertThat(files).contains(new File("/test1.jar"));
-        
+
     }
-    
+
 }
 // CHECKSTYLE:ON

@@ -57,7 +57,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -138,64 +137,6 @@ public final class Utils4J {
     }
 
     /**
-     * Load properties from classpath.
-     * 
-     * @param clasz
-     *            Class in the same package as the properties file - Cannot be <code>null</code>.
-     * @param filename
-     *            Name of the properties file (without path) - Cannot be <code>null</code>.
-     * 
-     * @return Properties.
-     */
-    public static Properties loadProperties(final Class<?> clasz, final String filename) {
-        checkNotNull("clasz", clasz);
-        checkNotNull("filename", filename);
-
-        final String path = getPackagePath(clasz);
-        final String resPath = "/" + path + "/" + filename;
-        try {
-            final Properties props = new Properties();
-            final InputStream inStream = clasz.getResourceAsStream(resPath);
-            if (inStream == null) {
-                throw new IllegalArgumentException("Resource '" + resPath + "' was not found!");
-            }
-            try {
-                props.load(inStream);
-            } finally {
-                inStream.close();
-            }
-            return props;
-        } catch (final IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    /**
-     * Load properties from a file.
-     * 
-     * @param file
-     *            Properties file - Cannot be <code>null</code> and must be a valid file.
-     * 
-     * @return Properties.
-     */
-    public static Properties loadProperties(final File file) {
-        checkNotNull("file", file);
-        checkValidFile(file);
-        try {
-            final Properties props = new Properties();
-            final InputStream inStream = new FileInputStream(file);
-            try {
-                props.load(inStream);
-            } finally {
-                inStream.close();
-            }
-            return props;
-        } catch (final IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    /**
      * Check if the argument is an existing file. If the check fails an <code>IllegalArgumentException</code>
      * is thrown.
      * 
@@ -226,36 +167,6 @@ public final class Utils4J {
         }
         if (!dir.isDirectory()) {
             throw new IllegalArgumentException("The name '" + dir + "' is not a directory!");
-        }
-    }
-
-    /**
-     * Save properties to a file.
-     * 
-     * @param file
-     *            Destination file - Cannot be <code>null</code> and parent directory must exist.
-     * @param props
-     *            Properties to save - Cannot be <code>null</code>.
-     * @param comment
-     *            Comment for the file.
-     */
-    public static void saveProperties(final File file, final Properties props, final String comment) {
-        checkNotNull("file", file);
-        checkNotNull("props", props);
-
-        if (!file.getParentFile().exists()) {
-            throw new IllegalArgumentException("The parent directory '" + file.getParentFile()
-                    + "' does not exist [file='" + file + "']!");
-        }
-        try {
-            final OutputStream outStream = new FileOutputStream(file);
-            try {
-                props.store(outStream, comment);
-            } finally {
-                outStream.close();
-            }
-        } catch (final IOException ex) {
-            throw new RuntimeException(ex);
         }
     }
 
@@ -416,11 +327,8 @@ public final class Utils4J {
         checkNotNull("file", file);
         checkNotNull("algorithm", algorithm);
         try {
-            final FileInputStream in = new FileInputStream(file);
-            try {
+            try (final FileInputStream in = new FileInputStream(file)) {
                 return createHash(in, algorithm);
-            } finally {
-                in.close();
             }
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
@@ -442,15 +350,12 @@ public final class Utils4J {
         checkNotNull("algorithm", algorithm);
         try {
             final MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-            final BufferedInputStream in = new BufferedInputStream(inputStream);
-            try {
+            try (final BufferedInputStream in = new BufferedInputStream(inputStream)) {
                 final byte[] buf = new byte[1024];
                 int count = 0;
                 while ((count = in.read(buf)) > -1) {
                     messageDigest.update(buf, 0, count);
                 }
-            } finally {
-                in.close();
             }
             return encodeHex(messageDigest.digest());
         } catch (final NoSuchAlgorithmException ex) {
@@ -718,70 +623,6 @@ public final class Utils4J {
     }
 
     /**
-     * Load a file from an directory.
-     * 
-     * @param baseUrl
-     *            Directory URL - Cannot be <code>null</code>.
-     * @param filename
-     *            Filename without path - Cannot be <code>null</code>.
-     * 
-     * @return Properties.
-     */
-    public static Properties loadProperties(final URL baseUrl, final String filename) {
-        return loadProperties(createUrl(baseUrl, "", filename));
-    }
-
-    /**
-     * Load a file from an URL.
-     * 
-     * @param fileURL
-     *            Property file URL - Cannot be <code>null</code>.
-     * 
-     * @return Properties.
-     */
-    public static Properties loadProperties(final URL fileURL) {
-        checkNotNull("fileURL", fileURL);
-        try {
-            final Properties props = new Properties();
-            final InputStream inStream = fileURL.openStream();
-            try {
-                props.load(inStream);
-            } finally {
-                inStream.close();
-            }
-            return props;
-        } catch (final IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    /**
-     * Load a file from an directory. Wraps a possible <code>MalformedURLException</code> exception into a
-     * <code>RuntimeException</code>.
-     * 
-     * @param baseUrl
-     *            Directory URL as <code>String</code> - Cannot be <code>null</code>.
-     * @param filename
-     *            Filename without path - Cannot be <code>null</code>.
-     * 
-     * @return Properties.
-     */
-    public static Properties loadProperties(final String baseUrl, final String filename) {
-        checkNotNull("baseUrl", baseUrl);
-        checkNotNull("filename", filename);
-
-        try {
-            final URL url = new URL(baseUrl);
-            return loadProperties(url, filename);
-        } catch (final MalformedURLException ex) {
-            // Should be an IllegalArgumentException but 1.4 has no "String,
-            // Throwable" constructor...
-            throw new RuntimeException("The argument 'srcUrl' is not a valid URL [" + baseUrl + "]!", ex);
-        }
-
-    }
-
-    /**
      * Adds an URL to the class path.
      * 
      * @param url
@@ -1020,8 +861,7 @@ public final class Utils4J {
         checkNotNull("destDir", destDir);
         checkValidDir(destDir);
 
-        final ZipFile zip = new ZipFile(zipFile);
-        try {
+        try (final ZipFile zip = new ZipFile(zipFile)) {
             final Enumeration<? extends ZipEntry> enu = zip.entries();
             while (enu.hasMoreElements() && ((cancelable == null) || !cancelable.isCanceled())) {
                 final ZipEntry entry = enu.nextElement();
@@ -1036,31 +876,21 @@ public final class Utils4J {
                 } else {
                     final File outFile = new File(destDir, entry.getName());
                     createIfNecessary(outFile.getParentFile());
-                    final InputStream in;
-                    if (wrapper == null) {
-                        in = new BufferedInputStream(zip.getInputStream(entry));
-                    } else {
-                        in = new BufferedInputStream(
-                                wrapper.wrapInputStream(zip.getInputStream(entry), entry, outFile));
-                    }
-                    try {
-                        final OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile));
-                        try {
+                    try (final InputStream in = (wrapper == null
+                            ? new BufferedInputStream(zip.getInputStream(entry))
+                            : new BufferedInputStream(
+                                    wrapper.wrapInputStream(zip.getInputStream(entry), entry, outFile)))) {
+                        try (final OutputStream out = new BufferedOutputStream(
+                                new FileOutputStream(outFile))) {
                             final byte[] buf = new byte[4096];
                             int len;
                             while ((len = in.read(buf)) > 0) {
                                 out.write(buf, 0, len);
                             }
-                        } finally {
-                            out.close();
                         }
-                    } finally {
-                        in.close();
                     }
                 }
             }
-        } finally {
-            zip.close();
         }
     }
 
@@ -1246,12 +1076,9 @@ public final class Utils4J {
         }
         final String content = createWindowsDesktopUrlLinkContent(baseUrl, url, workingDir, showCommand,
                 iconIndex, iconFile, hotKey, modified);
-        final Writer writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(linkFile), "Cp1252"));
-        try {
+        try (final Writer writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(linkFile), "Cp1252"))) {
             writer.write(content);
-        } finally {
-            writer.close();
         }
 
     }
@@ -1515,8 +1342,7 @@ public final class Utils4J {
             throws IOException {
 
         final byte[] buf = new byte[1024];
-        final InputStream in = new BufferedInputStream(new FileInputStream(srcFile));
-        try {
+        try (final InputStream in = new BufferedInputStream(new FileInputStream(srcFile))) {
             final ZipEntry zipEntry = new ZipEntry(
                     concatPathAndFilename(destPath, srcFile.getName(), File.separator));
             zipEntry.setTime(srcFile.lastModified());
@@ -1526,8 +1352,6 @@ public final class Utils4J {
                 out.write(buf, 0, len);
             }
             out.closeEntry();
-        } finally {
-            in.close();
         }
     }
 
@@ -1606,12 +1430,9 @@ public final class Utils4J {
         Utils4J.checkValidDir(srcDir);
         Utils4J.checkNotNull("destFile", destFile);
 
-        final ZipOutputStream out = new ZipOutputStream(
-                new BufferedOutputStream(new FileOutputStream(destFile)));
-        try {
+        try (final ZipOutputStream out = new ZipOutputStream(
+                new BufferedOutputStream(new FileOutputStream(destFile)))) {
             zipDir(srcDir, filter, destPath, out);
-        } finally {
-            out.close();
         }
 
     }
@@ -1648,15 +1469,10 @@ public final class Utils4J {
         if (obj == null) {
             return null;
         }
-        try {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try {
-                final ObjectOutputStream out = new ObjectOutputStream(baos);
-                out.writeObject(obj);
-                return baos.toByteArray();
-            } finally {
-                baos.close();
-            }
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            final ObjectOutputStream out = new ObjectOutputStream(baos);
+            out.writeObject(obj);
+            return baos.toByteArray();
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -1678,14 +1494,9 @@ public final class Utils4J {
         if (data == null) {
             return null;
         }
-        try {
-            final ByteArrayInputStream bais = new ByteArrayInputStream(data);
-            try {
-                final ObjectInputStream in = new ObjectInputStream(bais);
-                return (T) in.readObject();
-            } finally {
-                bais.close();
-            }
+        try (final ByteArrayInputStream bais = new ByteArrayInputStream(data)) {
+            final ObjectInputStream in = new ObjectInputStream(bais);
+            return (T) in.readObject();
         } catch (final ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         } catch (final IOException ex) {
@@ -1706,19 +1517,14 @@ public final class Utils4J {
      * @return File content as String.
      */
     public static String readAsString(final URL url, final String encoding, final int bufSize) {
-        try {
-            final Reader reader = new InputStreamReader(url.openStream(), encoding);
-            try {
-                final StringBuilder sb = new StringBuilder();
-                final char[] cbuf = new char[bufSize];
-                int count;
-                while ((count = reader.read(cbuf)) > -1) {
-                    sb.append(String.valueOf(cbuf, 0, count));
-                }
-                return sb.toString();
-            } finally {
-                reader.close();
+        try (final Reader reader = new InputStreamReader(url.openStream(), encoding)) {
+            final StringBuilder sb = new StringBuilder();
+            final char[] cbuf = new char[bufSize];
+            int count;
+            while ((count = reader.read(cbuf)) > -1) {
+                sb.append(String.valueOf(cbuf, 0, count));
             }
+            return sb.toString();
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
         }

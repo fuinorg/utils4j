@@ -44,8 +44,8 @@ public final class TestHelper {
      *            First properties file.
      */
     public static void assertPropertiesEqual(final File fileA, final File fileB) {
-        final Properties propsA = Utils4J.loadProperties(fileA);
-        final Properties propsB = Utils4J.loadProperties(fileA);
+        final Properties propsA = PropertiesUtils.loadProperties(fileA);
+        final Properties propsB = PropertiesUtils.loadProperties(fileA);
         assertEqual(propsA, propsB);
     }
 
@@ -58,7 +58,7 @@ public final class TestHelper {
      *            First properties.
      */
     public static void assertPropertiesEqual(final File fileA, final Properties propsB) {
-        final Properties propsA = Utils4J.loadProperties(fileA);
+        final Properties propsA = PropertiesUtils.loadProperties(fileA);
         assertEqual(propsA, propsB);
     }
 
