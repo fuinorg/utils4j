@@ -27,6 +27,7 @@ A small Java library that contains several helpful utility classes.
 * [JAXB CDATA Stream Writer](#jaxb-cdata-stream-writer)
 * [Wait for code to finish](#wait-for-code-to-finish)
 * [Find all JARs and classes in the classpath](#find-all-jars-and-classes-in-the-classpath)
+* [Analyze classes in the classpath with Jandex](#analyze-classes-in-the-classpath-with-jandex)
 
 * * *
 
@@ -212,6 +213,37 @@ for (final File file : Utils4J.pathsFiles(System.getProperty("sun.boot.class.pat
 }
 ```
 A full example can be found here: [FindJarsAndClassesInClasspath.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/FindJarsAndClassesInClasspath.java)
+
+### Analyze classes in the classpath with Jandex
+Easily find matching types from all classes or JAR files in the classpath using [Jandex](https://github.com/wildfly/jandex)
+```Java
+List<File> knownFiles = new ArrayList<>();
+Indexer indexer = new Indexer();
+JandexUtils.indexClasspath((URLClassLoader) this.getClass().getClassLoader(), indexer, knownFiles);
+Index index = indexer.complete();
+Set<ClassInfo> implementors = index.getAllKnownImplementors(DotName.createSimple(List.class.getName()));
+
+// Print all classes that implement the 'List' interface
+for (ClassInfo ci : implementors) {
+    System.out.println(ci.name().toString());
+}
+
+// Print all files ("*.jar" and ".class") that were analyzed
+for (File file : knownFiles) {
+    System.out.println(file);
+}
+```
+A test that shows the usage can be found here: [JandexUtilsTest](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/JandexUtilsTest.java)
+
+**Caution** - You must explicitly add the Jandex dependency to your POM if you want to use this feature, because it's defined as optional here.
+
+```xml
+<dependency>
+    <groupId>org.jboss</groupId>
+    <artifactId>jandex</artifactId>
+    <version>2.0.4.Final</version>
+</dependency>
+```
 
 
 * * *
