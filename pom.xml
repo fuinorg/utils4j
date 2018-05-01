@@ -90,7 +90,7 @@
                 <version>0.8.1</version>
                 <executions>
                     <execution>
-                        <phase>verify</phase>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -105,14 +105,6 @@
                 <configuration>
                     <repoToken>${coveralls.utils4j}</repoToken>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
