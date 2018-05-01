@@ -53,7 +53,7 @@ public class PropertiesUtilsTest {
             fail();
         } catch (final IllegalArgumentException ex) {
             assertThat(ex.getMessage()).contains("Resource");
-            assertThat(ex.getMessage()).contains("was not found");
+            assertThat(ex.getMessage()).contains("not found");
         }
     }
 

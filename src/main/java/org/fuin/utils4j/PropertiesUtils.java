@@ -35,7 +35,7 @@ import java.util.Properties;
 /**
  * Utilities related to the {@link Properties} class.
  */
-public class PropertiesUtils {
+public final class PropertiesUtils {
 
     /**
      * Private default constructor.
@@ -59,19 +59,35 @@ public class PropertiesUtils {
         checkNotNull("filename", filename);
 
         final String path = getPackagePath(clasz);
-        final String resPath = "/" + path + "/" + filename;
-        try {
-            final Properties props = new Properties();
-            try (final InputStream inStream = clasz.getResourceAsStream(resPath)) {
-                if (inStream == null) {
-                    throw new IllegalArgumentException("Resource '" + resPath + "' was not found!");
-                }
-                props.load(inStream);
+        final String resPath = path + "/" + filename;
+        return loadProperties(clasz.getClassLoader(), resPath);
+
+    }
+
+    /**
+     * Loads a resource from the classpath as properties.
+     * 
+     * @param loader
+     *            Class loader to use.
+     * @param resource
+     *            Resource to load.
+     * 
+     * @return Properties.
+     */
+    public static Properties loadProperties(final ClassLoader loader, final String resource) {
+        checkNotNull("loader", loader);
+        checkNotNull("resource", resource);
+
+        final Properties props = new Properties();
+        try (final InputStream inStream = loader.getResourceAsStream(resource)) {
+            if (inStream == null) {
+                throw new IllegalArgumentException("Resource '" + resource + "' not found!");
             }
-            return props;
+            props.load(inStream);
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
         }
+        return props;
     }
 
     /**
@@ -85,15 +101,13 @@ public class PropertiesUtils {
     public static Properties loadProperties(final File file) {
         checkNotNull("file", file);
         checkValidFile(file);
-        try {
-            final Properties props = new Properties();
-            try (final InputStream inStream = new FileInputStream(file)) {
-                props.load(inStream);
-            }
-            return props;
+        final Properties props = new Properties();
+        try (final InputStream inStream = new FileInputStream(file)) {
+            props.load(inStream);
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
         }
+        return props;
     }
 
     /**
