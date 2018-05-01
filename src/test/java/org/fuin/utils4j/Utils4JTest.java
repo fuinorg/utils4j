@@ -825,7 +825,6 @@ public class Utils4JTest {
         final File javaExtDir = new File(javaHomeDir, "lib/ext");
 
         // Existing JRE files
-        assertThat(Utils4J.jreFile(new File(javaHomeDir, "README"))).isTrue();
         assertThat(Utils4J.jreFile(new File(javaHomeDir, "lib/rt.jar"))).isTrue();
         assertThat(Utils4J.jreFile(new File(javaExtDir, "localedata.jar"))).isTrue();
 
