@@ -229,14 +229,14 @@ public class StringFilter implements Filter {
             return sign;
         }
 
-    }
+        private static List<Operator> asList(final Operator...operators) {
+            final List<Operator> list = new ArrayList<>(operators.length);
+            for (final Operator operator : operators) {
+                list.add(operator);
+                }
+            return Collections.unmodifiableList(list);
+        }
 
-    private static List<Operator> asList(final Operator...operators) {
-	final List<Operator> list = new ArrayList<>(operators.length);
-	for (final Operator operator : operators) {
-	    list.add(operator);
-	}
-	return Collections.unmodifiableList(list);
     }
 
 }
