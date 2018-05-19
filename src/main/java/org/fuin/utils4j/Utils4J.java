@@ -910,20 +910,20 @@ public final class Utils4J {
      * @return Directory.
      */
     public static File getUserHomeDir() {
+	final String errMsg = "System property '" + USER_HOME_KEY + "'";
         final String str = System.getProperty(USER_HOME_KEY);
         if (str == null) {
-            throw new IllegalStateException("System property '" + USER_HOME_KEY + "' not found!");
+            throw new IllegalStateException(errMsg + " not found!");
         }
         final String userHome = str.trim();
         if (userHome.length() == 0) {
-            throw new IllegalStateException("System property '" + USER_HOME_KEY + "' is empty!");
+            throw new IllegalStateException(errMsg + " is empty!");
         }
         final File dir = new File(userHome);
         try {
             checkValidDir(dir);
         } catch (final IllegalArgumentException ex) {
-            throw new IllegalStateException(
-                    "System property '" + USER_HOME_KEY + "' is not valid! [" + ex.getMessage() + "]");
+            throw new IllegalStateException(errMsg + " is not valid! [" + ex.getMessage() + "]");
         }
         return dir;
     }
