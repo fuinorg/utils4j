@@ -21,8 +21,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
- * XML stream writer that does not escape the content of a CDATA section. This is meant to be used with JAXB
- * to serialize a string field to a CDATA section. This field is annotated with {@link CDataXmlAdapter}.
+ * XML stream writer that does not escape the content of a CDATA section. This
+ * is meant to be used with JAXB to serialize a string field to a CDATA section.
+ * This field is annotated with {@link CDataXmlAdapter}.
  */
 public final class CDataXmlStreamWriter extends XMLStreamWriterAdapter {
 
@@ -33,17 +34,28 @@ public final class CDataXmlStreamWriter extends XMLStreamWriterAdapter {
      *            All method calls are delegated to this writer.
      */
     public CDataXmlStreamWriter(final XMLStreamWriter delegate) {
-        super(delegate);
+	super(delegate);
     }
 
     @Override
-    public final void writeCharacters(final String text) throws XMLStreamException {
-        if (text.startsWith("<![CDATA[") && text.endsWith("]]>")) {
-            final String str = text.substring(9, text.length() - 3);
-            super.writeCData(str);
-        } else {
-            super.writeCharacters(text);
-        }
+    public final void writeCharacters(final String text)
+	    throws XMLStreamException {
+	writeText(text);
+    }
+
+    @Override
+    public final void writeCharacters(final char[] text, final int start,
+	    final int len) throws XMLStreamException {
+	writeText(new String(text, start, len));
+    }
+
+    private void writeText(final String text) throws XMLStreamException {
+	if (text.startsWith("<![CDATA[") && text.endsWith("]]>")) {
+	    final String str = text.substring(9, text.length() - 3);
+	    super.writeCData(str);
+	} else {
+	    super.writeCharacters(text);
+	}
     }
 
 }
