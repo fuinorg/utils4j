@@ -147,7 +147,7 @@ public abstract class ComparableFilter implements Filter {
          * @return Sign.
          */
         public final String getSign() {
-            return id;
+            return sign;
         }
 
         /**
