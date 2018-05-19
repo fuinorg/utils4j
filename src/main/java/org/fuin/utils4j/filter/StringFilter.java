@@ -149,7 +149,7 @@ public class StringFilter implements Filter {
         public static final Operator GTE = new Operator("GTE", ">=");
 
         /** List of all known instances. */
-        public static final List<Operator> INSTANCES = asList( LT, LTE, EQ, EQ_RELAXED, GT, GTE );
+        public static final List<Operator> INSTANCES = asList( LT, LTE, EQ, EQ_RELAXED, GT, GTE ); //NOSONAR
 
         private final String id;
 

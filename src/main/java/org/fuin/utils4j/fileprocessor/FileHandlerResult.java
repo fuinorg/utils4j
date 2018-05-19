@@ -42,7 +42,7 @@ public final class FileHandlerResult {
     public static final FileHandlerResult STOP = new FileHandlerResult("STOP");
 
     /** All enumeration instances. */
-    public static final List<FileHandlerResult> INSTANCES = asList( CONTINUE, SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP);
+    public static final List<FileHandlerResult> INSTANCES = asList( CONTINUE, SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP); //NOSONAR
 
     private final String name;
 

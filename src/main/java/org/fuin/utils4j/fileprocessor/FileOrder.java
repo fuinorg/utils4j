@@ -36,7 +36,7 @@ public final class FileOrder {
     public static final FileOrder DIR_FIRST = new FileOrder("DIR_FIRST");
 
     /** All enumeration instances. */
-    public static final List<FileOrder> INSTANCES = asList( DEFAULT, FILES_FIRST, DIR_FIRST );
+    public static final List<FileOrder> INSTANCES = asList( DEFAULT, FILES_FIRST, DIR_FIRST ); //NOSONAR
 
     private final String name;
 
