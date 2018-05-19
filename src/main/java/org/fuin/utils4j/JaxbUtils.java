@@ -36,6 +36,8 @@ import javax.xml.stream.XMLStreamWriter;
  */
 public final class JaxbUtils {
 
+    private static final String ERROR_MARSHALLING_TEST_DATA = "Error marshalling test data";
+    
     /** Standard XML prefix with UTF-8 encoding. */
     public static final String XML_PREFIX = "<?xml version=\"1.0\" "
             + "encoding=\"UTF-8\" standalone=\"yes\"?>";
@@ -87,7 +89,7 @@ public final class JaxbUtils {
             final JAXBContext ctx = JAXBContext.newInstance(classesToBeBound);
             return marshal(ctx, data, adapters);
         } catch (final JAXBException ex) {
-            throw new RuntimeException("Error marshalling test data", ex);
+            throw new RuntimeException(ERROR_MARSHALLING_TEST_DATA, ex);
         }
     }
 
@@ -164,7 +166,7 @@ public final class JaxbUtils {
             }
             marshaller.marshal(data, writer);
         } catch (final JAXBException ex) {
-            throw new RuntimeException("Error marshalling test data", ex);
+            throw new RuntimeException(ERROR_MARSHALLING_TEST_DATA, ex);
         }
     }
 
@@ -198,7 +200,7 @@ public final class JaxbUtils {
             }
             marshaller.marshal(data, writer);
         } catch (final JAXBException ex) {
-            throw new RuntimeException("Error marshalling test data", ex);
+            throw new RuntimeException(ERROR_MARSHALLING_TEST_DATA, ex);
         }
     }
 
