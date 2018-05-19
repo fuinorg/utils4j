@@ -26,7 +26,7 @@ public final class ConsoleFileHandler implements FileHandler {
 
     @Override
     public final FileHandlerResult handleFile(final File file) {
-        System.out.println(file);
+        System.out.println(file); //NO_SONAR System.out by intention
         return FileHandlerResult.CONTINUE;
     }
 
