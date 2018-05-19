@@ -74,6 +74,8 @@ import javax.crypto.spec.PBEParameterSpec;
  */
 public final class Utils4J {
 
+    private static final String SLASH = "/";
+
     private static final String USER_HOME_KEY = "user.home";
 
     private static final String TEMP_DIR_KEY = "java.io.tmpdir";
@@ -132,7 +134,7 @@ public final class Utils4J {
     public static URL getResource(final Class<?> clasz, final String name) {
         checkNotNull("clasz", clasz);
         checkNotNull("name", name);
-        final String nameAndPath = "/" + getPackagePath(clasz) + "/" + name;
+        final String nameAndPath = SLASH + getPackagePath(clasz) + SLASH + name;
         return clasz.getResource(nameAndPath);
     }
 
@@ -480,17 +482,17 @@ public final class Utils4J {
         checkNotNull("filename", filename);
         try {
             String baseUrlStr = baseUrl.toString();
-            if (!baseUrlStr.endsWith("/")) {
-                baseUrlStr = baseUrlStr + "/";
+            if (!baseUrlStr.endsWith(SLASH)) {
+                baseUrlStr = baseUrlStr + SLASH;
             }
             final String pathStr;
             if ((path == null) || (path.length() == 0)) {
                 pathStr = "";
             } else {
-                if (path.endsWith("/")) {
+                if (path.endsWith(SLASH)) {
                     pathStr = path;
                 } else {
-                    pathStr = path + "/";
+                    pathStr = path + SLASH;
                 }
             }
             return new URL(baseUrlStr + pathStr + filename);
