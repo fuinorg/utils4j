@@ -108,8 +108,12 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
     protected void flushSpi() throws BackingStoreException {
         try {
             if (removed) {
-                file.delete();
-                dir.delete();
+                if (!file.delete()) {
+                    throw new IllegalStateException("Was not able to delete file: " + file);
+                }                
+                if (!dir.delete()) {
+                    throw new IllegalStateException("Was not able to delete directory: " + dir);
+                }
             } else {
                 final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 final String[] comments = new String[] { "DO NOT EDIT!",
