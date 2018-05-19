@@ -17,13 +17,17 @@
  */
 package org.fuin.utils4j;
 
+import java.io.Serializable;
+
 /**
  * A key value pair that maintains an additional change state. The state contains the information if the value
  * has been changed since construction of the instance. The methods <code>hashCode()</code> and
  * <code>equals(Object)</code> are based on the <code>key</code> attribute. The attributes <code>key</code>
  * and <code>initialValue</code> are immutable.
  */
-public final class Property implements Comparable<Property> {
+public final class Property implements Comparable<Property>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String key;
 

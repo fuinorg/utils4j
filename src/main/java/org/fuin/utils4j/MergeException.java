@@ -18,6 +18,7 @@
 package org.fuin.utils4j;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * One or more attempts to merge properties failed.
@@ -69,9 +70,11 @@ public final class MergeException extends Exception {
     /**
      * Error while merging a property.
      */
-    public static final class Problem {
+    public static final class Problem implements Serializable {
 
-        /** Message describing the problem. */
+	private static final long serialVersionUID = 1L;
+
+	/** Message describing the problem. */
         private final String text;
 
         /** Property from memory. */
