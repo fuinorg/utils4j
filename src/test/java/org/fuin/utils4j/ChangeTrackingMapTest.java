@@ -264,7 +264,7 @@ public class ChangeTrackingMapTest {
 
         // Check the result
         assertThat(initialEmptyMap.isChanged()).isTrue();
-        assertThat(initialEmptyMap.hasChangedSinceTagging());
+        assertThat(initialEmptyMap.hasChangedSinceTagging()).isTrue();
         assertThat(initialEmptyMap.get("one")).isEqualTo("1");
         assertThat(initialEmptyMap).hasSize(1);
         assertThat(initialEmptyMap.getAdded()).isEqualTo(toMap("one=1"));
@@ -311,8 +311,8 @@ public class ChangeTrackingMapTest {
         initialFilledMap.put("two", "2");
 
         // Check the result
-        assertThat(initialFilledMap.isChanged());
-        assertThat(initialFilledMap.hasChangedSinceTagging());
+        assertThat(initialFilledMap.isChanged()).isFalse();
+        assertThat(initialFilledMap.hasChangedSinceTagging()).isFalse();
         assertThat(initialFilledMap.get("one")).isEqualTo("1");
         assertThat(initialFilledMap.get("two")).isEqualTo("2");
         assertThat(initialFilledMap.get("three")).isEqualTo("3");

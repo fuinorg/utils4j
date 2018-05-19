@@ -58,7 +58,6 @@ public final class MergeExceptionTest {
 	final MergeException copy = Utils4J.deserialize(data);
 	
 	// VERIFY
-	assertThat(copy).isEqualTo(testee);
         assertThat(testee.getFile()).isEqualTo(file);
         assertThat(testee.getProblems()).containsExactly(problems);
 	

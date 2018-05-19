@@ -246,7 +246,7 @@ public class ChangeTrackingUniqueListTest {
         initialEmptyList.add("six");
 
         // Check the result
-        assertThat(initialEmptyList.isChanged());
+        assertThat(initialEmptyList.isChanged()).isTrue();
         assertThat(initialEmptyList.hasChangedSinceTagging()).isTrue();
         assertThat(initialEmptyList.getAdded()).containsExactly("four", "five", "six");
         assertThat(initialEmptyList.getDeleted()).isEmpty();
