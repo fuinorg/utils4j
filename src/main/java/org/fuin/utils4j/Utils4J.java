@@ -1313,7 +1313,7 @@ public final class Utils4J {
             }
             try {
                 Thread.sleep(tryWaitMillis);
-            } catch (final InterruptedException ex) {
+            } catch (final InterruptedException ex) { //NOSONAR
                 throw new LockingFailedException("Unexpected interrupt!", ex);
             }
         }
@@ -1602,7 +1602,7 @@ public final class Utils4J {
     public static void sleep(final long millis) {
         try {
             Thread.sleep(millis);
-        } catch (final InterruptedException ex) {
+        } catch (final InterruptedException ex) { //NOSONAR
             throw new RuntimeException("Sleep interrupted", ex);
         }
     }
