@@ -267,8 +267,7 @@ public class PropertiesFile {
 
         try (final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(file, "rw");
              final Writer writer = new OutputStreamWriter(new BufferedOutputStream(out), encoding)) {
-            final FileLock lock = out.lock(tryLockMax, tryWaitMillis);
-            try {
+            try (final FileLock lock = out.lock(tryLockMax, tryWaitMillis)) {
 
                 // TODO Anyone knows a better/faster solution?
                 // Just checking "file.lastModified()" failed here on a
@@ -307,8 +306,6 @@ public class PropertiesFile {
                 out.truncate();
                 out.flush();
 
-            } finally {
-                lock.release();
             }
         }
 
