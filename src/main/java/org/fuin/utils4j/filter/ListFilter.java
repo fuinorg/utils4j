@@ -89,7 +89,7 @@ public abstract class ListFilter implements Filter {
      * @return String with brackets
      */
     protected final String toString(final String opStr) {
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         sb.append(openBracket);
 
         for (int i = 0; i < filterList.size(); i++) {
