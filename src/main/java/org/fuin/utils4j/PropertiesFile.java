@@ -265,8 +265,8 @@ public class PropertiesFile {
     public final void save(final String[] comments, final boolean sortByKey) throws IOException,
             MergeException, LockingFailedException {
 
-        final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(file, "rw");
-        try {
+        try (final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(file, "rw");
+             final Writer writer = new OutputStreamWriter(new BufferedOutputStream(out), encoding)) {
             final FileLock lock = out.lock(tryLockMax, tryWaitMillis);
             try {
 
@@ -284,8 +284,6 @@ public class PropertiesFile {
                 }
 
                 // Write the data to disk
-                final BufferedOutputStream bout = new BufferedOutputStream(out);
-                final Writer writer = new OutputStreamWriter(bout, encoding);
                 final String lf = System.getProperty("line.separator");
 
                 // Write comment
@@ -312,8 +310,6 @@ public class PropertiesFile {
             } finally {
                 lock.release();
             }
-        } finally {
-            out.close();
         }
 
         // Remove all deleted entries
