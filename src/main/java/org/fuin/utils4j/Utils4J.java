@@ -358,9 +358,7 @@ public final class Utils4J {
                 }
             }
             return encodeHex(messageDigest.digest());
-        } catch (final NoSuchAlgorithmException ex) {
-            throw new RuntimeException(ex);
-        } catch (final IOException ex) {
+        } catch (final NoSuchAlgorithmException | IOException ex) {
             throw new RuntimeException(ex);
         }
     }
