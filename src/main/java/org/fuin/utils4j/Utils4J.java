@@ -607,7 +607,7 @@ public final class Utils4J {
 
         checkNotNull("relativePath", relativePath);
 
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         boolean firstChar = true;
         for (int i = 0; i < relativePath.length(); i++) {
             final char ch = relativePath.charAt(i);
@@ -711,7 +711,7 @@ public final class Utils4J {
      */
     private static String getMethodSignature(final String returnType, final String methodName,
             final Class<?>[] argTypes) {
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         if (returnType != null) {
             sb.append(returnType);
             sb.append(" ");
@@ -969,7 +969,7 @@ public final class Utils4J {
             return str;
         }
 
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
 
         int end = -1;
         int from = 0;
@@ -1125,7 +1125,7 @@ public final class Utils4J {
         checkNotNull("url", url);
         checkNotEmpty("url", url);
 
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         sb.append("[DEFAULT]\r\n");
         sb.append("BASEURL=" + baseUrl + "\r\n");
         sb.append("\r\n");
@@ -1566,7 +1566,7 @@ public final class Utils4J {
             return null;
         }
         final int len = str.length();
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         int i = 0;
         while (i < len) {
             final char ch = str.charAt(i++);
