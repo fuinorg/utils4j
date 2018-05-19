@@ -1067,7 +1067,7 @@ public final class Utils4J {
         checkNotNull("linkFilenameWithoutExtension", linkFilenameWithoutExtension);
         checkNotEmpty("linkFilenameWithoutExtension", linkFilenameWithoutExtension);
 
-        final File userHomeDir = new File(System.getProperty("user.home"));
+        final File userHomeDir = new File(System.getProperty(USER_HOME_KEY));
         final File desktopDir = new File(userHomeDir, "Desktop");
         final File linkFile = new File(desktopDir, linkFilenameWithoutExtension + ".url");
         if (linkFile.exists() && !overwrite) {
