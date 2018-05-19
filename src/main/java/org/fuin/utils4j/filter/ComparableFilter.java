@@ -125,8 +125,7 @@ public abstract class ComparableFilter implements Filter {
 	public static final Operator GTE = new Operator("GTE", ">=");
 
 	/** List of all known instances. */
-	public static final List<Operator> INSTANCES = asList(LT, LTE, EQ, GT,
-		GTE); // NOSONAR
+	public static final List<Operator> INSTANCES = asList(LT, LTE, EQ, GT, GTE); // NOSONAR
 
 	private final String id;
 
