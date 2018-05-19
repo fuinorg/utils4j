@@ -17,6 +17,10 @@
  */
 package org.fuin.utils4j.fileprocessor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Result after a file was processed.
  */
@@ -38,8 +42,7 @@ public final class FileHandlerResult {
     public static final FileHandlerResult STOP = new FileHandlerResult("STOP");
 
     /** All enumeration instances. */
-    public static final FileHandlerResult[] INSTANCES = new FileHandlerResult[] { CONTINUE, SKIP_ALL,
-            SKIP_FILES, SKIP_SUBDIRS, STOP };
+    public static final List<FileHandlerResult> INSTANCES = asList( CONTINUE, SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP);
 
     private final String name;
 
@@ -104,9 +107,9 @@ public final class FileHandlerResult {
         if (name == null) {
             return null;
         }
-        for (int i = 0; i < INSTANCES.length; i++) {
-            if (INSTANCES[i].name.equals(name)) {
-                return INSTANCES[i];
+        for (final FileHandlerResult result : INSTANCES) {
+            if (result.name.equals(name)) {
+                return result;
             }
         }
         throw new IllegalArgumentException("Unknown name: " + name);
@@ -124,12 +127,20 @@ public final class FileHandlerResult {
         if (name == null) {
             return true;
         }
-        for (int i = 0; i < INSTANCES.length; i++) {
-            if (INSTANCES[i].name.equals(name)) {
+        for (final FileHandlerResult result : INSTANCES) {
+            if (result.name.equals(name)) {
                 return true;
             }
         }
         return false;
     }
 
+    private static List<FileHandlerResult> asList(final FileHandlerResult...handler) {
+	final List<FileHandlerResult> list = new ArrayList<>(handler.length);
+	for (final FileHandlerResult result : handler) {
+	    list.add(result);
+	}
+	return Collections.unmodifiableList(list);
+    }
+    
 }

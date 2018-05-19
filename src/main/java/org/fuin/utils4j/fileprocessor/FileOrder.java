@@ -17,6 +17,10 @@
  */
 package org.fuin.utils4j.fileprocessor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Sort order of files.
  */
@@ -32,7 +36,7 @@ public final class FileOrder {
     public static final FileOrder DIR_FIRST = new FileOrder("DIR_FIRST");
 
     /** All enumeration instances. */
-    public static final FileOrder[] INSTANCES = new FileOrder[] { DEFAULT, FILES_FIRST, DIR_FIRST };
+    public static final List<FileOrder> INSTANCES = asList( DEFAULT, FILES_FIRST, DIR_FIRST );
 
     private final String name;
 
@@ -97,9 +101,9 @@ public final class FileOrder {
         if (name == null) {
             return null;
         }
-        for (int i = 0; i < INSTANCES.length; i++) {
-            if (INSTANCES[i].name.equals(name)) {
-                return INSTANCES[i];
+        for (final FileOrder fo : INSTANCES) {
+            if (fo.name.equals(name)) {
+                return fo;
             }
         }
         throw new IllegalArgumentException("Unknown name: " + name);
@@ -117,12 +121,20 @@ public final class FileOrder {
         if (name == null) {
             return true;
         }
-        for (int i = 0; i < INSTANCES.length; i++) {
-            if (INSTANCES[i].name.equals(name)) {
+        for (final FileOrder fo : INSTANCES) {
+            if (fo.name.equals(name)) {
                 return true;
             }
         }
         return false;
     }
 
+    private static List<FileOrder> asList(final FileOrder...handler) {
+	final List<FileOrder> list = new ArrayList<>(handler.length);
+	for (final FileOrder result : handler) {
+	    list.add(result);
+	}
+	return Collections.unmodifiableList(list);
+    }
+    
 }

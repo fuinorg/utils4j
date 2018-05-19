@@ -17,6 +17,10 @@
  */
 package org.fuin.utils4j.filter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.fuin.utils4j.Utils4J;
 
 /**
@@ -145,7 +149,7 @@ public class StringFilter implements Filter {
         public static final Operator GTE = new Operator("GTE", ">=");
 
         /** List of all known instances. */
-        public static final Operator[] INSTANCES = new Operator[] { LT, LTE, EQ, EQ_RELAXED, GT, GTE };
+        public static final List<Operator> INSTANCES = asList( LT, LTE, EQ, EQ_RELAXED, GT, GTE );
 
         private final String id;
 
@@ -194,8 +198,8 @@ public class StringFilter implements Filter {
          */
         public static boolean isValid(final String id) {
             Utils4J.checkNotNull("id", id);
-            for (int i = 0; i < INSTANCES.length; i++) {
-                if (INSTANCES[i].getId().equals(id)) {
+            for (final Operator op : INSTANCES) {
+                if (op.getId().equals(id)) {
                     return true;
                 }
             }
@@ -212,9 +216,9 @@ public class StringFilter implements Filter {
          */
         public static Operator getInstance(final String id) {
             Utils4J.checkNotNull("id", id);
-            for (int i = 0; i < INSTANCES.length; i++) {
-                if (INSTANCES[i].getId().equals(id)) {
-                    return INSTANCES[i];
+            for (final Operator op : INSTANCES) {
+                if (op.getId().equals(id)) {
+                    return op;
                 }
             }
             throw new IllegalArgumentException("The id '" + id + "' is unknown!");
@@ -225,6 +229,14 @@ public class StringFilter implements Filter {
             return sign;
         }
 
+    }
+
+    private static List<Operator> asList(final Operator...operators) {
+	final List<Operator> list = new ArrayList<>(operators.length);
+	for (final Operator operator : operators) {
+	    list.add(operator);
+	}
+	return Collections.unmodifiableList(list);
     }
 
 }
