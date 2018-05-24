@@ -31,8 +31,7 @@ public class IntegerPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testCompliesLT() {
-        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LT,
-                new Integer(2));
+        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LT, new Integer(2));
         assertThat(filter.complies(new TestObject(new Integer(1)))).isTrue();
         assertThat(filter.complies(new TestObject(new Integer(2)))).isFalse();
         assertThat(filter.complies(new TestObject(new Integer(3)))).isFalse();
@@ -40,8 +39,7 @@ public class IntegerPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testCompliesLTE() {
-        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LTE,
-                new Integer(2));
+        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LTE, new Integer(2));
         assertThat(filter.complies(new TestObject(new Integer(1)))).isTrue();
         assertThat(filter.complies(new TestObject(new Integer(2)))).isTrue();
         assertThat(filter.complies(new TestObject(new Integer(3)))).isFalse();
@@ -49,8 +47,7 @@ public class IntegerPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testCompliesEQ() {
-        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.EQ,
-                new Integer(2));
+        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.EQ, new Integer(2));
         assertThat(filter.complies(new TestObject(new Integer(1)))).isFalse();
         assertThat(filter.complies(new TestObject(new Integer(2)))).isTrue();
         assertThat(filter.complies(new TestObject(new Integer(3)))).isFalse();
@@ -58,8 +55,7 @@ public class IntegerPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testCompliesGT() {
-        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GT,
-                new Integer(2));
+        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GT, new Integer(2));
         assertThat(filter.complies(new TestObject(new Integer(1)))).isFalse();
         assertThat(filter.complies(new TestObject(new Integer(2)))).isFalse();
         assertThat(filter.complies(new TestObject(new Integer(3)))).isTrue();
@@ -67,8 +63,7 @@ public class IntegerPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testCompliesGTE() {
-        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GTE,
-                new Integer(2));
+        final Filter filter = new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GTE, new Integer(2));
         assertThat(filter.complies(new TestObject(new Integer(1)))).isFalse();
         assertThat(filter.complies(new TestObject(new Integer(2)))).isTrue();
         assertThat(filter.complies(new TestObject(new Integer(3)))).isTrue();
@@ -76,26 +71,16 @@ public class IntegerPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testToString() {
-        assertThat(
-                ""
-                        + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LT,
-                                new Integer(2))).isEqualTo(INTEGER_PROPERTY_NAME + " < 2");
-        assertThat(
-                ""
-                        + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LTE,
-                                new Integer(2))).isEqualTo(INTEGER_PROPERTY_NAME + " <= 2");
-        assertThat(
-                ""
-                        + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.EQ,
-                                new Integer(2))).isEqualTo(INTEGER_PROPERTY_NAME + " = 2");
-        assertThat(
-                ""
-                        + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GT,
-                                new Integer(2))).isEqualTo(INTEGER_PROPERTY_NAME + " > 2");
-        assertThat(
-                ""
-                        + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GTE,
-                                new Integer(2))).isEqualTo(INTEGER_PROPERTY_NAME + " >= 2");
+        assertThat("" + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LT, new Integer(2)))
+                .isEqualTo(INTEGER_PROPERTY_NAME + " < 2");
+        assertThat("" + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.LTE, new Integer(2)))
+                .isEqualTo(INTEGER_PROPERTY_NAME + " <= 2");
+        assertThat("" + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.EQ, new Integer(2)))
+                .isEqualTo(INTEGER_PROPERTY_NAME + " = 2");
+        assertThat("" + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GT, new Integer(2)))
+                .isEqualTo(INTEGER_PROPERTY_NAME + " > 2");
+        assertThat("" + new IntegerPropertyFilter(INTEGER_PROPERTY_NAME, ComparableFilter.Operator.GTE, new Integer(2)))
+                .isEqualTo(INTEGER_PROPERTY_NAME + " >= 2");
     }
 
 }

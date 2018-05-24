@@ -149,7 +149,7 @@ public class StringFilter implements Filter {
         public static final Operator GTE = new Operator("GTE", ">=");
 
         /** List of all known instances. */
-        public static final List<Operator> INSTANCES = asList( LT, LTE, EQ, EQ_RELAXED, GT, GTE ); //NOSONAR
+        public static final List<Operator> INSTANCES = asList(LT, LTE, EQ, EQ_RELAXED, GT, GTE); // NOSONAR
 
         private final String id;
 
@@ -229,11 +229,11 @@ public class StringFilter implements Filter {
             return sign;
         }
 
-        private static List<Operator> asList(final Operator...operators) {
+        private static List<Operator> asList(final Operator... operators) {
             final List<Operator> list = new ArrayList<>(operators.length);
             for (final Operator operator : operators) {
                 list.add(operator);
-                }
+            }
             return Collections.unmodifiableList(list);
         }
 

@@ -80,15 +80,15 @@ public abstract class PropertyFilter implements Filter {
                 final Method m = cl.getMethod(getter, new Class[] {});
                 return m.invoke(obj, new Object[] {});
             } catch (final IllegalAccessException e) {
-                throw new RuntimeException("Accessing " + getter + " method of property '" + property
-                        + "' failed (private? protected?)! [" + obj.getClass() + "]", e);
+                throw new RuntimeException("Accessing " + getter + " method of property '" + property + "' failed (private? protected?)! ["
+                        + obj.getClass() + "]", e);
             } catch (final InvocationTargetException e) {
-                throw new RuntimeException("Exception within " + getter + " method of property '" + property
-                        + "'! [" + obj.getClass() + "]", e.getCause());
+                throw new RuntimeException(
+                        "Exception within " + getter + " method of property '" + property + "'! [" + obj.getClass() + "]", e.getCause());
             } catch (final NoSuchMethodException e) {
                 if (i == getter.length() - 1) {
-                    throw new RuntimeException("No " + getter + " method found for property! '" + property
-                            + "'! [" + obj.getClass() + "]", e);
+                    throw new RuntimeException("No " + getter + " method found for property! '" + property + "'! [" + obj.getClass() + "]",
+                            e);
                 }
             }
         }

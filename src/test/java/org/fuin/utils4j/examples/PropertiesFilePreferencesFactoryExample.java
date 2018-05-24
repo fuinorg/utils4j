@@ -62,8 +62,7 @@ public final class PropertiesFilePreferencesFactoryExample {
         System.setProperty(PropertiesFilePreferencesFactory.USER_PREF_DIR, userPrefDir.toString());
 
         // Set the factory
-        System.setProperty("java.util.prefs.PreferencesFactory",
-                PropertiesFilePreferencesFactory.class.getName());
+        System.setProperty("java.util.prefs.PreferencesFactory", PropertiesFilePreferencesFactory.class.getName());
 
         // Write something to the preferences
         final Preferences userPrefs = Preferences.userRoot();

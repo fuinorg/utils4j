@@ -107,8 +107,7 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
     }
 
     /**
-     * Checks if the system variable is set and is a valid directory. If this is not the case a
-     * {@link RuntimeException} will be thrown.
+     * Checks if the system variable is set and is a valid directory. If this is not the case a {@link RuntimeException} will be thrown.
      * 
      * @param varName
      *            Name of the system variable.
@@ -123,12 +122,10 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
         }
         final File dir = new File(dirName);
         if (!dir.exists()) {
-            throw new IllegalArgumentException("The directory '" + dir
-                    + "' does not exist! [system variable '" + varName + "']");
+            throw new IllegalArgumentException("The directory '" + dir + "' does not exist! [system variable '" + varName + "']");
         }
         if (!dir.isDirectory()) {
-            throw new IllegalArgumentException("The name '" + dir
-                    + "' is not a directory! [system variable '" + varName + "']");
+            throw new IllegalArgumentException("The name '" + dir + "' is not a directory! [system variable '" + varName + "']");
         }
         return dir;
     }

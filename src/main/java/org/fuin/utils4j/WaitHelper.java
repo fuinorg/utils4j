@@ -52,8 +52,7 @@ public final class WaitHelper {
      * @param expectedExceptions
      *            List of expected exceptions.
      */
-    public void waitUntilNoMoreException(final Runnable runnable,
-            final List<Class<? extends Exception>> expectedExceptions) {
+    public void waitUntilNoMoreException(final Runnable runnable, final List<Class<? extends Exception>> expectedExceptions) {
 
         final List<RuntimeException> actualExceptions = new ArrayList<>();
         int tries = 0;
@@ -62,8 +61,7 @@ public final class WaitHelper {
                 runnable.run();
                 return;
             } catch (final RuntimeException ex) {
-                if (!Utils4J.expectedException(ex, expectedExceptions)
-                        && !Utils4J.expectedCause(ex, expectedExceptions)) {
+                if (!Utils4J.expectedException(ex, expectedExceptions) && !Utils4J.expectedCause(ex, expectedExceptions)) {
                     throw ex;
                 }
                 actualExceptions.add(ex);
@@ -71,15 +69,14 @@ public final class WaitHelper {
                 Utils4J.sleep(sleepMillis);
             }
         }
-        throw new IllegalStateException(
-                "Waited too long for execution without exception. Expected exceptions: " + expectedExceptions
-                        + ", Actual exceptions: " + actualExceptions);
+        throw new IllegalStateException("Waited too long for execution without exception. Expected exceptions: " + expectedExceptions
+                + ", Actual exceptions: " + actualExceptions);
 
     }
 
     /**
-     * Wait until one of the expected values was returned or the number of wait cycles has been exceeded.
-     * Throws {@link IllegalStateException} if the timeout is reached.
+     * Wait until one of the expected values was returned or the number of wait cycles has been exceeded. Throws
+     * {@link IllegalStateException} if the timeout is reached.
      * 
      * @param function
      *            Function to read the value from.
@@ -92,8 +89,7 @@ public final class WaitHelper {
      *             The function raised an exception.
      * 
      * @param <T>
-     *            Expected return type that must be an object that support equals/hasCode that is not the
-     *            {@link Object}'s default method.
+     *            Expected return type that must be an object that support equals/hasCode that is not the {@link Object}'s default method.
      */
     public <T> T waitUntilResult(final Callable<T> function, final List<T> expectedValues) throws Exception {
 
@@ -108,8 +104,8 @@ public final class WaitHelper {
             tries++;
             Utils4J.sleep(sleepMillis);
         }
-        throw new IllegalStateException("Waited too long for one of the expected results: " + expectedValues
-                + ", Actual results: " + actualResults);
+        throw new IllegalStateException(
+                "Waited too long for one of the expected results: " + expectedValues + ", Actual results: " + actualResults);
 
     }
 

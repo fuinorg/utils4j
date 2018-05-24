@@ -41,8 +41,7 @@ public class RandomAccessFileOutputStreamTest {
 
     @BeforeClass
     public static void beforeClass() throws IOException {
-        final File dir = new File("src/test/resources/"
-                + Utils4J.getPackagePath(RandomAccessFileOutputStream.class));
+        final File dir = new File("src/test/resources/" + Utils4J.getPackagePath(RandomAccessFileOutputStream.class));
         file = new File(Utils4J.getTempDir(), "RandomAccessFileOutputStreamData.bin");
         inputFile = new File(dir, "RandomAccessFileInputStreamData.bin");
         if (!inputFile.exists()) {

@@ -83,7 +83,8 @@ public class WaitHelperExample {
             // Example of waiting for a customer to be found
             waitHelper.waitUntilNoMoreException(() -> {
 
-                // We want to wait some time to see if the CustomerNotFoundException
+                // We want to wait some time to see if the
+                // CustomerNotFoundException
                 // disappears and a customer name is finally loaded
                 loadCustomerName(customerId);
 
@@ -98,7 +99,8 @@ public class WaitHelperExample {
             // Example of waiting for a customer name
             waitHelper.waitUntilResult(() -> {
 
-                // We want to wait some time to see if the CustomerNotFoundException
+                // We want to wait some time to see if the
+                // CustomerNotFoundException
                 // disappears and a customer name is finally loaded
                 return loadCustomerName2(customerId);
 

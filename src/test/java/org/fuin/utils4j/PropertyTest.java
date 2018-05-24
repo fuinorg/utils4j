@@ -128,21 +128,21 @@ public final class PropertyTest {
 
     @Test
     public final void testSerDeserialize() {
-	
-	// PREPARE
-	final Property testee = new Property("KEY", "INITIAL", "VALUE");
-	
-	// TEST
-	final byte[] data = Utils4J.serialize(testee);
-	final Property copy = Utils4J.deserialize(data);
-	
-	// VERIFY
-	assertThat(copy).isEqualTo(testee);
-	assertThat(copy.getKey()).isEqualTo(testee.getKey());
-	assertThat(copy.getValue()).isEqualTo(testee.getValue());
-	assertThat(copy.getInitialValue()).isEqualTo(testee.getInitialValue());
-	
+
+        // PREPARE
+        final Property testee = new Property("KEY", "INITIAL", "VALUE");
+
+        // TEST
+        final byte[] data = Utils4J.serialize(testee);
+        final Property copy = Utils4J.deserialize(data);
+
+        // VERIFY
+        assertThat(copy).isEqualTo(testee);
+        assertThat(copy.getKey()).isEqualTo(testee.getKey());
+        assertThat(copy.getValue()).isEqualTo(testee.getValue());
+        assertThat(copy.getInitialValue()).isEqualTo(testee.getInitialValue());
+
     }
-    
+
 }
 // CHECKSTYLE:ON

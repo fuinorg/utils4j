@@ -105,8 +105,8 @@ public class PropertiesFile {
     }
 
     /**
-     * Loads or reloads the content of the underlying file. Current properties in memory will NOT be
-     * discarded! If you want to discard the current values you must call <code>clear()</code> before!
+     * Loads or reloads the content of the underlying file. Current properties in memory will NOT be discarded! If you want to discard the
+     * current values you must call <code>clear()</code> before!
      * 
      * @throws IOException
      *             Error reading the file.
@@ -136,11 +136,10 @@ public class PropertiesFile {
 
     }
 
-    private void load(final RandomAccessFileInputStream in, final File file, final List<Property> props,
-            final String encoding) throws IOException {
+    private void load(final RandomAccessFileInputStream in, final File file, final List<Property> props, final String encoding)
+            throws IOException {
 
-        final LineNumberReader reader = new LineNumberReader(new InputStreamReader(
-                new BufferedInputStream(in), encoding));
+        final LineNumberReader reader = new LineNumberReader(new InputStreamReader(new BufferedInputStream(in), encoding));
         String line;
         while ((line = reader.readLine()) != null) {
             final int p = line.indexOf('=');
@@ -174,21 +173,19 @@ public class PropertiesFile {
                     if (prop.isNew()) {
                         // New property
                         if (!prop.getValue().equals(currentProp.getValue())) {
-                            problems.add(new MergeException.Problem(
-                                    "Same new property in file with a different value!", prop, currentProp));
+                            problems.add(
+                                    new MergeException.Problem("Same new property in file with a different value!", prop, currentProp));
                         }
                     } else {
                         if (prop.isDeleted()) {
                             // Deleted property
                             if (!prop.getInitialValue().equals(currentProp.getValue())) {
-                                problems.add(new MergeException.Problem(
-                                        "Modified property in file we want to delete!", prop, currentProp));
+                                problems.add(new MergeException.Problem("Modified property in file we want to delete!", prop, currentProp));
                             }
                         } else {
                             // Changed property
                             if (!prop.getInitialValue().equals(currentProp.getValue())) {
-                                problems.add(new MergeException.Problem(
-                                        "Same property modified in file but different value!", prop,
+                                problems.add(new MergeException.Problem("Same property modified in file but different value!", prop,
                                         currentProp));
                             }
                         }
@@ -201,8 +198,7 @@ public class PropertiesFile {
         }
 
         if (problems.size() > 0) {
-            throw new MergeException(file,
-                    problems.toArray(new MergeException.Problem[0]));
+            throw new MergeException(file, problems.toArray(new MergeException.Problem[0]));
         }
 
     }
@@ -220,8 +216,7 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final boolean sortByKey) throws IOException, MergeException,
-            LockingFailedException {
+    public final void save(final boolean sortByKey) throws IOException, MergeException, LockingFailedException {
         save(new String[] {}, sortByKey);
     }
 
@@ -229,8 +224,7 @@ public class PropertiesFile {
      * Save the content from memory to disk.
      * 
      * @param comment
-     *            Comment to prepend (Should not include the "#" comment sign - It will be prepended
-     *            automatically).
+     *            Comment to prepend (Should not include the "#" comment sign - It will be prepended automatically).
      * @param sortByKey
      *            Sort the properties by key before saving?
      * 
@@ -241,8 +235,7 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final String comment, final boolean sortByKey) throws IOException, MergeException,
-            LockingFailedException {
+    public final void save(final String comment, final boolean sortByKey) throws IOException, MergeException, LockingFailedException {
         save(new String[] { comment }, sortByKey);
     }
 
@@ -250,8 +243,7 @@ public class PropertiesFile {
      * Save the content from memory to disk.
      * 
      * @param comments
-     *            Comments to prepend (Should not include the "#" comment sign - It will be prepended
-     *            automatically).
+     *            Comments to prepend (Should not include the "#" comment sign - It will be prepended automatically).
      * @param sortByKey
      *            Sort the properties by key before saving?
      * 
@@ -262,11 +254,10 @@ public class PropertiesFile {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public final void save(final String[] comments, final boolean sortByKey) throws IOException,
-            MergeException, LockingFailedException {
+    public final void save(final String[] comments, final boolean sortByKey) throws IOException, MergeException, LockingFailedException {
 
         try (final RandomAccessFileOutputStream out = new RandomAccessFileOutputStream(file, "rw");
-             final Writer writer = new OutputStreamWriter(new BufferedOutputStream(out), encoding)) {
+                final Writer writer = new OutputStreamWriter(new BufferedOutputStream(out), encoding)) {
             try (final FileLock lock = out.lock(tryLockMax, tryWaitMillis)) {
 
                 // TODO Anyone knows a better/faster solution?
@@ -362,8 +353,8 @@ public class PropertiesFile {
     }
 
     /**
-     * Set a value for a property. If a property with the key is already known the value will be changed.
-     * Otherwise a new property will be created.
+     * Set a value for a property. If a property with the key is already known the value will be changed. Otherwise a new property will be
+     * created.
      * 
      * @param key
      *            Key to set.
@@ -380,9 +371,8 @@ public class PropertiesFile {
     }
 
     /**
-     * Remove the property with the given key. The internal property object is not deleted itself but it's
-     * value is set to <code>null</code> and the method <code>isDeleted()</code> will return <code>true</code>
-     * .
+     * Remove the property with the given key. The internal property object is not deleted itself but it's value is set to <code>null</code>
+     * and the method <code>isDeleted()</code> will return <code>true</code> .
      * 
      * @param key
      *            Key for the property to remove.
@@ -542,8 +532,8 @@ public class PropertiesFile {
     }
 
     /**
-     * Tries to delete the underlying file. The properties in memory remain unchanged. If you want also to
-     * remove the properties in memory call <code>clear()</code>.
+     * Tries to delete the underlying file. The properties in memory remain unchanged. If you want also to remove the properties in memory
+     * call <code>clear()</code>.
      * 
      * @return If the files was deleted <code>true</code> else <code>false</code>
      */

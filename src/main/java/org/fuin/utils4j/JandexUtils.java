@@ -52,8 +52,7 @@ public final class JandexUtils {
      * 
      * @return TRUE if the file was indexed or FALSE if it was ignored.
      */
-    public static boolean indexClassFile(final Indexer indexer, final List<File> knownFiles,
-            final File classFile) {
+    public static boolean indexClassFile(final Indexer indexer, final List<File> knownFiles, final File classFile) {
 
         if (knownFiles.contains(classFile)) {
             return false;
@@ -113,8 +112,7 @@ public final class JandexUtils {
                     try (final InputStream stream = jar.getInputStream(entry)) {
                         indexer.index(stream);
                     } catch (final IOException ex) {
-                        throw new RuntimeException("Error indexing " + entry.getName() + " in " + jarFile,
-                                ex);
+                        throw new RuntimeException("Error indexing " + entry.getName() + " in " + jarFile, ex);
                     }
                 }
 
@@ -136,8 +134,7 @@ public final class JandexUtils {
      * @param knownFiles
      *            List of files already analyzed. New files will be added within this method.
      */
-    public static void indexClasspath(final URLClassLoader classLoader, final Indexer indexer,
-            final List<File> knownFiles) {
+    public static void indexClasspath(final URLClassLoader classLoader, final Indexer indexer, final List<File> knownFiles) {
 
         // Variant that works with Maven "exec:java"
         final List<File> classPathFiles = Utils4J.localFilesFromUrlClassLoader(classLoader);

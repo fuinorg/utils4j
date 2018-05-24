@@ -30,23 +30,22 @@ public class FileOrderTest {
     public final void testFromName() {
 
         assertThat(FileOrder.fromName("FILES_FIRST")).isSameAs(FileOrder.FILES_FIRST);
-        
+
     }
 
     @Test
     public final void testIsValid() {
-        
+
         assertThat(FileOrder.isValid("FILES_FIRST")).isTrue();
         assertThat(FileOrder.isValid("FOO")).isFalse();
     }
-    
+
     @Test
     public final void testEqualsHashCode() {
 
-        EqualsVerifier.forClass(FileOrder.class)
-                .suppress(Warning.NONFINAL_FIELDS, Warning.NULL_FIELDS).verify();
+        EqualsVerifier.forClass(FileOrder.class).suppress(Warning.NONFINAL_FIELDS, Warning.NULL_FIELDS).verify();
 
     }
-    
+
 }
 // CHECKSTYLE:ON

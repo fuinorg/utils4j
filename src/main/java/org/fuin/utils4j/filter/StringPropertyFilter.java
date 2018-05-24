@@ -36,8 +36,7 @@ public class StringPropertyFilter extends PropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public StringPropertyFilter(final String newPropertyName, final StringFilter.Operator newOperator,
-            final String constValue) {
+    public StringPropertyFilter(final String newPropertyName, final StringFilter.Operator newOperator, final String constValue) {
         super(newPropertyName);
         this.filter = new StringFilter(newOperator, constValue);
     }
@@ -57,8 +56,7 @@ public class StringPropertyFilter extends PropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public StringPropertyFilter(final String newPropertyName, final String newOperator,
-            final String constValue) {
+    public StringPropertyFilter(final String newPropertyName, final String newOperator, final String constValue) {
         super(newPropertyName);
         this.filter = new StringFilter(newOperator, constValue);
     }

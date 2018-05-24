@@ -112,8 +112,7 @@ public class VariableResolverTest {
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 2), entry("b", 1), entry("c", 0));
         assertThat(testee.getResolved()).contains(entry("a", "123"), entry("b", "23"), entry("c", "3"));
-        assertThat(testee.getUnresolved())
-                .contains(entry("a", "1${b}"), entry("b", "2${c}"), entry("c", "3"));
+        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"), entry("b", "2${c}"), entry("c", "3"));
 
     }
 
@@ -132,10 +131,8 @@ public class VariableResolverTest {
 
         // VERIFY
         assertThat(testee.getDepth()).contains(entry("a", 3), entry("b", 2), entry("c", 1), entry("d", 0));
-        assertThat(testee.getResolved()).contains(entry("a", "1234"), entry("b", "234"), entry("c", "34"),
-                entry("d", "4"));
-        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"), entry("b", "2${c}"),
-                entry("c", "3${d}"), entry("d", "4"));
+        assertThat(testee.getResolved()).contains(entry("a", "1234"), entry("b", "234"), entry("c", "34"), entry("d", "4"));
+        assertThat(testee.getUnresolved()).contains(entry("a", "1${b}"), entry("b", "2${c}"), entry("c", "3${d}"), entry("d", "4"));
 
     }
 

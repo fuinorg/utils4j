@@ -90,16 +90,15 @@ public final class Utils4J {
     }
 
     /**
-     * The difference between the Windows epoch (1601-01-01 00:00:00) and the Unix epoch (1970-01-01 00:00:00)
-     * in milliseconds: 11644473600000L.
+     * The difference between the Windows epoch (1601-01-01 00:00:00) and the Unix epoch (1970-01-01 00:00:00) in milliseconds:
+     * 11644473600000L.
      */
     private static final long EPOCH_DIFF = 11644473600000L;
 
     /**
      * Used building output as Hex.
      */
-    private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
-            'd', 'e', 'f' };
+    private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
     /**
      * Private default constructor.
@@ -139,8 +138,7 @@ public final class Utils4J {
     }
 
     /**
-     * Check if the argument is an existing file. If the check fails an <code>IllegalArgumentException</code>
-     * is thrown.
+     * Check if the argument is an existing file. If the check fails an <code>IllegalArgumentException</code> is thrown.
      * 
      * @param file
      *            File to check - Cannot be <code>null</code>.
@@ -156,8 +154,7 @@ public final class Utils4J {
     }
 
     /**
-     * Check if the argument is an existing directory. If the check fails an
-     * <code>IllegalArgumentException</code> is thrown.
+     * Check if the argument is an existing directory. If the check fails an <code>IllegalArgumentException</code> is thrown.
      * 
      * @param dir
      *            Directory to check - Cannot be <code>null</code>.
@@ -173,8 +170,7 @@ public final class Utils4J {
     }
 
     /**
-     * Create an instance with Class.forName(..) and wrap all exceptions into RuntimeExceptions. The class
-     * loader of this class is used.
+     * Create an instance with Class.forName(..) and wrap all exceptions into RuntimeExceptions. The class loader of this class is used.
      * 
      * @param className
      *            Full qualified class name - Cannot be <code>null</code>.
@@ -384,8 +380,8 @@ public final class Utils4J {
      * @throws GeneralSecurityException
      *             Error creating the cipher.
      */
-    private static Cipher createCipher(final String algorithm, final int mode, final char[] password,
-            final byte[] salt, final int count) throws GeneralSecurityException {
+    private static Cipher createCipher(final String algorithm, final int mode, final char[] password, final byte[] salt, final int count)
+            throws GeneralSecurityException {
 
         final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(algorithm);
         final PBEKeySpec keySpec = new PBEKeySpec(password);
@@ -401,8 +397,7 @@ public final class Utils4J {
      * Encrypts some data based on a password.
      * 
      * @param algorithm
-     *            PBE algorithm like "PBEWithMD5AndDES" or "PBEWithMD5AndTripleDES" - Cannot be
-     *            <code>null</code>.
+     *            PBE algorithm like "PBEWithMD5AndDES" or "PBEWithMD5AndTripleDES" - Cannot be <code>null</code>.
      * @param data
      *            Data to encrypt - Cannot be <code>null</code>.
      * @param password
@@ -414,8 +409,8 @@ public final class Utils4J {
      * 
      * @return Encrypted data.
      */
-    public static byte[] encryptPasswordBased(final String algorithm, final byte[] data,
-            final char[] password, final byte[] salt, final int count) {
+    public static byte[] encryptPasswordBased(final String algorithm, final byte[] data, final char[] password, final byte[] salt,
+            final int count) {
 
         checkNotNull("algorithm", algorithm);
         checkNotNull("data", data);
@@ -434,8 +429,7 @@ public final class Utils4J {
      * Decrypts some data based on a password.
      * 
      * @param algorithm
-     *            PBE algorithm like "PBEWithMD5AndDES" or "PBEWithMD5AndTripleDES" - Cannot be
-     *            <code>null</code>.
+     *            PBE algorithm like "PBEWithMD5AndDES" or "PBEWithMD5AndTripleDES" - Cannot be <code>null</code>.
      * @param encryptedData
      *            Data to decrypt - Cannot be <code>null</code>.
      * @param password
@@ -447,8 +441,8 @@ public final class Utils4J {
      * 
      * @return Encrypted data.
      */
-    public static byte[] decryptPasswordBased(final String algorithm, final byte[] encryptedData,
-            final char[] password, final byte[] salt, final int count) {
+    public static byte[] decryptPasswordBased(final String algorithm, final byte[] encryptedData, final char[] password, final byte[] salt,
+            final int count) {
 
         checkNotNull("algorithm", algorithm);
         checkNotNull("encryptedData", encryptedData);
@@ -467,11 +461,10 @@ public final class Utils4J {
      * Creates an URL based on a directory a relative path and a filename.
      * 
      * @param baseUrl
-     *            Directory URL with or without slash ("/") at the end of the string - Cannot be
-     *            <code>null</code>.
+     *            Directory URL with or without slash ("/") at the end of the string - Cannot be <code>null</code>.
      * @param path
-     *            Relative path inside the base URL (with or without slash ("/") at the end of the string) -
-     *            Can be <code>null</code> or an empty string.
+     *            Relative path inside the base URL (with or without slash ("/") at the end of the string) - Can be <code>null</code> or an
+     *            empty string.
      * @param filename
      *            Filename without path - Cannot be <code>null</code>.
      * 
@@ -502,16 +495,15 @@ public final class Utils4J {
     }
 
     /**
-     * Returns a relative path based on a base directory. If the <code>dir</code> is not inside
-     * <code>baseDir</code> an <code>IllegalArgumentException</code> is thrown.
+     * Returns a relative path based on a base directory. If the <code>dir</code> is not inside <code>baseDir</code> an
+     * <code>IllegalArgumentException</code> is thrown.
      * 
      * @param baseDir
      *            Base directory the path is relative to - Cannot be <code>null</code>.
      * @param dir
      *            Directory inside the base directory - Cannot be <code>null</code>.
      * 
-     * @return Path of <code>dir</code> relative to <code>baseDir</code>. If both are equal an empty string is
-     *         returned.
+     * @return Path of <code>dir</code> relative to <code>baseDir</code>. If both are equal an empty string is returned.
      */
     public static String getRelativePath(final File baseDir, final File dir) {
         checkNotNull("baseDir", baseDir);
@@ -520,8 +512,7 @@ public final class Utils4J {
         final String base = getCanonicalPath(baseDir);
         final String path = getCanonicalPath(dir);
         if (!path.startsWith(base)) {
-            throw new IllegalArgumentException(
-                    "The path '" + path + "' is not inside the base directory '" + base + "'!");
+            throw new IllegalArgumentException("The path '" + path + "' is not inside the base directory '" + base + "'!");
         }
         if (base.equals(path)) {
             return "";
@@ -549,8 +540,8 @@ public final class Utils4J {
     }
 
     /**
-     * Returns the canonical path for the file without throwing a checked exception. A potential
-     * {@link IOException} is converted into a {@link RuntimeException}
+     * Returns the canonical path for the file without throwing a checked exception. A potential {@link IOException} is converted into a
+     * {@link RuntimeException}
      * 
      * @param file
      *            File to return the canonical path for or <code>null</code>.
@@ -569,8 +560,8 @@ public final class Utils4J {
     }
 
     /**
-     * Returns the canonical file for the file without throwing a checked exception. A potential
-     * {@link IOException} is converted into a {@link RuntimeException}
+     * Returns the canonical file for the file without throwing a checked exception. A potential {@link IOException} is converted into a
+     * {@link RuntimeException}
      * 
      * @param file
      *            File to return the canonical file for or <code>null</code>.
@@ -644,15 +635,13 @@ public final class Utils4J {
         checkNotNull("url", url);
         checkNotNull("classLoader", classLoader);
         if (!(classLoader instanceof URLClassLoader)) {
-            throw new IllegalArgumentException(
-                    "Cannot add '" + url + "' to classloader because it's not an URL classloader");
+            throw new IllegalArgumentException("Cannot add '" + url + "' to classloader because it's not an URL classloader");
         }
         final URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
         if (!containsURL(urlClassLoader.getURLs(), url)) {
             try {
 
-                final Method addURL = URLClassLoader.class.getDeclaredMethod("addURL",
-                        new Class[] { URL.class });
+                final Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
                 addURL.setAccessible(true);
                 addURL.invoke(urlClassLoader, new Object[] { url });
             } catch (final NoSuchMethodException e) {
@@ -668,8 +657,7 @@ public final class Utils4J {
     }
 
     /**
-     * Checks if a variable is not <code>null</code> and throws an <code>IllegalNullArgumentException</code>
-     * if this rule is violated.
+     * Checks if a variable is not <code>null</code> and throws an <code>IllegalNullArgumentException</code> if this rule is violated.
      * 
      * @param name
      *            Name of the variable to be displayed in an error message.
@@ -683,8 +671,8 @@ public final class Utils4J {
     }
 
     /**
-     * Checks if a variable is not <code>empty</code> and throws an <code>IllegalNullArgumentException</code>
-     * if this rule is violated. A String with spaces is NOT considered empty!
+     * Checks if a variable is not <code>empty</code> and throws an <code>IllegalNullArgumentException</code> if this rule is violated. A
+     * String with spaces is NOT considered empty!
      * 
      * @param name
      *            Name of the variable to be displayed in an error message.
@@ -709,8 +697,7 @@ public final class Utils4J {
      * 
      * @return Textual signature of the method.
      */
-    private static String getMethodSignature(final String returnType, final String methodName,
-            final Class<?>[] argTypes) {
+    private static String getMethodSignature(final String returnType, final String methodName, final Class<?>[] argTypes) {
         final StringBuilder sb = new StringBuilder();
         if (returnType != null) {
             sb.append(returnType);
@@ -740,17 +727,15 @@ public final class Utils4J {
      * @param argTypes
      *            The list of parameters - May be <code>null</code>.
      * @param args
-     *            Arguments the arguments used for the method call - May be <code>null</code> if "argTypes" is
-     *            also <code>null</code>.
+     *            Arguments the arguments used for the method call - May be <code>null</code> if "argTypes" is also <code>null</code>.
      * 
-     * @return The result of dispatching the method represented by this object on <code>obj</code> with
-     *         parameters <code>args</code>.
+     * @return The result of dispatching the method represented by this object on <code>obj</code> with parameters <code>args</code>.
      * 
      * @throws InvokeMethodFailedException
      *             Invoking the method failed for some reason.
      */
-    public static Object invoke(final Object obj, final String methodName, final Class<?>[] argTypes,
-            final Object[] args) throws InvokeMethodFailedException {
+    public static Object invoke(final Object obj, final String methodName, final Class<?>[] argTypes, final Object[] args)
+            throws InvokeMethodFailedException {
 
         checkNotNull("obj", obj);
         checkNotNull("methodName", methodName);
@@ -760,15 +745,13 @@ public final class Utils4J {
         if (argTypes == null) {
             argTypesIntern = new Class[] {};
             if (args != null) {
-                throw new IllegalArgumentException(
-                        "The argument 'argTypes' is null but " + "'args' containes values!");
+                throw new IllegalArgumentException("The argument 'argTypes' is null but " + "'args' containes values!");
             }
             argsIntern = new Object[] {};
         } else {
             argTypesIntern = argTypes;
             if (args == null) {
-                throw new IllegalArgumentException(
-                        "The argument 'argTypes' contains classes " + "but 'args' is null!");
+                throw new IllegalArgumentException("The argument 'argTypes' contains classes " + "but 'args' is null!");
             }
             argsIntern = args;
         }
@@ -784,43 +767,33 @@ public final class Utils4J {
             }
             return method.invoke(obj, argsIntern);
         } catch (final SecurityException ex) {
-            throw new InvokeMethodFailedException(
-                    "Security problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
-                            + "'! [" + obj.getClass().getName() + "]",
-                    ex);
+            throw new InvokeMethodFailedException("Security problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
+                    + "'! [" + obj.getClass().getName() + "]", ex);
         } catch (final NoSuchMethodException ex) {
-            throw new InvokeMethodFailedException(
-                    "Method '" + getMethodSignature(returnType, methodName, argTypesIntern) + "' not found! ["
-                            + obj.getClass().getName() + "]",
-                    ex);
+            throw new InvokeMethodFailedException("Method '" + getMethodSignature(returnType, methodName, argTypesIntern) + "' not found! ["
+                    + obj.getClass().getName() + "]", ex);
         } catch (final IllegalArgumentException ex) {
-            throw new InvokeMethodFailedException(
-                    "Argument problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
-                            + "'! [" + obj.getClass().getName() + "]",
-                    ex);
+            throw new InvokeMethodFailedException("Argument problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
+                    + "'! [" + obj.getClass().getName() + "]", ex);
         } catch (final IllegalAccessException ex) {
-            throw new InvokeMethodFailedException(
-                    "Access problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
-                            + "'! [" + obj.getClass().getName() + "]",
-                    ex);
+            throw new InvokeMethodFailedException("Access problem with '" + getMethodSignature(returnType, methodName, argTypesIntern)
+                    + "'! [" + obj.getClass().getName() + "]", ex);
         } catch (final InvocationTargetException ex) {
             throw new InvokeMethodFailedException("Got an exception when calling '"
-                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! ["
-                    + obj.getClass().getName() + "]", ex);
+                    + getMethodSignature(returnType, methodName, argTypesIntern) + "'! [" + obj.getClass().getName() + "]", ex);
         }
 
     }
 
     private static void checkSameLength(final Class<?>[] argTypes, final Object[] args) {
         if (argTypes.length != args.length) {
-            throw new IllegalArgumentException("The argument 'argTypes' contains " + argTypes.length
-                    + " classes " + "but 'args' only contains " + args.length + " arguments!");
+            throw new IllegalArgumentException("The argument 'argTypes' contains " + argTypes.length + " classes "
+                    + "but 'args' only contains " + args.length + " arguments!");
         }
     }
 
     /**
-     * Unzips a file into a given directory. WARNING: Only relative path entries are allowed inside the
-     * archive!
+     * Unzips a file into a given directory. WARNING: Only relative path entries are allowed inside the archive!
      * 
      * @param zipFile
      *            Source ZIP file - Cannot be <code>null</code> and must be a valid ZIP file.
@@ -835,26 +808,23 @@ public final class Utils4J {
     }
 
     /**
-     * Unzips a file into a given directory. WARNING: Only relative path entries are allowed inside the
-     * archive!
+     * Unzips a file into a given directory. WARNING: Only relative path entries are allowed inside the archive!
      * 
      * @param zipFile
      *            Source ZIP file - Cannot be <code>null</code> and must be a valid ZIP file.
      * @param destDir
      *            Destination directory - Cannot be <code>null</code> and must exist.
      * @param wrapper
-     *            Callback interface to give the caller the chance to wrap the ZIP input stream into another
-     *            one. This is useful for example to display a progress bar - Can be <code>null</code> if no
-     *            wrapping is required.
+     *            Callback interface to give the caller the chance to wrap the ZIP input stream into another one. This is useful for example
+     *            to display a progress bar - Can be <code>null</code> if no wrapping is required.
      * @param cancelable
-     *            Signals if the unzip should be canceled - Can be <code>null</code> if no cancel option is
-     *            required.
+     *            Signals if the unzip should be canceled - Can be <code>null</code> if no cancel option is required.
      * 
      * @throws IOException
      *             Error unzipping the file.
      */
-    public static void unzip(final File zipFile, final File destDir, final UnzipInputStreamWrapper wrapper,
-            final Cancelable cancelable) throws IOException {
+    public static void unzip(final File zipFile, final File destDir, final UnzipInputStreamWrapper wrapper, final Cancelable cancelable)
+            throws IOException {
 
         checkNotNull("zipFile", zipFile);
         checkValidFile(zipFile);
@@ -867,8 +837,7 @@ public final class Utils4J {
                 final ZipEntry entry = enu.nextElement();
                 final File file = new File(entry.getName());
                 if (file.isAbsolute()) {
-                    throw new IllegalArgumentException(
-                            "Only relative path entries are allowed! [" + entry.getName() + "]");
+                    throw new IllegalArgumentException("Only relative path entries are allowed! [" + entry.getName() + "]");
                 }
                 if (entry.isDirectory()) {
                     final File dir = new File(destDir, entry.getName());
@@ -876,12 +845,9 @@ public final class Utils4J {
                 } else {
                     final File outFile = new File(destDir, entry.getName());
                     createIfNecessary(outFile.getParentFile());
-                    try (final InputStream in = (wrapper == null
-                            ? new BufferedInputStream(zip.getInputStream(entry))
-                            : new BufferedInputStream(
-                                    wrapper.wrapInputStream(zip.getInputStream(entry), entry, outFile)))) {
-                        try (final OutputStream out = new BufferedOutputStream(
-                                new FileOutputStream(outFile))) {
+                    try (final InputStream in = (wrapper == null ? new BufferedInputStream(zip.getInputStream(entry))
+                            : new BufferedInputStream(wrapper.wrapInputStream(zip.getInputStream(entry), entry, outFile)))) {
+                        try (final OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))) {
                             final byte[] buf = new byte[4096];
                             int len;
                             while ((len = in.read(buf)) > 0) {
@@ -904,13 +870,12 @@ public final class Utils4J {
     }
 
     /**
-     * Returns the user home directory and checks if it is valid and exists. If not a
-     * <code>IllegalStateException</code> is thrown.
+     * Returns the user home directory and checks if it is valid and exists. If not a <code>IllegalStateException</code> is thrown.
      * 
      * @return Directory.
      */
     public static File getUserHomeDir() {
-	final String errMsg = "System property '" + USER_HOME_KEY + "'";
+        final String errMsg = "System property '" + USER_HOME_KEY + "'";
         final String str = System.getProperty(USER_HOME_KEY);
         if (str == null) {
             throw new IllegalStateException(errMsg + " not found!");
@@ -929,8 +894,7 @@ public final class Utils4J {
     }
 
     /**
-     * Returns the temporary directory and checks if it is valid and exists. If not a
-     * <code>IllegalStateException</code> is thrown.
+     * Returns the temporary directory and checks if it is valid and exists. If not a <code>IllegalStateException</code> is thrown.
      * 
      * @return Directory.
      */
@@ -947,8 +911,7 @@ public final class Utils4J {
         try {
             checkValidDir(dir);
         } catch (final IllegalArgumentException ex) {
-            throw new IllegalStateException(
-                    "System property '" + TEMP_DIR_KEY + "' is not valid! [" + ex.getMessage() + "]");
+            throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' is not valid! [" + ex.getMessage() + "]");
         }
         return dir;
     }
@@ -1001,10 +964,9 @@ public final class Utils4J {
     }
 
     /**
-     * Converts Date into a Windows FILETIME. The Windows FILETIME structure holds a date and time associated
-     * with a file. The structure identifies a 64-bit integer specifying the number of 100-nanosecond
-     * intervals which have passed since January 1, 1601. This code is copied from the
-     * <code>org.apache.poi.hpsf.Util</code> class.
+     * Converts Date into a Windows FILETIME. The Windows FILETIME structure holds a date and time associated with a file. The structure
+     * identifies a 64-bit integer specifying the number of 100-nanosecond intervals which have passed since January 1, 1601. This code is
+     * copied from the <code>org.apache.poi.hpsf.Util</code> class.
      * 
      * @param date
      *            The date to be converted - Cannot be <code>null</code>.
@@ -1018,31 +980,31 @@ public final class Utils4J {
     }
 
     /**
-     * Creates an URL Link on the Windows Desktop. This is done by creating a file (URL File Format) with an
-     * ".url" extension. For a description see http://www.cyanwerks.com/file-format-url.html .
+     * Creates an URL Link on the Windows Desktop. This is done by creating a file (URL File Format) with an ".url" extension. For a
+     * description see http://www.cyanwerks.com/file-format-url.html .
      * 
      * @param baseUrl
      *            Base URL for the link - Cannot be <code>null</code> or empty.
      * @param url
      *            Target URL - Cannot be <code>null</code> or empty.
      * @param workingDir
-     *            It's the "working folder" that your URL file uses. The working folder is possibly the folder
-     *            to be set as the current folder for the application that would open the file. However
-     *            Internet Explorer does not seem to be affected by this field - Can be <code>null</code>.
+     *            It's the "working folder" that your URL file uses. The working folder is possibly the folder to be set as the current
+     *            folder for the application that would open the file. However Internet Explorer does not seem to be affected by this field
+     *            - Can be <code>null</code>.
      * @param showCommand
      *            Normal=<code>null</code>, Minimized=7, Maximized=3
      * @param iconIndex
-     *            The Icon Index within the icon library specified by IconFile. In an icon library, which can
-     *            be generally be either a ICO, DLL or EXE file, the icons are indexed with numbers. The first
-     *            icon index starts at 0 - Can be <code>null</code> if the file is not indexed.
+     *            The Icon Index within the icon library specified by IconFile. In an icon library, which can be generally be either a ICO,
+     *            DLL or EXE file, the icons are indexed with numbers. The first icon index starts at 0 - Can be <code>null</code> if the
+     *            file is not indexed.
      * @param iconFile
-     *            Specifies the path of the icon library file. Generally the icon library can be an ICO, DLL
-     *            or EXE file. The default icon library used tends to be the URL.DLL library on the system's
-     *            Windows\System directory - Can be <code>null</code> if no icon is required.
+     *            Specifies the path of the icon library file. Generally the icon library can be an ICO, DLL or EXE file. The default icon
+     *            library used tends to be the URL.DLL library on the system's Windows\System directory - Can be <code>null</code> if no
+     *            icon is required.
      * @param hotKey
-     *            The HotKey field specifies what is the shortcut key used to automatically launch the
-     *            Internet shortcut. The field uses a number to specify what hotkey is used. To get the
-     *            appropriate code simply create a shortcut with MSIE and examine the file's content.
+     *            The HotKey field specifies what is the shortcut key used to automatically launch the Internet shortcut. The field uses a
+     *            number to specify what hotkey is used. To get the appropriate code simply create a shortcut with MSIE and examine the
+     *            file's content.
      * @param linkFilenameWithoutExtension
      *            Name for the link file (displayed as text) - Cannot be <code>null</code> or empty.
      * @param overwrite
@@ -1054,10 +1016,9 @@ public final class Utils4J {
      *             Error writing the file.
      */
     // CHECKSTYLE:OFF Maximum Parameters
-    public static void createWindowsDesktopUrlLink(final String baseUrl, final String url,
-            final File workingDir, final Integer showCommand, final Integer iconIndex, final File iconFile,
-            final Integer hotKey, final String linkFilenameWithoutExtension, final boolean overwrite,
-            final Date modified) throws IOException {
+    public static void createWindowsDesktopUrlLink(final String baseUrl, final String url, final File workingDir, final Integer showCommand,
+            final Integer iconIndex, final File iconFile, final Integer hotKey, final String linkFilenameWithoutExtension,
+            final boolean overwrite, final Date modified) throws IOException {
         // CHECKSTYLE:ON
 
         checkNotNull("baseUrl", baseUrl);
@@ -1074,10 +1035,9 @@ public final class Utils4J {
             // Do nothing
             return;
         }
-        final String content = createWindowsDesktopUrlLinkContent(baseUrl, url, workingDir, showCommand,
-                iconIndex, iconFile, hotKey, modified);
-        try (final Writer writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(linkFile), "Cp1252"))) {
+        final String content = createWindowsDesktopUrlLinkContent(baseUrl, url, workingDir, showCommand, iconIndex, iconFile, hotKey,
+                modified);
+        try (final Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(linkFile), "Cp1252"))) {
             writer.write(content);
         }
 
@@ -1092,32 +1052,31 @@ public final class Utils4J {
      * @param url
      *            Target URL - Cannot be <code>null</code> or empty.
      * @param workingDir
-     *            It's the "working folder" that your URL file uses. The working folder is possibly the folder
-     *            to be set as the current folder for the application that would open the file. However
-     *            Internet Explorer does not seem to be affected by this field - Can be <code>null</code>.
+     *            It's the "working folder" that your URL file uses. The working folder is possibly the folder to be set as the current
+     *            folder for the application that would open the file. However Internet Explorer does not seem to be affected by this field
+     *            - Can be <code>null</code>.
      * @param showCommand
      *            Normal=<code>null</code>, Minimized=7, Maximized=3
      * @param iconIndex
-     *            The Icon Index within the icon library specified by IconFile. In an icon library, which can
-     *            be generally be either a ICO, DLL or EXE file, the icons are indexed with numbers. The first
-     *            icon index starts at 0 - Can be <code>null</code> if the file is not indexed.
+     *            The Icon Index within the icon library specified by IconFile. In an icon library, which can be generally be either a ICO,
+     *            DLL or EXE file, the icons are indexed with numbers. The first icon index starts at 0 - Can be <code>null</code> if the
+     *            file is not indexed.
      * @param iconFile
-     *            Specifies the path of the icon library file. Generally the icon library can be an ICO, DLL
-     *            or EXE file. The default icon library used tends to be the URL.DLL library on the system's
-     *            Windows\System directory - Can be <code>null</code> if no icon is required.
+     *            Specifies the path of the icon library file. Generally the icon library can be an ICO, DLL or EXE file. The default icon
+     *            library used tends to be the URL.DLL library on the system's Windows\System directory - Can be <code>null</code> if no
+     *            icon is required.
      * @param hotKey
-     *            The HotKey field specifies what is the shortcut key used to automatically launch the
-     *            Internet shortcut. The field uses a number to specify what hotkey is used. To get the
-     *            appropriate code simply create a shortcut with MSIE and examine the file's content.
+     *            The HotKey field specifies what is the shortcut key used to automatically launch the Internet shortcut. The field uses a
+     *            number to specify what hotkey is used. To get the appropriate code simply create a shortcut with MSIE and examine the
+     *            file's content.
      * @param modified
      *            Timestamp.
      * 
      * @return INI file text.
      */
     // CHECKSTYLE:OFF
-    public static String createWindowsDesktopUrlLinkContent(final String baseUrl, final String url,
-            final File workingDir, final Integer showCommand, final Integer iconIndex, final File iconFile,
-            final Integer hotKey, final Date modified) {
+    public static String createWindowsDesktopUrlLinkContent(final String baseUrl, final String url, final File workingDir,
+            final Integer showCommand, final Integer iconIndex, final File iconFile, final Integer hotKey, final Date modified) {
         // CHECKSTYLE:ON
 
         checkNotNull("baseUrl", baseUrl);
@@ -1164,8 +1123,7 @@ public final class Utils4J {
      * 
      * @return Path and filename divided by the separator.
      */
-    public static String concatPathAndFilename(final String path, final String filename,
-            final String separator) {
+    public static String concatPathAndFilename(final String path, final String filename, final String separator) {
 
         checkNotNull("filename", filename);
         checkNotNull("separator", separator);
@@ -1187,9 +1145,8 @@ public final class Utils4J {
     }
 
     /**
-     * Converts an array of bytes into an array of characters representing the hexidecimal values of each byte
-     * in order. The returned array will be double the length of the passed array, as it takes two characters
-     * to represent any given byte.
+     * Converts an array of bytes into an array of characters representing the hexidecimal values of each byte in order. The returned array
+     * will be double the length of the passed array, as it takes two characters to represent any given byte.
      * 
      * Author: Apache Software Foundation See: org.apache.commons.codec.binary.Hex
      * 
@@ -1217,10 +1174,9 @@ public final class Utils4J {
     // CHECKSTYLE:ON
 
     /**
-     * Converts an array of characters representing hexidecimal values into an array of bytes of those same
-     * values. The returned array will be half the length of the passed array, as it takes two characters to
-     * represent any given byte. An exception is thrown if the passed char array has an odd number of
-     * elements.
+     * Converts an array of characters representing hexidecimal values into an array of bytes of those same values. The returned array will
+     * be half the length of the passed array, as it takes two characters to represent any given byte. An exception is thrown if the passed
+     * char array has an odd number of elements.
      * 
      * @param data
      *            An array of characters containing hexidecimal digits - Cannot be <code>null</code>.
@@ -1291,8 +1247,8 @@ public final class Utils4J {
      * @throws LockingFailedException
      *             Locking the file failed.
      */
-    public static FileLock lockRandomAccessFile(final RandomAccessFile file, final int tryLockMax,
-            final long tryWaitMillis) throws LockingFailedException {
+    public static FileLock lockRandomAccessFile(final RandomAccessFile file, final int tryLockMax, final long tryWaitMillis)
+            throws LockingFailedException {
 
         checkNotNull("file", file);
 
@@ -1313,7 +1269,7 @@ public final class Utils4J {
             }
             try {
                 Thread.sleep(tryWaitMillis);
-            } catch (final InterruptedException ex) { //NOSONAR
+            } catch (final InterruptedException ex) { // NOSONAR
                 throw new LockingFailedException("Unexpected interrupt!", ex);
             }
         }
@@ -1338,13 +1294,11 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    private static void zipFile(final File srcFile, final String destPath, final ZipOutputStream out)
-            throws IOException {
+    private static void zipFile(final File srcFile, final String destPath, final ZipOutputStream out) throws IOException {
 
         final byte[] buf = new byte[1024];
         try (final InputStream in = new BufferedInputStream(new FileInputStream(srcFile))) {
-            final ZipEntry zipEntry = new ZipEntry(
-                    concatPathAndFilename(destPath, srcFile.getName(), File.separator));
+            final ZipEntry zipEntry = new ZipEntry(concatPathAndFilename(destPath, srcFile.getName(), File.separator));
             zipEntry.setTime(srcFile.lastModified());
             out.putNextEntry(zipEntry);
             int len;
@@ -1392,14 +1346,13 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    private static void zipDir(final File srcDir, final FileFilter filter, final String destPath,
-            final ZipOutputStream out) throws IOException {
+    private static void zipDir(final File srcDir, final FileFilter filter, final String destPath, final ZipOutputStream out)
+            throws IOException {
 
         final File[] files = listFiles(srcDir, filter);
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
-                zipDir(files[i], filter, concatPathAndFilename(destPath, files[i].getName(), File.separator),
-                        out);
+                zipDir(files[i], filter, concatPathAndFilename(destPath, files[i].getName(), File.separator), out);
             } else {
                 zipFile(files[i], destPath, out);
             }
@@ -1408,8 +1361,8 @@ public final class Utils4J {
     }
 
     /**
-     * Creates a ZIP file and adds all files in a directory and all it's sub directories to the archive. Only
-     * entries are added that comply to the file filter.
+     * Creates a ZIP file and adds all files in a directory and all it's sub directories to the archive. Only entries are added that comply
+     * to the file filter.
      * 
      * @param srcDir
      *            Directory to add - Cannot be <code>null</code> and must be a valid directory.
@@ -1423,15 +1376,13 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final FileFilter filter, final String destPath,
-            final File destFile) throws IOException {
+    public static void zipDir(final File srcDir, final FileFilter filter, final String destPath, final File destFile) throws IOException {
 
         Utils4J.checkNotNull("srcDir", srcDir);
         Utils4J.checkValidDir(srcDir);
         Utils4J.checkNotNull("destFile", destFile);
 
-        try (final ZipOutputStream out = new ZipOutputStream(
-                new BufferedOutputStream(new FileOutputStream(destFile)))) {
+        try (final ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(destFile)))) {
             zipDir(srcDir, filter, destPath, out);
         }
 
@@ -1450,8 +1401,7 @@ public final class Utils4J {
      * @throws IOException
      *             Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final String destPath, final File destFile)
-            throws IOException {
+    public static void zipDir(final File srcDir, final String destPath, final File destFile) throws IOException {
 
         zipDir(srcDir, null, destPath, destFile);
 
@@ -1531,8 +1481,7 @@ public final class Utils4J {
     }
 
     /**
-     * Returns a given string as URL and supports "classpath:" scheme. A <code>null</code> argument returns
-     * <code>null</code>.
+     * Returns a given string as URL and supports "classpath:" scheme. A <code>null</code> argument returns <code>null</code>.
      * 
      * @param url
      *            String to convert into an URL or <code>null</code>.
@@ -1591,10 +1540,9 @@ public final class Utils4J {
     }
 
     /**
-     * Causes the currently executing thread to sleep (temporarily cease execution) for the specified number
-     * of milliseconds, subject to the precision and accuracy of system timers and schedulers. The thread does
-     * not lose ownership of any monitors. The {@link InterruptedException} is wrapped into a
-     * {@link RuntimeException}.
+     * Causes the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds, subject to the
+     * precision and accuracy of system timers and schedulers. The thread does not lose ownership of any monitors. The
+     * {@link InterruptedException} is wrapped into a {@link RuntimeException}.
      * 
      * @param millis
      *            The length of time to sleep in milliseconds.
@@ -1602,7 +1550,7 @@ public final class Utils4J {
     public static void sleep(final long millis) {
         try {
             Thread.sleep(millis);
-        } catch (final InterruptedException ex) { //NOSONAR
+        } catch (final InterruptedException ex) { // NOSONAR
             throw new RuntimeException("Sleep interrupted", ex);
         }
     }
@@ -1617,8 +1565,7 @@ public final class Utils4J {
      * 
      * @return TRUE if the actual exception is one of the expected exceptions.
      */
-    public static boolean expectedCause(final Exception actualException,
-            final Collection<Class<? extends Exception>> expectedExceptions) {
+    public static boolean expectedCause(final Exception actualException, final Collection<Class<? extends Exception>> expectedExceptions) {
 
         checkNotNull("actualException", actualException);
 

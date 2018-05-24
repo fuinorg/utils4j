@@ -22,8 +22,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
- * Adapter for an {@link XMLStreamWriter}. CAUTION: If you override a method, don't forget to call the "super"
- * method!
+ * Adapter for an {@link XMLStreamWriter}. CAUTION: If you override a method, don't forget to call the "super" method!
  */
 // CHECKSTYLE:OFF DesignForExtension is not possible here
 public class XMLStreamWriterAdapter implements XMLStreamWriter, AutoCloseable {
@@ -47,26 +46,22 @@ public class XMLStreamWriterAdapter implements XMLStreamWriter, AutoCloseable {
     }
 
     @Override
-    public void writeStartElement(final String namespaceURI, final String localName)
-            throws XMLStreamException {
+    public void writeStartElement(final String namespaceURI, final String localName) throws XMLStreamException {
         delegate.writeStartElement(namespaceURI, localName);
     }
 
     @Override
-    public void writeStartElement(final String prefix, final String localName, final String namespaceURI)
-            throws XMLStreamException {
+    public void writeStartElement(final String prefix, final String localName, final String namespaceURI) throws XMLStreamException {
         delegate.writeStartElement(prefix, localName, namespaceURI);
     }
 
     @Override
-    public void writeEmptyElement(final String namespaceURI, final String localName)
-            throws XMLStreamException {
+    public void writeEmptyElement(final String namespaceURI, final String localName) throws XMLStreamException {
         delegate.writeEmptyElement(namespaceURI, localName);
     }
 
     @Override
-    public void writeEmptyElement(final String prefix, final String localName, final String namespaceURI)
-            throws XMLStreamException {
+    public void writeEmptyElement(final String prefix, final String localName, final String namespaceURI) throws XMLStreamException {
         delegate.writeEmptyElement(prefix, localName, namespaceURI);
     }
 
@@ -101,14 +96,13 @@ public class XMLStreamWriterAdapter implements XMLStreamWriter, AutoCloseable {
     }
 
     @Override
-    public void writeAttribute(final String prefix, final String namespaceURI, final String localName,
-            final String value) throws XMLStreamException {
+    public void writeAttribute(final String prefix, final String namespaceURI, final String localName, final String value)
+            throws XMLStreamException {
         delegate.writeAttribute(prefix, namespaceURI, localName, value);
     }
 
     @Override
-    public void writeAttribute(final String namespaceURI, final String localName, final String value)
-            throws XMLStreamException {
+    public void writeAttribute(final String namespaceURI, final String localName, final String value) throws XMLStreamException {
         delegate.writeAttribute(namespaceURI, localName, value);
     }
 

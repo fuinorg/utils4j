@@ -218,8 +218,7 @@ public class ChangeTrackingUniqueListTest {
     @Test
     public void testAddAllIntCollectionWithRemoved() {
 
-        final ChangeTrackingUniqueList<String> filledList = new ChangeTrackingUniqueList<>(toList("one",
-                "two", "three", "four"));
+        final ChangeTrackingUniqueList<String> filledList = new ChangeTrackingUniqueList<>(toList("one", "two", "three", "four"));
         filledList.remove("two");
         filledList.remove("three");
 
@@ -639,8 +638,7 @@ public class ChangeTrackingUniqueListTest {
         assertThat(initialFilledList.isChanged()).isTrue();
         assertThat(initialFilledList.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledList).hasSize(6);
-        assertThat(new ArrayList<String>(initialFilledList)).containsExactly("1", "two", "3", "four", "5",
-                "six");
+        assertThat(new ArrayList<String>(initialFilledList)).containsExactly("1", "two", "3", "four", "5", "six");
         assertThat(initialFilledList.getAdded()).containsExactly("four", "six", "1", "3", "5");
         assertThat(initialFilledList.getDeleted()).containsExactly("one", "three");
 

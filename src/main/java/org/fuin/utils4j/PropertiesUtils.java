@@ -125,8 +125,7 @@ public final class PropertiesUtils {
         checkNotNull("props", props);
 
         if (!file.getParentFile().exists()) {
-            throw new IllegalArgumentException("The parent directory '" + file.getParentFile()
-                    + "' does not exist [file='" + file + "']!");
+            throw new IllegalArgumentException("The parent directory '" + file.getParentFile() + "' does not exist [file='" + file + "']!");
         }
         try (final OutputStream outStream = new FileOutputStream(file)) {
             props.store(outStream, comment);
@@ -169,8 +168,7 @@ public final class PropertiesUtils {
     }
 
     /**
-     * Load a file from an directory. Wraps a possible <code>MalformedURLException</code> exception into a
-     * <code>RuntimeException</code>.
+     * Load a file from an directory. Wraps a possible <code>MalformedURLException</code> exception into a <code>RuntimeException</code>.
      * 
      * @param baseUrl
      *            Directory URL as <code>String</code> - Cannot be <code>null</code>.
@@ -187,8 +185,7 @@ public final class PropertiesUtils {
             final URL url = new URL(baseUrl);
             return loadProperties(url, filename);
         } catch (final MalformedURLException ex) {
-            throw new IllegalArgumentException("The argument 'srcUrl' is not a valid URL [" + baseUrl + "]!",
-                    ex);
+            throw new IllegalArgumentException("The argument 'srcUrl' is not a valid URL [" + baseUrl + "]!", ex);
         }
 
     }

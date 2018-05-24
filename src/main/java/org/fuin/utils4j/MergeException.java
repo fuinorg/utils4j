@@ -72,9 +72,9 @@ public final class MergeException extends Exception {
      */
     public static final class Problem implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-	/** Message describing the problem. */
+        /** Message describing the problem. */
         private final String text;
 
         /** Property from memory. */

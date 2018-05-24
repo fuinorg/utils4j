@@ -41,8 +41,7 @@ public class JandexUtilsTest {
 
         // PREPARE
         final List<File> knownFiles = new ArrayList<File>();
-        final File classFile = new File(
-                "target/classes/" + JandexUtils.class.getName().replace('.', '/') + ".class");
+        final File classFile = new File("target/classes/" + JandexUtils.class.getName().replace('.', '/') + ".class");
         final Indexer indexer = new Indexer();
 
         // TEST
@@ -60,10 +59,8 @@ public class JandexUtilsTest {
     public final void testIndexDir() {
 
         // PREPARE
-        final File jandexClassFile = new File(
-                "target/classes/" + JandexUtils.class.getName().replace('.', '/') + ".class");
-        final File utils4JClassFile = new File(
-                "target/classes/" + Utils4J.class.getName().replace('.', '/') + ".class");
+        final File jandexClassFile = new File("target/classes/" + JandexUtils.class.getName().replace('.', '/') + ".class");
+        final File utils4JClassFile = new File("target/classes/" + Utils4J.class.getName().replace('.', '/') + ".class");
         final List<File> knownFiles = new ArrayList<File>();
         final File classesDir = new File("target/classes");
         final Indexer indexer = new Indexer();
@@ -95,8 +92,7 @@ public class JandexUtilsTest {
         // VERIFY
         final Index index = indexer.complete();
         assertThat(knownFiles).contains(jarFile);
-        assertThat(index.getClassByName(DotName.createSimple("org.fuin.ext4logback.LogbackStandalone")))
-                .isNotNull();
+        assertThat(index.getClassByName(DotName.createSimple("org.fuin.ext4logback.LogbackStandalone"))).isNotNull();
 
     }
 
@@ -104,12 +100,11 @@ public class JandexUtilsTest {
     public final void testIndexClasspath() throws IOException {
 
         // PREPARE
-        final File jandexClassFile = new File(
-                "target/classes/" + JandexUtils.class.getName().replace('.', '/') + ".class")
-                        .getCanonicalFile();
+        final File jandexClassFile = new File("target/classes/" + JandexUtils.class.getName().replace('.', '/') + ".class")
+                .getCanonicalFile();
         final List<File> knownFiles = new ArrayList<File>();
         final Indexer indexer = new Indexer();
-        
+
         // TEST
         JandexUtils.indexClasspath((URLClassLoader) JandexUtils.class.getClassLoader(), indexer, knownFiles);
 

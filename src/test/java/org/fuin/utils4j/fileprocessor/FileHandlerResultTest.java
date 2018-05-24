@@ -30,23 +30,22 @@ public class FileHandlerResultTest {
     public final void testFromName() {
 
         assertThat(FileHandlerResult.fromName("CONTINUE")).isSameAs(FileHandlerResult.CONTINUE);
-        
+
     }
 
     @Test
     public final void testIsValid() {
-        
+
         assertThat(FileHandlerResult.isValid("CONTINUE")).isTrue();
         assertThat(FileHandlerResult.isValid("FOO")).isFalse();
     }
-    
+
     @Test
     public final void testEqualsHashCode() {
 
-        EqualsVerifier.forClass(FileHandlerResult.class)
-                .suppress(Warning.NONFINAL_FIELDS, Warning.NULL_FIELDS).verify();
+        EqualsVerifier.forClass(FileHandlerResult.class).suppress(Warning.NONFINAL_FIELDS, Warning.NULL_FIELDS).verify();
 
     }
-    
+
 }
 // CHECKSTYLE:ON

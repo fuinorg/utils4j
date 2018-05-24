@@ -37,10 +37,9 @@ import javax.xml.stream.XMLStreamWriter;
 public final class JaxbUtils {
 
     private static final String ERROR_MARSHALLING_TEST_DATA = "Error marshalling test data";
-    
+
     /** Standard XML prefix with UTF-8 encoding. */
-    public static final String XML_PREFIX = "<?xml version=\"1.0\" "
-            + "encoding=\"UTF-8\" standalone=\"yes\"?>";
+    public static final String XML_PREFIX = "<?xml version=\"1.0\" " + "encoding=\"UTF-8\" standalone=\"yes\"?>";
 
     private JaxbUtils() {
         throw new UnsupportedOperationException("It's not allowed to create an instance of a utility class");
@@ -52,8 +51,7 @@ public final class JaxbUtils {
      * @param data
      *            Data to serialize or <code>null</code>.
      * @param classesToBeBound
-     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
-     *            <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be <code>null</code>.
      * 
      * @return XML data or <code>null</code>.
      * 
@@ -72,16 +70,14 @@ public final class JaxbUtils {
      * @param adapters
      *            Adapters to associate with the marshaller or <code>null</code> .
      * @param classesToBeBound
-     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
-     *            <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be <code>null</code>.
      * 
      * @return XML data or <code>null</code>.
      * 
      * @param <T>
      *            Type of the data.
      */
-    public static <T> String marshal(final T data, final XmlAdapter<?, ?>[] adapters,
-            final Class<?>... classesToBeBound) {
+    public static <T> String marshal(final T data, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
         if (data == null) {
             return null;
         }
@@ -94,8 +90,7 @@ public final class JaxbUtils {
     }
 
     /**
-     * Marshals the given data using a given context. A <code>null</code> data argument returns
-     * <code>null</code>.
+     * Marshals the given data using a given context. A <code>null</code> data argument returns <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
@@ -112,8 +107,7 @@ public final class JaxbUtils {
     }
 
     /**
-     * Marshals the given data using a given context. A <code>null</code> data argument returns
-     * <code>null</code>.
+     * Marshals the given data using a given context. A <code>null</code> data argument returns <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
@@ -137,8 +131,7 @@ public final class JaxbUtils {
     }
 
     /**
-     * Marshals the given data using a given context. A <code>null</code> data argument returns
-     * <code>null</code>.
+     * Marshals the given data using a given context. A <code>null</code> data argument returns <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
@@ -152,8 +145,7 @@ public final class JaxbUtils {
      * @param <T>
      *            Type of the data to write.
      */
-    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters,
-            final Writer writer) {
+    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters, final Writer writer) {
         if (data == null) {
             return;
         }
@@ -171,8 +163,7 @@ public final class JaxbUtils {
     }
 
     /**
-     * Marshals the given data using a given context. A <code>null</code> data argument returns
-     * <code>null</code>.
+     * Marshals the given data using a given context. A <code>null</code> data argument returns <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
@@ -186,8 +177,7 @@ public final class JaxbUtils {
      * @param <T>
      *            Type of the data to write.
      */
-    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters,
-            final XMLStreamWriter writer) {
+    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters, final XMLStreamWriter writer) {
         if (data == null) {
             return;
         }
@@ -210,8 +200,7 @@ public final class JaxbUtils {
      * @param xmlData
      *            XML data or <code>null</code>.
      * @param classesToBeBound
-     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
-     *            <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be <code>null</code>.
      * 
      * @return Data or <code>null</code>.
      * 
@@ -230,16 +219,14 @@ public final class JaxbUtils {
      * @param adapters
      *            Adapters to associate with the unmarshaller or <code>null</code>.
      * @param classesToBeBound
-     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be
-     *            <code>null</code>.
+     *            List of java classes to be recognized by the {@link JAXBContext} - Cannot be <code>null</code>.
      * 
      * @return Data or <code>null</code>.
      * 
      * @param <T>
      *            Type of the expected data.
      */
-    public static <T> T unmarshal(final String xmlData, final XmlAdapter<?, ?>[] adapters,
-            final Class<?>... classesToBeBound) {
+    public static <T> T unmarshal(final String xmlData, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
         if (xmlData == null) {
             return null;
         }
@@ -252,8 +239,7 @@ public final class JaxbUtils {
     }
 
     /**
-     * Unmarshals the given data using a given context. A <code>null</code> XML data argument returns
-     * <code>null</code>.
+     * Unmarshals the given data using a given context. A <code>null</code> XML data argument returns <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
@@ -267,8 +253,7 @@ public final class JaxbUtils {
      * @param <T>
      *            Type of the expected data.
      */
-    public static <T> T unmarshal(final JAXBContext ctx, final String xmlData,
-            final XmlAdapter<?, ?>[] adapters) {
+    public static <T> T unmarshal(final JAXBContext ctx, final String xmlData, final XmlAdapter<?, ?>[] adapters) {
         if (xmlData == null) {
             return null;
         }
@@ -276,8 +261,7 @@ public final class JaxbUtils {
     }
 
     /**
-     * Unmarshals the given data using a given context. A <code>null</code> XML data argument returns
-     * <code>null</code>.
+     * Unmarshals the given data using a given context. A <code>null</code> XML data argument returns <code>null</code>.
      * 
      * @param ctx
      *            Context to use - Cannot be <code>null</code>.
@@ -292,8 +276,7 @@ public final class JaxbUtils {
      *            Type of the expected data.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T unmarshal(final JAXBContext ctx, final Reader reader,
-            final XmlAdapter<?, ?>[] adapters) {
+    public static <T> T unmarshal(final JAXBContext ctx, final Reader reader, final XmlAdapter<?, ?>[] adapters) {
 
         try {
             final Unmarshaller unmarshaller = ctx.createUnmarshaller();

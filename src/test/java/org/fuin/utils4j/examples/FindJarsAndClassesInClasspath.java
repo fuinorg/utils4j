@@ -50,12 +50,12 @@ public class FindJarsAndClassesInClasspath {
 
         // List JAR files that are located in the boot path of the JRE
         System.out.println("BOOT JAR:");
-        for (final File file : Utils4J.pathsFiles(System.getProperty("sun.boot.class.path"),
-                Utils4J::jreJarFile)) {
+        for (final File file : Utils4J.pathsFiles(System.getProperty("sun.boot.class.path"), Utils4J::jreJarFile)) {
             System.out.println(file);
         }
 
-        // List JAR files that are located in the extension directories of the JRE
+        // List JAR files that are located in the extension directories of the
+        // JRE
         System.out.println("EXT JAR:");
         for (final File file : Utils4J.pathsFiles(System.getProperty("java.ext.dirs"), Utils4J::jreJarFile)) {
             System.out.println(file);

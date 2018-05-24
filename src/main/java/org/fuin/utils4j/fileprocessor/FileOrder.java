@@ -36,7 +36,7 @@ public final class FileOrder {
     public static final FileOrder DIR_FIRST = new FileOrder("DIR_FIRST");
 
     /** All enumeration instances. */
-    public static final List<FileOrder> INSTANCES = asList( DEFAULT, FILES_FIRST, DIR_FIRST ); //NOSONAR
+    public static final List<FileOrder> INSTANCES = asList(DEFAULT, FILES_FIRST, DIR_FIRST); // NOSONAR
 
     private final String name;
 
@@ -129,12 +129,12 @@ public final class FileOrder {
         return false;
     }
 
-    private static List<FileOrder> asList(final FileOrder...handler) {
-	final List<FileOrder> list = new ArrayList<>(handler.length);
-	for (final FileOrder result : handler) {
-	    list.add(result);
-	}
-	return Collections.unmodifiableList(list);
+    private static List<FileOrder> asList(final FileOrder... handler) {
+        final List<FileOrder> list = new ArrayList<>(handler.length);
+        for (final FileOrder result : handler) {
+            list.add(result);
+        }
+        return Collections.unmodifiableList(list);
     }
-    
+
 }

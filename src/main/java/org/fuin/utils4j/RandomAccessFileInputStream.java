@@ -26,8 +26,8 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
 /**
- * A random access based file input stream. The <code>readlimit</code> argument of the <code>mark(int)</code>
- * method is ignored (there is no limit).
+ * A random access based file input stream. The <code>readlimit</code> argument of the <code>mark(int)</code> method is ignored (there is no
+ * limit).
  */
 public final class RandomAccessFileInputStream extends InputStream {
 
@@ -44,10 +44,9 @@ public final class RandomAccessFileInputStream extends InputStream {
      *            Access mode, as described in <code>RandomAccessFile</code> - Cannot be <code>null</code>.
      * 
      * @throws FileNotFoundException
-     *             If the mode is "r" but the given file object does not denote an existing regular file, or
-     *             if the mode begins with "rw" but the given file object does not denote an existing,
-     *             writable regular file and a new regular file of that name cannot be created, or if some
-     *             other error occurs while opening or creating the file.
+     *             If the mode is "r" but the given file object does not denote an existing regular file, or if the mode begins with "rw"
+     *             but the given file object does not denote an existing, writable regular file and a new regular file of that name cannot
+     *             be created, or if some other error occurs while opening or creating the file.
      */
     public RandomAccessFileInputStream(final File file, final String mode) throws FileNotFoundException {
         super();
@@ -57,12 +56,11 @@ public final class RandomAccessFileInputStream extends InputStream {
     }
 
     /**
-     * Constructor with input stream. The new stream shares the <code>RandomAccessFile</code> with the
-     * argument. Be aware that closing this stream will also close the file used by the argument!
+     * Constructor with input stream. The new stream shares the <code>RandomAccessFile</code> with the argument. Be aware that closing this
+     * stream will also close the file used by the argument!
      * 
      * @param in
-     *            The <code>RandomAccessFile</code> instance from this argument will be used - Cannot be
-     *            <code>null</code>.
+     *            The <code>RandomAccessFile</code> instance from this argument will be used - Cannot be <code>null</code>.
      */
     public RandomAccessFileInputStream(final RandomAccessFileInputStream in) {
         super();
@@ -71,12 +69,11 @@ public final class RandomAccessFileInputStream extends InputStream {
     }
 
     /**
-     * Constructor with output stream. The new stream shares the <code>RandomAccessFile</code> with the
-     * argument. Be aware that closing this stream will also close the file used by the argument!
+     * Constructor with output stream. The new stream shares the <code>RandomAccessFile</code> with the argument. Be aware that closing this
+     * stream will also close the file used by the argument!
      * 
      * @param out
-     *            The <code>RandomAccessFile</code> instance from this argument will be used - Cannot be
-     *            <code>null</code>.
+     *            The <code>RandomAccessFile</code> instance from this argument will be used - Cannot be <code>null</code>.
      */
     public RandomAccessFileInputStream(final RandomAccessFileOutputStream out) {
         super();
@@ -152,8 +149,7 @@ public final class RandomAccessFileInputStream extends InputStream {
     @Override
     public final synchronized void reset() throws IOException {
         if (mark == -1) {
-            throw new IOException("The method 'mark()' has not been called "
-                    + "since the stream was created!");
+            throw new IOException("The method 'mark()' has not been called " + "since the stream was created!");
         }
         file.seek(mark);
     }
@@ -182,14 +178,12 @@ public final class RandomAccessFileInputStream extends InputStream {
     }
 
     /**
-     * Sets the file-pointer offset, measured from the beginning of this file, at which the next read or write
-     * occurs. The offset may be set beyond the end of the file. Setting the offset beyond the end of the file
-     * does not change the file length. The file length will change only by writing after the offset has been
-     * set beyond the end of the file.
+     * Sets the file-pointer offset, measured from the beginning of this file, at which the next read or write occurs. The offset may be set
+     * beyond the end of the file. Setting the offset beyond the end of the file does not change the file length. The file length will
+     * change only by writing after the offset has been set beyond the end of the file.
      * 
      * @param pos
-     *            the offset position, measured in bytes from the beginning of the file, at which to set the
-     *            file pointer.
+     *            the offset position, measured in bytes from the beginning of the file, at which to set the file pointer.
      * 
      * @exception IOException
      *                if <code>pos</code> is less than <code>0</code> or if an I/O error occurs.

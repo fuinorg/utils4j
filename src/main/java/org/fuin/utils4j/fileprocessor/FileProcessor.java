@@ -102,8 +102,7 @@ public final class FileProcessor {
      * @param dir
      *            Directory to handle.
      * 
-     * @return Result of the processing - Either {@link FileHandlerResult#STOP} or
-     *         {@link FileHandlerResult#CONTINUE}.
+     * @return Result of the processing - Either {@link FileHandlerResult#STOP} or {@link FileHandlerResult#CONTINUE}.
      */
     // CHECKSTYLE:OFF Cyclomatic complexity of 11 is OK here
     private FileHandlerResult processDir(final File dir) {

@@ -42,7 +42,7 @@ public final class FileHandlerResult {
     public static final FileHandlerResult STOP = new FileHandlerResult("STOP");
 
     /** All enumeration instances. */
-    public static final List<FileHandlerResult> INSTANCES = asList( CONTINUE, SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP); //NOSONAR
+    public static final List<FileHandlerResult> INSTANCES = asList(CONTINUE, SKIP_ALL, SKIP_FILES, SKIP_SUBDIRS, STOP); // NOSONAR
 
     private final String name;
 
@@ -135,12 +135,12 @@ public final class FileHandlerResult {
         return false;
     }
 
-    private static List<FileHandlerResult> asList(final FileHandlerResult...handler) {
-	final List<FileHandlerResult> list = new ArrayList<>(handler.length);
-	for (final FileHandlerResult result : handler) {
-	    list.add(result);
-	}
-	return Collections.unmodifiableList(list);
+    private static List<FileHandlerResult> asList(final FileHandlerResult... handler) {
+        final List<FileHandlerResult> list = new ArrayList<>(handler.length);
+        for (final FileHandlerResult result : handler) {
+            list.add(result);
+        }
+        return Collections.unmodifiableList(list);
     }
-    
+
 }

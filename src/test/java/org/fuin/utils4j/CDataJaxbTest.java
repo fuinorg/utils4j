@@ -37,8 +37,7 @@ public class CDataJaxbTest {
     public final void testMarshal() throws Exception {
 
         final StringWriter writer = new StringWriter();
-        try (final CDataXmlStreamWriter sw = new CDataXmlStreamWriter(
-                XMLOutputFactory.newInstance().createXMLStreamWriter(writer));) {
+        try (final CDataXmlStreamWriter sw = new CDataXmlStreamWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(writer));) {
 
             // PREPARE
             final JAXBContext ctx = JAXBContext.newInstance(MyClassWithCData.class);
@@ -49,8 +48,8 @@ public class CDataJaxbTest {
             final String result = writer.toString();
 
             // VERIFY
-            assertThat(result).isEqualTo("<?xml version=\"1.0\" ?><my-class-with-cdata>" + "<![CDATA[" + DATA
-                    + "]]>" + "</my-class-with-cdata>");
+            assertThat(result)
+                    .isEqualTo("<?xml version=\"1.0\" ?><my-class-with-cdata>" + "<![CDATA[" + DATA + "]]>" + "</my-class-with-cdata>");
 
         }
     }
@@ -59,8 +58,7 @@ public class CDataJaxbTest {
     public final void testUnmarshal() throws Exception {
 
         // TEST
-        final MyClassWithCData testee = unmarshal(
-                "<my-class-with-cdata>" + "<![CDATA[" + DATA + "]]>" + "</my-class-with-cdata>",
+        final MyClassWithCData testee = unmarshal("<my-class-with-cdata>" + "<![CDATA[" + DATA + "]]>" + "</my-class-with-cdata>",
                 MyClassWithCData.class);
 
         // VERIFY

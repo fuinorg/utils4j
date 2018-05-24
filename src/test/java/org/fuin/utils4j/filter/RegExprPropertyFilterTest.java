@@ -77,8 +77,7 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
         assertThat(filter1.complies(new TestObject("bab"))).isFalse();
         assertThat(filter1.complies(new TestObject("xbab"))).isFalse();
 
-        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME,
-                ".*schlemmerinfo\\.de.*");
+        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME, ".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.MATCHES);
         assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/"))).isTrue();
         assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
@@ -100,8 +99,7 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
         assertThat(filter1.complies(new TestObject("bab"))).isTrue();
         assertThat(filter1.complies(new TestObject("xbab"))).isFalse();
 
-        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME,
-                ".*schlemmerinfo\\.de.*");
+        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME, ".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.LOOKING_AT);
         assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/"))).isTrue();
         assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();
@@ -123,8 +121,7 @@ public class RegExprPropertyFilterTest extends PropertyFilterTest {
         assertThat(filter1.complies(new TestObject("bab"))).isTrue();
         assertThat(filter1.complies(new TestObject("xbab"))).isTrue();
 
-        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME,
-                ".*schlemmerinfo\\.de.*");
+        final RegExprPropertyFilter filter2 = new RegExprPropertyFilter(STRING_PROPERTY_NAME, ".*schlemmerinfo\\.de.*");
         filter2.setType(RegExprFilter.FIND);
         assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/"))).isTrue();
         assertThat(filter2.complies(new TestObject("http://www.schlemmerinfo.de/eng/hamburg/"))).isTrue();

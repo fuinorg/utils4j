@@ -72,8 +72,7 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
      * @param name
      *            Name of the node.
      */
-    private PropertiesFilePreferences(final PropertiesFilePreferences parent, final File dir,
-            final String name) {
+    private PropertiesFilePreferences(final PropertiesFilePreferences parent, final File dir, final String name) {
         super(parent, name);
         this.dir = dir;
         this.file = new PropertiesFile(new File(dir, FILENAME));
@@ -110,14 +109,14 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
             if (removed) {
                 if (!file.delete()) {
                     throw new IllegalStateException("Was not able to delete file: " + file);
-                }                
+                }
                 if (!dir.delete()) {
                     throw new IllegalStateException("Was not able to delete directory: " + dir);
                 }
             } else {
                 final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                final String[] comments = new String[] { "DO NOT EDIT!",
-                        "Created by " + this.getClass().getName(), sdf.format(new Date()) };
+                final String[] comments = new String[] { "DO NOT EDIT!", "Created by " + this.getClass().getName(),
+                        sdf.format(new Date()) };
                 mkdirIfNecessary();
                 file.save(comments, true);
             }

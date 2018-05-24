@@ -117,8 +117,7 @@ public final class VariableResolver {
     }
 
     /**
-     * Returns the variable names and how many steps are necessary to resolve all references to other
-     * variables.
+     * Returns the variable names and how many steps are necessary to resolve all references to other variables.
      * 
      * @return Names and state of all known variables - Never <code>null</code>, but may be empty.
      */

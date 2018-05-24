@@ -37,8 +37,7 @@ public final class RandomAccessFileInputStreamTest {
 
     @BeforeClass
     public static void beforeClass() throws IOException {
-        final File dir = new File("src/test/resources/"
-                + Utils4J.getPackagePath(RandomAccessFileInputStreamTest.class));
+        final File dir = new File("src/test/resources/" + Utils4J.getPackagePath(RandomAccessFileInputStreamTest.class));
         file = new File(dir, "RandomAccessFileInputStreamData.bin");
         if (!file.exists()) {
             throw new IllegalStateException("File '" + file + "' not found!");

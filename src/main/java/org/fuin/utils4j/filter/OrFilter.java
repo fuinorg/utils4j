@@ -84,8 +84,7 @@ public class OrFilter extends ListFilter {
     }
 
     /**
-     * Set the phrase representing this type of filter A NULL argument will set the default
-     * <code>DEFAULT_OR_STR</code>.
+     * Set the phrase representing this type of filter A NULL argument will set the default <code>DEFAULT_OR_STR</code>.
      * 
      * @param newOrStr
      *            Name of the filter (default "or")

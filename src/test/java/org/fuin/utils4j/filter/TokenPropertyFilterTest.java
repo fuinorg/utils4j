@@ -62,8 +62,7 @@ public class TokenPropertyFilterTest extends PropertyFilterTest {
 
     @Test
     public final void testToString() {
-        assertThat("" + new TokenPropertyFilter(STRING_PROPERTY_NAME, "one", ",")).isEqualTo(
-                STRING_PROPERTY_NAME + " contains 'one' [,]");
+        assertThat("" + new TokenPropertyFilter(STRING_PROPERTY_NAME, "one", ",")).isEqualTo(STRING_PROPERTY_NAME + " contains 'one' [,]");
     }
 
 }

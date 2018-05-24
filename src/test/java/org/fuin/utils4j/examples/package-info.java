@@ -17,7 +17,6 @@
  */
 
 /**
- * Usage examples for the library. 
+ * Usage examples for the library.
  */
 package org.fuin.utils4j.examples;
-

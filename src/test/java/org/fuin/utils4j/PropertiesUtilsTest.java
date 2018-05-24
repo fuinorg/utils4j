@@ -34,8 +34,7 @@ import org.junit.Test;
 // CHECKSTYLE:OFF
 public class PropertiesUtilsTest {
 
-    private static final File TEST_PROPERTIES_FILE = new File(
-            "src/test/resources/org/fuin/utils4j/test.properties");
+    private static final File TEST_PROPERTIES_FILE = new File("src/test/resources/org/fuin/utils4j/test.properties");
 
     @Test
     public final void testLoadPropertiesClassString() {
@@ -93,8 +92,7 @@ public class PropertiesUtilsTest {
     public final void testSavePropertiesNonExistingParentDirectory() throws IOException {
         try {
             final File parentDir = new File("thisdoesnotexist");
-            PropertiesUtils.saveProperties(new File(parentDir, "dummy.properties"), new Properties(),
-                    "COMMENT");
+            PropertiesUtils.saveProperties(new File(parentDir, "dummy.properties"), new Properties(), "COMMENT");
             fail();
         } catch (final IllegalArgumentException ex) {
             assertThat(ex.getMessage()).contains("The parent directory");
@@ -120,8 +118,8 @@ public class PropertiesUtilsTest {
 
     @Test
     public final void testLoadPropertiesURLString() throws MalformedURLException {
-        final Properties props = PropertiesUtils.loadProperties(
-                TEST_PROPERTIES_FILE.getParentFile().toURI().toURL(), TEST_PROPERTIES_FILE.getName());
+        final Properties props = PropertiesUtils.loadProperties(TEST_PROPERTIES_FILE.getParentFile().toURI().toURL(),
+                TEST_PROPERTIES_FILE.getName());
         assertThat(props.size()).isEqualTo(3);
         assertThat(props.get("one")).isEqualTo("1");
         assertThat(props.get("two")).isEqualTo("2");
@@ -139,8 +137,7 @@ public class PropertiesUtilsTest {
 
     @Test
     public final void testLoadPropertiesStringString() throws MalformedURLException {
-        final Properties props = PropertiesUtils.loadProperties(
-                TEST_PROPERTIES_FILE.getParentFile().toURI().toURL().toExternalForm(),
+        final Properties props = PropertiesUtils.loadProperties(TEST_PROPERTIES_FILE.getParentFile().toURI().toURL().toExternalForm(),
                 TEST_PROPERTIES_FILE.getName());
         assertThat(props).hasSize(3);
         assertThat(props.get("one")).isEqualTo("1");

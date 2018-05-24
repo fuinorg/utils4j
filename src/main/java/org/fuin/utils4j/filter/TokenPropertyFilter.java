@@ -34,8 +34,7 @@ public class TokenPropertyFilter extends PropertyFilter {
      * @param newSeparators
      *            Separators
      */
-    public TokenPropertyFilter(final String newPropertyName, final String constValue,
-            final String newSeparators) {
+    public TokenPropertyFilter(final String newPropertyName, final String constValue, final String newSeparators) {
         super(newPropertyName);
         this.filter = new TokenFilter(constValue, newSeparators);
     }

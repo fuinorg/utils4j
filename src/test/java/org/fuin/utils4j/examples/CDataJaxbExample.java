@@ -43,7 +43,7 @@ public class CDataJaxbExample {
      *            Not used.
      */
     public static void main(String[] args) throws Exception {
-        
+
         // Create writers
         final StringWriter writer = new StringWriter();
         final XMLStreamWriter xmlWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(writer);
@@ -59,7 +59,8 @@ public class CDataJaxbExample {
 
         // Prints out the result
         System.out.println(xml);
-        // <?xml version="1.0" ?><my-class-with-cdata><![CDATA[<whatever this="is"/>]]></my-class-with-cdata>
+        // <?xml version="1.0" ?><my-class-with-cdata><![CDATA[<whatever
+        // this="is"/>]]></my-class-with-cdata>
 
         // Convert it back to object
         final MyClassWithCData copy = unmarshal(xml, MyClassWithCData.class);
@@ -67,8 +68,8 @@ public class CDataJaxbExample {
         // Print out cdata content
         System.out.println(copy.getContent());
         // <whatever this="is"/>
-        
+
     }
-    
+
 }
-//CHECKSTYLE:ON
+// CHECKSTYLE:ON

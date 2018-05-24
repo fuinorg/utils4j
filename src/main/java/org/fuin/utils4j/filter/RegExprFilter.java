@@ -30,8 +30,7 @@ public class RegExprFilter implements Filter {
     public static final int MATCHES = 0;
 
     /**
-     * The lookingAt method attempts to match the input sequence, starting at the beginning, against the
-     * pattern.
+     * The lookingAt method attempts to match the input sequence, starting at the beginning, against the pattern.
      */
     public static final int LOOKING_AT = 1;
 

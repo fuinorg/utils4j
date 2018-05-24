@@ -34,8 +34,7 @@ public class IntegerPropertyFilter extends ComparablePropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public IntegerPropertyFilter(final String newPropertyName, final String newOperator,
-            final Integer constValue) {
+    public IntegerPropertyFilter(final String newPropertyName, final String newOperator, final Integer constValue) {
         super(newPropertyName, new IntegerFilter(newOperator, constValue));
     }
 
@@ -49,8 +48,7 @@ public class IntegerPropertyFilter extends ComparablePropertyFilter {
      * @param constValue
      *            Value to compare with.
      */
-    public IntegerPropertyFilter(final String newPropertyName, final Operator newOperator,
-            final Integer constValue) {
+    public IntegerPropertyFilter(final String newPropertyName, final Operator newOperator, final Integer constValue) {
         super(newPropertyName, new IntegerFilter(newOperator, constValue));
     }
 

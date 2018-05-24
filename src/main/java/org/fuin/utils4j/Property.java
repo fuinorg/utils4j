@@ -20,10 +20,9 @@ package org.fuin.utils4j;
 import java.io.Serializable;
 
 /**
- * A key value pair that maintains an additional change state. The state contains the information if the value
- * has been changed since construction of the instance. The methods <code>hashCode()</code> and
- * <code>equals(Object)</code> are based on the <code>key</code> attribute. The attributes <code>key</code>
- * and <code>initialValue</code> are immutable.
+ * A key value pair that maintains an additional change state. The state contains the information if the value has been changed since
+ * construction of the instance. The methods <code>hashCode()</code> and <code>equals(Object)</code> are based on the <code>key</code>
+ * attribute. The attributes <code>key</code> and <code>initialValue</code> are immutable.
  */
 public final class Property implements Comparable<Property>, Serializable {
 
@@ -118,8 +117,7 @@ public final class Property implements Comparable<Property>, Serializable {
     /**
      * Returns if the value has been created since construction.
      * 
-     * @return If the property has been set to a non-<code>null</code> value <code>true</code> else
-     *         <code>false</code>.
+     * @return If the property has been set to a non-<code>null</code> value <code>true</code> else <code>false</code>.
      */
     public final boolean isNew() {
         if (initialValue != null) {

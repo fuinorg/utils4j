@@ -93,7 +93,7 @@ public class WaitHelperTest {
             // OK
         }
     }
-    
+
     @Test
     public final void testWaitUntilResultSUCCESS() throws Exception {
 
