@@ -243,7 +243,9 @@ A test that shows the usage can be found here: [JandexUtilsTest](https://github.
 </dependency>
 ```
 
+
 * * *
+
 
 ## Snapshots
 
