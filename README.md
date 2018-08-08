@@ -3,14 +3,12 @@ utils4j
 
 A small Java library that contains several helpful utility classes.
 
-[![Build Status](https://fuin-org.ci.cloudbees.com/job/utils4j/badge/icon)](https://fuin-org.ci.cloudbees.com/job/utils4j/)
+[![Build Status](https://jenkins.fuin.org/job/utils4j/badge/icon)](https://jenkins.fuin.org/job/utils4j/)
 [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=org.fuin%3Autils4j&metric=coverage)](https://sonarcloud.io/dashboard?id=org.fuin%3Autils4j)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/)
 [![Javadocs](https://www.javadoc.io/badge/org.fuin/utils4j.svg)](https://www.javadoc.io/doc/org.fuin/utils4j)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
 [![Java Development Kit 1.8](https://img.shields.io/badge/JDK-1.8-green.svg)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-
-<a href="https://fuin-org.ci.cloudbees.com/job/utils4j"><img src="http://www.fuin.org/images/Button-Built-on-CB-1.png" width="213" height="72" border="0" alt="Built on CloudBees"/></a>
 
 **JDK 1.8 for releases >= 0.9.0  /  JDK 1.4.2 for releases up to 0.8.0**
 
