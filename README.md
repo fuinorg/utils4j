@@ -246,6 +246,7 @@ A test that shows the usage can be found here: [JandexUtilsTest](https://github.
 
 * * *
 
+
 ## Snapshots
 
 Snapshots can be found on the [OSS Sonatype Snapshots Repository](http://oss.sonatype.org/content/repositories/snapshots/org/fuin "Snapshot Repository"). 
