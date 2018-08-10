@@ -8,6 +8,7 @@ pipeline {
             steps {
                 sh "./mvnw -version"
                 sh "gpg --version"
+                sh "gpg-agent --daemon"
             }
         }
         stage('Build') { 
