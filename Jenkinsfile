@@ -7,7 +7,6 @@ pipeline {
         stage ('Initialize') {
             steps {
                 sh "./mvnw -version"
-                sh "export GNUPGHOME=/private/jenkins/.gnupg"
                 sh "gpg --version"
             }
         }
