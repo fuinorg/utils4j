@@ -32,11 +32,19 @@ A small Java library that contains several helpful utility classes.
 # Description
 
 ### URL support for "classpath:" scheme
+There are two variats you can use.
+
+Directly create a URL using a utility method:
 ```Java
 URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 ```
 A full example can be found here: [ClasspathURLExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ClasspathURLExample.java)
 
+If you register the URL stream handler, all URLs (no matter how they were constructed) will work:
+```Java
+Handler.add();
+URL url = new URL("classpath:/org/fuin/utils4j/test.properties");
+```
 
 ### Variable resolver
 Resolves variable references in a map and prevents on cycles.
