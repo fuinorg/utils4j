@@ -19,7 +19,7 @@ A small Java library that contains several helpful utility classes.
 * [URL support for "classpath:" scheme](#url-support-for-classpath-scheme)
 * [Variable resolver](#variable-resolver)
 * [ZIP and UNZIP](#zip-and-unzip)
-* [Tracking changes of a list / map](##tracking-changes-of-a-list--map)
+* [Tracking changes of a list / map](#tracking-changes-of-a-list-map)
 * [Easy file locking](#easy-file-locking)
 * [Properties file preferences](#properties-file-preferences)
 * [JAXB CDATA Stream Writer](#jaxb-cdata-stream-writer)
