@@ -19,6 +19,8 @@ package org.fuin.utils4j;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * One or more attempts to merge properties failed.
@@ -39,14 +41,26 @@ public final class MergeException extends Exception {
      * @param problems
      *            List of one or more problems.
      */
-    public MergeException(final File file, final Problem[] problems) {
-        super("The properties file '" + file + "' was modified by someone else " + "and cannot be merged!");
+    public MergeException(final File file, final List<Problem> problems) {
+        super("The properties file '" + file + "' was modified by someone else " + "and cannot be merged! " + problems);
 
         Utils4J.checkNotNull("file", file);
         this.file = file;
 
         Utils4J.checkNotNull("problems", problems);
-        this.problems = problems;
+        this.problems = problems.toArray(new Problem[problems.size()]);
+    }
+    
+    /**
+     * Constructor with file and problem list.
+     * 
+     * @param file
+     *            File that caused the exception.
+     * @param problems
+     *            List of one or more problems.
+     */
+    public MergeException(final File file, final Problem...problems) {
+        this(file, Arrays.asList(problems));
     }
 
     /**

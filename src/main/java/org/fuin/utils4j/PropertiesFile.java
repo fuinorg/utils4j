@@ -197,8 +197,8 @@ public class PropertiesFile {
             }
         }
 
-        if (problems.isEmpty()) {
-            throw new MergeException(file, problems.toArray(new MergeException.Problem[0]));
+        if (!problems.isEmpty()) {
+            throw new MergeException(file, problems);
         }
 
     }

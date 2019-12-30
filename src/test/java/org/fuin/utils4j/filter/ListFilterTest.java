@@ -33,7 +33,7 @@ public abstract class ListFilterTest {
     @Test
     public final void testAddRemoveFilter() {
         final ListFilter filter = createTestee(" x ");
-        assertThat(filter.getFilterList()).isNull();
+        assertThat(filter.getFilterList()).isEmpty();
 
         final DummyFilter subFilter1 = new DummyFilter();
         filter.addFilter(subFilter1);
@@ -53,7 +53,7 @@ public abstract class ListFilterTest {
 
         // remove second filter from list
         filter.removeFilter(subFilter2);
-        assertThat(filter.getFilterList()).isNull();
+        assertThat(filter.getFilterList()).isEmpty();
 
     }
 
