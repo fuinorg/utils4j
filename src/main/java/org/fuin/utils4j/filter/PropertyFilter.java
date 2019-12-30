@@ -76,9 +76,9 @@ public abstract class PropertyFilter implements Filter {
         for (int i = 0; i < getterNames.length; i++) {
             final String getter = getterNames[i];
             try {
-                final Class cl = obj.getClass();
-                final Method m = cl.getMethod(getter, new Class[] {});
-                return m.invoke(obj, new Object[] {});
+                final Class<?> cl = obj.getClass();
+                final Method m = cl.getMethod(getter);
+                return m.invoke(obj);
             } catch (final IllegalAccessException e) {
                 throw new RuntimeException("Accessing " + getter + " method of property '" + property + "' failed (private? protected?)! ["
                         + obj.getClass() + "]", e);

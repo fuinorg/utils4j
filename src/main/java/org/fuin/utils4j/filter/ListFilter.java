@@ -18,6 +18,7 @@
 package org.fuin.utils4j.filter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -168,11 +169,10 @@ public abstract class ListFilter implements Filter {
      * @return List with <code>Filter</code> objects
      */
     public final List getFilterList() {
-        if (filterList.size() == 0) {
-            return null;
-        } else {
-            return filterList;
+        if (filterList.isEmpty()) {
+            return Collections.emptyList();
         }
+        return filterList;        
     }
 
     /**

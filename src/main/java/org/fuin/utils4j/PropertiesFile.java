@@ -136,7 +136,7 @@ public class PropertiesFile {
 
     }
 
-    private void load(final RandomAccessFileInputStream in, final File file, final List<Property> props, final String encoding)
+    private void load(final RandomAccessFileInputStream in, final List<Property> props, final String encoding)
             throws IOException {
 
         final LineNumberReader reader = new LineNumberReader(new InputStreamReader(new BufferedInputStream(in), encoding));
@@ -159,7 +159,7 @@ public class PropertiesFile {
         final List<MergeException.Problem> problems = new ArrayList<>();
 
         final List<Property> currentProps = new ArrayList<>();
-        load(in, file, currentProps, encoding);
+        load(in, currentProps, encoding);
 
         for (int i = 0; i < currentProps.size(); i++) {
             final Property currentProp = currentProps.get(i);
@@ -197,7 +197,7 @@ public class PropertiesFile {
             }
         }
 
-        if (problems.size() > 0) {
+        if (problems.isEmpty()) {
             throw new MergeException(file, problems.toArray(new MergeException.Problem[0]));
         }
 

@@ -641,16 +641,10 @@ public final class Utils4J {
         if (!containsURL(urlClassLoader.getURLs(), url)) {
             try {
 
-                final Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
+                final Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
                 addURL.setAccessible(true);
-                addURL.invoke(urlClassLoader, new Object[] { url });
-            } catch (final NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            } catch (final IllegalArgumentException e) {
-                throw new RuntimeException(e);
-            } catch (final IllegalAccessException e) {
-                throw new RuntimeException(e);
-            } catch (final InvocationTargetException e) {
+                addURL.invoke(urlClassLoader, url);
+            } catch (final NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -946,7 +940,7 @@ public final class Utils4J {
                 from = str.length();
             } else {
                 final String key = str.substring(start + 2, end);
-                final String value = (String) vars.get(key);
+                final String value = vars.get(key);
                 if (value == null) {
                     sb.append("${");
                     sb.append(key);
@@ -1447,9 +1441,7 @@ public final class Utils4J {
         try (final ByteArrayInputStream bais = new ByteArrayInputStream(data)) {
             final ObjectInputStream in = new ObjectInputStream(bais);
             return (T) in.readObject();
-        } catch (final ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
-        } catch (final IOException ex) {
+        } catch (final ClassNotFoundException | IOException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -1569,7 +1561,7 @@ public final class Utils4J {
 
         checkNotNull("actualException", actualException);
 
-        if (expectedExceptions == null || expectedExceptions.size() == 0) {
+        if (expectedExceptions == null || expectedExceptions.isEmpty()) {
             // All exceptions are expected
             return true;
         }
@@ -1599,7 +1591,7 @@ public final class Utils4J {
 
         checkNotNull("actualException", actualException);
 
-        if (expectedExceptions == null || expectedExceptions.size() == 0) {
+        if (expectedExceptions == null || expectedExceptions.isEmpty()) {
             // All exceptions are expected
             return true;
         }
@@ -1703,7 +1695,7 @@ public final class Utils4J {
      * @return List of files in the given paths.
      */
     public static List<File> pathsFiles(final String paths, final Predicate<File> predicate) {
-        final List<File> files = new ArrayList<File>();
+        final List<File> files = new ArrayList<>();
         for (final String filePathAndName : paths.split(File.pathSeparator)) {
             final File file = new File(filePathAndName);
             if (file.isDirectory()) {

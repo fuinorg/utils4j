@@ -46,10 +46,10 @@ public final class VariableResolver {
         if (unresolved == null) {
             this.unresolved = new HashMap<>();
         } else {
-            this.unresolved = new HashMap<String, String>(unresolved);
+            this.unresolved = new HashMap<>(unresolved);
         }
-        depth = new HashMap<String, Integer>();
-        resolved = new HashMap<String, String>();
+        depth = new HashMap<>();
+        resolved = new HashMap<>();
         resolve();
     }
 
@@ -111,7 +111,7 @@ public final class VariableResolver {
     }
 
     private List<String> add(final List<String> list, final String name) {
-        final List<String> newList = new ArrayList<String>(list);
+        final List<String> newList = new ArrayList<>(list);
         newList.add(name);
         return newList;
     }
@@ -153,7 +153,7 @@ public final class VariableResolver {
      */
     public static Set<String> references(final String value) {
 
-        final HashSet<String> names = new HashSet<String>();
+        final HashSet<String> names = new HashSet<>();
         if ((value == null) || (value.length() == 0)) {
             return names;
         }
