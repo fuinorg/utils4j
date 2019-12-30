@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +105,7 @@ public class JandexUtilsTest {
         final Indexer indexer = new Indexer();
 
         // TEST
-        JandexUtils.indexClasspath((URLClassLoader) JandexUtils.class.getClassLoader(), indexer, knownFiles);
+        JandexUtils.indexClasspath(indexer, knownFiles);
 
         // VERIFY
         final Index index = indexer.complete();

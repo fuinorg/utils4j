@@ -23,7 +23,10 @@ import java.util.concurrent.Callable;
 
 /**
  * Class that supports waiting for some condition.
+ * 
+ * @deprecated Use awaitility (https://github.com/awaitility/awaitility)
  */
+@Deprecated
 public final class WaitHelper {
 
     private final long sleepMillis;

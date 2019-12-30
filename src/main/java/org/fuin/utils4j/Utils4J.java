@@ -196,13 +196,21 @@ public final class Utils4J {
         checkNotNull("classLoader", classLoader);
         try {
             final Class<?> clasz = Class.forName(className, true, classLoader);
-            return clasz.newInstance();
-        } catch (final ClassNotFoundException e) {
-            throw new RuntimeException("Unknown class!", e);
-        } catch (final InstantiationException e) {
-            throw new RuntimeException("Error instanciating class!", e);
-        } catch (final IllegalAccessException e) {
-            throw new RuntimeException("Error accessing class!", e);
+            return clasz.getDeclaredConstructor().newInstance();
+        } catch (final ClassNotFoundException ex) {
+            throw new RuntimeException("Unknown class: " + className, ex);
+        } catch (final InstantiationException ex) {
+            throw new RuntimeException("Error instanciating class: " + className, ex);
+        } catch (final IllegalAccessException ex) {
+            throw new RuntimeException("Error accessing class: " + className, ex);
+        } catch (final IllegalArgumentException ex) {
+            throw new RuntimeException("Underlying constructor is inaccessible", ex);
+        } catch (final InvocationTargetException ex) {
+            throw new RuntimeException("Underlying constructor has thrown an exception", ex);
+        } catch (final NoSuchMethodException ex) {
+            throw new RuntimeException("No default constructor found for " + className, ex);
+        } catch (final SecurityException ex) {
+            throw new RuntimeException("Error accessing constructor", ex);
         }
     }
 
@@ -211,7 +219,10 @@ public final class Utils4J {
      * 
      * @param file
      *            File to add - Cannot be <code>null</code>.
+     *            
+     * @deprecated Will be removed with Java 11 - No replacement available.
      */
+    @Deprecated
     public static void addToClasspath(final File file) {
         addToClasspath(file, Utils4J.class.getClassLoader());
     }
@@ -223,7 +234,10 @@ public final class Utils4J {
      *            File to add - Cannot be <code>null</code>.
      * @param classLoader
      *            Class loader to use - Cannot be <code>null</code>.
+     *            
+     * @deprecated Will be removed with Java 11 - No replacement available.
      */
+    @Deprecated
     public static void addToClasspath(final File file, final ClassLoader classLoader) {
         checkNotNull("file", file);
         try {
@@ -238,7 +252,10 @@ public final class Utils4J {
      * 
      * @param url
      *            URL to add - Cannot be <code>null</code>.
+     *            
+     * @deprecated Will be removed with Java 11 - No replacement available.
      */
+    @Deprecated
     public static void addToClasspath(final String url) {
         addToClasspath(url, Utils4J.class.getClassLoader());
     }
@@ -250,7 +267,10 @@ public final class Utils4J {
      *            URL to add - Cannot be <code>null</code>.
      * @param classLoader
      *            Class loader to use - Cannot be <code>null</code>.
+     *            
+     * @deprecated Will be removed with Java 11 - No replacement available.
      */
+    @Deprecated
     public static void addToClasspath(final String url, final ClassLoader classLoader) {
         checkNotNull("url", url);
         try {
@@ -618,7 +638,10 @@ public final class Utils4J {
      * 
      * @param url
      *            URL to add - Cannot be <code>null</code>.
+     *            
+     * @deprecated Will be removed with Java 11 - No replacement available.
      */
+    @Deprecated
     public static void addToClasspath(final URL url) {
         addToClasspath(url, Utils4J.class.getClassLoader());
     }
@@ -630,7 +653,10 @@ public final class Utils4J {
      *            URL to add - Cannot be <code>null</code>.
      * @param classLoader
      *            Class loader to use - Cannot be <code>null</code>.
+     *            
+     * @deprecated Will be removed with Java 11 - No replacement available.
      */
+    @Deprecated
     public static void addToClasspath(final URL url, final ClassLoader classLoader) {
         checkNotNull("url", url);
         checkNotNull("classLoader", classLoader);
@@ -1672,7 +1698,7 @@ public final class Utils4J {
     }
 
     /**
-     * Returns a list of files from the classpath.
+     * Returns a list of filtered files from the classpath including content of directories and sub directories.
      * 
      * @param predicate
      *            Condition that returns files from the classpath.
@@ -1682,6 +1708,20 @@ public final class Utils4J {
     public static List<File> classpathFiles(final Predicate<File> predicate) {
         return pathsFiles(System.getProperty("java.class.path"), predicate);
 
+    }
+
+    /**
+     * Returns a list of all files from the classpath. Only returns the files itself and no files in directories.
+     * 
+     * @return List of files in the classpath (from property "java.class.path").
+     */
+    public static List<File> classpathFiles() {
+        final String paths = System.getProperty("java.class.path");
+        final List<File> files = new ArrayList<>();
+        for (final String filePathAndName : paths.split(File.pathSeparator)) {
+            files.add(new File(filePathAndName));
+        }
+        return files;
     }
 
     /**
@@ -1728,7 +1768,10 @@ public final class Utils4J {
      *            URL class loader to use.
      * 
      * @return List of files.
+     * 
+     * @deprecated Use {@link #classpathFiles()} instead.
      */
+    @Deprecated
     public static List<File> localFilesFromUrlClassLoader(final URLClassLoader urlClassLoader) {
         checkNotNull("urlClassLoader", urlClassLoader);
 

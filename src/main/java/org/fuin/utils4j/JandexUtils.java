@@ -133,12 +133,40 @@ public final class JandexUtils {
      *            Indexer to use.
      * @param knownFiles
      *            List of files already analyzed. New files will be added within this method.
+     *            
+     * @deprecated This method will be removed with Java 11, use {@link #indexClasspath(Indexer, List)} instead. 
      */
+    @Deprecated
     public static void indexClasspath(final URLClassLoader classLoader, final Indexer indexer, final List<File> knownFiles) {
+        indexFiles(Utils4J.localFilesFromUrlClassLoader(classLoader), indexer, knownFiles);
+    }
+    
+    /**
+     * Indexes all classes in the classpath (*.jar or *.class).
+     * 
+     * @param indexer
+     *            Indexer to use.
+     * @param knownFiles
+     *            List of files already analyzed. New files will be added within this method.
+     */    
+    public static void indexClasspath(final Indexer indexer, final List<File> knownFiles) {
+        indexFiles(Utils4J.classpathFiles(), indexer, knownFiles);
+    }
+    
+    /**
+     * Indexes all classes (*.jar or *.class).
+     * 
+     * @param classPathFiles
+     *            Files to use.
+     * @param indexer
+     *            Indexer to use.
+     * @param knownFiles
+     *            List of files already analyzed. New files will be added within this method.
+     */    
+    public static void indexFiles(final List<File> files, final Indexer indexer, final List<File> knownFiles) {
 
         // Variant that works with Maven "exec:java"
-        final List<File> classPathFiles = Utils4J.localFilesFromUrlClassLoader(classLoader);
-        for (final File file : classPathFiles) {
+        for (final File file : files) {
             if (Utils4J.nonJreJarFile(file)) {
                 indexJar(indexer, knownFiles, file);
             } else if (file.isDirectory() && !file.getName().startsWith(".")) {
