@@ -29,7 +29,7 @@ import java.util.Properties;
 public final class TestHelper {
 
     /**
-     * Private constructor to vaoid external instanciation.
+     * Private constructor to avoid external instantiation.
      */
     private TestHelper() {
         super();
