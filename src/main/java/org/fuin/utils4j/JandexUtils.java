@@ -156,7 +156,7 @@ public final class JandexUtils {
     /**
      * Indexes all classes (*.jar or *.class).
      * 
-     * @param classPathFiles
+     * @param files
      *            Files to use.
      * @param indexer
      *            Indexer to use.
