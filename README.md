@@ -130,9 +130,9 @@ public final class MyClassWithCData {
     
 }
 ```
-If you just need to unmarshal a CDATA section, using the above annotation is all you need to do.
+:information_source: If you just need to **unmarshal** (XML to Java) a CDATA section, using the above annotation is all you need to do.
 
-If you need to marshal a class with CDATA content you need to use the CDataXmlStreamWriter:
+:warning: If you need to **marshal** (Java to XML) a class with CDATA content you must use the CDataXmlStreamWriter in addition:
 ```Java
 // Create writers
 final StringWriter writer = new StringWriter();
