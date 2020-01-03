@@ -6,19 +6,15 @@
 
     <parent>
         <groupId>org.fuin</groupId>
-        <artifactId>pom-osgi</artifactId>
+        <artifactId>pom</artifactId>
         <version>1.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>utils4j</artifactId>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
     <version>0.11.0-SNAPSHOT</version>
     <description>A small Java library that contains several helpful utility classes.</description>
     <url>http://www.fuin.org/utils4j/</url>
-
-    <prerequisites>
-        <maven>3.3.0</maven>
-    </prerequisites>
 
     <scm>
         <url>https://github.com/fuinorg/utils4j/</url>
@@ -39,6 +35,13 @@
             <groupId>org.jboss</groupId>
             <artifactId>jandex</artifactId>
             <version>2.1.2.Final</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>2.3.2</version>
             <optional>true</optional>
         </dependency>
 
@@ -84,6 +87,43 @@
     <build>
 
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>4.2.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <manifestLocation>${manifest-location}</manifestLocation>
+                    <Automatic-Module-Name>org.fuin.utils4j</Automatic-Module-Name>
+                    <instructions>
+                        <_removeheaders>
+                            Built-By,Tool,Build-Jdk,Created-By,
+                            Bnd-LastModified, Private-Package
+                        </_removeheaders>
+                    </instructions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-manifest</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.jacoco</groupId>
