@@ -120,8 +120,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <manifestLocation>${manifest-location}</manifestLocation>
-                    <Automatic-Module-Name>org.fuin.utils4j</Automatic-Module-Name>
                     <instructions>
+                        <Automatic-Module-Name>org.fuin.utils4j</Automatic-Module-Name>
                         <_removeheaders>
                             Built-By,Tool,Build-Jdk,Created-By,
                             Bnd-LastModified, Private-Package
