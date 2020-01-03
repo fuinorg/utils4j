@@ -161,6 +161,16 @@ System.out.println(copy.getContent());
 
 A full example can be found here: [CDataJaxbExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/CDataJaxbExample.java)
 
+**Caution** - You must explicitly add the xml.bind-api dependency to your POM if you want to use this feature, because it's defined as optional here.
+
+```xml
+<dependency>
+    <groupId>jakarta.xml.bind</groupId>
+    <artifactId>jakarta.xml.bind-api</artifactId>
+    <version>2.3.2</version>
+</dependency>
+```
+
 
 ### Wait for code to finish
 
