@@ -23,7 +23,7 @@ A small Java library that contains several helpful utility classes.
 * [Easy file locking](#easy-file-locking)
 * [Properties file preferences](#properties-file-preferences)
 * [JAXB CDATA Stream Writer](#jaxb-cdata-stream-writer)
-* [Wait for code to finish](#wait-for-code-to-finish)
+* [Wait for code to finish](#wait-for-code-to-finish) (Deprecated in favour of [Awaitility](https://github.com/awaitility/awaitility))
 * [Find all JARs and classes in the classpath](#find-all-jars-and-classes-in-the-classpath)
 * [Analyze classes in the classpath with Jandex](#analyze-classes-in-the-classpath-with-jandex)
 
@@ -163,6 +163,8 @@ A full example can be found here: [CDataJaxbExample.java](https://github.com/fui
 
 
 ### Wait for code to finish
+
+> :warning: Deprecated in favour of [Awaitility](https://github.com/awaitility/awaitility)
 
 The [WaitHelper](https://github.com/fuinorg/utils4j/blob/master/src/main/java/org/fuin/utils4j/WaitHelper.java) class supports waiting for some condition.
 
