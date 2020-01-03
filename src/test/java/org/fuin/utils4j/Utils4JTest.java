@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -301,34 +300,6 @@ public class Utils4JTest {
         } catch (final IllegalArgumentException ex) {
             // OK
         }
-    }
-
-    @Test
-    @SuppressWarnings("resource")
-    public final void testAddToClasspathString() throws MalformedURLException {
-        final ClassLoader classLoader = Utils4J.class.getClassLoader();
-        if (!(classLoader instanceof URLClassLoader)) {
-            throw new IllegalStateException("Classloader is not an URL classloader! [" + classLoader.getClass().getName() + "]");
-        }
-        final URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
-        final URL url = new URL("file:/test1.jar");
-        assertThat(Utils4J.containsURL(urlClassLoader.getURLs(), url)).isFalse();
-        Utils4J.addToClasspath(url.toExternalForm());
-        assertThat(Utils4J.containsURL(urlClassLoader.getURLs(), url)).isTrue();
-    }
-
-    @Test
-    @SuppressWarnings("resource")
-    public final void testAddToClasspathURL() throws MalformedURLException {
-        final ClassLoader classLoader = Utils4J.class.getClassLoader();
-        if (!(classLoader instanceof URLClassLoader)) {
-            throw new IllegalStateException("Classloader is not an URL classloader! [" + classLoader.getClass().getName() + "]");
-        }
-        final URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
-        final URL url = new URL("file:/test2.jar");
-        assertThat(Utils4J.containsURL(urlClassLoader.getURLs(), url)).isFalse();
-        Utils4J.addToClasspath(url);
-        assertThat(Utils4J.containsURL(urlClassLoader.getURLs(), url)).isTrue();
     }
 
     @Test
@@ -892,7 +863,6 @@ public class Utils4JTest {
         final File[] jars = libDir.listFiles(file -> {
             return file.getName().endsWith(".jar");
         });
-        final File securityDir = new File(libDir, "security");
 
         // Valid JRE JARs
         assertThat(Utils4J.jreJarFile(jars[0])).isTrue();
@@ -927,33 +897,20 @@ public class Utils4JTest {
     public void testPathsFiles() {
 
         final File javaHomeDir = new File(System.getProperty("java.home"));
-
-        final List<File> bootJarFiles = Utils4J.pathsFiles(System.getProperty("sun.boot.class.path"), Utils4J::jreJarFile);
-        final File rtJar = new File(javaHomeDir, "lib/rt.jar");
+        final List<File> bootJarFiles = Utils4J.pathsFiles(System.getProperty("sun.boot.library.path"), Utils4J::jreJarFile);
+        final File rtJar = new File(javaHomeDir, "lib/jrt-fs.jar");
         assertThat(bootJarFiles).contains(rtJar);
 
-        final List<File> extJarFiles = Utils4J.pathsFiles(System.getProperty("java.ext.dirs"), Utils4J::jreJarFile);
-        final File localedataJar = new File(javaHomeDir, "lib/ext/localedata.jar");
-        assertThat(extJarFiles).contains(localedataJar);
-
-    }
-
-    @Test
-    public void testLocalFilesFromUrlClassLoader() throws IOException {
-
-        final List<File> files = Utils4J.localFilesFromUrlClassLoader((URLClassLoader) this.getClass().getClassLoader());
-        assertThat(files).contains(new File("/test1.jar"));
-        
     }
 
     @Test
     public void testClasspathFiles() throws IOException {
-        
+
         final File currentDir = new File(".").getCanonicalFile();
         final List<File> files = Utils4J.classpathFiles();
         assertThat(files).contains(new File(currentDir, "target/classes"));
-        
+
     }
-    
+
 }
 // CHECKSTYLE:ON

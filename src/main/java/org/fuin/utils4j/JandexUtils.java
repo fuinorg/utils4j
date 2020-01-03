@@ -20,7 +20,6 @@ package org.fuin.utils4j;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -127,32 +126,15 @@ public final class JandexUtils {
     /**
      * Indexes all classes in the classpath (*.jar or *.class).
      * 
-     * @param classLoader
-     *            Class loader to use.
      * @param indexer
      *            Indexer to use.
      * @param knownFiles
      *            List of files already analyzed. New files will be added within this method.
-     *            
-     * @deprecated This method will be removed with Java 11, use {@link #indexClasspath(Indexer, List)} instead. 
      */
-    @Deprecated
-    public static void indexClasspath(final URLClassLoader classLoader, final Indexer indexer, final List<File> knownFiles) {
-        indexFiles(Utils4J.localFilesFromUrlClassLoader(classLoader), indexer, knownFiles);
-    }
-    
-    /**
-     * Indexes all classes in the classpath (*.jar or *.class).
-     * 
-     * @param indexer
-     *            Indexer to use.
-     * @param knownFiles
-     *            List of files already analyzed. New files will be added within this method.
-     */    
     public static void indexClasspath(final Indexer indexer, final List<File> knownFiles) {
         indexFiles(Utils4J.classpathFiles(), indexer, knownFiles);
     }
-    
+
     /**
      * Indexes all classes (*.jar or *.class).
      * 
@@ -162,7 +144,7 @@ public final class JandexUtils {
      *            Indexer to use.
      * @param knownFiles
      *            List of files already analyzed. New files will be added within this method.
-     */    
+     */
     public static void indexFiles(final List<File> files, final Indexer indexer, final List<File> knownFiles) {
 
         // Variant that works with Maven "exec:java"

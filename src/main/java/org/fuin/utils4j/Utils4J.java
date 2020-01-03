@@ -39,9 +39,7 @@ import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
@@ -215,72 +213,6 @@ public final class Utils4J {
     }
 
     /**
-     * Adds a file to the classpath.
-     * 
-     * @param file
-     *            File to add - Cannot be <code>null</code>.
-     *            
-     * @deprecated Will be removed with Java 11 - No replacement available.
-     */
-    @Deprecated
-    public static void addToClasspath(final File file) {
-        addToClasspath(file, Utils4J.class.getClassLoader());
-    }
-
-    /**
-     * Adds a file to the classpath.
-     * 
-     * @param file
-     *            File to add - Cannot be <code>null</code>.
-     * @param classLoader
-     *            Class loader to use - Cannot be <code>null</code>.
-     *            
-     * @deprecated Will be removed with Java 11 - No replacement available.
-     */
-    @Deprecated
-    public static void addToClasspath(final File file, final ClassLoader classLoader) {
-        checkNotNull("file", file);
-        try {
-            addToClasspath(file.toURI().toURL(), classLoader);
-        } catch (final MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Adds an URL to the classpath.
-     * 
-     * @param url
-     *            URL to add - Cannot be <code>null</code>.
-     *            
-     * @deprecated Will be removed with Java 11 - No replacement available.
-     */
-    @Deprecated
-    public static void addToClasspath(final String url) {
-        addToClasspath(url, Utils4J.class.getClassLoader());
-    }
-
-    /**
-     * Adds an URL to the classpath.
-     * 
-     * @param url
-     *            URL to add - Cannot be <code>null</code>.
-     * @param classLoader
-     *            Class loader to use - Cannot be <code>null</code>.
-     *            
-     * @deprecated Will be removed with Java 11 - No replacement available.
-     */
-    @Deprecated
-    public static void addToClasspath(final String url, final ClassLoader classLoader) {
-        checkNotNull("url", url);
-        try {
-            addToClasspath(new URL(url), classLoader);
-        } catch (final MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * Checks if the array or URLs contains the given URL.
      * 
      * @param urls
@@ -302,21 +234,6 @@ public final class Utils4J {
             }
         }
         return false;
-    }
-
-    /**
-     * Creates an MD5 hash from a file.
-     * 
-     * @param file
-     *            File to create an hash for - Cannot be <code>null</code>.
-     * 
-     * @return Hash as text.
-     * 
-     * @deprecated Use <code>createHashMD5</code> instead.
-     */
-    @Deprecated
-    public static String createHash(final File file) {
-        return createHashMD5(file);
     }
 
     /**
@@ -631,49 +548,6 @@ public final class Utils4J {
             }
         }
         return sb.toString();
-    }
-
-    /**
-     * Adds an URL to the class path.
-     * 
-     * @param url
-     *            URL to add - Cannot be <code>null</code>.
-     *            
-     * @deprecated Will be removed with Java 11 - No replacement available.
-     */
-    @Deprecated
-    public static void addToClasspath(final URL url) {
-        addToClasspath(url, Utils4J.class.getClassLoader());
-    }
-
-    /**
-     * Adds an URL to the class path.
-     * 
-     * @param url
-     *            URL to add - Cannot be <code>null</code>.
-     * @param classLoader
-     *            Class loader to use - Cannot be <code>null</code>.
-     *            
-     * @deprecated Will be removed with Java 11 - No replacement available.
-     */
-    @Deprecated
-    public static void addToClasspath(final URL url, final ClassLoader classLoader) {
-        checkNotNull("url", url);
-        checkNotNull("classLoader", classLoader);
-        if (!(classLoader instanceof URLClassLoader)) {
-            throw new IllegalArgumentException("Cannot add '" + url + "' to classloader because it's not an URL classloader");
-        }
-        final URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
-        if (!containsURL(urlClassLoader.getURLs(), url)) {
-            try {
-
-                final Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-                addURL.setAccessible(true);
-                addURL.invoke(urlClassLoader, url);
-            } catch (final NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     /**
@@ -1751,41 +1625,6 @@ public final class Utils4J {
             }
         }
         return files;
-    }
-
-    private static File asFile(final URL url) {
-        try {
-            return new File(url.toURI());
-        } catch (final URISyntaxException ex) {
-            return new File(url.getPath());
-        }
-    }
-
-    /**
-     * Returns all "file://" entries in the URL class loader as files.
-     * 
-     * @param urlClassLoader
-     *            URL class loader to use.
-     * 
-     * @return List of files.
-     * 
-     * @deprecated Use {@link #classpathFiles()} instead.
-     */
-    @Deprecated
-    public static List<File> localFilesFromUrlClassLoader(final URLClassLoader urlClassLoader) {
-        checkNotNull("urlClassLoader", urlClassLoader);
-
-        final List<File> files = new ArrayList<>();
-
-        final URL[] urls = urlClassLoader.getURLs();
-        for (final URL url : urls) {
-            if ("file".equals(url.getProtocol())) {
-                files.add(asFile(url));
-            }
-        }
-
-        return files;
-
     }
 
     /**
