@@ -10,7 +10,7 @@ A small Java library that contains several helpful utility classes.
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
 [![Java Development Kit 11](https://img.shields.io/badge/JDK-11-green.svg)](https://openjdk.java.net/projects/jdk/11/)
 
-**Java 11 for releases >= 0.11.0** / Java 8 <= 0.10.1  /  Java 1.4.2 <= 0.8.0**
+**Java 11 for releases >= 0.11.0** / Java 8 <= 0.10.1  /  Java 1.4.2 <= 0.8.0
 
 * * *
 
