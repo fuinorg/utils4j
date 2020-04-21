@@ -106,7 +106,6 @@
                 <configuration>
                     <manifestLocation>${manifest-location}</manifestLocation>
                     <instructions>
-                        <Automatic-Module-Name>org.fuin.utils4j</Automatic-Module-Name>
                         <_removeheaders>
                             Built-By,Tool,Build-Jdk,Created-By,
                             Bnd-LastModified, Private-Package
@@ -122,7 +121,18 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                    --add-opens org.fuin.utils4j/org.fuin.utils4j=ALL-UNNAMED
+                    --add-opens org.fuin.utils4j/org.fuin.utils4j.classpath=ALL-UNNAMED
+                    --add-opens org.fuin.utils4j/org.fuin.utils4j.fileprocessor=ALL-UNNAMED
+                    --add-opens org.fuin.utils4j/org.fuin.utils4j.filter=ALL-UNNAMED
+                    --add-opens org.fuin.utils4j/org.fuin.utils4j.test=ALL-UNNAMED
+                    --add-modules java.xml.bind
+                    --add-modules org.jboss.jandex
+                    </argLine>
+                </configuration>
             </plugin>
 
             <plugin>
