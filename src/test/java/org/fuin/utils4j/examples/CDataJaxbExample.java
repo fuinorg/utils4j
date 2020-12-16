@@ -22,7 +22,7 @@ import static org.fuin.utils4j.JaxbUtils.unmarshal;
 
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 

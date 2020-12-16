@@ -23,49 +23,52 @@ import static org.fuin.utils4j.JaxbUtils.unmarshal;
 
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.stream.XMLOutputFactory;
 
 import org.junit.Test;
 
+import jakarta.xml.bind.JAXBContext;
+
 // CHECKSTYLE:OFF
 public class CDataJaxbTest {
 
-    private static final String DATA = "<whatever this=\"is\"/>";
+	private static final String DATA = "<whatever this=\"is\"/>";
 
-    @Test
-    public final void testMarshal() throws Exception {
+	@Test
+	public final void testMarshal() throws Exception {
 
-        final StringWriter writer = new StringWriter();
-        try (final CDataXmlStreamWriter sw = new CDataXmlStreamWriter(XMLOutputFactory.newInstance().createXMLStreamWriter(writer));) {
+		final StringWriter writer = new StringWriter();
+		try (final CDataXmlStreamWriter sw = new CDataXmlStreamWriter(
+				XMLOutputFactory.newInstance().createXMLStreamWriter(writer));) {
 
-            // PREPARE
-            final JAXBContext ctx = JAXBContext.newInstance(MyClassWithCData.class);
-            final MyClassWithCData testee = new MyClassWithCData(DATA);
+			// PREPARE
+			final JAXBContext ctx = JAXBContext.newInstance(MyClassWithCData.class);
+			final MyClassWithCData testee = new MyClassWithCData(DATA);
 
-            // TEST
-            marshal(ctx, testee, null, sw);
-            final String result = writer.toString();
+			// TEST
+			marshal(ctx, testee, null, sw);
+			final String result = writer.toString();
 
-            // VERIFY
-            assertThat(result)
-                    .isEqualTo("<?xml version=\"1.0\" ?><my-class-with-cdata>" + "<![CDATA[" + DATA + "]]>" + "</my-class-with-cdata>");
+			// VERIFY
+			assertThat(result).isEqualTo("<?xml version=\"1.0\" ?><my-class-with-cdata>" + "<![CDATA[" + DATA + "]]>"
+					+ "</my-class-with-cdata>");
 
-        }
-    }
+		}
+	}
 
-    @Test
-    public final void testUnmarshal() throws Exception {
+	@Test
+	public final void testUnmarshal() throws Exception {
 
-        // TEST
-        final MyClassWithCData testee = unmarshal("<my-class-with-cdata>" + "<![CDATA[" + DATA + "]]>" + "</my-class-with-cdata>",
-                MyClassWithCData.class);
+		// TEST
+		final MyClassWithCData testee = unmarshal(
+				"<my-class-with-cdata>" + "<![CDATA[" + DATA + "]]>" + "</my-class-with-cdata>",
+				MyClassWithCData.class);
 
-        // VERIFY
-        assertThat(testee).isNotNull();
-        assertThat(testee.getContent()).isEqualTo(DATA);
+		// VERIFY
+		assertThat(testee).isNotNull();
+		assertThat(testee.getContent()).isEqualTo(DATA);
 
-    }
+	}
 
 }
 // CHECKSTYLE:ON
