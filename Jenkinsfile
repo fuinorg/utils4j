@@ -15,7 +15,7 @@ pipeline {
                 withCredentials( [ 
                         string(credentialsId: 'sonar_login', variable: 'SONAR_LOGIN') 
                                  ] ) {
-                    sh "./mvnw clean deploy -U -B -P sonatype-oss-release -s /private/jenkins/settings.xml"
+                    sh "./mvnw clean javadoc:jar deploy -U -B -P sonatype-oss-release -s /private/jenkins/settings.xml"
                 } 
             }
         }
