@@ -11,7 +11,7 @@ A small Java library that contains several helpful utility classes.
 ## Versions
 - 0.12.0 (or later) = **Java 11** with new **jakarta** namespace
 - 0.11.x = **Java 11** before namespace change from 'javax' to 'jakarta'
-- 0.10.1 = **Java 8**
+- 0.9.x/0.10.x = **Java 8**
 - 0.80  (or previous) = **Java 1.4.2**
 
 
