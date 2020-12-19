@@ -1,6 +1,4 @@
-utils4j
-=======
-
+# utils4j
 A small Java library that contains several helpful utility classes.
 
 [![Build Status](https://jenkins.fuin.org/job/utils4j/badge/icon)](https://jenkins.fuin.org/job/utils4j/)
@@ -10,7 +8,12 @@ A small Java library that contains several helpful utility classes.
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
 [![Java Development Kit 11](https://img.shields.io/badge/JDK-11-green.svg)](https://openjdk.java.net/projects/jdk/11/)
 
-**Java 11 for releases >= 0.11.0** / Java 8 <= 0.10.1  /  Java 1.4.2 <= 0.8.0
+## Versions
+- >= 0.12.0 = Java 11 with new jakarta.* namespace
+- 0.11.x = Java 11 before namespace change from 'javax.' to 'jakarta.'
+- <= 0.10.1 = Java 8
+- <= 0.80 = Java 1.4.2
+
 
 * * *
 
