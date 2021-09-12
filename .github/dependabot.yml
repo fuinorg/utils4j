@@ -6,7 +6,4 @@ updates:
     interval: monthly
     time: "04:00"
   open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: nl.jqno.equalsverifier:equalsverifier
-    versions:
-    - 3.5.2
+
