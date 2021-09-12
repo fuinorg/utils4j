@@ -3,6 +3,7 @@
 !.gitkeep
 !.checkstyle
 !.mvn
+!.github
 target
 META-INF
 *.log
