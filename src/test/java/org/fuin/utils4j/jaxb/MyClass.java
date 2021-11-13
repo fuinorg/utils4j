@@ -1,4 +1,4 @@
-package org.fuin.utils4j;
+package org.fuin.utils4j.jaxb;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
