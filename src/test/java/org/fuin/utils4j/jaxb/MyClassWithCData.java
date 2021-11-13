@@ -1,11 +1,11 @@
 // CHECKSTYLE:OFF
-package org.fuin.utils4j;
+package org.fuin.utils4j.jaxb;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.fuin.utils4j.CDataXmlAdapter;
+import org.fuin.utils4j.jaxb.CDataXmlAdapter;
 
 /**
  * Example class with CDATA field.

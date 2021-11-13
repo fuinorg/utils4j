@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see http://www.gnu.org/licenses/.
  */
-package org.fuin.utils4j;
+package org.fuin.utils4j.jaxb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
@@ -26,6 +26,7 @@ import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.stream.XMLOutputFactory;
 
+import org.fuin.utils4j.jaxb.CDataXmlStreamWriter;
 import org.junit.Test;
 
 // CHECKSTYLE:OFF

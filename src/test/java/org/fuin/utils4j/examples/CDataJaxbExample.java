@@ -26,9 +26,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 
-import org.fuin.utils4j.CDataXmlAdapter;
-import org.fuin.utils4j.CDataXmlStreamWriter;
-import org.fuin.utils4j.MyClassWithCData;
+import org.fuin.utils4j.jaxb.CDataXmlAdapter;
+import org.fuin.utils4j.jaxb.CDataXmlStreamWriter;
+import org.fuin.utils4j.jaxb.MyClassWithCData;
 
 /**
  * Short example for using the {@link CDataXmlStreamWriter} together with the {@link CDataXmlAdapter}.
