@@ -53,7 +53,7 @@ public final class UnmarshallerBuilder {
 
     /**
      * Use a predefined context. An alternative would be to let the build create a JAXB context internally by using method
-     * {@link #addClassToBeBound}, {@link #addClassesToBeBound(Class) or {@link #addClassesToBeBound(Collection)}.
+     * {@link #addClassToBeBound(Class)}, {@link #addClassesToBeBound(Class...) or {@link #addClassesToBeBound(Collection)}.
      * 
      * @param ctx
      *            Context to use for unmarshalling.
