@@ -18,8 +18,8 @@
 package org.fuin.utils4j;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.fuin.utils4j.JaxbUtils.marshal;
-import static org.fuin.utils4j.JaxbUtils.unmarshal;
+import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
+import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 
 import java.io.StringWriter;
 

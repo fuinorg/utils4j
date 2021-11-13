@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:utils4j="http://www.fuin.org/utils4j"
+   targetNamespace="http://www.fuin.org/utils4j">   
+  
+  <xs:element name="my-class" xmlns:utils4j="http://www.fuin.org/utils4j">
+    <xs:complexType>
+      <xs:attribute type="xs:integer" name="id" use="required"/>
+      <xs:attribute type="xs:string" name="name" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+
+</xs:schema>

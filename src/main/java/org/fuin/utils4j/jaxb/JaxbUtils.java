@@ -15,8 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see http://www.gnu.org/licenses/.
  */
-package org.fuin.utils4j;
+package org.fuin.utils4j.jaxb;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -28,6 +31,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.stream.XMLStreamWriter;
+
+import org.fuin.utils4j.Utils4J;
 
 /**
  * JAXB releated functions.
@@ -204,9 +209,12 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the expected data.
+     * 
+     * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     public static <T> T unmarshal(final String xmlData, final Class<?>... classesToBeBound) {
-        return unmarshal(xmlData, null, classesToBeBound);
+        final Unmarshaller unmarshaller = new UnmarshallerBuilder().addClassesToBeBound(classesToBeBound).build();
+        return unmarshal(unmarshaller, xmlData);
     }
 
     /**
@@ -223,17 +231,12 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the expected data.
+     * 
+     * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     public static <T> T unmarshal(final String xmlData, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
-        if (xmlData == null) {
-            return null;
-        }
-        try {
-            final JAXBContext ctx = JAXBContext.newInstance(classesToBeBound);
-            return unmarshal(ctx, xmlData, adapters);
-        } catch (final JAXBException ex) {
-            throw new RuntimeException("Error unmarshalling test data", ex);
-        }
+        final Unmarshaller unmarshaller = new UnmarshallerBuilder().addClassesToBeBound(classesToBeBound).addAdapters(adapters).build();
+        return unmarshal(unmarshaller, xmlData);
     }
 
     /**
@@ -250,12 +253,12 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the expected data.
+     * 
+     * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     public static <T> T unmarshal(final JAXBContext ctx, final String xmlData, final XmlAdapter<?, ?>[] adapters) {
-        if (xmlData == null) {
-            return null;
-        }
-        return unmarshal(ctx, new StringReader(xmlData), adapters);
+        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(adapters).build();
+        return unmarshal(unmarshaller, xmlData);
     }
 
     /**
@@ -272,32 +275,87 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the expected data.
+     * 
+     * @deprecated Use method {@link #unmarshal(Unmarshaller, Reader)} together with {@link UnmarshallerBuilder} instead
+     */
+    public static <T> T unmarshal(final JAXBContext ctx, final Reader reader, final XmlAdapter<?, ?>[] adapters) {
+        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(adapters).build();
+        return unmarshal(unmarshaller, reader);
+    }
+
+    /**
+     * Convenience method to unmarshal an object from a string.
+     * 
+     * @param unmarshaller
+     *            Unmarshaller to use.
+     * @param xml
+     *            XML source to parse or <code>null</code>.
+     * 
+     * @return Unmarshalled object or <code>null</code> (in case the provided XML source argument was null).
+     * 
+     * @param <T>
+     *            Type returned.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T unmarshal(final JAXBContext ctx, final Reader reader, final XmlAdapter<?, ?>[] adapters) {
-
+    public static <T> T unmarshal(final Unmarshaller unmarshaller, final String xml) {
+        Utils4J.checkNotNull("unmarshaller", unmarshaller);
+        if (xml == null) {
+            return null;
+        }
         try {
-            final Unmarshaller unmarshaller = ctx.createUnmarshaller();
-            if (adapters != null) {
-                for (final XmlAdapter<?, ?> adapter : adapters) {
-                    unmarshaller.setAdapter(adapter);
-                }
-            }
-            unmarshaller.setEventHandler( event -> {
-                if (event.getSeverity() > 0) {
-                    final Throwable ex = event.getLinkedException();
-                    if (ex == null) {
-                        throw new RuntimeException("Error unmarshalling the data: " + event.getMessage());
-                    }
-                    throw new RuntimeException("Error unmarshalling the data", ex);
-                }
-                return true;                
-            });
+            return (T) unmarshaller.unmarshal(new StringReader(xml));
+        } catch (final JAXBException ex) {
+            throw new RuntimeException("Error unmarshalling from XML: " + xml, ex);
+        }
+    }
+
+    /**
+     * Convenience method to unmarshal an object from a reader.
+     * 
+     * @param unmarshaller
+     *            Unmarshaller to use.
+     * @param reader
+     *            Reader with XML source to parse.
+     * 
+     * @return Unmarshalled object.
+     * 
+     * @param <T>
+     *            Type returned.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T unmarshal(final Unmarshaller unmarshaller, final Reader reader) {
+        Utils4J.checkNotNull("unmarshaller", unmarshaller);
+        Utils4J.checkNotNull("reader", reader);
+        try {
             return (T) unmarshaller.unmarshal(reader);
         } catch (final JAXBException ex) {
-            throw new RuntimeException("Error unmarshalling test data", ex);
+            throw new RuntimeException("Error unmarshalling from reader", ex);
         }
+    }
 
+    /**
+     * Convenience method to unmarshal an object from a file.
+     * 
+     * @param unmarshaller
+     *            Unmarshaller to use.
+     * @param file
+     *            File with XML source to parse. Cannot be <code>null</code> and must be an existing file.
+     * 
+     * @return Unmarshalled object.
+     * 
+     * @param <T>
+     *            Type returned.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T unmarshal(final Unmarshaller unmarshaller, final File file) {
+        Utils4J.checkNotNull("unmarshaller", unmarshaller);
+        Utils4J.checkNotNull("file", file);
+        Utils4J.checkValidFile(file);
+        try (final FileReader reader = new FileReader(file)) {
+            return (T) unmarshaller.unmarshal(reader);
+        } catch (final JAXBException | IOException ex) {
+            throw new RuntimeException("Error unmarshalling from file: " + file, ex);
+        }
     }
 
 }
