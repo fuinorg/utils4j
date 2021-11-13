@@ -17,14 +17,15 @@
  */
 package org.fuin.utils4j.examples;
 
-import static org.fuin.utils4j.JaxbUtils.marshal;
-import static org.fuin.utils4j.JaxbUtils.unmarshal;
+import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
+import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 
 import java.io.StringWriter;
 
-import jakarta.xml.bind.JAXBContext;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
+
+import jakarta.xml.bind.JAXBContext;
 
 import org.fuin.utils4j.CDataXmlAdapter;
 import org.fuin.utils4j.CDataXmlStreamWriter;
