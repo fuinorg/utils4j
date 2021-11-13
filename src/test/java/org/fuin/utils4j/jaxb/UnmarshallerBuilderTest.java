@@ -33,9 +33,6 @@ import jakarta.xml.bind.UnmarshalException;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.fuin.utils4j.jaxb.JaxbUtils;
-import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
-import org.fuin.utils4j.jaxb.MyId.Adapter;
 import org.junit.Test;
 import org.xml.sax.SAXParseException;
 

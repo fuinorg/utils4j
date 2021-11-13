@@ -25,12 +25,13 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import javax.xml.stream.XMLStreamWriter;
+
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-import javax.xml.stream.XMLStreamWriter;
 
 import org.fuin.utils4j.Utils4J;
 
@@ -359,4 +360,3 @@ public final class JaxbUtils {
     }
 
 }
-

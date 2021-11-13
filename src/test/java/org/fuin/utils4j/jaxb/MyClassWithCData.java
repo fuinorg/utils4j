@@ -1,5 +1,5 @@
 // CHECKSTYLE:OFF
-package org.fuin.utils4j;
+package org.fuin.utils4j.jaxb;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlValue;
