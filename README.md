@@ -1,7 +1,7 @@
 # utils4j
 A small Java library that contains several helpful utility classes.
 
-[![Build Status](https://jenkins.fuin.org/job/utils4j/badge/icon)](https://jenkins.fuin.org/job/utils4j/)
+[![Java Maven Build](https://github.com/fuinorg/utils4j/actions/workflows/maven.yml/badge.svg?branch=pre_jakarta)](https://github.com/fuinorg/utils4j/actions/workflows/maven.yml)
 [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=org.fuin%3Autils4j&metric=coverage)](https://sonarcloud.io/dashboard?id=org.fuin%3Autils4j)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin/utils4j/)
 [![Javadocs](https://www.javadoc.io/badge/org.fuin/utils4j.svg)](https://www.javadoc.io/doc/org.fuin/utils4j)
