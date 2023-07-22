@@ -265,8 +265,11 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     public static <T> T unmarshal(final JAXBContext ctx, final String xmlData, final XmlAdapter<?, ?>[] adapters) {
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(adapters).build();
-        return unmarshal(unmarshaller, xmlData);
+        final UnmarshallerBuilder builder = new UnmarshallerBuilder().withContext(ctx);
+        if (adapters != null) {
+        	builder.addAdapters(adapters);
+        }
+        return unmarshal(builder.build(), xmlData);
     }
 
     /**
