@@ -214,8 +214,11 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     public static <T> T unmarshal(final String xmlData, final Class<?>... classesToBeBound) {
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().addClassesToBeBound(classesToBeBound).build();
-        return unmarshal(unmarshaller, xmlData);
+        final UnmarshallerBuilder builder = new UnmarshallerBuilder();
+        if (classesToBeBound != null) {
+            builder.addClassesToBeBound(classesToBeBound);
+        }
+        return unmarshal(builder.build(), xmlData);
     }
 
     /**
@@ -236,8 +239,12 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     public static <T> T unmarshal(final String xmlData, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().addClassesToBeBound(classesToBeBound).addAdapters(adapters).build();
-        return unmarshal(unmarshaller, xmlData);
+        final UnmarshallerBuilder builder = new UnmarshallerBuilder();
+        if (classesToBeBound != null) {
+            builder.addClassesToBeBound(classesToBeBound);
+        }
+        builder.addAdapters(adapters);
+        return unmarshal(builder.build(), xmlData);
     }
 
     /**
@@ -280,8 +287,11 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, Reader)} together with {@link UnmarshallerBuilder} instead
      */
     public static <T> T unmarshal(final JAXBContext ctx, final Reader reader, final XmlAdapter<?, ?>[] adapters) {
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(adapters).build();
-        return unmarshal(unmarshaller, reader);
+        final UnmarshallerBuilder builder = new UnmarshallerBuilder().withContext(ctx);
+        if (adapters != null) {
+            builder.addAdapters(adapters);
+        }
+        return unmarshal(builder.build(), reader);
     }
 
     /**
