@@ -218,6 +218,7 @@ public final class JaxbUtils {
         if (classesToBeBound != null) {
             builder.addClassesToBeBound(classesToBeBound);
         }
+        builder.withHandler(event -> { return false; });        	
         return unmarshal(builder.build(), xmlData);
     }
 
@@ -244,6 +245,7 @@ public final class JaxbUtils {
             builder.addClassesToBeBound(classesToBeBound);
         }
         builder.addAdapters(adapters);
+        builder.withHandler(event -> { return false; });        	
         return unmarshal(builder.build(), xmlData);
     }
 
@@ -269,6 +271,7 @@ public final class JaxbUtils {
         if (adapters != null) {
         	builder.addAdapters(adapters);
         }
+        builder.withHandler(event -> { return false; });        	
         return unmarshal(builder.build(), xmlData);
     }
 
@@ -294,6 +297,7 @@ public final class JaxbUtils {
         if (adapters != null) {
             builder.addAdapters(adapters);
         }
+        builder.withHandler(event -> { return false; });        	
         return unmarshal(builder.build(), reader);
     }
 
