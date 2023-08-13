@@ -1,9 +1,9 @@
 .*
 !.gitignore
 !.gitkeep
-!.checkstyle
 !.mvn
 !.github
+!.devcontainer
 target
 META-INF
 *.log
