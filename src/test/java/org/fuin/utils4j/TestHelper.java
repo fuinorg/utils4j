@@ -17,11 +17,11 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.util.Iterator;
 import java.util.Properties;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Helper routines for all test classes.

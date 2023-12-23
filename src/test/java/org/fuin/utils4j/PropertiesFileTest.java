@@ -17,8 +17,11 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.fuin.utils4j.MergeException.Problem;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -28,11 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import org.fuin.utils4j.MergeException.Problem;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 //CHECKSTYLE:OFF
 public class PropertiesFileTest {

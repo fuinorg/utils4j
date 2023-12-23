@@ -17,13 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Resolves the references from variable values to other variable names.

@@ -17,10 +17,11 @@
  */
 package org.fuin.utils4j.fileprocessor;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 // CHECKSTYLE:OFF
 public class FileHandlerResultTest {

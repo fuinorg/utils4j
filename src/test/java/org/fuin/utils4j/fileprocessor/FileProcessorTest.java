@@ -17,13 +17,14 @@
  */
 package org.fuin.utils4j.fileprocessor;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class FileProcessorTest {
@@ -51,7 +52,7 @@ public class FileProcessorTest {
         testee.process(FILE);
 
         // VERIFY
-        assertThat(processed.file).hasSameContentAs(FILE);
+        assertThat(processed.file).hasSameTextualContentAs(FILE);
 
     }
 
@@ -75,7 +76,7 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        assertThat(processed.size()).isEqualTo(2);
+        assertThat(processed).hasSize(2);
         if (processed.get(0).equals(FILE)) {
             assertThat(processed.get(1)).isEqualTo(SUB_FILE);
         } else {
@@ -103,7 +104,7 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        assertThat(processed.size()).isEqualTo(0);
+        assertThat(processed).isEmpty();
 
     }
 
@@ -125,7 +126,7 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        assertThat(processed.size()).isEqualTo(0);
+        assertThat(processed).isEmpty();
 
     }
 
@@ -149,7 +150,7 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        assertThat(processed.size()).isEqualTo(1);
+        assertThat(processed).hasSize(1);
         assertThat(processed.get(0)).isEqualTo(FILE);
 
     }
@@ -178,7 +179,7 @@ public class FileProcessorTest {
         testee.process(DIR);
 
         // VERIFY
-        assertThat(processed.size()).isEqualTo(1);
+        assertThat(processed).hasSize(1);
         assertThat(processed.get(0)).isEqualTo(SUB_FILE);
 
     }

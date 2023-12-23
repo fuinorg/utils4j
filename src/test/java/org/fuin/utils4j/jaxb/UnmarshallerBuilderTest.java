@@ -17,24 +17,22 @@
  */
 package org.fuin.utils4j.jaxb;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.UnmarshalException;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXParseException;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Test for the {@link UnmarshallerBuilder} class.

@@ -17,19 +17,17 @@
  */
 package org.fuin.utils4j.examples;
 
-import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
-import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
-
-import java.io.StringWriter;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
-
 import jakarta.xml.bind.JAXBContext;
-
 import org.fuin.utils4j.jaxb.CDataXmlAdapter;
 import org.fuin.utils4j.jaxb.CDataXmlStreamWriter;
 import org.fuin.utils4j.jaxb.MyClassWithCData;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.StringWriter;
+
+import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
+import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 
 /**
  * Short example for using the {@link CDataXmlStreamWriter} together with the {@link CDataXmlAdapter}.

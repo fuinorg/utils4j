@@ -17,13 +17,13 @@
  */
 package org.fuin.utils4j.examples;
 
+import org.fuin.utils4j.LockingFailedException;
+import org.fuin.utils4j.Utils4J;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
-
-import org.fuin.utils4j.LockingFailedException;
-import org.fuin.utils4j.Utils4J;
 
 /**
  * Short example locking a file.

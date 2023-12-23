@@ -17,10 +17,10 @@
  */
 package org.fuin.utils4j.examples;
 
+import org.fuin.utils4j.ChangeTrackingUniqueList;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.fuin.utils4j.ChangeTrackingUniqueList;
 
 /**
  * Short example for using the {@link ChangeTrackingUniqueList}.

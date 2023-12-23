@@ -17,11 +17,10 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public final class PropertyTest {
@@ -33,7 +32,7 @@ public final class PropertyTest {
         final String value = "1";
         final Property prop = new Property(key, initialValue, value);
         assertThat(prop.getKey()).isEqualTo(key);
-        assertThat(prop.getInitialValue()).isEqualTo(initialValue);
+        assertThat(prop.getInitialValue()).isNull();
         assertThat(prop.getValue()).isEqualTo(value);
         assertThat(prop.hasChanged()).isTrue();
         assertThat(prop.isNew()).isTrue();

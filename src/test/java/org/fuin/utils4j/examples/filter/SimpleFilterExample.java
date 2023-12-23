@@ -17,14 +17,10 @@
  */
 package org.fuin.utils4j.examples.filter;
 
+import org.fuin.utils4j.filter.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.fuin.utils4j.filter.AndFilter;
-import org.fuin.utils4j.filter.BooleanPropertyFilter;
-import org.fuin.utils4j.filter.IntegerFilter;
-import org.fuin.utils4j.filter.IntegerPropertyFilter;
-import org.fuin.utils4j.filter.OrFilter;
 
 /**
  * A basic filter example.

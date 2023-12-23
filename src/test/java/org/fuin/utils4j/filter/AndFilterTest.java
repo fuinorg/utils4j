@@ -20,7 +20,6 @@ package org.fuin.utils4j.filter;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class AndFilterTest extends ListFilterTest {

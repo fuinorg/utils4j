@@ -17,15 +17,14 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.data.MapEntry.entry;
-import static org.fuin.utils4j.VariableResolver.references;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.data.MapEntry.entry;
+import static org.fuin.utils4j.VariableResolver.references;
 
 /**
  * Test for {@link VariableResolver}.

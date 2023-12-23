@@ -17,17 +17,17 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class BooleanFilterTest {
 
     @Test
     public final void testCreateAndGet() {
-        assertThat((new BooleanFilter(Boolean.TRUE)).getConstValue()).isEqualTo(Boolean.TRUE);
-        assertThat((new BooleanFilter(Boolean.FALSE)).getConstValue()).isEqualTo(Boolean.FALSE);
+        assertThat((new BooleanFilter(Boolean.TRUE)).getConstValue()).isTrue();
+        assertThat((new BooleanFilter(Boolean.FALSE)).getConstValue()).isFalse();
     }
 
     @Test

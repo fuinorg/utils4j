@@ -1,27 +1,16 @@
 package org.fuin.utils4j.jaxb;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import jakarta.xml.bind.*;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import org.fuin.utils4j.Utils4J;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.PropertyException;
-import jakarta.xml.bind.Unmarshaller;
-import jakarta.xml.bind.ValidationEventHandler;
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
-import org.fuin.utils4j.Utils4J;
-import org.xml.sax.SAXException;
+import java.util.*;
 
 /**
  * Builder that helps creating an {@link Unmarshaller} instance.
@@ -290,6 +279,7 @@ public final class UnmarshallerBuilder {
     private Schema createSchema() {
         final SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         try {
+            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             return factory.newSchema(schemaSources.toArray(new Source[schemaSources.size()]));
         } catch (final SAXException ex) {
             throw new RuntimeException("Failed to create schema", ex);

@@ -17,23 +17,15 @@
  */
 package org.fuin.utils4j.jaxb;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-
-import javax.xml.stream.XMLStreamWriter;
-
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
 import org.fuin.utils4j.Utils4J;
+
+import javax.xml.stream.XMLStreamWriter;
+import java.io.*;
 
 /**
  * JAXB releated functions.

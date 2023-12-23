@@ -17,9 +17,9 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class BooleanPropertyFilterTest extends PropertyFilterTest {
@@ -34,11 +34,11 @@ public class BooleanPropertyFilterTest extends PropertyFilterTest {
     @Test
     public final void testCreateAndGet() {
         final BooleanPropertyFilter filterTRUE = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.TRUE);
-        assertThat(filterTRUE.getConstValue()).isEqualTo(Boolean.TRUE);
+        assertThat(filterTRUE.getConstValue()).isTrue();
         assertThat(filterTRUE.getPropertyName()).isEqualTo(PROPERTY_NAME);
 
         final BooleanPropertyFilter filterFALSE = new BooleanPropertyFilter(PROPERTY_NAME, Boolean.FALSE);
-        assertThat(filterFALSE.getConstValue()).isEqualTo(Boolean.FALSE);
+        assertThat(filterFALSE.getConstValue()).isFalse();
         assertThat(filterFALSE.getPropertyName()).isEqualTo(PROPERTY_NAME);
     }
 
