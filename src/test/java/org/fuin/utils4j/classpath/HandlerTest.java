@@ -25,8 +25,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.fuin.utils4j.classpath.Handler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 // CHECKSTYLE:OFF
 public class HandlerTest {

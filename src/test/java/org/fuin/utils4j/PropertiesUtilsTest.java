@@ -17,8 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,7 +25,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Properties;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Tests for {@link PropertiesUtils}.
@@ -47,13 +47,11 @@ public class PropertiesUtilsTest {
 
     @Test
     public final void testLoadPropertiesClassStringNonExisting() {
-        try {
+        assertThatThrownBy(() -> {
             PropertiesUtils.loadProperties(PropertiesUtilsTest.class, "DoesNotExist.properties");
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).contains("Resource");
-            assertThat(ex.getMessage()).contains("not found");
-        }
+        }).isInstanceOf(IllegalArgumentException.class)
+          .hasMessageContaining("Resource")
+          .hasMessageContaining("not found");
     }
 
     @Test
@@ -90,14 +88,12 @@ public class PropertiesUtilsTest {
 
     @Test
     public final void testSavePropertiesNonExistingParentDirectory() throws IOException {
-        try {
+        assertThatThrownBy(() -> {
             final File parentDir = new File("thisdoesnotexist");
             PropertiesUtils.saveProperties(new File(parentDir, "dummy.properties"), new Properties(), "COMMENT");
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).contains("The parent directory");
-            assertThat(ex.getMessage()).contains("does not exist");
-        }
+        }).isInstanceOf(IllegalArgumentException.class)
+          .hasMessageContaining("The parent directory")
+          .hasMessageContaining("does not exist");
     }
 
     @Test
@@ -105,12 +101,9 @@ public class PropertiesUtilsTest {
         final File testFile = File.createTempFile(this.getClass().getSimpleName() + "-", ".properties");
         try {
             testFile.setReadOnly();
-            try {
+            assertThatThrownBy(() -> {
                 PropertiesUtils.saveProperties(testFile, new Properties(), "COMMENT");
-                fail();
-            } catch (final RuntimeException ex) {
-                assertThat(ex).hasCauseInstanceOf(FileNotFoundException.class);
-            }
+            }).hasCauseInstanceOf(FileNotFoundException.class);
         } finally {
             testFile.delete();
         }
@@ -147,12 +140,10 @@ public class PropertiesUtilsTest {
 
     @Test
     public final void testLoadPropertiesStringStringIllegalUrl() throws MalformedURLException {
-        try {
+        assertThatThrownBy(() -> {
             PropertiesUtils.loadProperties("no-url", "dummy.properties");
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).contains("The argument 'srcUrl' is not a valid URL");
-        }
+        }).isInstanceOf(IllegalArgumentException.class)
+          .hasMessageContaining("The argument 'srcUrl' is not a valid URL");
     }
 }
 // CHECKSTYLE:ON

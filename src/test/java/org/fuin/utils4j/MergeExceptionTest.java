@@ -17,11 +17,11 @@
  */
 package org.fuin.utils4j;
 
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
-
-import org.junit.Test;
 
 //CHECKSTYLE:OFF
 public final class MergeExceptionTest {

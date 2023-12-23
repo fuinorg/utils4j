@@ -19,7 +19,7 @@ package org.fuin.utils4j.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 //CHECKSTYLE:OFF
 public class TokenFilterTest {

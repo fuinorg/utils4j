@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 //CHECKSTYLE:OFF
 public class ChangeTrackingMapTest {
@@ -51,13 +51,13 @@ public class ChangeTrackingMapTest {
         return map;
     }
 
-    @Before
+    @BeforeEach
     public final void beforeMethod() {
         initialEmptyMap = new ChangeTrackingMap<String, String>(new HashMap<String, String>());
         initialFilledMap = new ChangeTrackingMap<String, String>(toMap("one=1,two=2,three=3"));
     }
 
-    @After
+    @AfterEach
     public final void afterMethod() {
         initialFilledMap = null;
         initialEmptyMap = null;

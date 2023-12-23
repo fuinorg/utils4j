@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 //CHECKSTYLE:OFF
 public class ClasspathURLStreamHandlerTest {

@@ -25,21 +25,21 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 //CHECKSTYLE:OFF
 public final class PropertiesFilePreferencesTest {
 
     private static File baseDir;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws IOException {
         baseDir = new File(Utils4J.getTempDir(), "test-prop-file-pref");
     }
 
-    @Before
+    @BeforeEach
     public final void beforeMethod() throws IOException {
         FileUtils.deleteDirectory(baseDir);
         baseDir.mkdirs();

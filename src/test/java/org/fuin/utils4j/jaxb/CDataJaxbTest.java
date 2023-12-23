@@ -27,7 +27,7 @@ import javax.xml.stream.XMLOutputFactory;
 
 import jakarta.xml.bind.JAXBContext;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 // CHECKSTYLE:OFF
 public class CDataJaxbTest {

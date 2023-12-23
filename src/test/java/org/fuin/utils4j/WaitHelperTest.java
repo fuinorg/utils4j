@@ -17,14 +17,14 @@
  */
 package org.fuin.utils4j;
 
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Tests for {@link WaitHelper}.
@@ -60,16 +60,13 @@ public class WaitHelperTest {
         final AtomicInteger counter = new AtomicInteger(0);
 
         // TEST
-        try {
+        assertThatThrownBy(() -> {
             testee.waitUntilNoMoreException(() -> {
                 if (counter.getAndIncrement() < 2) {
                     throw new RuntimeException(new FileNotFoundException("dummy" + counter.get()));
                 }
             }, expectedExceptions);
-            fail();
-        } catch (final IllegalStateException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -81,17 +78,12 @@ public class WaitHelperTest {
         expectedExceptions.add(FileNotFoundException.class);
 
         // TEST
-        try {
+        assertThatThrownBy(() -> {
             testee.waitUntilNoMoreException(() -> {
                 throw new ClassCastException("dummy");
             }, expectedExceptions);
-            fail();
-        } catch (final ClassCastException ex) {
-            if (!ex.getMessage().equals("dummy")) {
-                throw ex;
-            }
-            // OK
-        }
+        }).isInstanceOf(ClassCastException.class)
+          .hasMessage("dummy");
     }
 
     @Test
@@ -122,14 +114,11 @@ public class WaitHelperTest {
         expectedValues.add(1);
 
         // TEST
-        try {
+        assertThatThrownBy(() -> {
             testee.waitUntilResult(() -> {
                 return null;
             }, expectedValues);
-            fail();
-        } catch (final IllegalStateException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalStateException.class);
 
     }
 

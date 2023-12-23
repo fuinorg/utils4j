@@ -18,7 +18,7 @@
 package org.fuin.utils4j;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.Properties;
 
 import org.fuin.utils4j.MergeException.Problem;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 //CHECKSTYLE:OFF
 public class PropertiesFileTest {
@@ -43,13 +43,13 @@ public class PropertiesFileTest {
 
     private PropertiesFile propFile;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws IOException {
         testFile = new File(Utils4J.getTempDir(), "PropertiesFileTest.properties");
         dir = new File("src/test/resources/" + Utils4J.getPackagePath(PropertiesFileTest.class));
     }
 
-    @Before
+    @BeforeEach
     public final void beforeMethod() throws IOException {
         // Create the initial content
         createPropertiesFile();
@@ -57,7 +57,7 @@ public class PropertiesFileTest {
         propFile = new PropertiesFile(testFile);
     }
 
-    @After
+    @AfterEach
     public final void afterMethod() throws IOException {
         propFile = null;
     }
