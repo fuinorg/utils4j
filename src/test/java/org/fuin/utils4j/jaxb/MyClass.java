@@ -11,6 +11,7 @@ public class MyClass {
     @XmlJavaTypeAdapter(value = MyId.Adapter.class)
     private MyId id;
 
+    @XmlAttribute(name = "name")
     private String name;
 
     protected MyClass() {
