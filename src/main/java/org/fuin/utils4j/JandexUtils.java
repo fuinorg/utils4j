@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jboss.jandex.Indexer;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,8 +26,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import org.jboss.jandex.Indexer;
 
 /**
  * Utilities related to Jandex.

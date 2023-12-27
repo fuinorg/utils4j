@@ -17,11 +17,11 @@
  */
 package org.fuin.utils4j.examples;
 
+import org.fuin.utils4j.VariableResolver;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.fuin.utils4j.VariableResolver;
 
 /**
  * Example how to use the variable resolver.

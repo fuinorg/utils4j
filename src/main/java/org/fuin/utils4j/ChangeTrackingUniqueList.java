@@ -17,12 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * A wrapper for lists that keeps track of all changes made to the list since construction. Only adding, replacing or deleting elements is

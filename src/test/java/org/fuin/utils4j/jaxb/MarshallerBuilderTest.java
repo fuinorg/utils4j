@@ -19,11 +19,13 @@ package org.fuin.utils4j.jaxb;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.UnmarshalException;
-import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.MarshalException;
+import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXParseException;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.diff.Diff;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -31,26 +33,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
- * Test for the {@link UnmarshallerBuilder} class.
+ * Test for the {@link MarshallerBuilder} class.
  */
-public class UnmarshallerBuilderTest {
+public class MarshallerBuilderTest {
 
     @Test
     public void testWithContext() throws JAXBException {
 
         // PREPARE
         final JAXBContext ctx = JAXBContext.newInstance(MyClass.class);
+        final MyId myId = new MyId(1);
+        final MyClass myClass = new MyClass(myId, "abc");
 
         // TEST
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter()).build();
+        final Marshaller marshaller = new MarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter()).build();
 
         // VERIFY
-        final MyClass result = JaxbUtils.unmarshal(unmarshaller, getValidXml());
-        assertThat(result.getId()).isEqualTo(new MyId(1));
+        final String copyXml = JaxbUtils.marshal(marshaller, myClass);
+        final Diff documentDiff = DiffBuilder.compare(getValidXml()).withTest(copyXml).ignoreWhitespace().build();
+        assertThat(documentDiff.hasDifferences()).describedAs(documentDiff.toString()).isFalse();
 
     }
 
@@ -59,15 +63,18 @@ public class UnmarshallerBuilderTest {
 
         // PREPARE
         final Class<?>[] classesToBeBound = new Class[] { MyClass.class };
+        final MyId myId = new MyId(1);
+        final MyClass myClass = new MyClass(myId, "abc");
 
         // TEST
         final List<XmlAdapter<?, ?>> adapters = new ArrayList<>();
         adapters.add(new MyId.Adapter());
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().addClassesToBeBound(classesToBeBound).addAdapters(adapters).build();
+        final Marshaller marshaller = new MarshallerBuilder().addClassesToBeBound(classesToBeBound).addAdapters(adapters).build();
 
         // VERIFY
-        final MyClass result = JaxbUtils.unmarshal(unmarshaller, getValidXml());
-        assertThat(result.getId()).isEqualTo(new MyId(1));
+        final String copyXml = JaxbUtils.marshal(marshaller, myClass);
+        final Diff documentDiff = DiffBuilder.compare(getValidXml()).withTest(copyXml).ignoreWhitespace().build();
+        assertThat(documentDiff.hasDifferences()).describedAs(documentDiff.toString()).isFalse();
 
     }
 
@@ -80,21 +87,20 @@ public class UnmarshallerBuilderTest {
         final String xsd = "/org/fuin/utils4j/test-schema.xsd";
         final List<String> schemas = new ArrayList<>();
         schemas.add(xsd);
+        final MyId myId = new MyId(1);
+        final MyClass myClass = new MyClass(myId, "abc");
 
         // TEST
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().addClassesToBeBound(classesToBeBound)
-                .addClasspathSchemas("/org/fuin/utils4j/test-schema.xsd").addClasspathSchemas(schemas) // Second add does not harm anything
-                .addAdapter(new MyId.Adapter()).build();
+        final Marshaller marshaller = new MarshallerBuilder().addClassesToBeBound(classesToBeBound)
+                .addClasspathSchemas("/org/fuin/utils4j/test-schema.xsd")
+                .addClasspathSchemas(schemas) // Second add does not harm anything
+                .addAdapter(new MyId.Adapter())
+                .build();
 
         // VERIFY
-        try {
-            JaxbUtils.unmarshal(unmarshaller, getInvalidXml());
-            fail("Expected exception");
-        } catch (final RuntimeException ex) {
-            assertThat(ex.getCause()).isInstanceOf(UnmarshalException.class);
-            assertThat(ex.getCause().getCause()).isInstanceOf(SAXParseException.class);
-            assertThat(ex.getCause().getCause().getMessage()).contains("Attribute 'name' must appear on element 'my-class'");
-        }
+        final String copyXml = JaxbUtils.marshal(marshaller, myClass);
+        final Diff documentDiff = DiffBuilder.compare(getValidXml()).withTest(copyXml).ignoreWhitespace().build();
+        assertThat(documentDiff.hasDifferences()).describedAs(documentDiff.toString()).isFalse();
 
     }
 
@@ -106,28 +112,28 @@ public class UnmarshallerBuilderTest {
         final StreamSource xsd = new StreamSource(getClass().getResourceAsStream("/org/fuin/utils4j/test-schema.xsd"));
         final List<Source> schemas = new ArrayList<>();
         schemas.add(xsd);
+        final MyId myId = new MyId(1);
+        final MyClass myClass = new MyClass(myId, "abc");
 
         // TEST
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter()).addSchemas(xsd)
+        final Marshaller marshaller = new MarshallerBuilder()
+                .withContext(ctx)
+                .addAdapters(new MyId.Adapter())
+                .addSchemas(xsd)
                 .addSchemas(schemas) // Second add does not harm anything
                 .build();
 
         // VERIFY
-        try {
-            JaxbUtils.unmarshal(unmarshaller, getInvalidXml());
-            fail("Expected exception");
-        } catch (final RuntimeException ex) {
-            assertThat(ex.getCause()).isInstanceOf(UnmarshalException.class);
-            assertThat(ex.getCause().getCause()).isInstanceOf(SAXParseException.class);
-            assertThat(ex.getCause().getCause().getMessage()).contains("Attribute 'name' must appear on element 'my-class'");
-        }
+        final String copyXml = JaxbUtils.marshal(marshaller, myClass);
+        final Diff documentDiff = DiffBuilder.compare(getValidXml()).withTest(copyXml).ignoreWhitespace().build();
+        assertThat(documentDiff.hasDifferences()).describedAs(documentDiff.toString()).isFalse();
 
     }
 
     @Test
     public void testClassesAndContextFailure() throws JAXBException {
         try {
-            new UnmarshallerBuilder().withContext(JAXBContext.newInstance(MyClass.class)).addClassToBeBound(MyClass.class).build();
+            new MarshallerBuilder().withContext(JAXBContext.newInstance(MyClass.class)).addClassToBeBound(MyClass.class).build();
             fail("Expected exception");
         } catch (final IllegalStateException ex) {
             assertThat(ex.getMessage()).isEqualTo(
@@ -138,7 +144,7 @@ public class UnmarshallerBuilderTest {
     @Test
     public void testNoClassesAndNoContext() throws JAXBException {
         try {
-            new UnmarshallerBuilder().build();
+            new MarshallerBuilder().build();
             fail("Expected exception");
         } catch (final IllegalStateException ex) {
             assertThat(ex.getMessage()).isEqualTo("Either the JAXBContext (ctx) or a list of classes (classesToBeBound) must be provided");
@@ -147,17 +153,15 @@ public class UnmarshallerBuilderTest {
 
     @Test
     public void testAddPropertyOK() {
-        new UnmarshallerBuilder().addClassToBeBound(MyClass.class).addProperty("org.glassfish.jaxb.core.ObjectFactory", "a.b.c.D").build();
+        new MarshallerBuilder().addClassToBeBound(MyClass.class).addProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true).build();
     }
 
     @Test
     public void testAddPropertyFailure() {
-        try {
-            new UnmarshallerBuilder().addClassToBeBound(MyClass.class).addProperty("bla", "blub").build();
-            fail("Expected exception");
-        } catch (final IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("Failed to set property 'bla' to: blub");
-        }
+        assertThatThrownBy(() -> {
+            new MarshallerBuilder().addClassToBeBound(MyClass.class).addProperty("bla", "blub").build();
+        }).isInstanceOf(IllegalArgumentException.class)
+          .hasMessageContaining("Failed to set property 'bla' to: blub");
     }
 
     @Test
@@ -165,18 +169,22 @@ public class UnmarshallerBuilderTest {
 
         // PREPARE
         final JAXBContext ctx = JAXBContext.newInstance(MyClass.class);
+        final MyId myId = new MyId(1);
+        final MyClass myClass = new MyClass(myId, "abc");
 
         // TEST
         final AtomicBoolean result = new AtomicBoolean(false);
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter())
-                .addClasspathSchema("/org/fuin/utils4j/test-schema.xsd").withHandler(event -> {
+        final Marshaller marshaller = new MarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter())
+                .addClasspathSchema("/org/fuin/utils4j/test-schema.xsd")
+                .withHandler(event -> {
                     result.set(true);
                     return true;
                 }).build();
 
         // VERIFY
-        JaxbUtils.unmarshal(unmarshaller, getInvalidXml());
-        assertThat(result.get()).isTrue();
+        final String copyXml = JaxbUtils.marshal(marshaller, myClass);
+        final Diff documentDiff = DiffBuilder.compare(getValidXml()).withTest(copyXml).ignoreWhitespace().build();
+        assertThat(documentDiff.hasDifferences()).describedAs(documentDiff.toString()).isFalse();
 
     }
 
@@ -185,23 +193,24 @@ public class UnmarshallerBuilderTest {
 
         // PREPARE
         final JAXBContext ctx = JAXBContext.newInstance(MyClass.class);
+        final MyId myId = new MyId(1);
+        final MyClass myClass = new MyClass(myId, "abc");
 
         // TEST
         final AtomicBoolean beforeCalled = new AtomicBoolean(false);
         final AtomicBoolean afterCalled = new AtomicBoolean(false);
-        final Unmarshaller unmarshaller = new UnmarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter())
-                .withListener(new Unmarshaller.Listener() {
-                    public void beforeUnmarshal(Object target, Object parent) {
+        final Marshaller marshaller = new MarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter())
+                .withListener(new Marshaller.Listener() {
+                    public void beforeMarshal(Object source) {
                         beforeCalled.set(true);
                     }
-
-                    public void afterUnmarshal(Object target, Object parent) {
+                    public void afterMarshal(Object source) {
                         afterCalled.set(true);
                     }
                 }).build();
 
         // VERIFY
-        JaxbUtils.unmarshal(unmarshaller, getInvalidXml());
+        JaxbUtils.marshal(marshaller, myClass);
         assertThat(beforeCalled.get()).isTrue();
         assertThat(afterCalled.get()).isTrue();
 

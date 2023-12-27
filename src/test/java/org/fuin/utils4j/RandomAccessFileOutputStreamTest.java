@@ -17,18 +17,18 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class RandomAccessFileOutputStreamTest {
@@ -39,7 +39,7 @@ public class RandomAccessFileOutputStreamTest {
 
     private RandomAccessFileOutputStream outputStream;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws IOException {
         final File dir = new File("src/test/resources/" + Utils4J.getPackagePath(RandomAccessFileOutputStream.class));
         file = new File(Utils4J.getTempDir(), "RandomAccessFileOutputStreamData.bin");
@@ -49,12 +49,12 @@ public class RandomAccessFileOutputStreamTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public final void beforeMethod() throws IOException {
         file.delete();
     }
 
-    @After
+    @AfterEach
     public final void afterMethod() throws IOException {
         outputStream.close();
         outputStream = null;

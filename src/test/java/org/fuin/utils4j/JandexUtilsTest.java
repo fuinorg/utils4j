@@ -17,17 +17,17 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.jandex.DotName;
+import org.jboss.jandex.Index;
+import org.jboss.jandex.Indexer;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.jandex.DotName;
-import org.jboss.jandex.Index;
-import org.jboss.jandex.Indexer;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for {@link JandexUtils}.

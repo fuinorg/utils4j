@@ -17,9 +17,9 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class TokenPropertyFilterTest extends PropertyFilterTest {

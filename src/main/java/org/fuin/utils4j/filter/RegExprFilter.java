@@ -43,10 +43,10 @@ public class RegExprFilter implements Filter {
     private static final String[] TYPES = new String[] { "matches", "lookingAt", "find" };
 
     /** Compiled pattern. */
-    private Pattern p = null;
+    private Pattern p;
 
     /** String pattern to apply. */
-    private String pattern = null;
+    private String pattern;
 
     /** Type of matching. */
     private int type = 1;

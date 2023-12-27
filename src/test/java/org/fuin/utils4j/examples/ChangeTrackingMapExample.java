@@ -17,11 +17,11 @@
  */
 package org.fuin.utils4j.examples;
 
+import org.fuin.utils4j.ChangeTrackingMap;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.fuin.utils4j.ChangeTrackingMap;
 
 /**
  * Short example for using the {@link ChangeTrackingMap}.

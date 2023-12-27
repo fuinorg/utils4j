@@ -17,10 +17,10 @@
  */
 package org.fuin.utils4j.examples;
 
+import org.fuin.utils4j.Utils4J;
+
 import java.io.File;
 import java.io.IOException;
-
-import org.fuin.utils4j.Utils4J;
 
 /**
  * Short example of listing all JARs and classes in the classpath.

@@ -17,11 +17,11 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.fuin.utils4j.Utils4J;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.fuin.utils4j.Utils4J;
 
 /**
  * Defines a filter on a Comparable value.

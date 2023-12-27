@@ -17,16 +17,15 @@
  */
 package org.fuin.utils4j.classpath;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
-import org.fuin.utils4j.classpath.Handler;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // CHECKSTYLE:OFF
 public class HandlerTest {

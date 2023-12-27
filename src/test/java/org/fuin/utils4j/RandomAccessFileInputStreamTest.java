@@ -17,16 +17,17 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 //CHECKSTYLE:OFF
 public final class RandomAccessFileInputStreamTest {
@@ -35,7 +36,7 @@ public final class RandomAccessFileInputStreamTest {
 
     private RandomAccessFileInputStream inputStream;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws IOException {
         final File dir = new File("src/test/resources/" + Utils4J.getPackagePath(RandomAccessFileInputStreamTest.class));
         file = new File(dir, "RandomAccessFileInputStreamData.bin");
@@ -44,12 +45,12 @@ public final class RandomAccessFileInputStreamTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public final void beforeMethod() throws FileNotFoundException {
         inputStream = new RandomAccessFileInputStream(file, "r");
     }
 
-    @After
+    @AfterEach
     public final void afterMethod() throws IOException {
         inputStream.close();
         inputStream = null;
@@ -111,9 +112,9 @@ public final class RandomAccessFileInputStreamTest {
         assertThat(inputStream.markSupported()).isTrue();
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public final void testResetWithoutMark() throws IOException {
-        inputStream.reset();
+        assertThatThrownBy(() -> inputStream.reset()).isInstanceOf(IOException.class);
     }
 
     @Test

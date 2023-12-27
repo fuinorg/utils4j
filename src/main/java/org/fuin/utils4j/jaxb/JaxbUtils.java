@@ -17,23 +17,15 @@
  */
 package org.fuin.utils4j.jaxb;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-
-import javax.xml.stream.XMLStreamWriter;
-
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
 import org.fuin.utils4j.Utils4J;
+
+import javax.xml.stream.XMLStreamWriter;
+import java.io.*;
 
 /**
  * JAXB releated functions.
@@ -61,6 +53,7 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the data.
+     * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     public static <T> String marshal(final T data, final Class<?>... classesToBeBound) {
         return marshal(data, null, classesToBeBound);
@@ -80,6 +73,7 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the data.
+     * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     public static <T> String marshal(final T data, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
         if (data == null) {
@@ -105,6 +99,7 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the data.
+     * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     public static <T> String marshal(final JAXBContext ctx, final T data) {
         return marshal(ctx, data, null);
@@ -124,6 +119,7 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the data.
+     * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     public static <T> String marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters) {
         if (data == null) {
@@ -148,6 +144,7 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the data to write.
+     * @deprecated Use method {@link #marshal(Marshaller, Object, Writer)} together with {@link MarshallerBuilder} instead
      */
     public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters, final Writer writer) {
         if (data == null) {
@@ -180,6 +177,7 @@ public final class JaxbUtils {
      * 
      * @param <T>
      *            Type of the data to write.
+     * @deprecated Use method {@link #marshal(Marshaller, Object, XMLStreamWriter)} together with {@link MarshallerBuilder} instead
      */
     public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters, final XMLStreamWriter writer) {
         if (data == null) {
@@ -373,6 +371,81 @@ public final class JaxbUtils {
             return (T) unmarshaller.unmarshal(reader);
         } catch (final JAXBException | IOException ex) {
             throw new RuntimeException("Error unmarshalling from file: " + file, ex);
+        }
+    }
+
+    /**
+     * Convenience method  to marshals the given data to string. A <code>null</code> data argument returns <code>null</code>.
+     *
+     * @param marshaller
+     *            Marshaller to use - Cannot be <code>null</code>.
+     * @param data
+     *            Data to serialize or <code>null</code>.
+     *
+     * @return XML data or <code>null</code>.
+     *
+     * @param <T>
+     *            Type of the data.
+     */
+    public static <T> String marshal(final Marshaller marshaller, final T data) {
+        Utils4J.checkNotNull("marshaller", marshaller);
+        if (data == null) {
+            return null;
+        }
+        final StringWriter writer = new StringWriter();
+        marshal(marshaller, data, writer);
+        return writer.toString();
+    }
+
+    /**
+     * Convenience method to marshals the given data using a writer. A <code>null</code> data argument returns <code>null</code>.
+     *
+     * @param marshaller
+     *            Marshaller to use - Cannot be <code>null</code>.
+     * @param data
+     *            Data to serialize or <code>null</code>.
+     * @param writer
+     *            Writer to use.
+     *
+     * @param <T>
+     *            Type of the data to write.
+     */
+    public static <T> void marshal(final Marshaller marshaller, final T data, final Writer writer) {
+        Utils4J.checkNotNull("marshaller", marshaller);
+        Utils4J.checkNotNull("writer", writer);
+        if (data == null) {
+            return;
+        }
+        try {
+            marshaller.marshal(data, writer);
+        } catch (final JAXBException ex) {
+            throw new RuntimeException(ERROR_MARSHALLING_TEST_DATA, ex);
+        }
+    }
+
+    /**
+     * Convenience method to marshals the given data using an XML stream writer. A <code>null</code> data argument returns <code>null</code>.
+     *
+     * @param marshaller
+     *            Marshaller to use - Cannot be <code>null</code>.
+     * @param data
+     *            Data to serialize or <code>null</code>.
+     * @param writer
+     *            Writer to use.
+     *
+     * @param <T>
+     *            Type of the data to write.
+     */
+    public static <T> void marshal(final Marshaller marshaller, final T data, final XMLStreamWriter writer) {
+        Utils4J.checkNotNull("marshaller", marshaller);
+        Utils4J.checkNotNull("writer", writer);
+        if (data == null) {
+            return;
+        }
+        try {
+            marshaller.marshal(data, writer);
+        } catch (final JAXBException ex) {
+            throw new RuntimeException(ERROR_MARSHALLING_TEST_DATA, ex);
         }
     }
 

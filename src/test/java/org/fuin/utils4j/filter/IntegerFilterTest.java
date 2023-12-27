@@ -17,60 +17,60 @@
  */
 package org.fuin.utils4j.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class IntegerFilterTest {
 
     @Test
     public final void testCompliesLT() {
-        final Filter filter = new IntegerFilter(IntegerFilter.Operator.LT, new Integer(2));
-        assertThat(filter.complies(new Integer(1))).isTrue();
-        assertThat(filter.complies(new Integer(2))).isFalse();
-        assertThat(filter.complies(new Integer(3))).isFalse();
+        final Filter filter = new IntegerFilter(IntegerFilter.Operator.LT, 2);
+        assertThat(filter.complies(1)).isTrue();
+        assertThat(filter.complies(2)).isFalse();
+        assertThat(filter.complies(3)).isFalse();
     }
 
     @Test
     public final void testCompliesLTE() {
-        final Filter filter = new IntegerFilter(IntegerFilter.Operator.LTE, new Integer(2));
-        assertThat(filter.complies(new Integer(1))).isTrue();
-        assertThat(filter.complies(new Integer(2))).isTrue();
-        assertThat(filter.complies(new Integer(3))).isFalse();
+        final Filter filter = new IntegerFilter(IntegerFilter.Operator.LTE, 2);
+        assertThat(filter.complies(1)).isTrue();
+        assertThat(filter.complies(2)).isTrue();
+        assertThat(filter.complies(3)).isFalse();
     }
 
     @Test
     public final void testCompliesEQ() {
-        final Filter filter = new IntegerFilter(IntegerFilter.Operator.EQ, new Integer(2));
-        assertThat(filter.complies(new Integer(1))).isFalse();
-        assertThat(filter.complies(new Integer(2))).isTrue();
-        assertThat(filter.complies(new Integer(3))).isFalse();
+        final Filter filter = new IntegerFilter(IntegerFilter.Operator.EQ, 2);
+        assertThat(filter.complies(1)).isFalse();
+        assertThat(filter.complies(2)).isTrue();
+        assertThat(filter.complies(3)).isFalse();
     }
 
     @Test
     public final void testCompliesGT() {
-        final Filter filter = new IntegerFilter(IntegerFilter.Operator.GT, new Integer(2));
-        assertThat(filter.complies(new Integer(1))).isFalse();
-        assertThat(filter.complies(new Integer(2))).isFalse();
-        assertThat(filter.complies(new Integer(3))).isTrue();
+        final Filter filter = new IntegerFilter(IntegerFilter.Operator.GT, 2);
+        assertThat(filter.complies(1)).isFalse();
+        assertThat(filter.complies(2)).isFalse();
+        assertThat(filter.complies(3)).isTrue();
     }
 
     @Test
     public final void testCompliesGTE() {
-        final Filter filter = new IntegerFilter(IntegerFilter.Operator.GTE, new Integer(2));
-        assertThat(filter.complies(new Integer(1))).isFalse();
-        assertThat(filter.complies(new Integer(2))).isTrue();
-        assertThat(filter.complies(new Integer(3))).isTrue();
+        final Filter filter = new IntegerFilter(IntegerFilter.Operator.GTE, 2);
+        assertThat(filter.complies(1)).isFalse();
+        assertThat(filter.complies(2)).isTrue();
+        assertThat(filter.complies(3)).isTrue();
     }
 
     @Test
     public final void testToString() {
-        assertThat("" + new IntegerFilter(IntegerFilter.Operator.LT, new Integer(2))).isEqualTo(" < 2");
-        assertThat("" + new IntegerFilter(IntegerFilter.Operator.LTE, new Integer(2))).isEqualTo(" <= 2");
-        assertThat("" + new IntegerFilter(IntegerFilter.Operator.EQ, new Integer(2))).isEqualTo(" = 2");
-        assertThat("" + new IntegerFilter(IntegerFilter.Operator.GT, new Integer(2))).isEqualTo(" > 2");
-        assertThat("" + new IntegerFilter(IntegerFilter.Operator.GTE, new Integer(2))).isEqualTo(" >= 2");
+        assertThat("" + new IntegerFilter(IntegerFilter.Operator.LT, 2)).isEqualTo(" < 2");
+        assertThat("" + new IntegerFilter(IntegerFilter.Operator.LTE, 2)).isEqualTo(" <= 2");
+        assertThat("" + new IntegerFilter(IntegerFilter.Operator.EQ, 2)).isEqualTo(" = 2");
+        assertThat("" + new IntegerFilter(IntegerFilter.Operator.GT, 2)).isEqualTo(" > 2");
+        assertThat("" + new IntegerFilter(IntegerFilter.Operator.GTE, 2)).isEqualTo(" >= 2");
     }
 
 }

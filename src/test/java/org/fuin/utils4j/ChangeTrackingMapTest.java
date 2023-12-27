@@ -17,16 +17,15 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class ChangeTrackingMapTest {
@@ -51,13 +50,13 @@ public class ChangeTrackingMapTest {
         return map;
     }
 
-    @Before
+    @BeforeEach
     public final void beforeMethod() {
         initialEmptyMap = new ChangeTrackingMap<String, String>(new HashMap<String, String>());
         initialFilledMap = new ChangeTrackingMap<String, String>(toMap("one=1,two=2,three=3"));
     }
 
-    @After
+    @AfterEach
     public final void afterMethod() {
         initialFilledMap = null;
         initialEmptyMap = null;
@@ -207,7 +206,7 @@ public class ChangeTrackingMapTest {
         // Check the result
         assertThat(initialFilledMap.isChanged()).isTrue();
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
-        assertThat(initialFilledMap.get("three")).isEqualTo(null);
+        assertThat(initialFilledMap.get("three")).isNull();
         assertThat(initialFilledMap).hasSize(2);
         assertThat(initialFilledMap.getAdded()).isEmpty();
         assertThat(initialFilledMap.getChanged()).isEmpty();
@@ -236,7 +235,7 @@ public class ChangeTrackingMapTest {
         // Check the result
         assertThat(initialFilledMap.isChanged()).isTrue();
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
-        assertThat(initialFilledMap.get("three")).isEqualTo(null);
+        assertThat(initialFilledMap.get("three")).isNull();
         assertThat(initialFilledMap).hasSize(2);
         assertThat(initialFilledMap.getAdded()).isEmpty();
         assertThat(initialFilledMap.getChanged()).isEmpty();
@@ -372,7 +371,7 @@ public class ChangeTrackingMapTest {
         // Check the result
         assertThat(initialFilledMap.isChanged()).isFalse();
         assertThat(initialFilledMap.hasChangedSinceTagging()).isFalse();
-        assertThat(initialFilledMap.get("four")).isEqualTo(null);
+        assertThat(initialFilledMap.get("four")).isNull();
         assertThat(initialFilledMap).hasSize(3);
         assertThat(initialFilledMap.getAdded()).isEmpty();
         assertThat(initialFilledMap.getChanged()).isEmpty();
@@ -401,7 +400,7 @@ public class ChangeTrackingMapTest {
         // Check the result
         assertThat(initialFilledMap.isChanged()).isTrue();
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
-        assertThat(initialFilledMap.get("two")).isEqualTo(null);
+        assertThat(initialFilledMap.get("two")).isNull();
         assertThat(initialFilledMap).hasSize(2);
         assertThat(initialFilledMap.getAdded()).isEmpty();
         assertThat(initialFilledMap.getChanged()).isEmpty();
@@ -418,7 +417,7 @@ public class ChangeTrackingMapTest {
         // Check the result
         assertThat(initialFilledMap.isChanged()).isTrue();
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
-        assertThat(initialFilledMap.get("two")).isEqualTo(null);
+        assertThat(initialFilledMap.get("two")).isNull();
         assertThat(initialFilledMap).hasSize(2);
         assertThat(initialFilledMap.getAdded()).isEmpty();
         assertThat(initialFilledMap.getChanged()).isEmpty();
@@ -430,7 +429,7 @@ public class ChangeTrackingMapTest {
         // Should be the same state!
         assertThat(initialFilledMap.isChanged()).isTrue();
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
-        assertThat(initialFilledMap.get("two")).isEqualTo(null);
+        assertThat(initialFilledMap.get("two")).isNull();
         assertThat(initialFilledMap).hasSize(2);
         assertThat(initialFilledMap.getAdded()).isEmpty();
         assertThat(initialFilledMap.getChanged()).isEmpty();
@@ -518,7 +517,7 @@ public class ChangeTrackingMapTest {
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledMap).hasSize(3);
         assertThat(initialFilledMap.get("one")).isEqualTo("1");
-        assertThat(initialFilledMap.get("two")).isEqualTo(null);
+        assertThat(initialFilledMap.get("two")).isNull();
         assertThat(initialFilledMap.get("three")).isEqualTo("11");
         assertThat(initialFilledMap.get("four")).isEqualTo("4");
         assertThat(initialFilledMap.getAdded()).isEqualTo(toMap("four=4"));
@@ -557,7 +556,7 @@ public class ChangeTrackingMapTest {
         assertThat(initialFilledMap.hasChangedSinceTagging()).isFalse();
         assertThat(initialFilledMap).hasSize(3);
         assertThat(initialFilledMap.get("one")).isEqualTo("1");
-        assertThat(initialFilledMap.get("two")).isEqualTo(null);
+        assertThat(initialFilledMap.get("two")).isNull();
         assertThat(initialFilledMap.get("three")).isEqualTo("11");
         assertThat(initialFilledMap.get("four")).isEqualTo("4");
         assertThat(initialFilledMap.getAdded()).isEmpty();
@@ -596,7 +595,7 @@ public class ChangeTrackingMapTest {
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledMap).hasSize(3);
         assertThat(initialFilledMap.get("one")).isEqualTo("1");
-        assertThat(initialFilledMap.get("two")).isEqualTo(null);
+        assertThat(initialFilledMap.get("two")).isNull();
         assertThat(initialFilledMap.get("three")).isEqualTo("11");
         assertThat(initialFilledMap.get("four")).isEqualTo("4");
         assertThat(initialFilledMap.getAdded()).isEqualTo(toMap("four=4"));
@@ -646,7 +645,7 @@ public class ChangeTrackingMapTest {
         assertThat(initialFilledMap.hasChangedSinceTagging()).isTrue();
         assertThat(initialFilledMap).hasSize(3);
         assertThat(initialFilledMap.get("one")).isEqualTo("1");
-        assertThat(initialFilledMap.get("two")).isEqualTo(null);
+        assertThat(initialFilledMap.get("two")).isNull();
         assertThat(initialFilledMap.get("three")).isEqualTo("11");
         assertThat(initialFilledMap.get("four")).isEqualTo("4");
         assertThat(initialFilledMap.getAdded()).isEqualTo(toMap("four=4"));

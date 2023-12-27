@@ -1,8 +1,8 @@
 package org.fuin.utils4j.jaxb;
 
-import java.util.Objects;
-
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+
+import java.util.Objects;
 
 public class MyId {
 

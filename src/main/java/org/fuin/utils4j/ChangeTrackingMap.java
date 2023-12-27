@@ -17,12 +17,7 @@
  */
 package org.fuin.utils4j;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A wrapper for maps that keeps track of all changes made to the map since construction. Only adding, replacing or deleting elements is

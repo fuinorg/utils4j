@@ -17,17 +17,15 @@
  */
 package org.fuin.utils4j.jaxb;
 
+import jakarta.xml.bind.JAXBContext;
+import org.junit.jupiter.api.Test;
+
+import javax.xml.stream.XMLOutputFactory;
+import java.io.StringWriter;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
 import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
-
-import java.io.StringWriter;
-
-import javax.xml.stream.XMLOutputFactory;
-
-import jakarta.xml.bind.JAXBContext;
-
-import org.junit.Test;
 
 // CHECKSTYLE:OFF
 public class CDataJaxbTest {

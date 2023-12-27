@@ -17,8 +17,10 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import org.apache.commons.io.FileUtils;
+import org.fuin.utils4j.test.ClassWithPrivateConstructor;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,18 +29,10 @@ import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileLock;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
-import org.apache.commons.io.FileUtils;
-import org.fuin.utils4j.test.ClassWithPrivateConstructor;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Tests for Utils4J.
@@ -52,7 +46,7 @@ public class Utils4JTest {
 
     private static final Map<String, String> vars = new HashMap<>();
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         vars.put("one", "1");
         vars.put("two", "2");
@@ -157,22 +151,16 @@ public class Utils4JTest {
 
     @Test
     public final void testCheckValidFileNotExisting() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.checkValidFile(new File(TEST_PROPERTIES_FILE.getParentFile(), "foobar.txt"));
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public final void testCheckValidFileDirectory() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.checkValidFile(TEST_PROPERTIES_FILE.getParentFile());
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -182,22 +170,16 @@ public class Utils4JTest {
 
     @Test
     public final void testCheckValidDirNotExisting() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.checkValidDir(new File(TEST_PROPERTIES_FILE.getParentFile(), "foobar"));
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public final void testCheckValidDirFile() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.checkValidDir(TEST_PROPERTIES_FILE);
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -208,32 +190,23 @@ public class Utils4JTest {
 
     @Test
     public final void testCreateInstanceClassNotFound() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.createInstance("x.y.Z");
-            fail();
-        } catch (final RuntimeException ex) {
-            assertThat(ex.getCause()).isInstanceOf(ClassNotFoundException.class);
-        }
+        }).hasCauseInstanceOf(ClassNotFoundException.class);
     }
 
     @Test
     public final void testCreateInstanceInstantiationProblem() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.createInstance(Cancelable.class.getName());
-            fail();
-        } catch (final RuntimeException ex) {
-            assertThat(ex.getCause()).isInstanceOf(NoSuchMethodException.class);
-        }
+        }).hasCauseInstanceOf(NoSuchMethodException.class);
     }
 
     @Test
     public final void testCreateInstanceIllegalAccess() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.createInstance(ClassWithPrivateConstructor.class.getName());
-            fail();
-        } catch (final RuntimeException ex) {
-            assertThat(ex.getCause()).isInstanceOf(IllegalAccessException.class);
-        }
+        }).hasCauseInstanceOf(IllegalAccessException.class);
     }
 
     @Test
@@ -294,12 +267,9 @@ public class Utils4JTest {
 
     @Test
     public final void testGetRelativePathNotInsideBaseDir() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.getRelativePath(TEST_PROPERTIES_FILE.getParentFile(), TEST_PROPERTIES_FILE.getParentFile().getParentFile());
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -309,12 +279,9 @@ public class Utils4JTest {
 
     @Test
     public final void testCheckNotNullFail() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.checkNotNull("name", null);
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -324,12 +291,9 @@ public class Utils4JTest {
 
     @Test
     public final void testCheckNotEmptyFail() {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.checkNotEmpty("name", "");
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            // OK
-        }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -340,12 +304,9 @@ public class Utils4JTest {
 
     @Test
     public final void testInvokeFail() throws InvokeMethodFailedException {
-        try {
+        assertThatThrownBy(() -> {
             Utils4J.invoke(new IllegalNullArgumentException("abc"), "getArgument", new Class[] { String.class }, new Object[] { "" });
-            fail();
-        } catch (final InvokeMethodFailedException ex) {
-            // OK
-        }
+        }).isInstanceOf(InvokeMethodFailedException.class);
     }
 
     @Test
@@ -511,34 +472,37 @@ public class Utils4JTest {
 
     }
 
-    @Test(expected = LockingFailedException.class)
-    public final void testLockRandomAccessFileFailed() throws Exception {
+    @Test
+    public final void testLockRandomAccessFileFailed() {
 
-        final File file = File.createTempFile("testLockRandomAccessFile", ".bin");
+        assertThatThrownBy(() -> {
 
-        try {
+            final File file = File.createTempFile("testLockRandomAccessFile", ".bin");
 
-            final ExceptionContainer ec1 = new ExceptionContainer();
-            // First holds a lock for one second
-            final Thread thread1 = new Thread(createLockRunnable(file, ec1, 3, 100, 1000));
+            try {
 
-            final ExceptionContainer ec2 = new ExceptionContainer();
-            // Second makes only one try to get the lock
-            final Thread thread2 = new Thread(createLockRunnable(file, ec2, 1, 0, 0));
+                final ExceptionContainer ec1 = new ExceptionContainer();
+                // First holds a lock for one second
+                final Thread thread1 = new Thread(createLockRunnable(file, ec1, 3, 100, 1000));
 
-            // Start both threads to simulate a concurrent lock
-            startAndWaitUntilFinished(thread1, thread2);
+                final ExceptionContainer ec2 = new ExceptionContainer();
+                // Second makes only one try to get the lock
+                final Thread thread2 = new Thread(createLockRunnable(file, ec2, 1, 0, 0));
 
-            // Check results
-            assertThat(ec1.exception).isNull();
-            if (ec2.exception != null) {
-                throw ec2.exception;
+                // Start both threads to simulate a concurrent lock
+                startAndWaitUntilFinished(thread1, thread2);
+
+                // Check results
+                assertThat(ec1.exception).isNull();
+                if (ec2.exception != null) {
+                    throw ec2.exception;
+                }
+
+            } finally {
+                file.delete();
             }
-            fail("Expected " + LockingFailedException.class.getName());
 
-        } finally {
-            file.delete();
-        }
+        }).isInstanceOf(LockingFailedException.class);
 
     }
 

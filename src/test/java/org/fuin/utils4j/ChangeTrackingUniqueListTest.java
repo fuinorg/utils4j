@@ -17,15 +17,14 @@
  */
 package org.fuin.utils4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //CHECKSTYLE:OFF
 public class ChangeTrackingUniqueListTest {
@@ -34,14 +33,14 @@ public class ChangeTrackingUniqueListTest {
 
     private ChangeTrackingUniqueList<String> initialFilledList;
 
-    @Before
+    @BeforeEach
     public final void beforeMethod() {
         initialEmptyList = new ChangeTrackingUniqueList<String>(new ArrayList<String>());
         initialFilledList = new ChangeTrackingUniqueList<String>(toList("one", "two", "three"));
 
     }
 
-    @After
+    @AfterEach
     public final void afterMethod() {
         initialFilledList = null;
         initialEmptyList = null;

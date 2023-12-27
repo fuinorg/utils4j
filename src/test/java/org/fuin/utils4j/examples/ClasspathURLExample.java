@@ -17,9 +17,9 @@
  */
 package org.fuin.utils4j.examples;
 
-import java.net.URL;
-
 import org.fuin.utils4j.Utils4J;
+
+import java.net.URL;
 
 /**
  * Short example for creating a "classpath:" scheme URL.

@@ -17,10 +17,10 @@
  */
 package org.fuin.utils4j.examples;
 
+import org.fuin.utils4j.WaitHelper;
+
 import java.util.Arrays;
 import java.util.UUID;
-
-import org.fuin.utils4j.WaitHelper;
 
 /**
  * Short example for using the {@link WaitHelper}.

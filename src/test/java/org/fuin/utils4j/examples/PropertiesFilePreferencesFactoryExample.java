@@ -17,10 +17,10 @@
  */
 package org.fuin.utils4j.examples;
 
+import org.fuin.utils4j.PropertiesFilePreferencesFactory;
+
 import java.io.File;
 import java.util.prefs.Preferences;
-
-import org.fuin.utils4j.PropertiesFilePreferencesFactory;
 
 /**
  * Example using the file based preferences factory.

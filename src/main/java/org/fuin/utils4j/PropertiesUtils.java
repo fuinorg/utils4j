@@ -17,20 +17,12 @@
  */
 package org.fuin.utils4j;
 
-import static org.fuin.utils4j.Utils4J.checkNotNull;
-import static org.fuin.utils4j.Utils4J.checkValidFile;
-import static org.fuin.utils4j.Utils4J.createUrl;
-import static org.fuin.utils4j.Utils4J.getPackagePath;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
+
+import static org.fuin.utils4j.Utils4J.*;
 
 /**
  * Utilities related to the {@link Properties} class.
