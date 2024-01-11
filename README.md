@@ -263,7 +263,7 @@ A test that shows the usage can be found here: [JandexUtilsTest](https://github.
 <dependency>
     <groupId>org.jboss</groupId>
     <artifactId>jandex</artifactId>
-    <version>2.0.4.Final</version>
+    <version>3.1.6</version>
 </dependency>
 ```
 
