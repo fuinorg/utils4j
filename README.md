@@ -171,7 +171,7 @@ A full example can be found here: [CDataJaxbExample.java](https://github.com/fui
 <dependency>
     <groupId>jakarta.xml.bind</groupId>
     <artifactId>jakarta.xml.bind-api</artifactId>
-    <version>2.3.2</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
