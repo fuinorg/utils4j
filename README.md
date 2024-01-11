@@ -171,7 +171,7 @@ A full example can be found here: [CDataJaxbExample.java](https://github.com/fui
 <dependency>
     <groupId>jakarta.xml.bind</groupId>
     <artifactId>jakarta.xml.bind-api</artifactId>
-    <version>2.3.2</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
@@ -263,7 +263,7 @@ A test that shows the usage can be found here: [JandexUtilsTest](https://github.
 <dependency>
     <groupId>org.jboss</groupId>
     <artifactId>jandex</artifactId>
-    <version>2.0.4.Final</version>
+    <version>3.1.6</version>
 </dependency>
 ```
 
