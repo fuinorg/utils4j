@@ -17,10 +17,13 @@
  */
 package org.fuin.utils4j;
 
-import org.jboss.jandex.*;
+import org.jboss.jandex.DotName;
+import org.jboss.jandex.Index;
+import org.jboss.jandex.Indexer;
 
-import java.io.*;
-import java.net.URL;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -31,11 +34,6 @@ import java.util.jar.JarFile;
  * Utilities related to Jandex.
  */
 public final class JandexUtils {
-
-    /**
-     * Default location of the Jandex index file.
-     */
-    public static final String DEFAULT_JANDEX_INDEX_FILE = "META-INF/jandex.idx";
 
     /**
      * Private default constructor.
@@ -195,88 +193,5 @@ public final class JandexUtils {
         return Utils4J.loadClass(name.toString());
     }
 
-    /**
-     * Writes the index to a file.
-     * Wraps the possible {@link IOException} into a {@link RuntimeException}.
-     *
-     * @param file File to write to.
-     * @param index Index to save.
-     */
-    public static void writeIndexR(final File file, final Index index) {
-        try {
-            writeIndex(file, index);
-        } catch (final IOException ex) {
-            throw new RuntimeException("Failed to write index to: " + file, ex);
-        }
-    }
-
-    /**
-     * Writes the index to a file.
-     *
-     * @param file File to write to.
-     * @param index Index to save.
-     * @throws IOException Failed to write to the file.
-     */
-    public static void writeIndex(final File file, final Index index) throws IOException {
-        try (final OutputStream out = new FileOutputStream(file)) {
-            new IndexWriter(out).write(index);
-        }
-    }
-
-    /**
-     * Loads the index from standard "META-INF/jandex.idx" location.
-     * Wraps the possible {@link IOException} into a {@link RuntimeException}.
-     *
-     * @return Index.
-     */
-    public static Index loadIndexResourceR() {
-        try {
-            return loadIndexResource();
-        } catch (final IOException ex) {
-            throw new RuntimeException("Failed to load: " + DEFAULT_JANDEX_INDEX_FILE, ex);
-        }
-    }
-
-    /**
-     * Loads the index from standard "META-INF/jandex.idx" location.
-     *
-     * @return Index.
-     * @throws IOException Failed to load the resource.
-     */
-    public static Index loadIndexResource() throws IOException {
-        return loadIndexResource(DEFAULT_JANDEX_INDEX_FILE);
-    }
-
-    /**
-     * Loads the index from a resource in the classpath.
-     * Wraps the possible {@link IOException} into a {@link RuntimeException}.
-     *
-     * @param indexFilePathAndName Path and name of the index file resource.
-     * @return Index.
-     */
-    public static Index loadIndexResourceR(final String indexFilePathAndName) {
-        try {
-            return loadIndexResource(indexFilePathAndName);
-        } catch (final IOException ex) {
-            throw new RuntimeException("Failed to write index to: " + indexFilePathAndName, ex);
-        }
-    }
-
-    /**
-     * Loads the index from a resource in the classpath.
-     *
-     * @param indexFilePathAndName Path and name of the index file resource.
-     * @return Index.
-     * @throws IOException Failed to load the resource.
-     */
-    public static Index loadIndexResource(final String indexFilePathAndName) throws IOException {
-        final URL url = Thread.currentThread().getContextClassLoader().getResource(indexFilePathAndName);
-        if (url == null) {
-            throw new FileNotFoundException("Resource not found: " + indexFilePathAndName);
-        }
-        try (final InputStream input = url.openStream()) {
-            return new IndexReader(input).read();
-        }
-    }
 
 }

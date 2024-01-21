@@ -23,7 +23,6 @@ import org.jboss.jandex.Indexer;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,57 +143,6 @@ public class JandexUtilsTest {
         assertThatThrownBy(() -> JandexUtils.loadClass(DotName.createSimple("a.b.c.d.DoesNotExist")))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Failed to load class");
-    }
-
-    @Test
-    void testWriteIndexR() throws IOException {
-
-        // PREPARE
-        final Indexer indexer = new Indexer();
-        indexer.indexClass(JandexUtils.class);
-        final Index index = indexer.complete();
-        final String filename = this.getClass().getSimpleName() + ".index";
-        final File file = new File(CLASSES_DIR, filename);
-        file.delete();
-
-        // TEST
-        JandexUtils.writeIndexR(file, index);
-
-        // VERIFY
-        assertThat(file).exists();
-        final Index result = JandexUtils.loadIndexResourceR(filename);
-        assertThat(result.getClassByName(JandexUtils.class.getName())).isNotNull();
-        assertThat(result.getClassByName(JandexUtils.class.getName()).name().toString()).isEqualTo(JandexUtils.class.getName());
-
-    }
-
-    @Test
-    public final void loadIndexResource() throws IOException {
-        final Index index = JandexUtils.loadIndexResource("sample.index");
-        assertThat(index.getClassByName(JandexUtils.class.getName())).isNotNull();
-        assertThat(index.getClassByName(JandexUtils.class.getName()).name().toString()).isEqualTo(JandexUtils.class.getName());
-    }
-
-    @Test
-    public final void loadIndexResourceR() {
-        final Index index = JandexUtils.loadIndexResourceR("sample.index");
-        assertThat(index.getClassByName(JandexUtils.class.getName())).isNotNull();
-        assertThat(index.getClassByName(JandexUtils.class.getName()).name().toString()).isEqualTo(JandexUtils.class.getName());
-    }
-
-    @Test
-    public final void loadIndexResourceFailure() {
-        assertThatThrownBy(() -> JandexUtils.loadIndexResource("does-not-exist.index"))
-                .isInstanceOf(FileNotFoundException.class)
-                .hasMessage("Resource not found: does-not-exist.index");
-    }
-
-    @Test
-    public final void loadIndexResourceRFailure() {
-        assertThatThrownBy(() -> JandexUtils.loadIndexResourceR("does-not-exist.index"))
-                .isInstanceOf(RuntimeException.class)
-                .hasRootCauseInstanceOf(FileNotFoundException.class)
-                .hasRootCauseMessage("Resource not found: does-not-exist.index");
     }
 
 }
