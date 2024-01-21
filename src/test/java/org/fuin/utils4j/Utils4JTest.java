@@ -876,5 +876,18 @@ public class Utils4JTest {
 
     }
 
+    @Test
+    public final void loadClassOK() {
+        assertThat(Utils4J.loadClass(Utils4J.class.getName())).isEqualTo(Utils4J.class);
+    }
+
+    @Test
+    public final void loadClassFailure() {
+        assertThatThrownBy(() -> Utils4J.loadClass("a.b.c.d.DoesNotExist"))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Failed to load class");
+    }
+
+
 }
 // CHECKSTYLE:ON

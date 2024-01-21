@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Tests for {@link JandexUtils}.
@@ -51,6 +52,21 @@ public class JandexUtilsTest {
         final Index index = indexer.complete();
         assertThat(knownFiles).contains(classFile);
         assertThat(index.getClassByName(DotName.createSimple(JandexUtils.class.getName()))).isNotNull();
+
+    }
+
+    @Test
+    public final void testIndexDirSimple() {
+
+        // PREPARE
+        final File classesDir = new File("target/classes");
+
+        // TEST
+        final Index index = JandexUtils.indexDir(classesDir);
+
+        // VERIFY
+        assertThat(index.getClassByName(DotName.createSimple(JandexUtils.class.getName()))).isNotNull();
+        assertThat(index.getClassByName(DotName.createSimple(Utils4J.class.getName()))).isNotNull();
 
     }
 
@@ -112,6 +128,18 @@ public class JandexUtilsTest {
         assertThat(index.getClassByName(DotName.createSimple(JandexUtils.class.getName()))).isNotNull();
         assertThat(knownFiles).contains(jandexClassFile);
 
+    }
+
+    @Test
+    public final void loadClassOK() {
+        assertThat(JandexUtils.loadClass(DotName.createSimple(Utils4J.class))).isEqualTo(Utils4J.class);
+    }
+
+    @Test
+    public final void loadClassFailure() {
+        assertThatThrownBy(() -> JandexUtils.loadClass(DotName.createSimple("a.b.c.d.DoesNotExist")))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Failed to load class");
     }
 
 }

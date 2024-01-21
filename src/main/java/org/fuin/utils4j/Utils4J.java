@@ -1623,4 +1623,20 @@ public final class Utils4J {
 
     }
 
+    /**
+     * Loads the class using the current thread's context class loader.
+     *
+     * @param name Name of the class to load.
+     *
+     * @return Loaded class.
+     */
+    public static Class<?> loadClass(String name) {
+        try {
+            return Thread.currentThread().getContextClassLoader().loadClass(name);
+        } catch (final ClassNotFoundException ex) {
+            throw new RuntimeException("Failed to load class: " + name, ex);
+        }
+    }
+
+
 }
