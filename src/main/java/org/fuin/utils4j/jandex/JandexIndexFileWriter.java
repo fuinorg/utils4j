@@ -1,4 +1,4 @@
-package org.fuin.utils4j;
+package org.fuin.utils4j.jandex;
 
 import org.jboss.jandex.*;
 

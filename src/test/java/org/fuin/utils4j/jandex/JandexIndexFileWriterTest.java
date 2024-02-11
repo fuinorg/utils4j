@@ -15,8 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see http://www.gnu.org/licenses/.
  */
-package org.fuin.utils4j;
+package org.fuin.utils4j.jandex;
 
+import org.fuin.utils4j.jandex.JandexIndexFileReader;
+import org.fuin.utils4j.jandex.JandexIndexFileWriter;
+import org.fuin.utils4j.jandex.JandexUtils;
 import org.jboss.jandex.Index;
 import org.jboss.jandex.IndexView;
 import org.jboss.jandex.Indexer;
