@@ -23,6 +23,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -1638,5 +1639,24 @@ public final class Utils4J {
         }
     }
 
+    /**
+     * Sets a private field in an object by using reflection.
+     *
+     * @param obj
+     *            Object with the attribute to set.
+     * @param name
+     *            Name of the attribute to set.
+     * @param value
+     *            Value to set for the attribute.
+     */
+    public static void setPrivateField(final Object obj, final String name, final Object value) {
+        try {
+            final Field field = obj.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            field.set(obj, value);
+        } catch (final Exception ex) {
+            throw new RuntimeException("Couldn't set field '" + name + "' in class '" + obj.getClass() + "'", ex);
+        }
+    }
 
 }

@@ -888,6 +888,34 @@ public class Utils4JTest {
                 .hasMessageContaining("Failed to load class");
     }
 
+    @Test
+    public final void testSetPrivateField() {
+
+        // PREPARE
+        final MyTestClass original = new MyTestClass("Test");
+        final String name = "Changed";
+
+        // TEST
+        Utils4J.setPrivateField(original, "name", name);
+
+        // VERIFY
+        assertThat(original.getName()).isEqualTo(name);
+
+    }
+
+    private static class MyTestClass {
+
+        private String name;
+
+        public MyTestClass(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
 
 }
 // CHECKSTYLE:ON
