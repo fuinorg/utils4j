@@ -1429,13 +1429,15 @@ public final class Utils4J {
             final File file = new File(filePathAndName);
             if (file.isDirectory()) {
                 try (final Stream<Path> stream = Files.walk(file.toPath(), Integer.MAX_VALUE)) {
-                    stream.map(f -> f.toFile()).filter(predicate).forEach(files::add);
+                    stream.map(Path::toFile).filter(predicate).forEach(files::add);
                 } catch (final IOException ex) {
                     throw new RuntimeException("Error walking path: " + file, ex);
                 }
             } else {
                 if (predicate.test(file)) {
                     files.add(file);
+                } else {
+                    System.err.println("Ignoring file: " + file);
                 }
             }
         }

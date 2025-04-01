@@ -127,6 +127,8 @@ public final class JandexIndexFileReader {
         /**
          * Adds one or more resources.
          *
+         * @param resources Array with resources to add.
+         *
          * @return Builder.
          */
         public Builder addResources(final String...resources) {
@@ -135,6 +137,8 @@ public final class JandexIndexFileReader {
 
         /**
          * Adds one or more resources.
+         *
+         * @param resources List of resources to add.
          *
          * @return Builder.
          */

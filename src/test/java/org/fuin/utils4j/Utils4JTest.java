@@ -869,10 +869,14 @@ public class Utils4JTest {
     }
 
     @Test
-    public void testPathsFiles() {
+    public void testPathsFiles() throws IOException {
 
         final File javaHomeDir = new File(System.getProperty("java.home"));
-        final List<File> bootJarFiles = Utils4J.pathsFiles(System.getProperty("sun.boot.library.path"), Utils4J::jreJarFile);
+        String path = System.getProperty("sun.boot.library.path");
+        if (path.endsWith("bin")) {
+            path = path.substring(0, path.length() - 4) + File.separator + "lib";
+        }
+        final List<File> bootJarFiles = Utils4J.pathsFiles(path, Utils4J::jreJarFile);
         final File rtJar = new File(javaHomeDir, "lib/jrt-fs.jar");
         assertThat(bootJarFiles).contains(rtJar);
 
