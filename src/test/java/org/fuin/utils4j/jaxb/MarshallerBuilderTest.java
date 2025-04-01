@@ -19,11 +19,9 @@ package org.fuin.utils4j.jaxb;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.MarshalException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXParseException;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
 
@@ -201,9 +199,11 @@ public class MarshallerBuilderTest {
         final AtomicBoolean afterCalled = new AtomicBoolean(false);
         final Marshaller marshaller = new MarshallerBuilder().withContext(ctx).addAdapters(new MyId.Adapter())
                 .withListener(new Marshaller.Listener() {
+                    @Override
                     public void beforeMarshal(Object source) {
                         beforeCalled.set(true);
                     }
+                    @Override
                     public void afterMarshal(Object source) {
                         afterCalled.set(true);
                     }

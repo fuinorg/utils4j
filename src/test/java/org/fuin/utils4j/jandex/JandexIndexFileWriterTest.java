@@ -37,8 +37,6 @@ public class JandexIndexFileWriterTest {
 
     private static final File TARGET_DIR = new File("target");
 
-    private static final File CLASSES_DIR = new File(TARGET_DIR, "classes");
-
     private static final File TEST_CLASSES_DIR = new File(TARGET_DIR, "test-classes");
 
     @Test

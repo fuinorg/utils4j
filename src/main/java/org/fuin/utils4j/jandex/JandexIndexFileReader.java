@@ -62,8 +62,8 @@ public final class JandexIndexFileReader {
     private IndexView loadResources(final String indexFilePathAndName) throws IOException {
         final Enumeration<URL> enu = Thread.currentThread().getContextClassLoader().getResources(indexFilePathAndName);
         final List<IndexView> indexes = new ArrayList<>();
-        final List<URL> resources = Collections.list(enu);
-        for (final URL url : resources) {
+        final List<URL> urlList = Collections.list(enu);
+        for (final URL url : urlList) {
             try (final InputStream input = url.openStream()) {
                 indexes.add(new IndexReader(input).read());
             }

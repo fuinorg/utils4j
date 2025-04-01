@@ -29,8 +29,6 @@ public class MarshallerBuilder {
 
     private ValidationEventHandler handler;
 
-    private boolean formattedOutput;
-
     private JAXBContext ctx;
 
 

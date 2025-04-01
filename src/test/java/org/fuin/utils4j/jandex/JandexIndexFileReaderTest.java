@@ -17,10 +17,8 @@
  */
 package org.fuin.utils4j.jandex;
 
-import org.fuin.utils4j.jandex.JandexIndexFileReader;
 import org.fuin.utils4j.jandex.JandexIndexFileReader.Builder;
 
-import org.fuin.utils4j.jandex.JandexUtils;
 import org.jboss.jandex.IndexView;
 import org.junit.jupiter.api.Test;
 
