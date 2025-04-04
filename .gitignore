@@ -3,6 +3,7 @@
 !.gitkeep
 !.mvn
 !.github
+!.sonarlint
 !.devcontainer
 target
 META-INF
