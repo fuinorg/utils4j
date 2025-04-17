@@ -65,7 +65,7 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
      * @return If elements have been added or deleted <code>true</code> else <code>false</code>.
      */
     public final boolean isChanged() {
-        return (added.size() > 0) || (changed.size() > 0) || (removed.size() > 0);
+        return (!added.isEmpty()) || (changed.size() > 0) || (removed.size() > 0);
     }
 
     /**

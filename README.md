@@ -9,6 +9,7 @@ A small Java library that contains several helpful utility classes.
 [![Java Development Kit 17](https://img.shields.io/badge/JDK-17-green.svg)](https://openjdk.java.net/projects/jdk/17/)
 
 ## Versions
+- 0.14.0 = See [release-notes](release-notes.md)
 - 0.13.x (or later) = **Java 17**
 - 0.12.0 = **Java 11** with new **jakarta** namespace
 - 0.11.x = **Java 11** before namespace change from 'javax' to 'jakarta'
