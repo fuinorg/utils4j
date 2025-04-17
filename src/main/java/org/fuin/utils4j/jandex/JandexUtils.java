@@ -15,13 +15,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see http://www.gnu.org/licenses/.
  */
-package org.fuin.utils4j;
+package org.fuin.utils4j.jandex;
 
+import org.fuin.utils4j.Utils4J;
+import org.jboss.jandex.DotName;
+import org.jboss.jandex.Index;
 import org.jboss.jandex.Indexer;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -68,7 +72,20 @@ public final class JandexUtils {
     }
 
     /**
-     * Indexes all classes in a directory or it's sub directories.
+     * Indexes all classes in a directory or it's subdirectories.
+     *
+     * @param dir
+     *            Directory to analyze.
+     * @return Index of all classes in the directory.
+     */
+    public static Index indexDir(final File dir) {
+        final Indexer indexer = new Indexer();
+        indexDir(indexer, new ArrayList<>(), dir);
+        return indexer.complete();
+    }
+
+    /**
+     * Indexes all classes in a directory or it's subdirectories.
      * 
      * @param indexer
      *            Indexer to use.
@@ -165,5 +182,17 @@ public final class JandexUtils {
         }
 
     }
+
+    /**
+     * Loads the class using the current thread's context class loader.
+     *
+     * @param name Name of the class to load.
+     *
+     * @return Loaded class.
+     */
+    public static Class<?> loadClass(DotName name) {
+        return Utils4J.loadClass(name.toString());
+    }
+
 
 }

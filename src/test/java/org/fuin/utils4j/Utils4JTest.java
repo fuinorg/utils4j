@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * Copyright (C) 2015 Michael Schnell. All rights reserved.
  * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -11,7 +11,7 @@
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
- *
+ * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see http://www.gnu.org/licenses/.
  */
@@ -29,10 +29,21 @@ import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileLock;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.AssertionsKt.fail;
 
 /**
  * Tests for Utils4J.
@@ -211,7 +222,7 @@ public class Utils4JTest {
 
     @Test
     public final void testContainsURL() throws IOException {
-        final URL[] urls = new URL[] { new URL("http://www.google.com"), new URL("http://www.yahoo.com"), new URL("file:/foobar.txt") };
+        final URL[] urls = new URL[]{new URL("http://www.google.com"), new URL("http://www.yahoo.com"), new URL("file:/foobar.txt")};
         assertThat(Utils4J.containsURL(urls, new URL("http://www.google.com"))).isTrue();
         assertThat(Utils4J.containsURL(urls, new URL("http://www.google.com/"))).isFalse();
         assertThat(Utils4J.containsURL(urls, new URL("http://www.abc.com"))).isFalse();
@@ -298,14 +309,14 @@ public class Utils4JTest {
 
     @Test
     public final void testInvokeOK() throws InvokeMethodFailedException {
-        assertThat(Utils4J.invoke(new IllegalNullArgumentException("abc"), "getArgument", new Class[] {}, new Object[] {}))
+        assertThat(Utils4J.invoke(new IllegalNullArgumentException("abc"), "getArgument", new Class[]{}, new Object[]{}))
                 .isEqualTo("abc");
     }
 
     @Test
     public final void testInvokeFail() throws InvokeMethodFailedException {
         assertThatThrownBy(() -> {
-            Utils4J.invoke(new IllegalNullArgumentException("abc"), "getArgument", new Class[] { String.class }, new Object[] { "" });
+            Utils4J.invoke(new IllegalNullArgumentException("abc"), "getArgument", new Class[]{String.class}, new Object[]{""});
         }).isInstanceOf(InvokeMethodFailedException.class);
     }
 
@@ -524,8 +535,8 @@ public class Utils4JTest {
         final String str1 = "This is a secret text 1234567890-ÄÖÜäöüß";
         final byte[] data1 = str1.getBytes();
         final char[] password = "MyVerySecretPw!".toCharArray();
-        final byte[] salt = new byte[] { (byte) 0xc7, (byte) 0x73, (byte) 0x21, (byte) 0x8c, (byte) 0x7e, (byte) 0xc8, (byte) 0xee,
-                (byte) 0x99 };
+        final byte[] salt = new byte[]{(byte) 0xc7, (byte) 0x73, (byte) 0x21, (byte) 0x8c, (byte) 0x7e, (byte) 0xc8, (byte) 0xee,
+                (byte) 0x99};
         final int count = 100;
 
         final byte[] encrypted = Utils4J.encryptPasswordBased(algorithm, data1, password, salt, count);
@@ -670,7 +681,7 @@ public class Utils4JTest {
 
     /**
      * Create a runnable that locks the file.
-     * 
+     *
      * @param file
      *            File to lock.
      * @param ec
@@ -681,11 +692,11 @@ public class Utils4JTest {
      *            Milliseconds to sleep between retries.
      * @param sleepMillis
      *            Number of milliseconds to hold the lock.
-     * 
+     *
      * @return New runnable instance.
      */
     private Runnable createLockRunnable(final File file, final ExceptionContainer ec, final int tryLockMax, final long tryWaitMillis,
-            final long sleepMillis) {
+                                        final long sleepMillis) {
         return new Runnable() {
             @Override
             public void run() {
@@ -711,7 +722,7 @@ public class Utils4JTest {
 
     /**
      * Start the two threads and wait until both finished.
-     * 
+     *
      * @param thread1
      *            First thread.
      * @param thread2
@@ -858,10 +869,14 @@ public class Utils4JTest {
     }
 
     @Test
-    public void testPathsFiles() {
+    public void testPathsFiles() throws IOException {
 
         final File javaHomeDir = new File(System.getProperty("java.home"));
-        final List<File> bootJarFiles = Utils4J.pathsFiles(System.getProperty("sun.boot.library.path"), Utils4J::jreJarFile);
+        String path = System.getProperty("sun.boot.library.path");
+        if (path.endsWith("bin")) {
+            path = path.substring(0, path.length() - 4) + File.separator + "lib";
+        }
+        final List<File> bootJarFiles = Utils4J.pathsFiles(path, Utils4J::jreJarFile);
         final File rtJar = new File(javaHomeDir, "lib/jrt-fs.jar");
         assertThat(bootJarFiles).contains(rtJar);
 
@@ -875,6 +890,131 @@ public class Utils4JTest {
         assertThat(files).contains(new File(currentDir, "target/classes"));
 
     }
+
+    @Test
+    public final void loadClassOK() {
+        assertThat(Utils4J.loadClass(Utils4J.class.getName())).isEqualTo(Utils4J.class);
+    }
+
+    @Test
+    public final void loadClassFailure() {
+        assertThatThrownBy(() -> Utils4J.loadClass("a.b.c.d.DoesNotExist"))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Failed to load class");
+    }
+
+    @Test
+    public final void testSetPrivateField() {
+
+        // PREPARE
+        final MyTestClass original = new MyTestClass("Test");
+        final String name = "Changed";
+
+        // TEST
+        Utils4J.setPrivateField(original, "name", name);
+
+        // VERIFY
+        assertThat(original.getName()).isEqualTo(name);
+
+    }
+
+    @Test
+    public final void testTryLockedOK() {
+
+        // PREPARE
+        final Semaphore semaphore = new Semaphore(1);
+        final AtomicBoolean executed = new AtomicBoolean();
+
+        // TEST
+        Utils4J.tryLocked(semaphore, () -> executed.set(true));
+
+        // VERIFY
+        assertThat(executed.get()).isTrue();
+
+    }
+
+
+    @Test
+    public final void testTryLockedFails() {
+
+        // PREPARE
+        final Semaphore semaphore = new Semaphore(1);
+        final AtomicBoolean executed = new AtomicBoolean();
+
+        Utils4J.runLocked(semaphore, () -> {
+
+            // TEST
+            Utils4J.tryLocked(semaphore, () -> executed.set(true));
+
+            // VERIFY
+            assertThat(executed.get()).isFalse();
+
+        }, ex -> fail("First lock is not expected to fail", ex));
+
+    }
+
+    @Test
+    public final void testRunLockedOK() {
+
+        // PREPARE
+        final Semaphore semaphore = new Semaphore(1);
+        final AtomicBoolean executed = new AtomicBoolean();
+
+        // TEST
+        Utils4J.runLocked(semaphore, () -> executed.set(true), ex -> fail("Lock is not expected to fail", ex));
+
+        // VERIFY
+        assertThat(executed.get()).isTrue();
+
+    }
+
+
+    @Test
+    public final void testRunLockedFails() {
+
+        // PREPARE
+        final List<String> executionOrder = Collections.synchronizedList(new ArrayList<>());
+        final Semaphore semaphore = new Semaphore(1);
+        final AtomicReference<InterruptedException> firstFailed = new AtomicReference<>();
+        final Thread t1 = new Thread(() -> {
+            Utils4J.runLocked(semaphore, () -> {
+                executionOrder.add("1A");
+                Utils4J.sleep(2000);
+                executionOrder.add("1B");
+            }, firstFailed::set);
+        });
+        t1.start();
+
+        final AtomicBoolean secondExecuted = new AtomicBoolean();
+        final AtomicReference<InterruptedException> secondFailed = new AtomicReference<>();
+
+        // TEST
+        Utils4J.sleep(1000); // Wait until 1st thread started
+        executionOrder.add("2A");
+        Utils4J.runLocked(semaphore, () -> secondExecuted.set(true), secondFailed::set);
+        executionOrder.add("2B");
+
+        // VERIFY
+        assertThat(firstFailed.get()).isNull();
+        assertThat(secondFailed.get()).isNull();
+        assertThat(secondExecuted.get()).isTrue();
+        assertThat(executionOrder).containsExactly("1A", "2A", "1B", "2B");
+
+    }
+
+    private static class MyTestClass {
+
+        private String name;
+
+        public MyTestClass(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
 
 }
 // CHECKSTYLE:ON

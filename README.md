@@ -9,6 +9,7 @@ A small Java library that contains several helpful utility classes.
 [![Java Development Kit 17](https://img.shields.io/badge/JDK-17-green.svg)](https://openjdk.java.net/projects/jdk/17/)
 
 ## Versions
+- 0.14.0 = See [release-notes](release-notes.md)
 - 0.13.x (or later) = **Java 17**
 - 0.12.0 = **Java 11** with new **jakarta** namespace
 - 0.11.x = **Java 11** before namespace change from 'javax' to 'jakarta'
@@ -42,7 +43,7 @@ Directly create a URL using a utility method:
 ```Java
 URL url = Utils4J.url("classpath:org/fuin/utils4j/test.properties");
 ```
-A full example can be found here: [ClasspathURLExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ClasspathURLExample.java)
+A full example can be found here: [ClasspathURLExample.java](src/test/java/org/fuin/utils4j/examples/ClasspathURLExample.java)
 
 If you register the URL stream handler, all URLs (no matter how they were constructed) will work:
 ```Java
@@ -63,7 +64,7 @@ a=1
 b=1/2
 c=1/2/3
 ```
-A full example can be found here: [VariableResolverExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/VariableResolverExample.java)
+A full example can be found here: [VariableResolverExample.java](src/test/java/org/fuin/utils4j/examples/VariableResolverExample.java)
 
 
 ### ZIP and UNZIP
@@ -74,7 +75,7 @@ final File zipFile = new File(Utils4J.getTempDir(), "myfile1.zip");
 Utils4J.zipDir(zipDir, "abc/def", zipFile);
 Utils4J.unzip(zipFile, Utils4J.getTempDir());
 ```
-A full example can be found here: [ZipDirExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ZipDirExample.java)
+A full example can be found here: [ZipDirExample.java](src/test/java/org/fuin/utils4j/examples/ZipDirExample.java)
 
 
 ### Tracking changes of a list / map
@@ -87,8 +88,8 @@ System.out.println(trackingList.getDeleted());
 System.out.println(trackingList.getAdded());
 trackingList.revert();
 ```
-A list example can be found here: [ChangeTrackingUniqueListExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingUniqueListExample.java)
-A map example can be found here: [ChangeTrackingMapExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/ChangeTrackingMapExample.java)
+A list example can be found here: [ChangeTrackingUniqueListExample.java](src/test/java/org/fuin/utils4j/examples/ChangeTrackingUniqueListExample.java)
+A map example can be found here: [ChangeTrackingMapExample.java](src/test/java/org/fuin/utils4j/examples/ChangeTrackingMapExample.java)
 
 
 ### Easy file locking
@@ -101,7 +102,7 @@ try {
     lock.release();
 }
 ```
-A full example can be found here: [LockFileExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/LockFileExample.java)
+A full example can be found here: [LockFileExample.java](src/test/java/org/fuin/utils4j/examples/LockFileExample.java)
 
 
 ### Properties file preferences
@@ -110,7 +111,7 @@ Shows the use of a directory and properties file based [Preferences API](http://
 System.setProperty("java.util.prefs.PreferencesFactory",  PropertiesFilePreferencesFactory.class.getName());
 Preferences userPrefs = Preferences.userRoot();
 ```
-A full example can be found here: [PropertiesFilePreferencesFactoryExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/PropertiesFilePreferencesFactoryExample.java)
+A full example can be found here: [PropertiesFilePreferencesFactoryExample.java](src/test/java/org/fuin/utils4j/examples/PropertiesFilePreferencesFactoryExample.java)
 
 
 ### JAXB CDATA Stream Writer
@@ -163,7 +164,7 @@ System.out.println(copy.getContent());
 // <whatever this="is"/>
 ```
 
-A full example can be found here: [CDataJaxbExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/CDataJaxbExample.java)
+A full example can be found here: [CDataJaxbExample.java](src/test/java/org/fuin/utils4j/examples/CDataJaxbExample.java)
 
 **Caution** - You must explicitly add the xml.bind-api dependency to your POM if you want to use this feature, because it's defined as optional here.
 
@@ -180,7 +181,7 @@ A full example can be found here: [CDataJaxbExample.java](https://github.com/fui
 
 > :warning: Deprecated in favour of [Awaitility](https://github.com/awaitility/awaitility)
 
-The [WaitHelper](https://github.com/fuinorg/utils4j/blob/master/src/main/java/org/fuin/utils4j/WaitHelper.java) class supports waiting for some condition.
+The [WaitHelper](src/main/java/org/fuin/utils4j/WaitHelper.java) class supports waiting for some condition.
 
 Example of waiting for a function to finish without an exception: 
 ```Java
@@ -208,7 +209,7 @@ waitHelper.waitUntilResult(() -> {
 }, Arrays.asList("Peter Parker, Inc"));
 ```
 
-A full example can be found here: [WaitHelperExample.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/WaitHelperExample.java)
+A full example can be found here: [WaitHelperExample.java](src/test/java/org/fuin/utils4j/examples/WaitHelperExample.java)
 
 
 ### Find all JARs and classes in the classpath
@@ -234,7 +235,7 @@ for (final File file : Utils4J.pathsFiles(System.getProperty("sun.boot.class.pat
     System.out.println(file);
 }
 ```
-A full example can be found here: [FindJarsAndClassesInClasspath.java](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/examples/FindJarsAndClassesInClasspath.java)
+A full example can be found here: [FindJarsAndClassesInClasspath.java](src/test/java/org/fuin/utils4j/examples/FindJarsAndClassesInClasspath.java)
 
 ### Analyze classes in the classpath with Jandex
 Easily find matching types from all classes or JAR files in the classpath using [Jandex](https://github.com/wildfly/jandex)
@@ -255,7 +256,7 @@ for (File file : knownFiles) {
     System.out.println(file);
 }
 ```
-A test that shows the usage can be found here: [JandexUtilsTest](https://github.com/fuinorg/utils4j/blob/master/src/test/java/org/fuin/utils4j/JandexUtilsTest.java)
+A test that shows the usage can be found here: [JandexUtilsTest](src/test/java/org/fuin/utils4j/jandex/JandexUtilsTest.java)
 
 **Caution** - You must explicitly add the Jandex dependency to your POM if you want to use this feature, because it's defined as optional here.
 
