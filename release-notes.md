@@ -1,5 +1,8 @@
 # Release Notes
 
+## 0.15.0
+- Added new [JandexUtils](src/main/java/org/fuin/utils4j/jandex/JandexUtils.java) methods
+
 ## 0.14.0
 
 ### General

@@ -18,7 +18,10 @@
 package org.fuin.utils4j.jandex;
 
 import org.fuin.utils4j.Utils4J;
+import org.fuin.utils4j.filter.AndFilter;
+import org.fuin.utils4j.filter.Filter;
 import org.fuin.utils4j.jandex.JandexUtils;
+import org.fuin.utils4j.jaxb.CDataXmlAdapter;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Index;
 import org.jboss.jandex.Indexer;
@@ -70,6 +73,22 @@ public class JandexUtilsTest {
         // VERIFY
         assertThat(index.getClassByName(DotName.createSimple(JandexUtils.class.getName()))).isNotNull();
         assertThat(index.getClassByName(DotName.createSimple(Utils4J.class.getName()))).isNotNull();
+
+    }
+
+    @Test
+    public final void testIndexDirs() {
+
+        // PREPEARE
+        final File filterDir = new File(TARGET_DIR, "classes/org/fuin/utils4j/filter");
+        final File jaxbDir = new File(TARGET_DIR, "classes/org/fuin/utils4j/jaxb");
+
+        // TEST
+        final Index index = JandexUtils.indexDirs(filterDir, jaxbDir);
+
+        // VERIFY
+        assertThat(index.getClassByName(DotName.createSimple(AndFilter.class.getName()))).isNotNull();
+        assertThat(index.getClassByName(DotName.createSimple(CDataXmlAdapter.class.getName()))).isNotNull();
 
     }
 
@@ -143,6 +162,21 @@ public class JandexUtilsTest {
         assertThatThrownBy(() -> JandexUtils.loadClass(DotName.createSimple("a.b.c.d.DoesNotExist")))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Failed to load class");
+    }
+
+    @Test
+    public final void findImplementors() {
+
+        // PREPEARE
+        final File filterDir = new File(TARGET_DIR, "classes/org/fuin/utils4j/filter");
+
+        // TEST
+        final List<Class<? extends Filter>> classes = JandexUtils.findImplementors(Filter.class, filterDir);
+
+        // VERIFY
+        assertThat(classes).isNotEmpty();
+        assertThat(classes).contains(AndFilter.class);
+
     }
 
 }
