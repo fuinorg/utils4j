@@ -2,6 +2,7 @@
 
 ## 0.15.0
 - Added new [JandexUtils](src/main/java/org/fuin/utils4j/jandex/JandexUtils.java) methods
+- Added new [TechnicalId](src/main/java/org/fuin/utils4j/TechnicalId.java) tag interface.
 
 ## 0.14.0
 
