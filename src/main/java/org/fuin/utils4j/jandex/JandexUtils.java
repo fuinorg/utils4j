@@ -18,14 +18,21 @@
 package org.fuin.utils4j.jandex;
 
 import org.fuin.utils4j.Utils4J;
+import org.jboss.jandex.ClassInfo;
+import org.jboss.jandex.CompositeIndex;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Index;
+import org.jboss.jandex.IndexView;
 import org.jboss.jandex.Indexer;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -81,6 +88,21 @@ public final class JandexUtils {
     public static Index indexDir(final File dir) {
         final Indexer indexer = new Indexer();
         indexDir(indexer, new ArrayList<>(), dir);
+        return indexer.complete();
+    }
+
+    /**
+     * Indexes all classes in multiple directories and their subdirectories.
+     *
+     * @param dirs Classes directories to analyze.
+     * @return Index of all classes in the directories.
+     */
+    public static Index indexDirs(final File... dirs) {
+        final Indexer indexer = new Indexer();
+        final List<File> knownClassFiles = new ArrayList<>();
+        for (final File dir : dirs) {
+            indexDir(indexer, knownClassFiles, dir);
+        }
         return indexer.complete();
     }
 
@@ -194,5 +216,43 @@ public final class JandexUtils {
         return Utils4J.loadClass(name.toString());
     }
 
+    /**
+     * Locates (non-abstract, non-interface) classes that implement a given interface in directories.
+     *
+     * @param intf Interface to find implementors for.
+     * @param classesDirs Directories with class files to scan.
+     * @return List of classes.
+     *
+     * @param <T> Expected interface type.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> List<Class<? extends T>> findImplementors(final Class<T> intf, final File... classesDirs) {
+        final List<IndexView> indexes = new ArrayList<>();
+        indexes.add(new JandexIndexFileReader.Builder().addDefaultResource().build().loadR());
+        indexes.add(indexDirs(classesDirs));
+        return findImplementors(intf, CompositeIndex.create(indexes));
+    }
+
+    /**
+     * Locates (non-abstract, non-interface) classes that implement a given interface in an index.
+     *
+     * @param intf Interface to find implementors for.
+     * @param index Index with known classes.
+     * @return List of classes.
+     *
+     * @param <T> Expected interface type.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> List<Class<? extends T>> findImplementors(final Class<T> intf, final IndexView index) {
+        List<Class<? extends T>> implementors = new ArrayList<>();
+        final Collection<ClassInfo> implementingClasses = index.getAllKnownImplementors(DotName.createSimple(intf));
+        for (final ClassInfo classInfo : implementingClasses) {
+            if (!Modifier.isAbstract(classInfo.flags()) && !Modifier.isInterface(classInfo.flags())) {
+                final Class<? extends T> implementor = (Class<? extends T>) JandexUtils.loadClass(classInfo.name());
+                implementors.add(implementor);
+            }
+        }
+        return implementors;
+    }
 
 }
