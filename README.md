@@ -9,8 +9,7 @@ A small Java library that contains several helpful utility classes.
 [![Java Development Kit 17](https://img.shields.io/badge/JDK-17-green.svg)](https://openjdk.java.net/projects/jdk/17/)
 
 ## Versions
-- [0.15.0](release-notes.md#0150)
-- [0.14.0](release-notes.md#0140)
+- See [Release Notes](release-notes.md)
 - 0.13.x (or later) = **Java 17**
 - 0.12.0 = **Java 11** with new **jakarta** namespace
 - 0.11.x = **Java 11** before namespace change from 'javax' to 'jakarta'
@@ -32,6 +31,7 @@ A small Java library that contains several helpful utility classes.
 * [Wait for code to finish](#wait-for-code-to-finish) (Deprecated in favour of [Awaitility](https://github.com/awaitility/awaitility))
 * [Find all JARs and classes in the classpath](#find-all-jars-and-classes-in-the-classpath)
 * [Analyze classes in the classpath with Jandex](#analyze-classes-in-the-classpath-with-jandex)
+* [Convert a UUID to 22 character string and back](#convert-uuid-to-22-character-string-and-back)
 
 * * *
 
@@ -267,6 +267,20 @@ A test that shows the usage can be found here: [JandexUtilsTest](src/test/java/o
     <artifactId>jandex</artifactId>
     <version>3.1.6</version>
 </dependency>
+```
+
+### Convert UUID to 22 character string and back
+Normally UUID as string use 36 characters. This functions use a 22 character representation.
+The UUID's MSB/LSB are stored as Base64 encoded string and replaces "+" with "-" and "/" with "_".
+This may be helpful in situations where the standard 36 characters representation is too long.
+
+```Java
+UUID uuid1 = UUID.fromString("c9a5ab65-0fae-4ff8-8858-e06ddaf595e7");
+String str = Utils4J.uuid2ShortStr(uuid1);
+// MSB/LSB Base64 encoded would be: "yaWrZQ+uT/iIWOBt2vWV5w"
+System.out.println(str);  // Prints "yaWrZQ-uT_iIWOBt2vWV5w"
+UUID uuid2 = Utils4J.shortStr2uuid(str);
+System.out.println(uuid2); // Prints "c9a5ab65-0fae-4ff8-8858-e06ddaf595e7"
 ```
 
 

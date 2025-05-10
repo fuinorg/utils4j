@@ -46,6 +46,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
@@ -55,6 +56,7 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
@@ -62,6 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -1535,6 +1538,38 @@ public final class Utils4J {
                 failedToLockListener.accept(ex);
             }
         }
+    }
+
+    /**
+     * Converts the UUID to a short string. Normally UUID as string use 36 characters.
+     * This function returns the UUID as text that only occupies 22 characters.
+     * It stores MSB/LSB as Base64 encoded string and replaces "+" with "-" and "/" with "_".
+     *
+     * @return String with 22 characters.
+     */
+    public static String uuid2ShortStr(final UUID uuid) {
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(16);
+        byteBuffer.putLong(uuid.getMostSignificantBits());
+        byteBuffer.putLong(uuid.getLeastSignificantBits());
+        final String base64 = Base64.getEncoder().withoutPadding().encodeToString(byteBuffer.array());
+        return base64.replaceAll("/", "_").replaceAll("\\+", "-");
+    }
+
+    /**
+     * Parses a short string created by {@link #uuid2ShortStr(UUID)}.
+     *
+     * @param shortStr Short string to parse back to UUID.
+     * @return UUID.
+     */
+    public static UUID shortStr2uuid(final String shortStr) {
+        final String base64 = shortStr
+                .replaceAll("_", "/")
+                .replaceAll("-", "+");
+        final byte[] bytes = Base64.getDecoder().decode(base64);
+        final ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+        final long msb = byteBuffer.getLong();
+        final long lsb = byteBuffer.getLong(8);
+        return new UUID(msb, lsb);
     }
 
 }
