@@ -12,7 +12,8 @@
 
     <artifactId>utils4j</artifactId>
     <packaging>bundle</packaging>
-    <version>0.16.0-SNAPSHOT</version>
+    <version>0.16.0</version>
+    <name>Utils4J</name>
     <description>A small Java library that contains several helpful utility classes.</description>
     <url>https://www.github.com/fuinorg/utils4j/</url>
 
