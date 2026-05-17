@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -1001,6 +1002,28 @@ public class Utils4JTest {
         assertThat(executionOrder).containsExactly("1A", "2A", "1B", "2B");
 
     }
+
+    @Test
+    public void testAsShortStringAndParse() {
+
+        // Single example
+        final UUID uuid1 = UUID.fromString("c9a5ab65-0fae-4ff8-8858-e06ddaf595e7");
+        final String str = Utils4J.uuid2ShortStr(uuid1);
+        // MSB/LSB Base64 encoded would be: "yaWrZQ+uT/iIWOBt2vWV5w"
+        assertThat(str).isEqualTo( "yaWrZQ-uT_iIWOBt2vWV5w");
+        final UUID uuid2 = Utils4J.shortStr2uuid(str);
+        assertThat(uuid2).isEqualTo(uuid1);
+
+        // Some random values
+        for (int i= 0; i < 10000; i++) {
+            final UUID original = UUID.randomUUID();
+            final String shortStr =Utils4J.uuid2ShortStr(original);
+            final UUID copy = Utils4J.shortStr2uuid(shortStr);
+            assertThat(copy).isEqualTo(original);
+        }
+
+    }
+
 
     private static class MyTestClass {
 

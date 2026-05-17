@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines a filter with a regular expression on a property.
  */
@@ -43,7 +45,7 @@ public class RegExprPropertyFilter extends PropertyFilter {
     }
 
     @Override
-    public final boolean complies(final Object obj) {
+    public final boolean complies(@Nullable final Object obj) {
         final String value = (String) this.getProperty(obj, this.getPropertyName());
         return filter.complies(value);
     }
@@ -72,6 +74,7 @@ public class RegExprPropertyFilter extends PropertyFilter {
      * 
      * @return Type name ("matches", "lookingAt" or "find")
      */
+    @Nullable
     public final String getTypeName() {
         return filter.getTypeName();
     }

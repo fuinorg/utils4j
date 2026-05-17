@@ -18,6 +18,7 @@
 package org.fuin.utils4j.filter;
 
 import org.fuin.utils4j.filter.StringFilter.Operator;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Defines a filter on a String property.
@@ -62,7 +63,7 @@ public class StringPropertyFilter extends PropertyFilter {
     }
 
     @Override
-    public final boolean complies(final Object obj) {
+    public final boolean complies(@Nullable final Object obj) {
         final String value = (String) this.getProperty(obj, this.getPropertyName());
         return filter.complies(value);
     }

@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.fileprocessor;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -97,7 +99,8 @@ public final class FileOrder {
      * 
      * @return Enumeration instance or NULL (if argument name was NULL).
      */
-    public static FileOrder fromName(final String name) {
+    @Nullable
+    public static FileOrder fromName(@Nullable final String name) {
         if (name == null) {
             return null;
         }

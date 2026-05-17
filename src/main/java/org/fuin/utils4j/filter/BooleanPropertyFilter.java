@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines a filter on a Boolean value.
  */
@@ -32,7 +34,7 @@ public class BooleanPropertyFilter extends PropertyFilter {
      * @param constValue
      *            Value the property is compared with.
      */
-    public BooleanPropertyFilter(final String newPropertyName, final Boolean constValue) {
+    public BooleanPropertyFilter(final String newPropertyName, @Nullable final Boolean constValue) {
         super(newPropertyName);
         this.filter = new BooleanFilter(constValue);
     }
@@ -48,12 +50,13 @@ public class BooleanPropertyFilter extends PropertyFilter {
      * 
      * @return Value.
      */
+    @Nullable
     public final Boolean getConstValue() {
         return filter.getConstValue();
     }
 
     @Override
-    public final boolean complies(final Object obj) {
+    public final boolean complies(@Nullable final Object obj) {
         final Object value = getProperty(obj, getPropertyName());
         return filter.complies(value);
     }

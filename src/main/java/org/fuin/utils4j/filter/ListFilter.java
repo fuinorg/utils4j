@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -114,6 +116,7 @@ public abstract class ListFilter implements Filter {
      * 
      * @return Bracket
      */
+    @Nullable
     public final String getCloseBracket() {
         if (closeBracket.equals(DEFAULT_CLOSE_BRACKET)) {
             return null;
@@ -127,6 +130,7 @@ public abstract class ListFilter implements Filter {
      * 
      * @return Bracket
      */
+    @Nullable
     public final String getOpenBracket() {
         if (openBracket.equals(DEFAULT_OPEN_BRACKET)) {
             return null;

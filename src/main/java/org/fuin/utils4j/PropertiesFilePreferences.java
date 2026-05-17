@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
      * @param name
      *            Name of the node.
      */
-    private PropertiesFilePreferences(final PropertiesFilePreferences parent, final File dir, final String name) {
+    private PropertiesFilePreferences(@Nullable final PropertiesFilePreferences parent, final File dir, final String name) {
         super(parent, name);
         this.dir = dir;
         this.file = new PropertiesFile(new File(dir, FILENAME));
@@ -132,6 +134,7 @@ public final class PropertiesFilePreferences extends AbstractPreferences {
     }
 
     @Override
+    @Nullable
     protected final String getSpi(final String key) {
         loadIfNecessary();
         return file.get(key);

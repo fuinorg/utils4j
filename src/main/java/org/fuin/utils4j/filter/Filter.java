@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines a filter condition.
  */
@@ -24,12 +26,12 @@ public interface Filter {
 
     /**
      * Checks if the argument complies with the condition of the filter.
-     * 
+     *
      * @param obj
      *            Object to be tested for compliance
-     * 
+     *
      * @return If object complies TRUE else FALSE is returned.
      */
-    public boolean complies(Object obj);
+    boolean complies(@Nullable Object obj);
 
 }

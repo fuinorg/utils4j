@@ -17,7 +17,10 @@
  */
 package org.fuin.utils4j.fileprocessor;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -103,7 +106,8 @@ public final class FileHandlerResult {
      * 
      * @return Enumeration instance or NULL (if argument name was NULL).
      */
-    public static FileHandlerResult fromName(final String name) {
+    @Nullable
+    public static FileHandlerResult fromName(@Nullable final String name) {
         if (name == null) {
             return null;
         }
@@ -137,9 +141,7 @@ public final class FileHandlerResult {
 
     private static List<FileHandlerResult> asList(final FileHandlerResult... handler) {
         final List<FileHandlerResult> list = new ArrayList<>(handler.length);
-        for (final FileHandlerResult result : handler) {
-            list.add(result);
-        }
+        list.addAll(Arrays.asList(handler));
         return Collections.unmodifiableList(list);
     }
 

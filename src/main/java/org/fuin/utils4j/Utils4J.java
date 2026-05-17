@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -46,6 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
@@ -55,6 +58,7 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
@@ -62,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -213,8 +218,7 @@ public final class Utils4J {
     public static boolean containsURL(final URL[] urls, final URL url) {
         checkNotNull("urls", urls);
         checkNotNull("url", url);
-        for (int i = 0; i < urls.length; i++) {
-            final URL element = urls[i];
+        for (final URL element : urls) {
             final String elementStr = element.toExternalForm();
             final String urlStr = url.toExternalForm();
             if (elementStr.equals(urlStr)) {
@@ -363,7 +367,7 @@ public final class Utils4J {
      * @param filename Filename without path - Cannot be <code>null</code>.
      * @return URL.
      */
-    public static URL createUrl(final URL baseUrl, final String path, final String filename) {
+    public static URL createUrl(final URL baseUrl, @Nullable final String path, final String filename) {
         checkNotNull("baseUrl", baseUrl);
         checkNotNull("filename", filename);
         try {
@@ -372,7 +376,7 @@ public final class Utils4J {
                 baseUrlStr = baseUrlStr + SLASH;
             }
             final String pathStr;
-            if ((path == null) || (path.length() == 0)) {
+            if ((path == null) || (path.isEmpty())) {
                 pathStr = "";
             } else {
                 if (path.endsWith(SLASH)) {
@@ -399,8 +403,8 @@ public final class Utils4J {
         checkNotNull("baseDir", baseDir);
         checkNotNull("dir", dir);
 
-        final String base = getCanonicalPath(baseDir);
-        final String path = getCanonicalPath(dir);
+        final String base = Objects.requireNonNull(getCanonicalPath(baseDir));
+        final String path = Objects.requireNonNull(getCanonicalPath(dir));
         if (!path.startsWith(base)) {
             throw new IllegalArgumentException("The path '" + path + "' is not inside the base directory '" + base + "'!");
         }
@@ -421,8 +425,8 @@ public final class Utils4J {
         checkNotNull("dir", dir);
         checkNotNull("file", file);
 
-        final String dirPath = getCanonicalPath(dir);
-        final String filePath = getCanonicalPath(file);
+        final String dirPath = Objects.requireNonNull(getCanonicalPath(dir));
+        final String filePath = Objects.requireNonNull(getCanonicalPath(file));
         return filePath.startsWith(dirPath);
     }
 
@@ -433,7 +437,8 @@ public final class Utils4J {
      * @param file File to return the canonical path for or <code>null</code>.
      * @return Canonical path for the given argument or <code>null</code> if the input was <code>null</code>.
      */
-    public static String getCanonicalPath(final File file) {
+    @Nullable
+    public static String getCanonicalPath(@Nullable final File file) {
         if (file == null) {
             return null;
         }
@@ -451,7 +456,8 @@ public final class Utils4J {
      * @param file File to return the canonical file for or <code>null</code>.
      * @return Canonical file for the given argument or <code>null</code> if the input was <code>null</code>.
      */
-    public static File getCanonicalFile(final File file) {
+    @Nullable
+    public static File getCanonicalFile(@Nullable final File file) {
         if (file == null) {
             return null;
         }
@@ -513,7 +519,7 @@ public final class Utils4J {
      * @param value Value to check for an empty String - Cannot be <code>null</code>.
      */
     public static void checkNotEmpty(final String name, final String value) {
-        if (value.length() == 0) {
+        if (value.isEmpty()) {
             throw new IllegalArgumentException("The argument '" + name + "' cannot be empty");
         }
     }
@@ -526,7 +532,7 @@ public final class Utils4J {
      * @param argTypes   The list of parameters - Can be <code>null</code>.
      * @return Textual signature of the method.
      */
-    private static String getMethodSignature(final String returnType, final String methodName, final Class<?>[] argTypes) {
+    private static String getMethodSignature(@Nullable final String returnType, final String methodName, final Class<?>[] argTypes) {
         final StringBuilder sb = new StringBuilder();
         if (returnType != null) {
             sb.append(returnType);
@@ -556,7 +562,8 @@ public final class Utils4J {
      * @return The result of dispatching the method represented by this object on <code>obj</code> with parameters <code>args</code>.
      * @throws InvokeMethodFailedException Invoking the method failed for some reason.
      */
-    public static Object invoke(final Object obj, final String methodName, final Class<?>[] argTypes, final Object[] args)
+    @Nullable
+    public static Object invoke(final Object obj, final String methodName, @Nullable final Class<?>[] argTypes, @Nullable final Object[] args)
             throws InvokeMethodFailedException {
 
         checkNotNull("obj", obj);
@@ -635,7 +642,7 @@ public final class Utils4J {
      * @param cancelable Signals if the unzip should be canceled - Can be <code>null</code> if no cancel option is required.
      * @throws IOException Error unzipping the file.
      */
-    public static void unzip(final File zipFile, final File destDir, final UnzipInputStreamWrapper wrapper, final Cancelable cancelable)
+    public static void unzip(final File zipFile, final File destDir, @Nullable final UnzipInputStreamWrapper wrapper, @Nullable final Cancelable cancelable)
             throws IOException {
 
         checkNotNull("zipFile", zipFile);
@@ -693,7 +700,7 @@ public final class Utils4J {
             throw new IllegalStateException(errMsg + " not found!");
         }
         final String userHome = str.trim();
-        if (userHome.length() == 0) {
+        if (userHome.isEmpty()) {
             throw new IllegalStateException(errMsg + " is empty!");
         }
         final File dir = new File(userHome);
@@ -716,7 +723,7 @@ public final class Utils4J {
             throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' not found!");
         }
         final String tempDirStr = str.trim();
-        if (tempDirStr.length() == 0) {
+        if (tempDirStr.isEmpty()) {
             throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' is empty!");
         }
         final File dir = new File(tempDirStr);
@@ -735,9 +742,10 @@ public final class Utils4J {
      * @param vars Map with key/values (both of type <code>String</code> - May be <code>null</code>.
      * @return String with replaced variables. Unknown variables will remain unchanged.
      */
-    public static String replaceVars(final String str, final Map<String, String> vars) {
+    @Nullable
+    public static String replaceVars(@Nullable final String str, @Nullable final Map<String, String> vars) {
 
-        if ((str == null) || (str.length() == 0) || (vars == null) || (vars.size() == 0)) {
+        if ((str == null) || (str.isEmpty()) || (vars == null) || (vars.isEmpty())) {
             return str;
         }
 
@@ -789,7 +797,7 @@ public final class Utils4J {
 
     /**
      * Creates an URL Link on the Windows Desktop. This is done by creating a file (URL File Format) with an ".url" extension. For a
-     * description see http://www.cyanwerks.com/file-format-url.html .
+     * description see <a href="http://www.cyanwerks.com/file-format-url.html">file-format-url</a> .
      *
      * @param baseUrl                      Base URL for the link - Cannot be <code>null</code> or empty.
      * @param url                          Target URL - Cannot be <code>null</code> or empty.
@@ -841,7 +849,7 @@ public final class Utils4J {
 
     /**
      * Creates the content of an URL Link file (.url) on the Windows Desktop. For a description see
-     * http://www.cyanwerks.com/file-format-url.html .
+     * <a href="http://www.cyanwerks.com/file-format-url.html">file-format-url.</a> .
      *
      * @param baseUrl     Base URL for the link - Cannot be <code>null</code> or empty.
      * @param url         Target URL - Cannot be <code>null</code> or empty.
@@ -862,8 +870,9 @@ public final class Utils4J {
      * @return INI file text.
      */
     // CHECKSTYLE:OFF
-    public static String createWindowsDesktopUrlLinkContent(final String baseUrl, final String url, final File workingDir,
-                                                            final Integer showCommand, final Integer iconIndex, final File iconFile, final Integer hotKey, final Date modified) {
+    public static String createWindowsDesktopUrlLinkContent(final String baseUrl, final String url, @Nullable final File workingDir,
+                                                            final Integer showCommand, final Integer iconIndex, final File iconFile,
+                                                            final Integer hotKey, final Date modified) {
         // CHECKSTYLE:ON
 
         checkNotNull("baseUrl", baseUrl);
@@ -906,7 +915,7 @@ public final class Utils4J {
      * @param separator Separator for directories - Can be <code>null</code> or an empty string.
      * @return Path and filename divided by the separator.
      */
-    public static String concatPathAndFilename(final String path, final String filename, final String separator) {
+    public static String concatPathAndFilename(@Nullable final String path, final String filename, final String separator) {
 
         checkNotNull("filename", filename);
         checkNotNull("separator", separator);
@@ -916,7 +925,7 @@ public final class Utils4J {
             return filename;
         }
         final String trimmedPath = path.trim();
-        if (trimmedPath.length() == 0) {
+        if (trimmedPath.isEmpty()) {
             return filename;
         }
         final String trimmedFilename = filename.trim();
@@ -945,9 +954,9 @@ public final class Utils4J {
         final char[] out = new char[l << 1];
         // two characters form the hex value.
         int j = 0;
-        for (int i = 0; i < l; i++) {
-            out[j++] = DIGITS[(0xF0 & data[i]) >>> 4];
-            out[j++] = DIGITS[0x0F & data[i]];
+        for (byte datum : data) {
+            out[j++] = DIGITS[(0xF0 & datum) >>> 4];
+            out[j++] = DIGITS[0x0F & datum];
         }
         return String.copyValueOf(out);
     }
@@ -1059,7 +1068,7 @@ public final class Utils4J {
      * @param out      Destination stream - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    private static void zipFile(final File srcFile, final String destPath, final ZipOutputStream out) throws IOException {
+    private static void zipFile(final File srcFile, @Nullable final String destPath, final ZipOutputStream out) throws IOException {
 
         final byte[] buf = new byte[1024];
         try (final InputStream in = new BufferedInputStream(new FileInputStream(srcFile))) {
@@ -1079,15 +1088,18 @@ public final class Utils4J {
      *
      * @param srcDir Directory to list the files for - Cannot be <code>null</code> and must be a valid directory.
      * @param filter Filter or <code>null</code> for all files.
-     * @return List of child entries of the directory.
+     * @return Array of child entries of the directory.
      */
-    private static File[] listFiles(final File srcDir, final FileFilter filter) {
+    private static File[] listFiles(final File srcDir, @Nullable final FileFilter filter) {
 
         final File[] files;
         if (filter == null) {
             files = srcDir.listFiles();
         } else {
             files = srcDir.listFiles(filter);
+        }
+        if (files == null) {
+            return new File[] {};
         }
         return files;
 
@@ -1102,15 +1114,15 @@ public final class Utils4J {
      * @param out      Destination stream - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    private static void zipDir(final File srcDir, final FileFilter filter, final String destPath, final ZipOutputStream out)
+    private static void zipDir(final File srcDir, @Nullable final FileFilter filter, @Nullable final String destPath, final ZipOutputStream out)
             throws IOException {
 
         final File[] files = listFiles(srcDir, filter);
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory()) {
-                zipDir(files[i], filter, concatPathAndFilename(destPath, files[i].getName(), File.separator), out);
+        for (File file : files) {
+            if (file.isDirectory()) {
+                zipDir(file, filter, concatPathAndFilename(destPath, file.getName(), File.separator), out);
             } else {
-                zipFile(files[i], destPath, out);
+                zipFile(file, destPath, out);
             }
         }
 
@@ -1126,7 +1138,7 @@ public final class Utils4J {
      * @param destFile Target ZIP file - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final FileFilter filter, final String destPath, final File destFile) throws IOException {
+    public static void zipDir(final File srcDir, @Nullable final FileFilter filter, @Nullable final String destPath, final File destFile) throws IOException {
 
         Utils4J.checkNotNull("srcDir", srcDir);
         Utils4J.checkValidDir(srcDir);
@@ -1146,7 +1158,7 @@ public final class Utils4J {
      * @param destFile Target ZIP file - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final String destPath, final File destFile) throws IOException {
+    public static void zipDir(final File srcDir, @Nullable final String destPath, final File destFile) throws IOException {
 
         zipDir(srcDir, null, destPath, destFile);
 
@@ -1158,7 +1170,7 @@ public final class Utils4J {
      * @param obj Object to serialize or <code>null</code>.
      * @return Serialized object or <code>null</code>.
      */
-    public static byte[] serialize(final Object obj) {
+    public static byte @Nullable [] serialize(@Nullable final Object obj) {
         if (obj == null) {
             return null;
         }
@@ -1179,7 +1191,8 @@ public final class Utils4J {
      * @return Object created from data or <code>null</code>.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T deserialize(final byte[] data) {
+    @Nullable
+    public static <T> T deserialize(final byte @Nullable [] data) {
         if (data == null) {
             return null;
         }
@@ -1219,7 +1232,8 @@ public final class Utils4J {
      * @param url String to convert into an URL or <code>null</code>.
      * @return URL or <code>null</code>
      */
-    public static URL url(final String url) {
+    @Nullable
+    public static URL url(@Nullable final String url) {
         if (url == null) {
             return null;
         }
@@ -1239,7 +1253,8 @@ public final class Utils4J {
      * @param str String to replace or <code>null</code>.
      * @return Replaced string or <code>null</code>.
      */
-    public static String replaceCrLfTab(final String str) {
+    @Nullable
+    public static String replaceCrLfTab(@Nullable final String str) {
         if (str == null) {
             return null;
         }
@@ -1290,7 +1305,8 @@ public final class Utils4J {
      * @param expectedExceptions Expected exceptions - May be <code>null</code> if any cause is expected.
      * @return TRUE if the actual exception is one of the expected exceptions.
      */
-    public static boolean expectedCause(final Exception actualException, final Collection<Class<? extends Exception>> expectedExceptions) {
+    public static boolean expectedCause(final Exception actualException,
+                                        @Nullable final Collection<Class<? extends Exception>> expectedExceptions) {
 
         checkNotNull("actualException", actualException);
 
@@ -1317,7 +1333,7 @@ public final class Utils4J {
      * @return TRUE if the actual exception is one of the expected exceptions.
      */
     public static boolean expectedException(final Exception actualException,
-                                            final Collection<Class<? extends Exception>> expectedExceptions) {
+                                            @Nullable final Collection<Class<? extends Exception>> expectedExceptions) {
 
         checkNotNull("actualException", actualException);
 
@@ -1535,6 +1551,39 @@ public final class Utils4J {
                 failedToLockListener.accept(ex);
             }
         }
+    }
+
+    /**
+     * Converts the UUID to a short string. Normally UUID as string use 36 characters.
+     * This function returns the UUID as text that only occupies 22 characters.
+     * It stores MSB/LSB as Base64 encoded string and replaces "+" with "-" and "/" with "_".
+     *
+     * @param uuid Value to convert into a short UUID string.
+     * @return String with 22 characters.
+     */
+    public static String uuid2ShortStr(final UUID uuid) {
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(16);
+        byteBuffer.putLong(uuid.getMostSignificantBits());
+        byteBuffer.putLong(uuid.getLeastSignificantBits());
+        final String base64 = Base64.getEncoder().withoutPadding().encodeToString(byteBuffer.array());
+        return base64.replace("/", "_").replaceAll("\\+", "-");
+    }
+
+    /**
+     * Parses a short string created by {@link #uuid2ShortStr(UUID)}.
+     *
+     * @param shortStr Short string to parse back to UUID.
+     * @return UUID.
+     */
+    public static UUID shortStr2uuid(final String shortStr) {
+        final String base64 = shortStr
+                .replace("_", "/")
+                .replace("-", "+");
+        final byte[] bytes = Base64.getDecoder().decode(base64);
+        final ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+        final long msb = byteBuffer.getLong();
+        final long lsb = byteBuffer.getLong(8);
+        return new UUID(msb, lsb);
     }
 
 }

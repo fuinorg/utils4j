@@ -18,6 +18,7 @@
 package org.fuin.utils4j.filter;
 
 import org.fuin.utils4j.Utils4J;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,12 +48,11 @@ public abstract class ComparableFilter implements Filter {
     }
 
     @Override
-    public final boolean complies(final Object value) {
+    public final boolean complies(@Nullable final Object value) {
         if (value == null) {
             return (constValue == null);
-        } else {
-            return simpleCompareTo((Comparable) value);
         }
+        return simpleCompareTo((Comparable) value);
     }
 
     /**

@@ -23,6 +23,7 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.fuin.utils4j.Utils4J;
+import org.jspecify.annotations.Nullable;
 
 import javax.xml.stream.XMLStreamWriter;
 import java.io.*;
@@ -56,7 +57,8 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> String marshal(final T data, final Class<?>... classesToBeBound) {
+    @Nullable
+    public static <T> String marshal(@Nullable final T data, final Class<?>... classesToBeBound) {
         return marshal(data, null, classesToBeBound);
     }
 
@@ -77,7 +79,8 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> String marshal(final T data, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
+    @Nullable
+    public static <T> String marshal(@Nullable final T data, final XmlAdapter<?, ?> @Nullable [] adapters, final Class<?>... classesToBeBound) {
         if (data == null) {
             return null;
         }
@@ -104,7 +107,8 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> String marshal(final JAXBContext ctx, final T data) {
+    @Nullable
+    public static <T> String marshal(final JAXBContext ctx, @Nullable final T data) {
         return marshal(ctx, data, null);
     }
 
@@ -125,7 +129,8 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #marshal(Marshaller, Object)} together with {@link MarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> String marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters) {
+    @Nullable
+    public static <T> String marshal(final JAXBContext ctx, @Nullable final T data, final XmlAdapter<?, ?> @Nullable [] adapters) {
         if (data == null) {
             return null;
         }
@@ -151,7 +156,7 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #marshal(Marshaller, Object, Writer)} together with {@link MarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters, final Writer writer) {
+    public static <T> void marshal(final JAXBContext ctx, @Nullable final T data, final XmlAdapter<?, ?> @Nullable [] adapters, final Writer writer) {
         if (data == null) {
             return;
         }
@@ -185,7 +190,7 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #marshal(Marshaller, Object, XMLStreamWriter)} together with {@link MarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> void marshal(final JAXBContext ctx, final T data, final XmlAdapter<?, ?>[] adapters, final XMLStreamWriter writer) {
+    public static <T> void marshal(final JAXBContext ctx, @Nullable final T data, final XmlAdapter<?, ?> @Nullable [] adapters, final XMLStreamWriter writer) {
         if (data == null) {
             return;
         }
@@ -218,7 +223,8 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> T unmarshal(final String xmlData, final Class<?>... classesToBeBound) {
+    @Nullable
+    public static <T> T unmarshal(@Nullable final String xmlData, final Class<?>... classesToBeBound) {
         final UnmarshallerBuilder builder = new UnmarshallerBuilder();
         if (classesToBeBound != null) {
             builder.addClassesToBeBound(classesToBeBound);
@@ -245,7 +251,8 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> T unmarshal(final String xmlData, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
+    @Nullable
+    public static <T> T unmarshal(@Nullable final String xmlData, final XmlAdapter<?, ?>[] adapters, final Class<?>... classesToBeBound) {
         final UnmarshallerBuilder builder = new UnmarshallerBuilder();
         if (classesToBeBound != null) {
             builder.addClassesToBeBound(classesToBeBound);
@@ -273,7 +280,8 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, String)} together with {@link UnmarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> T unmarshal(final JAXBContext ctx, final String xmlData, final XmlAdapter<?, ?>[] adapters) {
+    @Nullable
+    public static <T> T unmarshal(final JAXBContext ctx, @Nullable final String xmlData, final XmlAdapter<?, ?> @Nullable [] adapters) {
         final UnmarshallerBuilder builder = new UnmarshallerBuilder().withContext(ctx);
         if (adapters != null) {
         	builder.addAdapters(adapters);
@@ -300,7 +308,7 @@ public final class JaxbUtils {
      * @deprecated Use method {@link #unmarshal(Unmarshaller, Reader)} together with {@link UnmarshallerBuilder} instead
      */
     @Deprecated
-    public static <T> T unmarshal(final JAXBContext ctx, final Reader reader, final XmlAdapter<?, ?>[] adapters) {
+    public static <T> T unmarshal(final JAXBContext ctx, final Reader reader, final XmlAdapter<?, ?> @Nullable [] adapters) {
         final UnmarshallerBuilder builder = new UnmarshallerBuilder().withContext(ctx);
         if (adapters != null) {
             builder.addAdapters(adapters);
@@ -323,7 +331,8 @@ public final class JaxbUtils {
      *            Type returned.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T unmarshal(final Unmarshaller unmarshaller, final String xml) {
+    @Nullable
+    public static <T> T unmarshal(final Unmarshaller unmarshaller, @Nullable final String xml) {
         Utils4J.checkNotNull("unmarshaller", unmarshaller);
         if (xml == null) {
             return null;
@@ -397,7 +406,8 @@ public final class JaxbUtils {
      * @param <T>
      *            Type of the data.
      */
-    public static <T> String marshal(final Marshaller marshaller, final T data) {
+    @Nullable
+    public static <T> String marshal(final Marshaller marshaller, @Nullable final T data) {
         Utils4J.checkNotNull("marshaller", marshaller);
         if (data == null) {
             return null;
@@ -420,7 +430,7 @@ public final class JaxbUtils {
      * @param <T>
      *            Type of the data to write.
      */
-    public static <T> void marshal(final Marshaller marshaller, final T data, final Writer writer) {
+    public static <T> void marshal(final Marshaller marshaller, @Nullable final T data, final Writer writer) {
         Utils4J.checkNotNull("marshaller", marshaller);
         Utils4J.checkNotNull("writer", writer);
         if (data == null) {
@@ -446,7 +456,7 @@ public final class JaxbUtils {
      * @param <T>
      *            Type of the data to write.
      */
-    public static <T> void marshal(final Marshaller marshaller, final T data, final XMLStreamWriter writer) {
+    public static <T> void marshal(final Marshaller marshaller, @Nullable final T data, final XMLStreamWriter writer) {
         Utils4J.checkNotNull("marshaller", marshaller);
         Utils4J.checkNotNull("writer", writer);
         if (data == null) {

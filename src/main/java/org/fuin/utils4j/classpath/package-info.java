@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * Copyright (C) 2015 Michael Schnell. All rights reserved.
  * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -17,9 +17,9 @@
  */
 
 /**
- * Provides a way to process one or more files, directories and sub directories.
+ * Classpath related utilities.
  */
 @NullMarked
-package org.fuin.utils4j.fileprocessor;
+package org.fuin.utils4j.classpath;
 
 import org.jspecify.annotations.NullMarked;

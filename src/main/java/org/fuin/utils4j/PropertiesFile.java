@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.*;
 import java.nio.channels.FileLock;
 import java.util.*;
@@ -161,19 +163,19 @@ public class PropertiesFile {
                 if (prop.hasChanged()) {
                     if (prop.isNew()) {
                         // New property
-                        if (!prop.getValue().equals(currentProp.getValue())) {
+                        if (!Objects.requireNonNull(prop.getValue()).equals(currentProp.getValue())) {
                             problems.add(
                                     new MergeException.Problem("Same new property in file with a different value!", prop, currentProp));
                         }
                     } else {
                         if (prop.isDeleted()) {
                             // Deleted property
-                            if (!prop.getInitialValue().equals(currentProp.getValue())) {
+                            if (!Objects.requireNonNull(prop.getInitialValue()).equals(currentProp.getValue())) {
                                 problems.add(new MergeException.Problem("Modified property in file we want to delete!", prop, currentProp));
                             }
                         } else {
                             // Changed property
-                            if (!prop.getInitialValue().equals(currentProp.getValue())) {
+                            if (!Objects.requireNonNull(prop.getInitialValue()).equals(currentProp.getValue())) {
                                 problems.add(new MergeException.Problem("Same property modified in file but different value!", prop,
                                         currentProp));
                             }
@@ -299,6 +301,7 @@ public class PropertiesFile {
 
     }
 
+    @Nullable
     private Property find(final String key) {
         for (int i = 0; i < props.size(); i++) {
             final Property prop = props.get(i);
@@ -317,6 +320,7 @@ public class PropertiesFile {
      * 
      * @return Value or <code>null</code> if the key is unknown.
      */
+    @Nullable
     public final String get(final String key) {
         final Property prop = find(key);
         if (prop == null) {
@@ -333,6 +337,7 @@ public class PropertiesFile {
      * 
      * @return Status text or <code>null</code> if the key is unknown.
      */
+    @Nullable
     public final String getStatus(final String key) {
         final Property prop = find(key);
         if (prop == null) {

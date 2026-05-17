@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Michael Schnell. All rights reserved. 
+ * Copyright (C) 2015 Michael Schnell. All rights reserved.
  * http://www.fuin.org/
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -17,9 +17,9 @@
  */
 
 /**
- * Provides a way to process one or more files, directories and sub directories.
+ * Convenience builders and helpers for working with Jakarta XML Binding (JAXB).
  */
 @NullMarked
-package org.fuin.utils4j.fileprocessor;
+package org.fuin.utils4j.jaxb;
 
 import org.jspecify.annotations.NullMarked;

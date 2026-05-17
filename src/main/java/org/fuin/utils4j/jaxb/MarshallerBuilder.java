@@ -3,6 +3,7 @@ package org.fuin.utils4j.jaxb;
 import jakarta.xml.bind.*;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.fuin.utils4j.Utils4J;
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -25,10 +26,12 @@ public class MarshallerBuilder {
 
     private final Map<String, Object> properties;
 
-    private Marshaller.Listener listener;
+    private Marshaller.@Nullable Listener listener;
 
+    @Nullable
     private ValidationEventHandler handler;
 
+    @Nullable
     private JAXBContext ctx;
 
 

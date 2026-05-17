@@ -7,14 +7,15 @@
     <parent>
         <groupId>org.fuin</groupId>
         <artifactId>pom</artifactId>
-        <version>1.9.0</version>
+        <version>2.0.2</version>
     </parent>
 
     <artifactId>utils4j</artifactId>
     <packaging>bundle</packaging>
-    <version>0.15.0-SNAPSHOT</version>
+    <version>0.16.0</version>
+    <name>Utils4J</name>
     <description>A small Java library that contains several helpful utility classes.</description>
-    <url>http://www.fuin.org/utils4j/</url>
+    <url>https://www.github.com/fuinorg/utils4j/</url>
 
     <scm>
         <url>https://github.com/fuinorg/utils4j/</url>
@@ -31,23 +32,40 @@
         <sonar.projectKey>utils4j</sonar.projectKey>
         <sonar.organization>fuinorg</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <error-prone.version>2.49.0</error-prone.version>
+        <nullaway.version>0.13.4</nullaway.version>
 	</properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.fuin</groupId>
+                <artifactId>bom</artifactId>
+                <version>1.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
         <!-- Compile -->
 
         <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.smallrye</groupId>
             <artifactId>jandex</artifactId>
-            <version>3.2.7</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.2</version>
             <optional>true</optional>
         </dependency>
 
@@ -56,42 +74,36 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.5</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.26.3</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>3.19.2</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-core</artifactId>
-            <version>2.10.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.18.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>4.0.5</version>
             <scope>test</scope>
         </dependency>
 
@@ -104,6 +116,32 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${error-prone.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.uber.nullaway</groupId>
+                            <artifactId>nullaway</artifactId>
+                            <version>${nullaway.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>-XDcompilePolicy=simple</arg>
+                                <arg>--should-stop=ifError=FLOW</arg>
+                                <arg>-Xplugin:ErrorProne -XepDisableAllChecks -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=org.fuin.utils4j</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -140,11 +178,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jdeps-plugin</artifactId>
-            </plugin>
-
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
@@ -152,7 +185,7 @@
             <plugin>
                 <groupId>io.smallrye</groupId>
                 <artifactId>jandex-maven-plugin</artifactId>
-                <version>3.0.6</version>
+                <version>3.5.3</version>
                 <executions>
                     <execution>
                         <id>make-index</id>

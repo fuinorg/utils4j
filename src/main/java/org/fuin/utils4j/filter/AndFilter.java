@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines a filter on a list of sub filters 'and's them all together.
  */
@@ -49,7 +51,7 @@ public class AndFilter extends ListFilter {
     }
 
     @Override
-    public final boolean complies(final Object obj) {
+    public final boolean complies(@Nullable final Object obj) {
         if (getFilterList() == null) {
             return true;
         } else {
@@ -70,12 +72,12 @@ public class AndFilter extends ListFilter {
      * 
      * @return Name of the filter (default "and")
      */
+    @Nullable
     public final String getAndStr() {
         if (andStr.equals(DEFAULT_AND_STR)) {
             return null;
-        } else {
-            return andStr;
         }
+        return andStr;
     }
 
     /**

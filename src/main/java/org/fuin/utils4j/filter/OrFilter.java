@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines a filter on a list of sub filters all OR'ed together.
  */
@@ -49,7 +51,7 @@ public class OrFilter extends ListFilter {
     }
 
     @Override
-    public final boolean complies(final Object obj) {
+    public final boolean complies(@Nullable final Object obj) {
         if (getFilterList() == null) {
             return true;
         } else {
@@ -75,6 +77,7 @@ public class OrFilter extends ListFilter {
      * 
      * @return Name of the filter (default "or")
      */
+    @Nullable
     public final String getOrStr() {
         if (orStr.equals(DEFAULT_OR_STR)) {
             return null;

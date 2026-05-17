@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.File;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -37,12 +39,16 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
      */
     public static final String USER_PREF_DIR = "PropertiesFilePreferences.UserDir";
 
+    @Nullable
     private final String systemPrefDir;
 
+    @Nullable
     private final String userPrefDir;
 
+    @Nullable
     private PropertiesFilePreferences systemRoot = null;
 
+    @Nullable
     private PropertiesFilePreferences userRoot = null;
 
     /**
@@ -60,14 +66,15 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
      * @param userPrefDir
      *            Path and name of the "user" preferences directory.
      */
-    public PropertiesFilePreferencesFactory(final String systemPrefDir, final String userPrefDir) {
+    public PropertiesFilePreferencesFactory(@Nullable final String systemPrefDir, @Nullable final String userPrefDir) {
         super();
         this.systemPrefDir = systemPrefDir;
         this.userPrefDir = userPrefDir;
     }
 
     @Override
-    public final synchronized Preferences systemRoot() {
+    @SuppressWarnings("NullAway") // False positive for "systemRoot"
+    public synchronized Preferences systemRoot() {
         if (systemRoot == null) {
             systemRoot = new PropertiesFilePreferences(getValidDir(SYSTEM_PREF_DIR, systemPrefDir));
             // Always sync at shutdown
@@ -87,7 +94,8 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
     }
 
     @Override
-    public final synchronized Preferences userRoot() {
+    @SuppressWarnings("NullAway") // False positive for "sysuserRoottemRoot"
+    public synchronized Preferences userRoot() {
         if (userRoot == null) {
             userRoot = new PropertiesFilePreferences(getValidDir(USER_PREF_DIR, userPrefDir));
             // Always sync at shutdown
@@ -116,7 +124,7 @@ public final class PropertiesFilePreferencesFactory implements PreferencesFactor
      * 
      * @return Directory reference.
      */
-    private File getValidDir(final String varName, final String dirName) {
+    private File getValidDir(final String varName, @Nullable final String dirName) {
         if (dirName == null) {
             throw new RuntimeException("The system variable '" + varName + "' is not set!");
         }

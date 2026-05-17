@@ -19,4 +19,7 @@
 /**
  * Basic Java utilities.
  */
+@NullMarked
 package org.fuin.utils4j;
+
+import org.jspecify.annotations.NullMarked;
