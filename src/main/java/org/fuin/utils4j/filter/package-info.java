@@ -19,4 +19,7 @@
 /**
  * A tiny framework for filtering Java objects.
  */
+@NullMarked
 package org.fuin.utils4j.filter;
+
+import org.jspecify.annotations.NullMarked;

@@ -18,6 +18,7 @@
 package org.fuin.utils4j.jaxb;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Converts a string into a CDATA XML and back. CAUTION: Only works together with {@link CDataXmlStreamWriter} because otherwise the CDATA
@@ -26,7 +27,8 @@ import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 public final class CDataXmlAdapter extends XmlAdapter<String, String> {
 
     @Override
-    public final String marshal(final String value) throws Exception {
+    @Nullable
+    public final String marshal(@Nullable final String value) throws Exception {
         if (value == null) {
             return null;
         }
@@ -34,7 +36,8 @@ public final class CDataXmlAdapter extends XmlAdapter<String, String> {
     }
 
     @Override
-    public final String unmarshal(final String value) throws Exception {
+    @Nullable
+    public final String unmarshal(@Nullable final String value) throws Exception {
         if (value == null) {
             return null;
         }

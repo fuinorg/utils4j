@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.*;
 
 /**
@@ -136,7 +138,7 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
         return Collections.unmodifiableMap(added);
     }
 
-    private void changeIntern(final K key, final V oldValue, final V newValue) {
+    private void changeIntern(final K key, @Nullable final V oldValue, @Nullable final V newValue) {
         if (tagged) {
             final V addedValue = added.get(key);
             if (addedValue == null) {
@@ -168,7 +170,7 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
         }
     }
 
-    private void removeIntern(final K key, final V value) {
+    private void removeIntern(final K key, @Nullable final V value) {
         if (tagged) {
             if (added.get(key) == null) {
                 final V changedValue = changed.get(key);
@@ -216,6 +218,7 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
     }
 
     @Override
+    @Nullable
     public final V get(final Object key) {
         return map.get(key);
     }
@@ -231,6 +234,7 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
     }
 
     @Override
+    @Nullable
     public final V put(final K key, final V newValue) {
         final V oldValue = map.put(key, newValue);
         changeIntern(key, oldValue, newValue);
@@ -250,6 +254,7 @@ public class ChangeTrackingMap<K, V> implements Map<K, V>, Taggable {
 
     @SuppressWarnings("unchecked")
     @Override
+    @Nullable
     public final V remove(final Object key) {
         final V oldValue = map.remove(key);
         removeIntern((K) key, oldValue);

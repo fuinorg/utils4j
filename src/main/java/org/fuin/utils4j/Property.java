@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -30,8 +32,10 @@ public final class Property implements Comparable<Property>, Serializable {
 
     private final String key;
 
+    @Nullable
     private final String initialValue;
 
+    @Nullable
     private String value;
 
     /**
@@ -44,7 +48,7 @@ public final class Property implements Comparable<Property>, Serializable {
      * @param value
      *            Value.
      */
-    public Property(final String key, final String initialValue, final String value) {
+    public Property(final String key, @Nullable final String initialValue, @Nullable final String value) {
         super();
         Utils4J.checkNotNull("key", key);
         this.key = key;
@@ -57,6 +61,7 @@ public final class Property implements Comparable<Property>, Serializable {
      * 
      * @return Actual value.
      */
+    @Nullable
     public final String getValue() {
         return value;
     }
@@ -67,7 +72,7 @@ public final class Property implements Comparable<Property>, Serializable {
      * @param value
      *            Value to set.
      */
-    public final void setValue(final String value) {
+    public final void setValue(@Nullable final String value) {
         this.value = value;
     }
 
@@ -76,6 +81,7 @@ public final class Property implements Comparable<Property>, Serializable {
      * 
      * @return Value at construction time.
      */
+    @Nullable
     public final String getInitialValue() {
         return initialValue;
     }
@@ -132,7 +138,7 @@ public final class Property implements Comparable<Property>, Serializable {
     }
 
     @Override
-    public final boolean equals(final Object obj) {
+    public final boolean equals(@Nullable final Object obj) {
         if (this == obj) {
             return true;
         }

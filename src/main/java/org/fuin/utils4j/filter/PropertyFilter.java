@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -68,7 +70,8 @@ public abstract class PropertyFilter implements Filter {
      * 
      * @return Value returned via the getter of the property.
      */
-    protected final Object getProperty(final Object obj, final String property) {
+    @Nullable
+    protected final Object getProperty(@Nullable final Object obj, @Nullable final String property) {
         if ((obj == null) || (property == null) || (property.trim().length() == 0)) {
             return null;
         }

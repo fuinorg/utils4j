@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.StringTokenizer;
 
 /**
@@ -61,7 +63,7 @@ public class TokenFilter implements Filter {
     }
 
     @Override
-    public final boolean complies(final Object value) {
+    public final boolean complies(@Nullable final Object value) {
         return complies((String) value, constValue, separators);
     }
 
@@ -77,7 +79,7 @@ public class TokenFilter implements Filter {
      * 
      * @return If object property contains the value as one of the tokens TRUE else FALSE.
      */
-    protected final boolean complies(final String value, final String constValue, final String separators) {
+    protected final boolean complies(@Nullable final String value, final String constValue, final String separators) {
         if (value == null) {
             return false;
         } else {

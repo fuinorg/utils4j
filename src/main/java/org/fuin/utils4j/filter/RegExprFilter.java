@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.regex.Pattern;
 
 /**
@@ -64,7 +66,10 @@ public class RegExprFilter implements Filter {
     }
 
     @Override
-    public final boolean complies(final Object obj) {
+    public final boolean complies(@Nullable final Object obj) {
+        if (obj == null) {
+            return false;
+        }
         final String str = obj.toString();
         if (type == MATCHES) {
             return p.matcher(str).matches();
@@ -114,6 +119,7 @@ public class RegExprFilter implements Filter {
      * 
      * @return Type name ("matches", "lookingAt" or "find") or NULL (="lookingAt")
      */
+    @Nullable
     public final String getTypeName() {
         if (type == LOOKING_AT) {
             return null;

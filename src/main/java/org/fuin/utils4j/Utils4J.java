@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -365,7 +367,7 @@ public final class Utils4J {
      * @param filename Filename without path - Cannot be <code>null</code>.
      * @return URL.
      */
-    public static URL createUrl(final URL baseUrl, final String path, final String filename) {
+    public static URL createUrl(final URL baseUrl, @Nullable final String path, final String filename) {
         checkNotNull("baseUrl", baseUrl);
         checkNotNull("filename", filename);
         try {
@@ -374,7 +376,7 @@ public final class Utils4J {
                 baseUrlStr = baseUrlStr + SLASH;
             }
             final String pathStr;
-            if ((path == null) || (path.length() == 0)) {
+            if ((path == null) || (path.isEmpty())) {
                 pathStr = "";
             } else {
                 if (path.endsWith(SLASH)) {
@@ -401,8 +403,8 @@ public final class Utils4J {
         checkNotNull("baseDir", baseDir);
         checkNotNull("dir", dir);
 
-        final String base = getCanonicalPath(baseDir);
-        final String path = getCanonicalPath(dir);
+        final String base = Objects.requireNonNull(getCanonicalPath(baseDir));
+        final String path = Objects.requireNonNull(getCanonicalPath(dir));
         if (!path.startsWith(base)) {
             throw new IllegalArgumentException("The path '" + path + "' is not inside the base directory '" + base + "'!");
         }
@@ -423,8 +425,8 @@ public final class Utils4J {
         checkNotNull("dir", dir);
         checkNotNull("file", file);
 
-        final String dirPath = getCanonicalPath(dir);
-        final String filePath = getCanonicalPath(file);
+        final String dirPath = Objects.requireNonNull(getCanonicalPath(dir));
+        final String filePath = Objects.requireNonNull(getCanonicalPath(file));
         return filePath.startsWith(dirPath);
     }
 
@@ -435,7 +437,8 @@ public final class Utils4J {
      * @param file File to return the canonical path for or <code>null</code>.
      * @return Canonical path for the given argument or <code>null</code> if the input was <code>null</code>.
      */
-    public static String getCanonicalPath(final File file) {
+    @Nullable
+    public static String getCanonicalPath(@Nullable final File file) {
         if (file == null) {
             return null;
         }
@@ -453,7 +456,8 @@ public final class Utils4J {
      * @param file File to return the canonical file for or <code>null</code>.
      * @return Canonical file for the given argument or <code>null</code> if the input was <code>null</code>.
      */
-    public static File getCanonicalFile(final File file) {
+    @Nullable
+    public static File getCanonicalFile(@Nullable final File file) {
         if (file == null) {
             return null;
         }
@@ -515,7 +519,7 @@ public final class Utils4J {
      * @param value Value to check for an empty String - Cannot be <code>null</code>.
      */
     public static void checkNotEmpty(final String name, final String value) {
-        if (value.length() == 0) {
+        if (value.isEmpty()) {
             throw new IllegalArgumentException("The argument '" + name + "' cannot be empty");
         }
     }
@@ -528,7 +532,7 @@ public final class Utils4J {
      * @param argTypes   The list of parameters - Can be <code>null</code>.
      * @return Textual signature of the method.
      */
-    private static String getMethodSignature(final String returnType, final String methodName, final Class<?>[] argTypes) {
+    private static String getMethodSignature(@Nullable final String returnType, final String methodName, final Class<?>[] argTypes) {
         final StringBuilder sb = new StringBuilder();
         if (returnType != null) {
             sb.append(returnType);
@@ -558,7 +562,8 @@ public final class Utils4J {
      * @return The result of dispatching the method represented by this object on <code>obj</code> with parameters <code>args</code>.
      * @throws InvokeMethodFailedException Invoking the method failed for some reason.
      */
-    public static Object invoke(final Object obj, final String methodName, final Class<?>[] argTypes, final Object[] args)
+    @Nullable
+    public static Object invoke(final Object obj, final String methodName, @Nullable final Class<?>[] argTypes, @Nullable final Object[] args)
             throws InvokeMethodFailedException {
 
         checkNotNull("obj", obj);
@@ -637,7 +642,7 @@ public final class Utils4J {
      * @param cancelable Signals if the unzip should be canceled - Can be <code>null</code> if no cancel option is required.
      * @throws IOException Error unzipping the file.
      */
-    public static void unzip(final File zipFile, final File destDir, final UnzipInputStreamWrapper wrapper, final Cancelable cancelable)
+    public static void unzip(final File zipFile, final File destDir, @Nullable final UnzipInputStreamWrapper wrapper, @Nullable final Cancelable cancelable)
             throws IOException {
 
         checkNotNull("zipFile", zipFile);
@@ -737,7 +742,8 @@ public final class Utils4J {
      * @param vars Map with key/values (both of type <code>String</code> - May be <code>null</code>.
      * @return String with replaced variables. Unknown variables will remain unchanged.
      */
-    public static String replaceVars(final String str, final Map<String, String> vars) {
+    @Nullable
+    public static String replaceVars(@Nullable final String str, @Nullable final Map<String, String> vars) {
 
         if ((str == null) || (str.isEmpty()) || (vars == null) || (vars.isEmpty())) {
             return str;
@@ -864,8 +870,9 @@ public final class Utils4J {
      * @return INI file text.
      */
     // CHECKSTYLE:OFF
-    public static String createWindowsDesktopUrlLinkContent(final String baseUrl, final String url, final File workingDir,
-                                                            final Integer showCommand, final Integer iconIndex, final File iconFile, final Integer hotKey, final Date modified) {
+    public static String createWindowsDesktopUrlLinkContent(final String baseUrl, final String url, @Nullable final File workingDir,
+                                                            final Integer showCommand, final Integer iconIndex, final File iconFile,
+                                                            final Integer hotKey, final Date modified) {
         // CHECKSTYLE:ON
 
         checkNotNull("baseUrl", baseUrl);
@@ -908,7 +915,7 @@ public final class Utils4J {
      * @param separator Separator for directories - Can be <code>null</code> or an empty string.
      * @return Path and filename divided by the separator.
      */
-    public static String concatPathAndFilename(final String path, final String filename, final String separator) {
+    public static String concatPathAndFilename(@Nullable final String path, final String filename, final String separator) {
 
         checkNotNull("filename", filename);
         checkNotNull("separator", separator);
@@ -1061,7 +1068,7 @@ public final class Utils4J {
      * @param out      Destination stream - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    private static void zipFile(final File srcFile, final String destPath, final ZipOutputStream out) throws IOException {
+    private static void zipFile(final File srcFile, @Nullable final String destPath, final ZipOutputStream out) throws IOException {
 
         final byte[] buf = new byte[1024];
         try (final InputStream in = new BufferedInputStream(new FileInputStream(srcFile))) {
@@ -1083,13 +1090,16 @@ public final class Utils4J {
      * @param filter Filter or <code>null</code> for all files.
      * @return Array of child entries of the directory.
      */
-    private static File[] listFiles(final File srcDir, final FileFilter filter) {
+    private static File[] listFiles(final File srcDir, @Nullable final FileFilter filter) {
 
         final File[] files;
         if (filter == null) {
             files = srcDir.listFiles();
         } else {
             files = srcDir.listFiles(filter);
+        }
+        if (files == null) {
+            return new File[] {};
         }
         return files;
 
@@ -1104,7 +1114,7 @@ public final class Utils4J {
      * @param out      Destination stream - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    private static void zipDir(final File srcDir, final FileFilter filter, final String destPath, final ZipOutputStream out)
+    private static void zipDir(final File srcDir, @Nullable final FileFilter filter, @Nullable final String destPath, final ZipOutputStream out)
             throws IOException {
 
         final File[] files = listFiles(srcDir, filter);
@@ -1128,7 +1138,7 @@ public final class Utils4J {
      * @param destFile Target ZIP file - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final FileFilter filter, final String destPath, final File destFile) throws IOException {
+    public static void zipDir(final File srcDir, @Nullable final FileFilter filter, @Nullable final String destPath, final File destFile) throws IOException {
 
         Utils4J.checkNotNull("srcDir", srcDir);
         Utils4J.checkValidDir(srcDir);
@@ -1148,7 +1158,7 @@ public final class Utils4J {
      * @param destFile Target ZIP file - Cannot be <code>null</code>.
      * @throws IOException Error writing to the output stream.
      */
-    public static void zipDir(final File srcDir, final String destPath, final File destFile) throws IOException {
+    public static void zipDir(final File srcDir, @Nullable final String destPath, final File destFile) throws IOException {
 
         zipDir(srcDir, null, destPath, destFile);
 
@@ -1160,7 +1170,7 @@ public final class Utils4J {
      * @param obj Object to serialize or <code>null</code>.
      * @return Serialized object or <code>null</code>.
      */
-    public static byte[] serialize(final Object obj) {
+    public static byte @Nullable [] serialize(@Nullable final Object obj) {
         if (obj == null) {
             return null;
         }
@@ -1181,7 +1191,8 @@ public final class Utils4J {
      * @return Object created from data or <code>null</code>.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T deserialize(final byte[] data) {
+    @Nullable
+    public static <T> T deserialize(final byte @Nullable [] data) {
         if (data == null) {
             return null;
         }
@@ -1221,7 +1232,8 @@ public final class Utils4J {
      * @param url String to convert into an URL or <code>null</code>.
      * @return URL or <code>null</code>
      */
-    public static URL url(final String url) {
+    @Nullable
+    public static URL url(@Nullable final String url) {
         if (url == null) {
             return null;
         }
@@ -1241,7 +1253,8 @@ public final class Utils4J {
      * @param str String to replace or <code>null</code>.
      * @return Replaced string or <code>null</code>.
      */
-    public static String replaceCrLfTab(final String str) {
+    @Nullable
+    public static String replaceCrLfTab(@Nullable final String str) {
         if (str == null) {
             return null;
         }
@@ -1292,7 +1305,8 @@ public final class Utils4J {
      * @param expectedExceptions Expected exceptions - May be <code>null</code> if any cause is expected.
      * @return TRUE if the actual exception is one of the expected exceptions.
      */
-    public static boolean expectedCause(final Exception actualException, final Collection<Class<? extends Exception>> expectedExceptions) {
+    public static boolean expectedCause(final Exception actualException,
+                                        @Nullable final Collection<Class<? extends Exception>> expectedExceptions) {
 
         checkNotNull("actualException", actualException);
 
@@ -1319,7 +1333,7 @@ public final class Utils4J {
      * @return TRUE if the actual exception is one of the expected exceptions.
      */
     public static boolean expectedException(final Exception actualException,
-                                            final Collection<Class<? extends Exception>> expectedExceptions) {
+                                            @Nullable final Collection<Class<? extends Exception>> expectedExceptions) {
 
         checkNotNull("actualException", actualException);
 

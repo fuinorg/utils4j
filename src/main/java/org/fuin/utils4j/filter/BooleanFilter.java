@@ -17,11 +17,14 @@
  */
 package org.fuin.utils4j.filter;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines a filter on a Boolean property value.
  */
 public class BooleanFilter implements Filter {
 
+    @Nullable
     private final Boolean constValue;
 
     /**
@@ -30,7 +33,7 @@ public class BooleanFilter implements Filter {
      * @param constValue
      *            Value the property is compared with.
      */
-    public BooleanFilter(final Boolean constValue) {
+    public BooleanFilter(@Nullable final Boolean constValue) {
         super();
         this.constValue = constValue;
     }
@@ -40,22 +43,22 @@ public class BooleanFilter implements Filter {
      * 
      * @return Value.
      */
+    @Nullable
     public final Boolean getConstValue() {
         return constValue;
     }
 
     @Override
-    public final boolean complies(final Object value) {
+    public final boolean complies(@Nullable final Object value) {
         if (value == null) {
             return (constValue == null);
-        } else {
-            return value.equals(constValue);
         }
+        return value.equals(constValue);
     }
 
     @Override
     public final String toString() {
-        return " = " + constValue.toString();
+        return " = " + constValue;
     }
 
 }

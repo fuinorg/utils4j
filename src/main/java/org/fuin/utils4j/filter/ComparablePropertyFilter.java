@@ -18,6 +18,7 @@
 package org.fuin.utils4j.filter;
 
 import org.fuin.utils4j.filter.ComparableFilter.Operator;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Defines a filter on a Comparable property.
@@ -40,7 +41,7 @@ public abstract class ComparablePropertyFilter extends PropertyFilter {
     }
 
     @Override
-    public final boolean complies(final Object obj) {
+    public final boolean complies(@Nullable final Object obj) {
         final Comparable value = (Comparable) this.getProperty(obj, this.getPropertyName());
         return filter.complies(value);
     }

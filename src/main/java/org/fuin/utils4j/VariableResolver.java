@@ -17,6 +17,8 @@
  */
 package org.fuin.utils4j;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.*;
 
 /**
@@ -36,7 +38,7 @@ public final class VariableResolver {
      * @param unresolved
      *            Map to use - May be <code>null</code>.
      */
-    public VariableResolver(final Map<String, String> unresolved) {
+    public VariableResolver(@Nullable final Map<String, String> unresolved) {
         if (unresolved == null) {
             this.unresolved = new HashMap<>();
         } else {
@@ -49,22 +51,18 @@ public final class VariableResolver {
 
     private void resolve() {
         int max = 0;
-        Iterator<String> it = unresolved.keySet().iterator();
-        while (it.hasNext()) {
-            final String name = it.next();
+        for (String name : unresolved.keySet()) {
             final String value = unresolved.get(name);
-            final int d = resolve(name, value, new ArrayList<String>());
+            final int d = resolve(name, value, new ArrayList<>());
             if (d > max) {
                 max = d;
             }
         }
 
         for (int d = 0; d <= max; d++) {
-            it = unresolved.keySet().iterator();
-            while (it.hasNext()) {
-                final String name = it.next();
+            for (String name : unresolved.keySet()) {
                 final String value = unresolved.get(name);
-                if (depth.get(name).intValue() == d) {
+                if (Objects.requireNonNull(depth.get(name)) == d) {
                     resolved.put(name, Utils4J.replaceCrLfTab(Utils4J.replaceVars(value, resolved)));
                 }
             }
@@ -72,35 +70,32 @@ public final class VariableResolver {
 
     }
 
-    private Integer resolve(final String name, final String value, final List<String> path) {
+    private int resolve(final String name, @Nullable final String value, final List<String> path) {
 
         // Check for cycles
         if (path.contains(name)) {
             final StringBuilder sb = new StringBuilder();
-            final Iterator<String> it = path.iterator();
-            while (it.hasNext()) {
-                sb.append(it.next() + " > ");
+            for (String s : path) {
+                sb.append(s).append(" > ");
             }
             sb.append(name);
             throw new IllegalStateException("Cycle: " + sb);
         }
 
         // Analyze
-        Integer d = depth.get(name);
-        if (d == null) {
-            final Set<String> refs = references(value);
-            if (refs.isEmpty()) {
-                d = 0;
-            } else {
-                final Iterator<String> it = refs.iterator();
-                while (it.hasNext()) {
-                    final String refName = it.next();
-                    final String refValue = unresolved.get(refName);
-                    d = 1 + resolve(refName, refValue, add(path, name));
-                }
-            }
-            depth.put(name, d);
+        final Integer existing = depth.get(name);
+        if (existing != null) {
+            return existing;
         }
+        int d = 0;
+        final Set<String> refs = references(value);
+        if (!refs.isEmpty()) {
+            for (String refName : refs) {
+                final String refValue = unresolved.get(refName);
+                d = 1 + resolve(refName, refValue, add(path, name));
+            }
+        }
+        depth.put(name, d);
         return d;
     }
 
@@ -145,10 +140,10 @@ public final class VariableResolver {
      * 
      * @return Referenced variable names - Never <code>null</code>, but may be empty.
      */
-    public static Set<String> references(final String value) {
+    public static Set<String> references(@Nullable final String value) {
 
         final HashSet<String> names = new HashSet<>();
-        if ((value == null) || (value.length() == 0)) {
+        if ((value == null) || (value.isEmpty())) {
             return names;
         }
 

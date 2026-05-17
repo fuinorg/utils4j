@@ -3,6 +3,7 @@ package org.fuin.utils4j.jaxb;
 import jakarta.xml.bind.*;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.fuin.utils4j.Utils4J;
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -25,11 +26,13 @@ public final class UnmarshallerBuilder {
 
     private final Set<Class<?>> classesToBeBound;
 
+    @Nullable
     private ValidationEventHandler handler;
 
+    @Nullable
     private JAXBContext ctx;
 
-    private Unmarshaller.Listener listener;
+    private Unmarshaller.@Nullable Listener listener;
 
     /**
      * Default constructor.
