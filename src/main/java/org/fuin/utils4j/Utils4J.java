@@ -216,8 +216,7 @@ public final class Utils4J {
     public static boolean containsURL(final URL[] urls, final URL url) {
         checkNotNull("urls", urls);
         checkNotNull("url", url);
-        for (int i = 0; i < urls.length; i++) {
-            final URL element = urls[i];
+        for (final URL element : urls) {
             final String elementStr = element.toExternalForm();
             final String urlStr = url.toExternalForm();
             if (elementStr.equals(urlStr)) {
@@ -696,7 +695,7 @@ public final class Utils4J {
             throw new IllegalStateException(errMsg + " not found!");
         }
         final String userHome = str.trim();
-        if (userHome.length() == 0) {
+        if (userHome.isEmpty()) {
             throw new IllegalStateException(errMsg + " is empty!");
         }
         final File dir = new File(userHome);
@@ -719,7 +718,7 @@ public final class Utils4J {
             throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' not found!");
         }
         final String tempDirStr = str.trim();
-        if (tempDirStr.length() == 0) {
+        if (tempDirStr.isEmpty()) {
             throw new IllegalStateException("System property '" + TEMP_DIR_KEY + "' is empty!");
         }
         final File dir = new File(tempDirStr);
@@ -740,7 +739,7 @@ public final class Utils4J {
      */
     public static String replaceVars(final String str, final Map<String, String> vars) {
 
-        if ((str == null) || (str.length() == 0) || (vars == null) || (vars.size() == 0)) {
+        if ((str == null) || (str.isEmpty()) || (vars == null) || (vars.isEmpty())) {
             return str;
         }
 
@@ -792,7 +791,7 @@ public final class Utils4J {
 
     /**
      * Creates an URL Link on the Windows Desktop. This is done by creating a file (URL File Format) with an ".url" extension. For a
-     * description see http://www.cyanwerks.com/file-format-url.html .
+     * description see <a href="http://www.cyanwerks.com/file-format-url.html">file-format-url</a> .
      *
      * @param baseUrl                      Base URL for the link - Cannot be <code>null</code> or empty.
      * @param url                          Target URL - Cannot be <code>null</code> or empty.
@@ -844,7 +843,7 @@ public final class Utils4J {
 
     /**
      * Creates the content of an URL Link file (.url) on the Windows Desktop. For a description see
-     * http://www.cyanwerks.com/file-format-url.html .
+     * <a href="http://www.cyanwerks.com/file-format-url.html">file-format-url.</a> .
      *
      * @param baseUrl     Base URL for the link - Cannot be <code>null</code> or empty.
      * @param url         Target URL - Cannot be <code>null</code> or empty.
@@ -919,7 +918,7 @@ public final class Utils4J {
             return filename;
         }
         final String trimmedPath = path.trim();
-        if (trimmedPath.length() == 0) {
+        if (trimmedPath.isEmpty()) {
             return filename;
         }
         final String trimmedFilename = filename.trim();
@@ -948,9 +947,9 @@ public final class Utils4J {
         final char[] out = new char[l << 1];
         // two characters form the hex value.
         int j = 0;
-        for (int i = 0; i < l; i++) {
-            out[j++] = DIGITS[(0xF0 & data[i]) >>> 4];
-            out[j++] = DIGITS[0x0F & data[i]];
+        for (byte datum : data) {
+            out[j++] = DIGITS[(0xF0 & datum) >>> 4];
+            out[j++] = DIGITS[0x0F & datum];
         }
         return String.copyValueOf(out);
     }
@@ -1082,7 +1081,7 @@ public final class Utils4J {
      *
      * @param srcDir Directory to list the files for - Cannot be <code>null</code> and must be a valid directory.
      * @param filter Filter or <code>null</code> for all files.
-     * @return List of child entries of the directory.
+     * @return Array of child entries of the directory.
      */
     private static File[] listFiles(final File srcDir, final FileFilter filter) {
 
@@ -1109,11 +1108,11 @@ public final class Utils4J {
             throws IOException {
 
         final File[] files = listFiles(srcDir, filter);
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory()) {
-                zipDir(files[i], filter, concatPathAndFilename(destPath, files[i].getName(), File.separator), out);
+        for (File file : files) {
+            if (file.isDirectory()) {
+                zipDir(file, filter, concatPathAndFilename(destPath, file.getName(), File.separator), out);
             } else {
-                zipFile(files[i], destPath, out);
+                zipFile(file, destPath, out);
             }
         }
 
@@ -1545,6 +1544,7 @@ public final class Utils4J {
      * This function returns the UUID as text that only occupies 22 characters.
      * It stores MSB/LSB as Base64 encoded string and replaces "+" with "-" and "/" with "_".
      *
+     * @param uuid Value to convert into a short UUID string.
      * @return String with 22 characters.
      */
     public static String uuid2ShortStr(final UUID uuid) {
@@ -1552,7 +1552,7 @@ public final class Utils4J {
         byteBuffer.putLong(uuid.getMostSignificantBits());
         byteBuffer.putLong(uuid.getLeastSignificantBits());
         final String base64 = Base64.getEncoder().withoutPadding().encodeToString(byteBuffer.array());
-        return base64.replaceAll("/", "_").replaceAll("\\+", "-");
+        return base64.replace("/", "_").replaceAll("\\+", "-");
     }
 
     /**
@@ -1563,8 +1563,8 @@ public final class Utils4J {
      */
     public static UUID shortStr2uuid(final String shortStr) {
         final String base64 = shortStr
-                .replaceAll("_", "/")
-                .replaceAll("-", "+");
+                .replace("_", "/")
+                .replace("-", "+");
         final byte[] bytes = Base64.getDecoder().decode(base64);
         final ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         final long msb = byteBuffer.getLong();
