@@ -3,6 +3,7 @@
 ## 0.16.1
 - Import new Super BOM
 - Avoid snapshot dependencies when releasing
+- Added [flatten-maven-plugin](https://www.mojohaus.org/flatten-maven-plugin/)
 
 ## 0.16.0
 - Added new [Utils4J](src/main/java/org/fuin/utils4j/Utils4J.java) method to encode a UUID to a short string and back
