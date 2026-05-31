@@ -115,6 +115,39 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-no-snapshots</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <!-- Fail a release build that still references SNAPSHOT dependencies
+                                     (or a SNAPSHOT parent). Skipped while the project itself is a SNAPSHOT. -->
+                                <requireReleaseDeps>
+                                    <onlyWhenRelease>true</onlyWhenRelease>
+                                    <message>No SNAPSHOT dependencies are allowed in a release!</message>
+                                </requireReleaseDeps>
+                                <!-- Forbid SNAPSHOT plugins. This rule has no "onlyWhenRelease" option,
+                                     so only the snapshot check is enabled; all other bans are turned off. -->
+                                <requirePluginVersions>
+                                    <banSnapshots>true</banSnapshots>
+                                    <banLatest>false</banLatest>
+                                    <banRelease>false</banRelease>
+                                    <banMavenDefaults>false</banMavenDefaults>
+                                    <message>No SNAPSHOT plugins are allowed in a release!</message>
+                                </requirePluginVersions>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <annotationProcessorPaths>
