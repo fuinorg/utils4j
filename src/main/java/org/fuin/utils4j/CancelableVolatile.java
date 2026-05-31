@@ -24,6 +24,13 @@ public class CancelableVolatile implements Cancelable {
 
     private volatile boolean canceled = false;
 
+    /**
+     * Default constructor.
+     */
+    public CancelableVolatile() {
+        super();
+    }
+
     @Override
     public final void cancel() {
         canceled = true;

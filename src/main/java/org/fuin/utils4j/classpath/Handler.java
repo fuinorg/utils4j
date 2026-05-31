@@ -12,7 +12,14 @@ public final class Handler extends URLStreamHandler {
 
     static final String HANDLER_PKGS = "java.protocol.handler.pkgs";
     
-    static final String PKG = "org.fuin.utils4j"; 
+    static final String PKG = "org.fuin.utils4j";
+
+    /**
+     * Default constructor.
+     */
+    public Handler() {
+        super();
+    }
 
     /**
      * Adds the protocol handler.

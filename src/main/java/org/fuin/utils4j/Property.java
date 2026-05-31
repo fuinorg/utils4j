@@ -30,11 +30,14 @@ public final class Property implements Comparable<Property>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /** Unique name of the property. */
     private final String key;
 
+    /** Value at construction time. */
     @Nullable
     private final String initialValue;
 
+    /** Current value. */
     @Nullable
     private String value;
 

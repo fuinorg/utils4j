@@ -24,6 +24,13 @@ import java.io.File;
  */
 public final class ConsoleFileHandler implements FileHandler {
 
+    /**
+     * Default constructor.
+     */
+    public ConsoleFileHandler() {
+        super();
+    }
+
     @Override
     public final FileHandlerResult handleFile(final File file) {
         System.out.println(file); // NO_SONAR System.out by intention

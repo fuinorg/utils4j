@@ -10,6 +10,13 @@ import java.io.*;
 public final class JandexIndexFileWriter {
 
     /**
+     * Default constructor.
+     */
+    public JandexIndexFileWriter() {
+        super();
+    }
+
+    /**
      * Writes the index to a file.
      * Wraps the possible {@link IOException} into a {@link RuntimeException}.
      *

@@ -29,8 +29,10 @@ public final class MergeException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
+    /** File that caused the exception. */
     private final File file;
 
+    /** List of one or more problems that prevented the merge. */
     private final Problem[] problems;
 
     /**

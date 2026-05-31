@@ -24,6 +24,13 @@ import java.io.File;
  */
 public final class NoOpFileHandler implements FileHandler {
 
+    /**
+     * Default constructor.
+     */
+    public NoOpFileHandler() {
+        super();
+    }
+
     @Override
     public final FileHandlerResult handleFile(final File file) {
         return FileHandlerResult.STOP;

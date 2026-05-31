@@ -193,6 +193,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <!-- This is a non-modular project (no module-info.java) whose
+                         Automatic-Module-Name equals the root package name
+                         (org.fuin.utils4j). In module mode the plugin emits a
+                         patch-module option for org.fuin.utils4j, which makes
+                         javadoc fail with "No source files for package
+                         org.fuin.utils4j". Force the legacy classpath mode to
+                         avoid this. -->
+                    <legacyMode>true</legacyMode>
+                </configuration>
             </plugin>
 
             <plugin>

@@ -26,6 +26,13 @@ import org.jspecify.annotations.Nullable;
  */
 public final class CDataXmlAdapter extends XmlAdapter<String, String> {
 
+    /**
+     * Default constructor.
+     */
+    public CDataXmlAdapter() {
+        super();
+    }
+
     @Override
     @Nullable
     public final String marshal(@Nullable final String value) throws Exception {
