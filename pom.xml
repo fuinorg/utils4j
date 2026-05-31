@@ -29,7 +29,7 @@
     </issueManagement>
 
 	<properties>
-        <sonar.projectKey>utils4j</sonar.projectKey>
+        <sonar.projectKey>org.fuin:utils4j</sonar.projectKey>
         <sonar.organization>fuinorg</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <error-prone.version>2.49.0</error-prone.version>
