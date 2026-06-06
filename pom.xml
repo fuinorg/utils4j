@@ -34,14 +34,15 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <error-prone.version>2.49.0</error-prone.version>
         <nullaway.version>0.13.4</nullaway.version>
-	</properties>
+        <org-fuin-bom.version>1.0.2-SNAPSHOT</org-fuin-bom.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.fuin</groupId>
                 <artifactId>bom</artifactId>
-                <version>1.0.2-SNAPSHOT</version>
+                <version>${org-fuin-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
