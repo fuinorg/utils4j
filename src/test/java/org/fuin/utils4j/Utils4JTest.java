@@ -756,11 +756,10 @@ public class Utils4JTest {
         final File[] jars = libDir.listFiles(file -> {
             return file.getName().endsWith(".jar");
         });
-        final File securityDir = new File(libDir, "security");
 
         // Existing JRE files
         assertThat(Utils4J.jreFile(jars[0])).isTrue();
-        assertThat(Utils4J.jreFile(new File(securityDir, "cacerts"))).isTrue();
+        assertThat(Utils4J.jreFile(new File(libDir, "modules"))).isTrue();
 
         // Non existing and not in JRE
         assertThat(Utils4J.jreFile(new File(Utils4J.getTempDir(), "whatever.jar"))).isFalse();
